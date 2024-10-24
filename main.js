@@ -1,9 +1,9 @@
 import './style.css'
 
-const PLAYER_1_COLOR = "bg-red-500"
-const PLAYER_2_COLOR = "bg-green-500"
-const PLAYER_3_COLOR = "bg-yellow-500"
-const PLAYER_4_COLOR = "bg-blue-500"
+const PLAYER_1_COLOR = "bg-red-600"
+const PLAYER_2_COLOR = "bg-green-600"
+const PLAYER_3_COLOR = "bg-yellow-600"
+const PLAYER_4_COLOR = "bg-blue-600"
 
 // todo: need to numerical color instead of this ugly array, just used to visualize for now
 const GRID_CELL_STYLES = [
@@ -39,4 +39,4 @@ function setupGrid() {
     }
 }
 
-setupGrid()
+// setupGrid()
