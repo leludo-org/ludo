@@ -7,12 +7,19 @@
 </head>
 <body class="h-full">
 <div id="root" class="h-full flex items-center justify-center bg-background">
-    <div class="w-4/5 sm:w-auto sm:h-3/5  aspect-square grid grid-rows-5 grid-cols-5">
 
+    <div class="w-4/5 sm:w-auto sm:h-3/5  aspect-square grid grid-rows-5 grid-cols-5">
         <div class="bg-player-1 border border-black row-span-2 col-span-2 flex items-center justify-center z-10">
-            <div class="bg-background size-4/6 border border-black grid grid-cols-2">
+            <div class="bg-background size-4/6 border border-black grid grid-cols-2 grid-rows-2">
                 <div class="flex items-center justify-center">
-                    <div id="p1-h1" class="size-1/2 rounded-full bg-player-1 border border-black"></div>
+                    <div id="p1-h1" class="size-1/2 rounded-full bg-player-1 border border-black flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="fill-player-1 lucide lucide-award size-full">
+                            <path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/>
+                            <circle cx="12" cy="8" r="6"/>
+                        </svg>
+                    </div>
                 </div>
                 <div class="flex items-center justify-center">
                     <div class="size-1/2 rounded-full bg-player-1 border border-black"></div>
