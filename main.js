@@ -1,42 +1,30 @@
-import './style.css'
+import './style.css' // todo: check if better way to import style
 
-const PLAYER_1_COLOR = "bg-red-600"
-const PLAYER_2_COLOR = "bg-green-600"
-const PLAYER_3_COLOR = "bg-yellow-600"
-const PLAYER_4_COLOR = "bg-blue-600"
+document.addEventListener("DOMContentLoaded", () => {
+    const testButton = document.getElementById("test");
+    testButton.addEventListener("click", () => {
+        movePlayerPiece(1,1);
+    });
+});
 
-// todo: need to numerical color instead of this ugly array, just used to visualize for now
-const GRID_CELL_STYLES = [
-    [PLAYER_1_COLOR, PLAYER_1_COLOR, PLAYER_1_COLOR, PLAYER_1_COLOR, PLAYER_1_COLOR, PLAYER_1_COLOR, "", "", "", PLAYER_2_COLOR, PLAYER_2_COLOR, PLAYER_2_COLOR, PLAYER_2_COLOR, PLAYER_2_COLOR, PLAYER_2_COLOR],
-    [PLAYER_1_COLOR, "", "", "", "", PLAYER_1_COLOR, "", "", "", PLAYER_2_COLOR, "", "", "", "", PLAYER_2_COLOR],
-    [PLAYER_1_COLOR, "", "", "", "", PLAYER_1_COLOR, "", "", "", PLAYER_2_COLOR, "", "", "", "", PLAYER_2_COLOR],
-    [PLAYER_1_COLOR, "", "", "", "", PLAYER_1_COLOR, "", "", "", PLAYER_2_COLOR, "", "", "", "", PLAYER_2_COLOR],
-    [PLAYER_1_COLOR, "", "", "", "", PLAYER_1_COLOR, "", "", "", PLAYER_2_COLOR, "", "", "", "", PLAYER_2_COLOR],
-    [PLAYER_1_COLOR, PLAYER_1_COLOR, PLAYER_1_COLOR, PLAYER_1_COLOR, PLAYER_1_COLOR, PLAYER_1_COLOR, "", "", "", PLAYER_2_COLOR, PLAYER_2_COLOR, PLAYER_2_COLOR, PLAYER_2_COLOR, PLAYER_2_COLOR, PLAYER_2_COLOR],
-    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    [PLAYER_4_COLOR, PLAYER_4_COLOR, PLAYER_4_COLOR, PLAYER_4_COLOR, PLAYER_4_COLOR, PLAYER_4_COLOR, "", "", "", PLAYER_3_COLOR, PLAYER_3_COLOR, PLAYER_3_COLOR, PLAYER_3_COLOR, PLAYER_3_COLOR, PLAYER_3_COLOR],
-    [PLAYER_4_COLOR, "", "", "", "", PLAYER_4_COLOR, "", "", "", PLAYER_3_COLOR, "", "", "", "", PLAYER_3_COLOR],
-    [PLAYER_4_COLOR, "", "", "", "", PLAYER_4_COLOR, "", "", "", PLAYER_3_COLOR, "", "", "", "", PLAYER_3_COLOR],
-    [PLAYER_4_COLOR, "", "", "", "", PLAYER_4_COLOR, "", "", "", PLAYER_3_COLOR, "", "", "", "", PLAYER_3_COLOR],
-    [PLAYER_4_COLOR, "", "", "", "", PLAYER_4_COLOR, "", "", "", PLAYER_3_COLOR, "", "", "", "", PLAYER_3_COLOR],
-    [PLAYER_4_COLOR, PLAYER_4_COLOR, PLAYER_4_COLOR, PLAYER_4_COLOR, PLAYER_4_COLOR, PLAYER_4_COLOR, "", "", "", PLAYER_3_COLOR, PLAYER_3_COLOR, PLAYER_3_COLOR, PLAYER_3_COLOR, PLAYER_3_COLOR, PLAYER_3_COLOR],
-]
+/**
+ *
+ * @param {1|2|3|4} player
+ * @param {1|2|3|4} piece
+ */
+function movePlayerPiece(player, piece) {
+    const pieceElement = document.getElementById(`p${player}-p${piece}`);
+    const initialPosition = pieceElement.getBoundingClientRect();
 
-function setupGrid() {
-    const grid = document.createElement("div")
-    grid.className = "size-[40rem] grid grid-cols-15"
-    document.querySelector("#root").appendChild(grid)
+    const targetContainer = document.getElementById("m0");
+    const finalPosition = targetContainer.getBoundingClientRect();
 
-    for (let r = 0; r < 15; r++) {
-        for (let c = 0; c < 15; c++) {
-            const cell = document.createElement("div")
-            cell.id = `cell-${r}-${c}`
-            cell.className = "flex items-center justify-center bg-sky-100 border border-black " + GRID_CELL_STYLES[r][c]
-            grid.appendChild(cell)
-        }
-    }
+    const offsetX = finalPosition.left - initialPosition.left;
+    const offsetY = finalPosition.top - initialPosition.top;
+
+    pieceElement.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+    setTimeout(() => {
+        pieceElement.style.transform = `translate(0px, 0px)`;
+        targetContainer.appendChild(pieceElement);
+    }, 1000)
 }
-
-// setupGrid()
