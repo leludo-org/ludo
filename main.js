@@ -26,5 +26,5 @@ function movePlayerPiece(player, piece) {
     setTimeout(() => {
         pieceElement.style.transform = `translate(0px, 0px)`;
         targetContainer.appendChild(pieceElement);
-    }, 1000)
+z    }, 1000)
 }
