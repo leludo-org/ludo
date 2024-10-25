@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 204 94% 94%;
+        --player-1: 0 72% 51%;
+        --player-2: 142 76% 36%;
+        --player-3: 41 96% 40%;
+        --player-4: 200 98% 39%;
+    }
+}
