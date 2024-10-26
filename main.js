@@ -1,6 +1,21 @@
 import './style.css' // todo: check if better way to import style
 
+/**
+ *
+ * @type {number}
+ */
 let currentPlayerIndex = 0;
+
+/**
+ *
+ * @type {number}
+ */
+let currentDiceRoll = 1;
+
+/**
+ *
+ * @type {number[]}
+ */
 const positions = new Array(15).fill(-1)
 
 
@@ -12,10 +27,23 @@ document.addEventListener("DOMContentLoaded", () => {
         // positions[0] += 1
         // movePiece(0)
 
-        currentPlayerIndex = (currentPlayerIndex + 1) % 4
-        moveDice()
+        // currentPlayerIndex = (currentPlayerIndex + 1) % 4
+        // moveDice()
+
+        rollDice()
     })
 })
+
+function rollDice() {
+    const lastDiceRoll = currentDiceRoll
+    currentDiceRoll = Math.ceil(Math.pow(Math.random(), 1/2) * 6) // skewed towards higher number
+
+    console.debug('currentDiceRoll', currentDiceRoll)
+
+    document.getElementById(`d${lastDiceRoll}`).classList.add("hidden")
+    document.getElementById(`d${currentDiceRoll}`).classList.remove("hidden")
+
+}
 
 function setInitialPosition() {
     const params = new URLSearchParams(window.location.search)
