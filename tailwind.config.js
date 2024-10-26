@@ -6,6 +6,7 @@ export default {
     theme: {
         extend: {
             colors: {
+                "border": 'hsl(var(--border))',
                 "background": "hsl(var(--background))",
                 "player-1": "hsl(var(--player-1))",
                 "player-2": "hsl(var(--player-2))",

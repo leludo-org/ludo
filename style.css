@@ -4,10 +4,15 @@
 
 @layer base {
     :root {
+        --border: 0 0% 0%;
         --background: 0 0% 100%;
         --player-1: 0 72% 51%;
         --player-2: 142 76% 36%;
         --player-3: 41 96% 40%;
         --player-4: 200 98% 39%;
+    }
+
+    * {
+        @apply border-border;
     }
 }
