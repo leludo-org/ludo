@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const testButton = document.getElementById("test")
     testButton.addEventListener("click", () => {
-        positions[12] += 4
-        movePiece(12)
+        positions[0] += 1
+        movePiece(0)
     })
 })
 
