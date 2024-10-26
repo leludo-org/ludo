@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const testButton = document.getElementById("test")
     testButton.addEventListener("click", () => {
-        positions[4] += 4
-        movePiece(4)
+        positions[12] += 4
+        movePiece(12)
     })
 })
 
@@ -57,7 +57,11 @@ function findTargetContainerId(pieceIndex) {
     }
 
     const playerIndex = Math.floor(pieceIndex / 4)
-    const markIndex = (piecePosition + (13 * playerIndex)) % 52
+    if (piecePosition > 50) {
+        const safeIndex = piecePosition % 50;
+        return `p${playerIndex}s${safeIndex}`
+    }
 
+    const markIndex = (piecePosition + (13 * playerIndex)) % 52
     return `m${markIndex}`
 }
