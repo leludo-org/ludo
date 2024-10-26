@@ -1,5 +1,6 @@
 import './style.css' // todo: check if better way to import style
 
+let currentPlayerIndex = 0;
 const positions = new Array(15).fill(-1)
 
 
@@ -8,8 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const testButton = document.getElementById("test")
     testButton.addEventListener("click", () => {
-        positions[0] += 1
-        movePiece(0)
+        // positions[0] += 1
+        // movePiece(0)
+
+        currentPlayerIndex = (currentPlayerIndex + 1) % 4
+        moveDice()
     })
 })
 
@@ -28,20 +32,36 @@ function setInitialPosition() {
  * @param {number} pieceIndex
  */
 function movePiece(pieceIndex) {
-    const pieceElement = document.getElementById(`p${pieceIndex}`)
-    const initialPosition = pieceElement.getBoundingClientRect()
-
+    const pieceElementId = `p${pieceIndex}`;
     const targetContainerId = findTargetContainerId(pieceIndex)
+
+    moveElement(pieceElementId, targetContainerId)
+}
+
+function moveDice() {
+    const targetContainerId = `b${currentPlayerIndex}`
+    moveElement("dice", targetContainerId)
+}
+
+/**
+ *
+ * @param {string} elementId
+ * @param {string} targetContainerId
+ */
+function moveElement(elementId, targetContainerId) {
+    const element = document.getElementById(elementId)
     const targetContainer = document.getElementById(targetContainerId)
+
+    const initialPosition = element.getBoundingClientRect()
     const finalPosition = targetContainer.getBoundingClientRect()
 
     const offsetX = finalPosition.left - initialPosition.left
     const offsetY = finalPosition.top - initialPosition.top
 
-    pieceElement.style.transform = `translate(${offsetX}px, ${offsetY}px)`
+    element.style.transform = `translate(${offsetX}px, ${offsetY}px)`
     setTimeout(() => {
-        pieceElement.style.transform = `translate(0px, 0px)`
-        targetContainer.appendChild(pieceElement)
+        element.style.transform = `translate(0px, 0px)`
+        targetContainer.appendChild(element)
     }, 1000)
 }
 
