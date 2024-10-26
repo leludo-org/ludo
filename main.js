@@ -1,19 +1,33 @@
 import './style.css' // todo: check if better way to import style
 
+const positions = new Array(15).fill(-1);
+
+
 document.addEventListener("DOMContentLoaded", () => {
+    setInitialPosition()
+
     const testButton = document.getElementById("test");
     testButton.addEventListener("click", () => {
-        movePlayerPiece(1,1);
+        movePiece(0);
     });
 });
 
+function setInitialPosition() {
+    const params = new URLSearchParams(window.location.search);
+    params.get("positions")
+        ?.split(",")
+        .forEach(((p, index) => {
+            positions[index] = +p
+            movePiece(index)
+        }))
+}
+
 /**
  *
- * @param {1|2|3|4} player
- * @param {1|2|3|4} piece
+ * @param {number} piece
  */
-function movePlayerPiece(player, piece) {
-    const pieceElement = document.getElementById(`p${player}-p${piece}`);
+function movePiece(piece) {
+    const pieceElement = document.getElementById(`p${piece}`);
     const initialPosition = pieceElement.getBoundingClientRect();
 
     const targetContainer = document.getElementById("m0");
@@ -26,5 +40,6 @@ function movePlayerPiece(player, piece) {
     setTimeout(() => {
         pieceElement.style.transform = `translate(0px, 0px)`;
         targetContainer.appendChild(pieceElement);
-z    }, 1000)
+        z
+    }, 1000)
 }
