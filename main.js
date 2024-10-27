@@ -32,19 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
     diceElement.addEventListener("click", () => {
         rollDice()
     })
-
-    positions.forEach((position, pieceIndex) => {
-        const pieceElementId = getPieceElementId(pieceIndex);
-        document.getElementById(pieceElementId).addEventListener("click", () => {
-            if (positions[pieceIndex] === -1) {
-                positions[pieceIndex] = 0
-            } else {
-                positions[pieceIndex] = positions[pieceIndex] + currentDiceRoll
-            }
-
-            movePiece(pieceIndex)
-        })
-    })
 })
 
 function rollDice() {
@@ -176,11 +163,45 @@ function animateMovablePieces() {
             const pieceElementId = getPieceElementId(pieceIndex)
             const pieceElement = document.getElementById(pieceElementId)
             pieceElement.classList.add("animate-bounce")
+            pieceElement.addEventListener("click", updatePiecePositionAndMove)
         }
     }
 
     if (hasMoveablePiece) {
         const diceElement = document.getElementById("dice")
         diceElement.classList.remove("animate-bounce")
+    } else {
+        updateCurrentPlayer()
     }
+}
+
+
+/**
+ *
+ * @param {PointerEvent} $event
+ */
+function updatePiecePositionAndMove($event) {
+    document.querySelectorAll(".animate-bounce").forEach(element => {
+        element.classList.remove("animate-bounce")
+        element.removeEventListener("click", updatePiecePositionAndMove)
+    })
+
+    const pieceIndex = +$event.currentTarget.id.substring(1)
+    if (positions[pieceIndex] === -1) {
+        positions[pieceIndex] = 0
+    } else {
+        positions[pieceIndex] = positions[pieceIndex] + currentDiceRoll
+    }
+    movePiece(pieceIndex)
+
+    if (currentDiceRoll !== 6) {
+        updateCurrentPlayer();
+    }
+
+    document.getElementById("dice").classList.add("animate-bounce")
+}
+
+function updateCurrentPlayer() {
+    currentPlayerIndex = (currentPlayerIndex + 1) % 4
+    moveDice()
 }
