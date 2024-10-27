@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Vite App</title>
+    <title>Ludo</title>
 </head>
 <body class="h-full">
 <div id="root" class="h-full flex items-center justify-center bg-background">
@@ -11,8 +11,9 @@
     <div class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] grid grid-rows-7 grid-cols-5">
 
         <div class="col-span-full grid grid-cols-3">
-            <div id="b0" class="border p-2">
-                <div id="dice" class="w-1/2 border rounded aspect-square p-2">
+
+            <div id="b0" class="p-2">
+                <div id="dice" class="w-1/2 rounded aspect-square p-2 shadow-xl bg-white">
                     <div id="d1" class="size-full grid grid-rows-3 grid-cols-3 gap-1">
                         <div class="bg-black rounded-full row-start-2 col-start-2"></div>
                     </div>
@@ -48,7 +49,8 @@
                     </div>
                 </div>
             </div>
-            <div id="b1" class="border p-2 col-start-3"></div>
+
+            <div id="b1" class="p-2 col-start-3"></div>
         </div>
 
         <div class="bg-player-1 border row-span-2 col-span-2 flex items-center justify-center">
@@ -384,8 +386,8 @@
         </div>
 
         <div class="col-span-full grid grid-cols-3">
-            <div id="b3" class="border p-2"></div>
-            <div id="b2" class="border p-2 col-start-3"></div>
+            <div id="b3" class="p-2"></div>
+            <div id="b2" class="p-2 col-start-3"></div>
         </div>
 
     </div>
