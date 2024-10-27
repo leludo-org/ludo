@@ -20,7 +20,7 @@ const positions = new Array(15).fill(-1)
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    setInitialPosition()
+    setInitialState()
 
     const diceElement = document.getElementById("dice")
     diceElement.addEventListener("click", () => {
@@ -55,7 +55,7 @@ function rollDice() {
     }, 100)
 }
 
-function setInitialPosition() {
+function setInitialState() {
     const params = new URLSearchParams(window.location.search)
     params.get("positions")
         ?.split(",")
@@ -63,6 +63,13 @@ function setInitialPosition() {
             positions[pieceIndex] = +position
             movePiece(pieceIndex)
         }))
+
+    const player = params.get("player");
+    if (player) {
+        currentPlayerIndex = +player
+        moveDice()
+    }
+
 }
 
 /**
