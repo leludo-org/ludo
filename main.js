@@ -14,6 +14,12 @@ let currentDiceRoll = 1;
 
 /**
  *
+ * @type {'roll dice'|'move piece'}
+ */
+let currentAction = "roll dice";
+
+/**
+ *
  * @type {number[]}
  */
 const positions = new Array(15).fill(-1)
@@ -22,15 +28,22 @@ const positions = new Array(15).fill(-1)
 document.addEventListener("DOMContentLoaded", () => {
     setInitialPosition()
 
-    const testButton = document.getElementById("test")
-    testButton.addEventListener("click", () => {
-        // positions[0] += 1
-        // movePiece(0)
-
-        // currentPlayerIndex = (currentPlayerIndex + 1) % 4
-        // moveDice()
-
+    const diceElement = document.getElementById("dice")
+    diceElement.addEventListener("click", () => {
         rollDice()
+    })
+
+    positions.forEach((position, pieceIndex) => {
+        const pieceElementId = getPieceElementId(pieceIndex);
+        document.getElementById(pieceElementId).addEventListener("click", () => {
+            if (positions[pieceIndex] === -1) {
+                positions[pieceIndex] = 0
+            } else {
+                positions[pieceIndex] = positions[pieceIndex] + currentDiceRoll
+            }
+
+            movePiece(pieceIndex)
+        })
     })
 })
 
@@ -41,13 +54,15 @@ function rollDice() {
 
 
         if (counter === 6) {
+            clearInterval(interval)
+
             const weights = [1, 2, 2, 1, 2, 2];
             const cumulativeWeights = weights.map((sum => value => sum += value)(0));
             const maxWeight = cumulativeWeights[cumulativeWeights.length - 1];
             const randomValue = Math.random() * maxWeight;
             currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
 
-            clearInterval(interval)
+            animateMovablePieces()
         } else {
             currentDiceRoll = (currentDiceRoll % 6) + 1
         }
@@ -72,9 +87,18 @@ function setInitialPosition() {
 /**
  *
  * @param {number} pieceIndex
+ * @returns {string}
+ */
+function getPieceElementId(pieceIndex) {
+    return `p${pieceIndex}`;
+}
+
+/**
+ *
+ * @param {number} pieceIndex
  */
 function movePiece(pieceIndex) {
-    const pieceElementId = `p${pieceIndex}`;
+    const pieceElementId = getPieceElementId(pieceIndex);
     const targetContainerId = findTargetContainerId(pieceIndex)
 
     moveElement(pieceElementId, targetContainerId)
@@ -104,6 +128,7 @@ function moveElement(elementId, targetContainerId) {
     setTimeout(() => {
         element.style.transform = `translate(0px, 0px)`
         targetContainer.appendChild(element)
+
     }, 1000)
 }
 
@@ -126,4 +151,36 @@ function findTargetContainerId(pieceIndex) {
 
     const markIndex = (piecePosition + (13 * playerIndex)) % 52
     return `m${markIndex}`
+}
+
+/**
+ *
+ * @param {number} pieceIndex
+ */
+function isPieceMovable(pieceIndex) {
+    const piecePosition = positions[pieceIndex];
+
+    if (currentDiceRoll === 6 && piecePosition === -1) {
+        return true
+    }
+
+    return piecePosition >= 0 && (piecePosition + currentDiceRoll) <= 56
+}
+
+
+function animateMovablePieces() {
+    let hasMoveablePiece = false
+    for (let pieceIndex = currentPlayerIndex * 4; pieceIndex < (currentPlayerIndex + 1) * 4; pieceIndex++) {
+        if (isPieceMovable(pieceIndex)) {
+            hasMoveablePiece = true
+            const pieceElementId = getPieceElementId(pieceIndex)
+            const pieceElement = document.getElementById(pieceElementId)
+            pieceElement.classList.add("animate-bounce")
+        }
+    }
+
+    if (hasMoveablePiece) {
+        const diceElement = document.getElementById("dice")
+        diceElement.classList.remove("animate-bounce")
+    }
 }
