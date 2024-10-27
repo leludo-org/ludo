@@ -23,9 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setInitialState()
 
     const diceElement = document.getElementById("dice")
-    diceElement.addEventListener("click", () => {
-        rollDice()
-    })
+    diceElement.addEventListener("click", rollDice)
 })
 
 function rollDice() {
@@ -171,6 +169,7 @@ function animateMovablePieces() {
     if (hasMoveablePiece) {
         const diceElement = document.getElementById("dice")
         diceElement.classList.remove("animate-bounce")
+        diceElement.removeEventListener("click", rollDice)
     } else {
         updateCurrentPlayer()
     }
@@ -199,7 +198,10 @@ function updatePiecePositionAndMove($event) {
         updateCurrentPlayer();
     }
 
-    document.getElementById("dice").classList.add("animate-bounce")
+    const diceElement = document.getElementById("dice");
+    diceElement.classList.add("animate-bounce")
+    diceElement.addEventListener("click", rollDice)
+
 }
 
 function updateCurrentPlayer() {
