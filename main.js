@@ -35,20 +35,28 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 function rollDice() {
-    const lastDiceRoll = currentDiceRoll
-
-    const weights = [1, 2, 2, 1, 2, 2];
-    const cumulativeWeights = weights.map((sum => value => sum += value)(0));
-    const maxWeight = cumulativeWeights[cumulativeWeights.length - 1];
-    const randomValue = Math.random() * maxWeight;
-    currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
+    let counter = 0;
+    const interval = setInterval(() => {
+        const lastDiceRoll = currentDiceRoll
 
 
-    console.debug('currentDiceRoll', currentDiceRoll)
+        if (counter === 6) {
+            const weights = [1, 2, 2, 1, 2, 2];
+            const cumulativeWeights = weights.map((sum => value => sum += value)(0));
+            const maxWeight = cumulativeWeights[cumulativeWeights.length - 1];
+            const randomValue = Math.random() * maxWeight;
+            currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
 
-    document.getElementById(`d${lastDiceRoll}`).classList.add("hidden")
-    document.getElementById(`d${currentDiceRoll}`).classList.remove("hidden")
+            clearInterval(interval)
+        } else {
+            currentDiceRoll = (currentDiceRoll % 6) + 1
+        }
 
+        document.getElementById(`d${lastDiceRoll}`).classList.add("hidden")
+        document.getElementById(`d${currentDiceRoll}`).classList.remove("hidden")
+
+        counter++
+    }, 100)
 }
 
 function setInitialPosition() {
