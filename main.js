@@ -14,12 +14,6 @@ let currentDiceRoll = 1;
 
 /**
  *
- * @type {'roll dice'|'move piece'}
- */
-let currentAction = "roll dice";
-
-/**
- *
  * @type {number[]}
  */
 const positions = new Array(15).fill(-1)
