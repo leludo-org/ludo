@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setInitialState()
 
     document.getElementById("test").addEventListener("click", () => {
-        document.getElementById("audio").play()
+        document.getElementById("audio-background").play()
     })
 
     const diceElement = document.getElementById("dice")
@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 function rollDice() {
+    document.getElementById("audio-dice").play()
+
     let counter = 0;
     const interval = setInterval(() => {
         const lastDiceRoll = currentDiceRoll
