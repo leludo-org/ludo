@@ -45,7 +45,8 @@ function rollDice() {
             const cumulativeWeights = weights.map((sum => value => sum += value)(0));
             const maxWeight = cumulativeWeights[cumulativeWeights.length - 1];
             const randomValue = Math.random() * maxWeight;
-            currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
+            // currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
+            currentDiceRoll = 1 // fixme: test change only, remove and uncomment above
 
             animateMovablePieces()
         } else {
@@ -91,7 +92,7 @@ function getPieceElementId(pieceIndex) {
  */
 function movePiece(pieceIndex) {
     const pieceElementId = getPieceElementId(pieceIndex);
-    const targetContainerId = findTargetContainerId(pieceIndex)
+    const targetContainerId = findTargetPieceContainerId(pieceIndex)
 
     moveElement(pieceElementId, targetContainerId)
 }
@@ -121,7 +122,9 @@ function moveElement(elementId, targetContainerId) {
         targetContainer.appendChild(element)
         element.style.transform = `translate(0px, 0px)`
         if (targetContainer.children.length > 1) {
-            element.style.marginTop =  `-100%`;
+            element.style.marginTop = `-100%`;
+        } else {
+            element.style.marginTop = "0";
         }
     }, 200)
 }
@@ -131,7 +134,7 @@ function moveElement(elementId, targetContainerId) {
  * @param {number} pieceIndex
  * @return {string}
  */
-function findTargetContainerId(pieceIndex) {
+function findTargetPieceContainerId(pieceIndex) {
     const piecePosition = positions[pieceIndex]
     if (piecePosition === -1) {
         return `h${pieceIndex}`
@@ -183,6 +186,36 @@ function animateMovablePieces() {
     }
 }
 
+/**
+ *
+ * @param {number} pieceIndex
+ */
+function captureOpponentPieces(pieceIndex) {
+    const isUnsafePosition = ![0, 8, 13, 21, 26, 34, 39, 47].includes(positions[pieceIndex]) && positions[pieceIndex] < 51;
+    if (isUnsafePosition) {
+        const targetPieceContainerId = findTargetPieceContainerId(pieceIndex);
+        const currentPlayerPieceIndexStart = currentPlayerIndex * 4;
+        const piecesAlreadyThere = positions.map((position, pi) => {
+            if (!(pi >= currentPlayerPieceIndexStart && pi < (currentPlayerPieceIndexStart + 4)) &&
+                targetPieceContainerId === findTargetPieceContainerId(pi)
+            ) {
+                return pi
+            }
+        }).filter(pi => pi !== undefined)
+
+        const numberOfPieceByPlayer = new Array(4).fill(0)
+        piecesAlreadyThere.forEach(pi => {
+            numberOfPieceByPlayer[Math.floor(pi / 4)] += 1
+        })
+
+        piecesAlreadyThere.forEach(pi => {
+            if (numberOfPieceByPlayer[Math.floor(pi / 4)] !== 2) {
+                positions[pi] = -1
+                movePiece(pi)
+            }
+        })
+    }
+}
 
 /**
  *
@@ -200,6 +233,9 @@ function updatePiecePositionAndMove($event) {
     } else {
         positions[pieceIndex] = positions[pieceIndex] + currentDiceRoll
     }
+
+    captureOpponentPieces(pieceIndex);
+
     movePiece(pieceIndex)
 
     if (currentDiceRoll !== 6) {
