@@ -115,7 +115,7 @@ function moveElement(elementId, targetContainerId) {
         element.style.transform = `translate(0px, 0px)`
         targetContainer.appendChild(element)
 
-    }, 1000)
+    }, 200)
 }
 
 /**
