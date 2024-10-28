@@ -208,12 +208,18 @@ function captureOpponentPieces(pieceIndex) {
             numberOfPieceByPlayer[Math.floor(pi / 4)] += 1
         })
 
+        let captured = false
         piecesAlreadyThere.forEach(pi => {
             if (numberOfPieceByPlayer[Math.floor(pi / 4)] !== 2) {
                 positions[pi] = -1
                 movePiece(pi)
+                captured = true
             }
         })
+
+        if (captured) {
+            document.getElementById("audio-capture").play()
+        }
     }
 }
 
