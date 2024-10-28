@@ -22,6 +22,10 @@ const positions = new Array(15).fill(-1)
 document.addEventListener("DOMContentLoaded", () => {
     setInitialState()
 
+    document.getElementById("test").addEventListener("click", () => {
+        document.getElementById("audio").play()
+    })
+
     const diceElement = document.getElementById("dice")
     diceElement.addEventListener("click", rollDice)
 })
