@@ -118,9 +118,11 @@ function moveElement(elementId, targetContainerId) {
 
     element.style.transform = `translate(${offsetX}px, ${offsetY}px)`
     setTimeout(() => {
-        element.style.transform = `translate(0px, 0px)`
         targetContainer.appendChild(element)
-
+        element.style.transform = `translate(0px, 0px)`
+        if (targetContainer.children.length > 1) {
+            element.style.marginTop =  `-100%`;
+        }
     }, 200)
 }
 
