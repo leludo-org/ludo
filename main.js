@@ -171,8 +171,8 @@ function animateMovablePieces() {
         if (isPieceMovable(pieceIndex)) {
             hasMoveablePiece = true
             const pieceElementId = getPieceElementId(pieceIndex)
-            const pieceElement = document.getElementById(pieceElementId)
-            pieceElement.classList.add("animate-bounce")
+            const pieceElement = document.getElementById(pieceElementId);
+            ["animate-bounce", "z-20"].forEach(c => pieceElement.classList.add(c))
             pieceElement.addEventListener("click", updatePiecePositionAndMove)
         }
     }
@@ -224,6 +224,7 @@ function captureOpponentPieces(pieceIndex) {
 function updatePiecePositionAndMove($event) {
     document.querySelectorAll(".animate-bounce").forEach(element => {
         element.classList.remove("animate-bounce")
+        element.classList.remove("z-20")
         element.removeEventListener("click", updatePiecePositionAndMove)
     })
 
