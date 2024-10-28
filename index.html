@@ -8,12 +8,54 @@
 <body class="h-full">
 <div id="root" class="h-full flex items-center justify-center bg-background">
 
-    <div class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] grid grid-rows-7 grid-cols-5">
+    <div id="main-menu" class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] flex flex-col gap-6 text-2xl text-center">
+        <div id="mm-start" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">Start
+        </div>
+        <div id="mm-options" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">
+            Options
+        </div>
+        <div id="mm-exit" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">Exit
+        </div>
+    </div>
+
+    <div id="pause-menu" class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] flex flex-col gap-6 text-2xl text-center hidden">
+        <div id="pm-resume" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">Resume
+        </div>
+        <div id="pm-options" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">
+            Options
+        </div>
+        <div id="pm-exit" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">Exit
+        </div>
+    </div>
+
+    <div id="game" class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] grid grid-rows-7 grid-cols-5 hidden">
+
+        <div class="absolute top-0">
+            <svg id="g-pause"
+                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="circle-pause h-8 cursor-pointer">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="10" x2="10" y1="15" y2="9"/>
+                <line x1="14" x2="14" y1="15" y2="9"/>
+            </svg>
+
+            <audio id="audio-background" loop>
+                <source src="bg_loop.wav" type="audio/wav">
+            </audio>
+            <audio id="audio-dice">
+                <source src="dice.wav" type="audio/wav">
+            </audio>
+            <audio id="audio-capture">
+                <source src="capture.ogg" type="audio/ogg">
+            </audio>
+        </div>
 
         <div class="col-span-full grid grid-cols-3">
 
             <div id="b0" class="flex flex-col">
-                <div id="dice" class="w-1/3 rounded aspect-square p-[2%] shadow-xl bg-white cursor-pointer transition-all duration-200 animate-bounce">
+                <div id="dice"
+                     class="w-1/3 rounded aspect-square p-[2%] shadow-xl bg-white cursor-pointer transition-all duration-200 animate-bounce">
                     <div id="d1" class="size-full grid grid-rows-3 grid-cols-3 gap-[10%]">
                         <div class="bg-black rounded-full row-start-2 col-start-2"></div>
                     </div>
@@ -392,18 +434,6 @@
 
     </div>
 
-    <div class="absolute top-0">
-        <button id="test" class="border">Test</button>
-        <audio id="audio-background" loop>
-            <source src="bg_loop.wav" type="audio/wav">
-        </audio>
-        <audio id="audio-dice">
-            <source src="dice.wav" type="audio/wav">
-        </audio>
-        <audio id="audio-capture">
-            <source src="capture.ogg" type="audio/ogg">
-        </audio>
-    </div>
 </div>
 <script type="module" src="/main.js"></script>
 </body>

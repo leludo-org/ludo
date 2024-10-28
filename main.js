@@ -22,7 +22,21 @@ const positions = new Array(15).fill(-1)
 document.addEventListener("DOMContentLoaded", () => {
     setInitialState()
 
-    document.getElementById("test").addEventListener("click", () => {
+    document.getElementById("mm-start").addEventListener("click", () => {
+        document.getElementById("main-menu").classList.add("hidden")
+        document.getElementById("game").classList.remove("hidden")
+        document.getElementById("audio-background").play()
+    })
+
+    document.getElementById("g-pause").addEventListener("click", () => {
+        document.getElementById("game").classList.add("hidden")
+        document.getElementById("pause-menu").classList.remove("hidden")
+        document.getElementById("audio-background").pause()
+    })
+
+    document.getElementById("pm-resume").addEventListener("click", () => {
+        document.getElementById("pause-menu").classList.add("hidden")
+        document.getElementById("game").classList.remove("hidden")
         document.getElementById("audio-background").play()
     })
 
