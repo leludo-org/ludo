@@ -45,8 +45,7 @@ function rollDice() {
             const cumulativeWeights = weights.map((sum => value => sum += value)(0));
             const maxWeight = cumulativeWeights[cumulativeWeights.length - 1];
             const randomValue = Math.random() * maxWeight;
-            // currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
-            currentDiceRoll = 1 // fixme: test change only, remove and uncomment above
+            currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
 
             animateMovablePieces()
         } else {

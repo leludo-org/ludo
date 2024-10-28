@@ -15,4 +15,13 @@
     * {
         @apply border-border;
     }
+
+    @font-face {
+        font-family: "Whatdo";
+        src: url("Whatdo.otf") format("opentype"),
+    }
+
+    * {
+        font-family: 'Whatdo';
+    }
 }
