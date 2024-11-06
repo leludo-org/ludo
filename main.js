@@ -1,5 +1,3 @@
-import './style.css' // todo: check if better way to import style
-
 /**
  *
  * @type {number}
