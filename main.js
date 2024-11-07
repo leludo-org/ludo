@@ -16,6 +16,11 @@ let currentDiceRoll = 1;
  */
 const positions = new Array(16).fill(-1)
 
+/**
+ * @type {number}
+ */
+let consecutiveSixesCount = 0
+
 
 document.addEventListener("DOMContentLoaded", () => {
     setInitialState()
@@ -60,7 +65,15 @@ function rollDice() {
             const randomValue = Math.random() * maxWeight;
             currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
 
-            animateMovablePieces()
+            if (currentDiceRoll === 6) {
+                consecutiveSixesCount++
+            }
+
+            if (consecutiveSixesCount === 3) {
+                updateCurrentPlayer()
+            } else {
+                animateMovablePieces()
+            }
         } else {
             currentDiceRoll = (currentDiceRoll % 6) + 1
         }
@@ -271,6 +284,7 @@ function updatePiecePositionAndMove($event) {
 }
 
 function updateCurrentPlayer() {
+    consecutiveSixesCount = 0
     currentPlayerIndex = (currentPlayerIndex + 1) % 4
     moveDice()
 }
