@@ -567,16 +567,6 @@ video {
   border-color: hsl(var(--border));
 }
 
-@font-face {
-  font-family: "Whatdo";
-
-  src: url("Whatdo.otf") format("opentype"),
-}
-
-* {
-  font-family: 'Whatdo';
-}
-
 .absolute {
   position: absolute;
 }
@@ -621,6 +611,10 @@ video {
   grid-row-start: 3;
 }
 
+.inline {
+  display: inline;
+}
+
 .flex {
   display: flex;
 }
@@ -656,6 +650,14 @@ video {
   height: 100%;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
+.h-2\/3 {
+  height: 66.666667%;
+}
+
 .h-8 {
   height: 2rem;
 }
@@ -674,6 +676,10 @@ video {
 
 .min-w-full {
   min-width: 100%;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
 }
 
 .-translate-x-\[70\%\] {
@@ -775,6 +781,14 @@ video {
 
 .justify-center {
   justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-2 {
+  gap: 0.5rem;
 }
 
 .gap-6 {

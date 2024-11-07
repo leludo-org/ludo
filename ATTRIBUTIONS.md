@@ -23,13 +23,4 @@ This open-source Ludo game includes the following public domain assets with prop
 
 ---
 
-## Fonts
-
-- **Font: Whatdo**  
-  - Title: "https://www.dafont.com/khurasan.d5849"
-  - Creator: [Khurasan](https://www.dafont.com/khurasan.d5849)
-  - Source: [Dafont](https://www.dafont.com/whatdo.font?l[]=10&l[]=1)
-
----
-
 Thank you to all creators for making these assets available for public use!
