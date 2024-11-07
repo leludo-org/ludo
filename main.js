@@ -1,3 +1,5 @@
+import { tokenHTML } from "./token.js"
+
 /**
  *
  * @type {number}
@@ -48,6 +50,39 @@ document.addEventListener("DOMContentLoaded", () => {
     diceElement.addEventListener("click", rollDice)
 })
 
+/**
+ * 
+ * @param {string} html
+ * @returns {HTMLElement} 
+ */
+function htmlToElement(html) {
+    const element = document.createElement('template')
+    element.innerHTML = html
+    return element.content
+}
+
+
+function setInitialState() {
+    positions.forEach((position, pieceIndex) => {
+        const piece = htmlToElement(tokenHTML(pieceIndex))
+        document.getElementById(`h${pieceIndex}`).appendChild(piece)
+    })
+
+    const params = new URLSearchParams(window.location.search)
+    params.get("positions")
+        ?.split(",")
+        .forEach(((position, pieceIndex) => {
+            positions[pieceIndex] = +position
+            movePiece(pieceIndex)
+        }))
+
+    const player = params.get("player");
+    if (player) {
+        currentPlayerIndex = +player
+        moveDice()
+    }
+}
+
 function rollDice() {
     document.getElementById("audio-dice").play()
 
@@ -83,23 +118,6 @@ function rollDice() {
 
         counter++
     }, 100)
-}
-
-function setInitialState() {
-    const params = new URLSearchParams(window.location.search)
-    params.get("positions")
-        ?.split(",")
-        .forEach(((position, pieceIndex) => {
-            positions[pieceIndex] = +position
-            movePiece(pieceIndex)
-        }))
-
-    const player = params.get("player");
-    if (player) {
-        currentPlayerIndex = +player
-        moveDice()
-    }
-
 }
 
 /**
