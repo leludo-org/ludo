@@ -201,6 +201,7 @@ function animateMovablePieces() {
 /**
  *
  * @param {number} pieceIndex
+ * @returns {boolean}
  */
 function captureOpponentPieces(pieceIndex) {
     const isUnsafePosition = ![0, 8, 13, 21, 26, 34, 39, 47].includes(positions[pieceIndex]) && positions[pieceIndex] < 51;
@@ -232,6 +233,8 @@ function captureOpponentPieces(pieceIndex) {
         if (captured) {
             document.getElementById("audio-capture").play()
         }
+
+        return captured
     }
 }
 
@@ -253,11 +256,11 @@ function updatePiecePositionAndMove($event) {
         positions[pieceIndex] = positions[pieceIndex] + currentDiceRoll
     }
 
-    captureOpponentPieces(pieceIndex);
+    const capturedOpponent = captureOpponentPieces(pieceIndex);
 
     movePiece(pieceIndex)
 
-    if (currentDiceRoll !== 6) {
+    if (!capturedOpponent && currentDiceRoll !== 6) {
         updateCurrentPlayer();
     }
 
