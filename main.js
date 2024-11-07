@@ -14,11 +14,12 @@ let currentDiceRoll = 1;
  *
  * @type {number[]}
  */
-const positions = new Array(15).fill(-1)
+const positions = new Array(16).fill(-1)
 
 
 document.addEventListener("DOMContentLoaded", () => {
     setInitialState()
+    document.getElementById("audio-background").volume = 0.05
 
     document.getElementById("mm-start").addEventListener("click", () => {
         document.getElementById("main-menu").classList.add("hidden")
