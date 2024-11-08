@@ -47,8 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("audio-background").play()
     })
 
-    const diceElement = document.getElementById("dice")
-    diceElement.addEventListener("click", rollDice)
 })
 
 
@@ -73,42 +71,6 @@ function setInitialState() {
     }
 }
 
-function rollDice() {
-    document.getElementById("audio-dice").play()
-
-    let counter = 0;
-    const interval = setInterval(() => {
-        const lastDiceRoll = currentDiceRoll
-
-
-        if (counter === 6) {
-            clearInterval(interval)
-
-            const weights = [1, 2, 2, 1, 2, 2];
-            const cumulativeWeights = weights.map((sum => value => sum += value)(0));
-            const maxWeight = cumulativeWeights[cumulativeWeights.length - 1];
-            const randomValue = Math.random() * maxWeight;
-            currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
-
-            if (currentDiceRoll === 6) {
-                consecutiveSixesCount++
-            }
-
-            if (consecutiveSixesCount === 3) {
-                updateCurrentPlayer()
-            } else {
-                animateMovablePieces()
-            }
-        } else {
-            currentDiceRoll = (currentDiceRoll % 6) + 1
-        }
-
-        document.getElementById(`d${lastDiceRoll}`).classList.add("hidden")
-        document.getElementById(`d${currentDiceRoll}`).classList.remove("hidden")
-
-        counter++
-    }, 100)
-}
 
 /**
  *
@@ -219,7 +181,7 @@ function animateMovablePieces() {
     if (hasMoveablePiece) {
         const diceElement = document.getElementById("dice")
         diceElement.classList.remove("animate-bounce")
-        diceElement.removeEventListener("click", rollDice)
+        // diceElement.removeEventListener("click", rollDice)
     } else {
         updateCurrentPlayer()
     }
@@ -293,7 +255,7 @@ function updatePiecePositionAndMove($event) {
 
     const diceElement = document.getElementById("dice");
     diceElement.classList.add("animate-bounce")
-    diceElement.addEventListener("click", rollDice)
+    // diceElement.addEventListener("click", rollDice)
 
 }
 
