@@ -1,4 +1,5 @@
 import { tokenHTML } from "./token.js"
+import { htmlToElement } from "./utils.js"
 
 /**
  *
@@ -46,20 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("audio-background").play()
     })
 
-    const diceElement = document.getElementById("dice")
-    diceElement.addEventListener("click", rollDice)
 })
-
-/**
- * 
- * @param {string} html
- * @returns {HTMLElement} 
- */
-function htmlToElement(html) {
-    const element = document.createElement('template')
-    element.innerHTML = html
-    return element.content
-}
 
 
 function setInitialState() {
@@ -83,7 +71,8 @@ function setInitialState() {
     }
 }
 
-function rollDice() {
+    
+export function rollDice() {
     document.getElementById("audio-dice").play()
 
     let counter = 0;
@@ -120,6 +109,7 @@ function rollDice() {
     }, 100)
 }
 
+
 /**
  *
  * @param {number} pieceIndex
@@ -137,21 +127,7 @@ function movePiece(pieceIndex) {
     const pieceElementId = getPieceElementId(pieceIndex);
     const targetContainerId = findTargetPieceContainerId(pieceIndex)
 
-    moveElement(pieceElementId, targetContainerId)
-}
-
-function moveDice() {
-    const targetContainerId = `b${currentPlayerIndex}`
-    moveElement("dice", targetContainerId)
-}
-
-/**
- *
- * @param {string} elementId
- * @param {string} targetContainerId
- */
-function moveElement(elementId, targetContainerId) {
-    const element = document.getElementById(elementId)
+    const element = document.getElementById(pieceElementId)
     const targetContainer = document.getElementById(targetContainerId)
 
     const initialPosition = element.getBoundingClientRect()
@@ -177,6 +153,16 @@ function moveElement(elementId, targetContainerId) {
         }
     }, 200)
 }
+
+function moveDice() {
+    const targetContainerId = `b${currentPlayerIndex}`
+
+    const diceElement = document.getElementById("wc-dice")
+    const targetContainer  = document.getElementById(targetContainerId)
+
+    targetContainer.appendChild(diceElement)
+}
+
 
 /**
  *

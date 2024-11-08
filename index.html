@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="utils.js"></script>
+    <script type="module" src="wc-dice/wc-dice.js"></script>
     <script type="module" src="main.js"></script>
     <link rel="stylesheet" href="output.css" />
     <title>Ludo</title>
@@ -22,7 +24,7 @@
         </a>
     </nav>
 
-    <div id="root" class="flex-1 flex items-center justify-center bg-background">
+    <div id="root" class="flex-1 flex items-start justify-center bg-background py-12">
         <div id="main-menu" class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] flex flex-col gap-6 text-2xl text-center">
             <div id="mm-start" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">
                 Start
@@ -48,65 +50,24 @@
 
         <div id="game" class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] grid grid-rows-7 grid-cols-5 hidden">
 
-            <div class="absolute top-0">
-                <svg id="g-pause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="circle-pause h-8 cursor-pointer">
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="10" x2="10" y1="15" y2="9" />
-                    <line x1="14" x2="14" y1="15" y2="9" />
-                </svg>
-
+            <div class="absolute bottom-12">
+                <div id="g-pause" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">
+                    Pause
+                </div>
+                
                 <audio id="audio-background" loop>
-                    <source src="bg_loop.wav" type="audio/wav">
+                    <source src="/assets/bg_loop.wav" type="audio/wav">
                 </audio>
-                <audio id="audio-dice">
-                    <source src="dice.wav" type="audio/wav">
-                </audio>
+                
                 <audio id="audio-capture">
-                    <source src="capture.ogg" type="audio/ogg">
+                    <source src="assets/capture.ogg" type="audio/ogg">
                 </audio>
             </div>
 
             <div class="col-span-full grid grid-cols-3">
 
                 <div id="b0" class="flex flex-col">
-                    <div id="dice"
-                        class="w-1/3 rounded aspect-square p-[2%] shadow-xl bg-white cursor-pointer transition-all duration-200 animate-bounce">
-                        <div id="d1" class="size-full grid grid-rows-3 grid-cols-3 gap-[10%]">
-                            <div class="bg-black rounded-full row-start-2 col-start-2"></div>
-                        </div>
-                        <div id="d2" class="size-full grid grid-rows-3 grid-cols-3 gap-[10%] hidden">
-                            <div class="bg-black rounded-full"></div>
-                            <div class="bg-black rounded-full row-start-3 col-start-3"></div>
-                        </div>
-                        <div id="d3" class="size-full grid grid-rows-3 grid-cols-3 gap-[10%] hidden">
-                            <div class="bg-black rounded-full"></div>
-                            <div class="bg-black rounded-full row-start-2 col-start-2"></div>
-                            <div class="bg-black rounded-full row-start-3 col-start-3"></div>
-                        </div>
-                        <div id="d4" class="size-full grid grid-rows-3 grid-cols-3 gap-[10%] hidden">
-                            <div class="bg-black rounded-full"></div>
-                            <div class="bg-black rounded-full col-start-3"></div>
-                            <div class="bg-black rounded-full row-start-3"></div>
-                            <div class="bg-black rounded-full row-start-3 col-start-3"></div>
-                        </div>
-                        <div id="d5" class="size-full grid grid-rows-3 grid-cols-3 gap-[10%] hidden">
-                            <div class="bg-black rounded-full"></div>
-                            <div class="bg-black rounded-full col-start-3"></div>
-                            <div class="bg-black rounded-full row-start-2 col-start-2"></div>
-                            <div class="bg-black rounded-full row-start-3"></div>
-                            <div class="bg-black rounded-full row-start-3 col-start-3"></div>
-                        </div>
-                        <div id="d6" class="size-full grid grid-rows-3 grid-cols-3 gap-[10%] hidden">
-                            <div class="bg-black rounded-full"></div>
-                            <div class="bg-black rounded-full col-start-3"></div>
-                            <div class="bg-black rounded-full row-start-2"></div>
-                            <div class="bg-black rounded-full row-start-2 col-start-3"></div>
-                            <div class="bg-black rounded-full row-start-3"></div>
-                            <div class="bg-black rounded-full row-start-3 col-start-3"></div>
-                        </div>
-                    </div>
+                    <wc-dice id="wc-dice" class="w-1/3"></wc-dice>
                 </div>
 
                 <div id="b1" class="col-start-3 flex flex-col items-end"></div>
