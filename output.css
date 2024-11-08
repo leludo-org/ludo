@@ -575,6 +575,10 @@ video {
   position: relative;
 }
 
+.bottom-0 {
+  bottom: 0px;
+}
+
 .top-0 {
   top: 0px;
 }
@@ -664,6 +668,10 @@ video {
 
 .h-full {
   height: 100%;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .w-1\/3 {
@@ -944,6 +952,10 @@ video {
 @media (min-width: 640px) {
   .sm\:h-3\/5 {
     height: 60%;
+  }
+
+  .sm\:w-2\/5 {
+    width: 40%;
   }
 
   .sm\:w-auto {
