@@ -29,6 +29,8 @@ let autoplay = false
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("audio-pop").volume = 0.4
+
     setInitialState()
 
     document.getElementById("mm-start").addEventListener("click", () => {
@@ -78,7 +80,7 @@ function setInitialState() {
 
 
 export function rollDice() {
-    document.getElementById("audio-dice").play()
+    document.getElementById("audio-pop").play()
 
     let counter = 0;
     const interval = setInterval(() => {
@@ -111,7 +113,7 @@ export function rollDice() {
         document.getElementById(`d${currentDiceRoll}`).classList.remove("hidden")
 
         counter++
-    }, 100)
+    }, 20)
 }
 
 
@@ -275,7 +277,7 @@ function captureOpponentPieces(pieceIndex) {
         })
 
         if (captured) {
-            document.getElementById("audio-capture").play()
+            document.getElementById("audio-pop").play()
         }
 
         return captured

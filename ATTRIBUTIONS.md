@@ -6,21 +6,14 @@ This open-source Ludo game includes the following public domain assets with prop
 
 ## Sounds
 
-- **Background Sound**  
-  - Title: "Free Music Background Loop 003 - Var 02"  
-  - Creator: [Slaking_97](https://freesound.org/people/Slaking_97/)  
-  - Source: [Freesound.org](https://freesound.org/people/Slaking_97/sounds/586095/)
-
-- **Dice Roll Sound**  
-  - Title: "dice_01.wav"  
-  - Creator: [dermotte](https://freesound.org/people/dermotte/)  
-  - Source: [Freesound.org](https://freesound.org/people/dermotte/sounds/220743/)
-
-- **Capture Sound**  
-  - Title: "dead.ogg"  
-  - Creator: [Yoshicakes77](https://freesound.org/people/Yoshicakes77/)  
-  - Source: [Freesound.org](https://freesound.org/people/Yoshicakes77/sounds/703542/)
+- **pop.ogg**  
+  - Source: [Freesound.org](https://freesound.org/people/SunnySideSound/sounds/67088/)
 
 ---
+
+## Tools
+
+- **Audio Convert**
+  - Source: [Freeconvert.com](https://www.freeconvert.com/aif-to-ogg) 
 
 Thank you to all creators for making these assets available for public use!
