@@ -127,21 +127,7 @@ function movePiece(pieceIndex) {
     const pieceElementId = getPieceElementId(pieceIndex);
     const targetContainerId = findTargetPieceContainerId(pieceIndex)
 
-    moveElement(pieceElementId, targetContainerId)
-}
-
-function moveDice() {
-    const targetContainerId = `b${currentPlayerIndex}`
-    moveElement("wc-dice", targetContainerId)
-}
-
-/**
- *
- * @param {string} elementId
- * @param {string} targetContainerId
- */
-function moveElement(elementId, targetContainerId) {
-    const element = document.getElementById(elementId)
+    const element = document.getElementById(pieceElementId)
     const targetContainer = document.getElementById(targetContainerId)
 
     const initialPosition = element.getBoundingClientRect()
@@ -167,6 +153,16 @@ function moveElement(elementId, targetContainerId) {
         }
     }, 200)
 }
+
+function moveDice() {
+    const targetContainerId = `b${currentPlayerIndex}`
+
+    const diceElement = document.getElementById("wc-dice")
+    const targetContainer  = document.getElementById(targetContainerId)
+
+    targetContainer.appendChild(diceElement)
+}
+
 
 /**
  *
