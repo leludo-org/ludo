@@ -1,4 +1,5 @@
 import { tokenHTML } from "./token.js"
+import { htmlToElement } from "./utils.js"
 
 /**
  *
@@ -49,17 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const diceElement = document.getElementById("dice")
     diceElement.addEventListener("click", rollDice)
 })
-
-/**
- * 
- * @param {string} html
- * @returns {HTMLElement} 
- */
-function htmlToElement(html) {
-    const element = document.createElement('template')
-    element.innerHTML = html
-    return element.content
-}
 
 
 function setInitialState() {
