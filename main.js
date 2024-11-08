@@ -1,6 +1,3 @@
-import { tokenHTML } from "./token.js"
-import { htmlToElement } from "./utils.js"
-
 /**
  *
  * @type {number}
@@ -52,8 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function setInitialState() {
     positions.forEach((position, pieceIndex) => {
-        const piece = htmlToElement(tokenHTML(pieceIndex))
-        document.getElementById(`h${pieceIndex}`).appendChild(piece)
+        const token = document.createElement("wc-token")
+        token.setAttribute("token-index", pieceIndex.toString())
+        token.id = `p${pieceIndex}`
+        document.getElementById(`h${pieceIndex}`).appendChild(token)
     })
 
     const params = new URLSearchParams(window.location.search)
@@ -71,7 +70,7 @@ function setInitialState() {
     }
 }
 
-    
+
 export function rollDice() {
     document.getElementById("audio-dice").play()
 
@@ -151,14 +150,14 @@ function movePiece(pieceIndex) {
         if (previousContainer.children.length > 0) {
             previousContainer.children[0].style.marginTop = '0';
         }
-    }, 200)
+    }, 1)
 }
 
 function moveDice() {
     const targetContainerId = `b${currentPlayerIndex}`
 
-    const diceElement = document.getElementById("components")
-    const targetContainer  = document.getElementById(targetContainerId)
+    const diceElement = document.getElementById("wc-dice")
+    const targetContainer = document.getElementById(targetContainerId)
 
     targetContainer.appendChild(diceElement)
 }
@@ -207,13 +206,13 @@ function animateMovablePieces() {
             hasMoveablePiece = true
             const pieceElementId = getPieceElementId(pieceIndex)
             const pieceElement = document.getElementById(pieceElementId);
-            ["animate-bounce", "z-20"].forEach(c => pieceElement.classList.add(c))
+            ["animate-bounce", "z-20"].forEach(c => pieceElement.children[0].classList.add(c))
             pieceElement.addEventListener("click", updatePiecePositionAndMove)
         }
     }
 
     if (hasMoveablePiece) {
-        const diceElement = document.getElementById("dice")
+        const diceElement = document.getElementById("wc-dice")
         diceElement.classList.remove("animate-bounce")
         diceElement.removeEventListener("click", rollDice)
     } else {
@@ -267,9 +266,8 @@ function captureOpponentPieces(pieceIndex) {
  */
 function updatePiecePositionAndMove($event) {
     document.querySelectorAll(".animate-bounce").forEach(element => {
-        element.classList.remove("animate-bounce")
-        element.classList.remove("z-20")
-        element.removeEventListener("click", updatePiecePositionAndMove)
+        ["animate-bounce", "z-20"].forEach(c => element.classList.remove(c))
+        element.parentElement.removeEventListener("click", updatePiecePositionAndMove)
     })
 
     const pieceIndex = +$event.currentTarget.id.substring(1)
@@ -287,7 +285,7 @@ function updatePiecePositionAndMove($event) {
         updateCurrentPlayer();
     }
 
-    const diceElement = document.getElementById("dice");
+    const diceElement = document.getElementById("wc-dice");
     diceElement.classList.add("animate-bounce")
     diceElement.addEventListener("click", rollDice)
 
