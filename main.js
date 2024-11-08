@@ -157,7 +157,7 @@ function movePiece(pieceIndex) {
 function moveDice() {
     const targetContainerId = `b${currentPlayerIndex}`
 
-    const diceElement = document.getElementById("wc-dice")
+    const diceElement = document.getElementById("components")
     const targetContainer  = document.getElementById(targetContainerId)
 
     targetContainer.appendChild(diceElement)
