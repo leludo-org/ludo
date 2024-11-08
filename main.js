@@ -21,27 +21,33 @@ const positions = new Array(16).fill(-1)
  */
 let consecutiveSixesCount = 0
 
+/**
+ *
+ * @type {boolean}
+ */
+let autoplay = false
+
 
 document.addEventListener("DOMContentLoaded", () => {
     setInitialState()
-    document.getElementById("audio-background").volume = 0.05
 
     document.getElementById("mm-start").addEventListener("click", () => {
         document.getElementById("main-menu").classList.add("hidden")
         document.getElementById("game").classList.remove("hidden")
-        document.getElementById("audio-background").play()
+
+        if (autoplay) {
+            rollDice()
+        }
     })
 
     document.getElementById("g-pause").addEventListener("click", () => {
         document.getElementById("game").classList.add("hidden")
         document.getElementById("pause-menu").classList.remove("hidden")
-        document.getElementById("audio-background").pause()
     })
 
     document.getElementById("pm-resume").addEventListener("click", () => {
         document.getElementById("pause-menu").classList.add("hidden")
         document.getElementById("game").classList.remove("hidden")
-        document.getElementById("audio-background").play()
     })
 
 })
@@ -160,6 +166,10 @@ function moveDice() {
     const targetContainer = document.getElementById(targetContainerId)
 
     targetContainer.appendChild(diceElement)
+
+    if (autoplay) {
+        rollDice()
+    }
 }
 
 
@@ -199,11 +209,12 @@ function isPieceMovable(pieceIndex) {
 }
 
 
+// todo: optimize to remove unwarranted actions during autoplay
 function animateMovablePieces() {
-    let hasMoveablePiece = false
+    const movableTokenIndexes = []
     for (let pieceIndex = currentPlayerIndex * 4; pieceIndex < (currentPlayerIndex + 1) * 4; pieceIndex++) {
         if (isPieceMovable(pieceIndex)) {
-            hasMoveablePiece = true
+            movableTokenIndexes.push(pieceIndex)
             const pieceElementId = getPieceElementId(pieceIndex)
             const pieceElement = document.getElementById(pieceElementId);
             ["animate-bounce", "z-20"].forEach(c => pieceElement.children[0].classList.add(c))
@@ -211,10 +222,21 @@ function animateMovablePieces() {
         }
     }
 
-    if (hasMoveablePiece) {
+    if (movableTokenIndexes.length > 0) {
         const diceElement = document.getElementById("wc-dice")
         diceElement.classList.remove("animate-bounce")
         diceElement.removeEventListener("click", rollDice)
+
+        if (autoplay) {
+            const tokenIndexPositions = movableTokenIndexes
+                .map(tokenIndex => positions[tokenIndex])
+            const uniqueTokenIndexPositions = new Set(tokenIndexPositions)
+
+            if (uniqueTokenIndexPositions.size === 1) {
+                const tokenElementId = getPieceElementId(movableTokenIndexes[0]);
+                document.getElementById(tokenElementId).click()
+            }
+        }
     } else {
         updateCurrentPlayer()
     }
@@ -289,6 +311,9 @@ function updatePiecePositionAndMove($event) {
     diceElement.classList.add("animate-bounce")
     diceElement.addEventListener("click", rollDice)
 
+    if (autoplay) {
+        diceElement.click()
+    }
 }
 
 function updateCurrentPlayer() {
