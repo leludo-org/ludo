@@ -1,6 +1,3 @@
-import { tokenHTML } from "./token.js"
-import { htmlToElement } from "./utils.js"
-
 /**
  *
  * @type {number}
@@ -52,8 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function setInitialState() {
     positions.forEach((position, pieceIndex) => {
-        const piece = htmlToElement(tokenHTML(pieceIndex))
-        document.getElementById(`h${pieceIndex}`).appendChild(piece)
+        const token = document.createElement("wc-token")
+        token.setAttribute("token-index", pieceIndex.toString())
+        token.id = `p${pieceIndex}`
+        document.getElementById(`h${pieceIndex}`).appendChild(token)
     })
 
     const params = new URLSearchParams(window.location.search)
@@ -71,7 +70,7 @@ function setInitialState() {
     }
 }
 
-    
+
 export function rollDice() {
     document.getElementById("audio-dice").play()
 
@@ -157,8 +156,8 @@ function movePiece(pieceIndex) {
 function moveDice() {
     const targetContainerId = `b${currentPlayerIndex}`
 
-    const diceElement = document.getElementById("components")
-    const targetContainer  = document.getElementById(targetContainerId)
+    const diceElement = document.getElementById("wc-dice")
+    const targetContainer = document.getElementById(targetContainerId)
 
     targetContainer.appendChild(diceElement)
 }
