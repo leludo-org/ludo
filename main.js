@@ -150,7 +150,7 @@ function movePiece(pieceIndex) {
         if (previousContainer.children.length > 0) {
             previousContainer.children[0].style.marginTop = '0';
         }
-    }, 200)
+    }, 1)
 }
 
 function moveDice() {
@@ -206,13 +206,13 @@ function animateMovablePieces() {
             hasMoveablePiece = true
             const pieceElementId = getPieceElementId(pieceIndex)
             const pieceElement = document.getElementById(pieceElementId);
-            ["animate-bounce", "z-20"].forEach(c => pieceElement.classList.add(c))
+            ["animate-bounce", "z-20"].forEach(c => pieceElement.children[0].classList.add(c))
             pieceElement.addEventListener("click", updatePiecePositionAndMove)
         }
     }
 
     if (hasMoveablePiece) {
-        const diceElement = document.getElementById("dice")
+        const diceElement = document.getElementById("wc-dice")
         diceElement.classList.remove("animate-bounce")
         diceElement.removeEventListener("click", rollDice)
     } else {
@@ -266,9 +266,8 @@ function captureOpponentPieces(pieceIndex) {
  */
 function updatePiecePositionAndMove($event) {
     document.querySelectorAll(".animate-bounce").forEach(element => {
-        element.classList.remove("animate-bounce")
-        element.classList.remove("z-20")
-        element.removeEventListener("click", updatePiecePositionAndMove)
+        ["animate-bounce", "z-20"].forEach(c => element.classList.remove(c))
+        element.parentElement.removeEventListener("click", updatePiecePositionAndMove)
     })
 
     const pieceIndex = +$event.currentTarget.id.substring(1)
@@ -286,7 +285,7 @@ function updatePiecePositionAndMove($event) {
         updateCurrentPlayer();
     }
 
-    const diceElement = document.getElementById("dice");
+    const diceElement = document.getElementById("wc-dice");
     diceElement.classList.add("animate-bounce")
     diceElement.addEventListener("click", rollDice)
 

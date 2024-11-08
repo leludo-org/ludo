@@ -567,20 +567,16 @@ video {
   border-color: hsl(var(--border));
 }
 
+.static {
+  position: static;
+}
+
 .absolute {
   position: absolute;
 }
 
 .relative {
   position: relative;
-}
-
-.top-0 {
-  top: 0px;
-}
-
-.bottom-0 {
-  bottom: 0px;
 }
 
 .bottom-12 {
@@ -617,6 +613,10 @@ video {
 
 .row-start-3 {
   grid-row-start: 3;
+}
+
+.block {
+  display: block;
 }
 
 .inline {
@@ -664,10 +664,6 @@ video {
 
 .h-2\/3 {
   height: 66.666667%;
-}
-
-.h-8 {
-  height: 2rem;
 }
 
 .h-full {
@@ -887,16 +883,8 @@ video {
   padding: 0.5rem;
 }
 
-.p-8 {
-  padding: 2rem;
-}
-
 .p-\[2\%\] {
   padding: 2%;
-}
-
-.p-12 {
-  padding: 3rem;
 }
 
 .py-12 {

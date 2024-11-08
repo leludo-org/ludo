@@ -26,6 +26,9 @@ class Token extends HTMLElement {
      */
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === "token-index") {
+
+            this.classList.add("block")
+
             const tokenIndex = +newValue
             const playerIndex = Math.floor(tokenIndex / 4)
             let tokenHTML = TOKEN_HTML(playerIndex);
