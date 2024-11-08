@@ -3,10 +3,6 @@ import {rollDice} from "../main.js"
 
 //language=HTML
 const DICE_HTML = `
-    <audio id="audio-dice">
-        <source src="assets/dice.wav" type="audio/wav">
-    </audio>
-
     <div id="dice"
          class="size-full rounded aspect-square p-[2%] shadow-xl bg-white cursor-pointer transition-all duration-200 animate-bounce">
         <div id="d1" class="size-full grid grid-rows-3 grid-cols-3 gap-[10%]">

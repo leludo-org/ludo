@@ -12,7 +12,7 @@
 </head>
 
 <body class="h-full flex flex-col">
-    <nav class="p-2 gap-2 h-12 flex justify-between">
+    <nav class="p-2 gap-2 h-12 flex justify-between font-bold">
         <a href="/">Ludo</a>
         <a href="https://github.com/Giddu/ludo">
             <svg aria-hidden="true" viewBox="0 0 24 24" version="1.1" data-view-component="true"
@@ -25,42 +25,26 @@
     </nav>
 
     <div id="root" class="flex-1 flex items-start justify-center bg-background py-12">
-        <div id="main-menu" class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] flex flex-col gap-6 text-2xl text-center">
-            <div id="mm-start" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">
-                Start
-            </div>
-            <div id="mm-options" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">
-                Options
-            </div>
-            <div id="mm-exit" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">Exit
-            </div>
+        <div id="main-menu" class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] flex flex-col gap-6 text-xl text-center">
+            <wc-button id="mm-start" button-text="Start"></wc-button>
+            <wc-button id="mm-options" button-text="Options"></wc-button>
+            <wc-button id="mm-exit" button-text="Exit"></wc-button>
         </div>
 
         <div id="pause-menu"
-            class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] flex flex-col gap-6 text-2xl text-center hidden">
-            <div id="pm-resume" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">
-                Resume
-            </div>
-            <div id="pm-options" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">
-                Options
-            </div>
-            <div id="pm-exit" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">Exit
-            </div>
+            class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] flex flex-col gap-6 text-xl text-center hidden">
+            <wc-button id="pm-resume" button-text="Resume"></wc-button>
+            <wc-button id="pm-options" button-text="Options"></wc-button>
+            <wc-button id="pm-exit" button-text="Exit"></wc-button>
         </div>
 
         <div id="game" class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] grid grid-rows-7 grid-cols-5 hidden">
 
             <div class="absolute bottom-12">
-                <div id="g-pause" class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">
-                    Pause
-                </div>
-                
-                <audio id="audio-background" loop>
-                    <source src="/assets/bg_loop.wav" type="audio/wav">
-                </audio>
-                
-                <audio id="audio-capture">
-                    <source src="assets/capture.ogg" type="audio/ogg">
+                <wc-button id="g-pause" button-text="Pause"></wc-button>
+
+                <audio id="audio-pop">
+                    <source src="assets/pop.ogg" type="audio/ogg">
                 </audio>
             </div>
 
