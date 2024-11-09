@@ -8,7 +8,14 @@
     <script type="module" src="components/index.js"></script>
     <script type="module" src="main.js"></script>
     <link rel="stylesheet" href="output.css" />
-    <title>Ludo</title>
+
+    <!--  todo: remove  -->
+    <script>
+        const es = new EventSource('/reload');
+        es.onmessage = () => window.location.reload();
+    </script>
+
+    <title>LeLudo</title>
 </head>
 
 <body class="h-full flex flex-col">
