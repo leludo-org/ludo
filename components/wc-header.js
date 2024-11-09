@@ -3,8 +3,8 @@ import {htmlToElement} from "../utils.js"
 //language=HTML
 const HEADER_HTML = `
     <nav class="p-2 gap-2 h-12 flex justify-between font-bold">
-        <a href="/">leludo.org</a>
-        <a href="https://github.com/Giddu/ludo">
+        <a href="/" class="text-xl">leludo.org</a>
+        <a href="https://github.com/leludo-org/ludo">
             <svg aria-hidden="true" viewBox="0 0 24 24" version="1.1" data-view-component="true"
                  class="h-2/3 inline">
                 <path

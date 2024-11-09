@@ -52,6 +52,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("game").classList.remove("hidden")
     })
 
+    document.getElementById("pm-exit").addEventListener("click", () => {
+        window.location.href = window.location.origin
+    })
+
 })
 
 
