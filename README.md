@@ -9,22 +9,10 @@ server running.
 Ensure the following tools are installed globally:
 
 1. Node.js: Download and install from Node.js official website.
-2. Live Server:
+2. Install Development Dependencies:
 
     ```
-    npm install -g live-server
-    ```
-
-3. TailwindCSS CLI:
-
-    ```
-    npm install -g tailwindcss
-    ```
-
-4. Go Task CLI:
-
-    ```
-    npm install -g @go-task/cli
+    npm install -g live-server tailwindcss @go-task/cli
     ```
 
 ## Running the Local Server
