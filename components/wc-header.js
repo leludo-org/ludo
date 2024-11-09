@@ -18,8 +18,6 @@ const HEADER_HTML = `
 class Header extends HTMLElement {
     constructor() {
         super()
-        // this.classList.add("block")
-
         const headerElement = htmlToElement(HEADER_HTML)
         this.appendChild(headerElement)
 
