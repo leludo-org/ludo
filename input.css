@@ -14,5 +14,6 @@
 
     * {
         @apply border-border;
+        font-family: "Merriweather", sans-serif;
     }
 }

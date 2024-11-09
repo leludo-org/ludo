@@ -565,6 +565,7 @@ video {
 
 * {
   border-color: hsl(var(--border));
+  font-family: "Merriweather", sans-serif;
 }
 
 .static {
