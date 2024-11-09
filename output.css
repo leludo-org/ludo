@@ -565,6 +565,7 @@ video {
 
 * {
   border-color: hsl(var(--border));
+  font-family: "Merriweather", sans-serif;
 }
 
 .static {
@@ -783,10 +784,6 @@ video {
   align-items: center;
 }
 
-.justify-start {
-  justify-content: flex-start;
-}
-
 .justify-end {
   justify-content: flex-end;
 }
@@ -900,11 +897,6 @@ video {
   text-align: center;
 }
 
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
-}
-
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -912,10 +904,6 @@ video {
 
 .font-bold {
   font-weight: 700;
-}
-
-.font-thin {
-  font-weight: 100;
 }
 
 .text-player-0 {

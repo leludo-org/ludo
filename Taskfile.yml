@@ -1,0 +1,13 @@
+version: '3'
+
+tasks:
+  dev:
+    deps:
+      - for: [ls, css]
+        task: task-{{.ITEM}}
+  task-ls:
+    cmds:
+      - live-server
+  task-css:
+    cmds:
+      - tailwindcss -i input.css -o output.css --watch &
