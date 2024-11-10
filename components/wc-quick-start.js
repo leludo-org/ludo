@@ -2,7 +2,7 @@ import {htmlToElement} from "../utils.js";
 
 const QUICK_START_HTML = `
 <div class="flex flex-col gap-6 text-xl">
-        <div class="flex gap-6 opacity-25">
+        <div class="flex gap-6">
             <label class="p-2">
                 1
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -14,7 +14,7 @@ const QUICK_START_HTML = `
             </label>
 
             <div class="flex-1 grid grid-cols-3 gap-2">
-                <button class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,1,1" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
                     1
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -27,7 +27,7 @@ const QUICK_START_HTML = `
                         <path d="M9 13v2"/>
                     </svg>
                 </button>
-                <button class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,1,2" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
                     2
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -40,7 +40,7 @@ const QUICK_START_HTML = `
                         <path d="M9 13v2"/>
                     </svg>
                 </button>
-                <button class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,1,3" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
                     3
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -56,7 +56,7 @@ const QUICK_START_HTML = `
             </div>
         </div>
 
-        <div class="flex gap-6 opacity-25">
+        <div class="flex gap-6">
             <label class="p-2">
                 2
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -68,7 +68,7 @@ const QUICK_START_HTML = `
             </label>
 
             <div class="flex-1 grid grid-cols-3 gap-2">
-                <button class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,2,0" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
                     0
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -81,7 +81,7 @@ const QUICK_START_HTML = `
                         <path d="M9 13v2"/>
                     </svg>
                 </button>
-                <button class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,2,1" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
                     1
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -94,7 +94,7 @@ const QUICK_START_HTML = `
                         <path d="M9 13v2"/>
                     </svg>
                 </button>
-                <button class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,2,2" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
                     2
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -111,7 +111,7 @@ const QUICK_START_HTML = `
             </div>
         </div>
 
-        <div class="flex gap-6 opacity-25">
+        <div class="flex gap-6">
             <label class="p-2">
                 3
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -123,7 +123,7 @@ const QUICK_START_HTML = `
             </label>
 
             <div class="flex-1 grid grid-cols-2 gap-2">
-                <button class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,3,0" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
                     0
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -136,7 +136,7 @@ const QUICK_START_HTML = `
                         <path d="M9 13v2"/>
                     </svg>
                 </button>
-                <button class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,3,1" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
                     1
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -163,7 +163,7 @@ const QUICK_START_HTML = `
                 </svg>
             </label>
 
-            <button id="mm-start" class="flex-1 rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+            <button id="qs,4,0" class="quick-start flex-1 rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
                 0
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

@@ -1,5 +1,10 @@
 /**
  *
+ * @typedef {'PLAYER'|'BOT'|undefined} PlayerType
+ */
+
+/**
+ *
  * @type {number}
  */
 let currentPlayerIndex = 0;
@@ -27,19 +32,30 @@ let consecutiveSixesCount = 0
  */
 let autoplay = false
 
+/**
+ *
+ * @type {PlayerType[]}
+ */
+const playerTypes = new Array(4)
+
 
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("audio-pop").volume = 0.4
 
-    setInitialState()
+    document.querySelectorAll(".quick-start").forEach((el) => {
+        const quickStartId = el.id
 
-    document.getElementById("mm-start").addEventListener("click", () => {
-        document.getElementById("main-menu").classList.add("hidden")
-        document.getElementById("game").classList.remove("hidden")
+        el.addEventListener("click", () => {
+            getPlayerTypes(quickStartId).forEach((type, index) => playerTypes[index] = type)
+            setInitialState()
 
-        if (autoplay) {
-            rollDice()
-        }
+            document.getElementById("main-menu").classList.add("hidden")
+            document.getElementById("game").classList.remove("hidden")
+
+            if (autoplay || playerTypes[currentPlayerIndex] === "BOT") {
+                rollDice()
+            }
+        })
     })
 
     document.getElementById("g-pause").addEventListener("click", () => {
@@ -61,10 +77,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function setInitialState() {
     positions.forEach((position, pieceIndex) => {
-        const token = document.createElement("wc-token")
-        token.setAttribute("token-index", pieceIndex.toString())
-        token.id = `p${pieceIndex}`
-        document.getElementById(`h${pieceIndex}`).appendChild(token)
+        const playerIndex = Math.floor(pieceIndex / 4);
+        if (playerTypes[playerIndex]) {
+            const token = document.createElement("wc-token")
+            token.setAttribute("token-index", pieceIndex.toString())
+            token.id = `p${pieceIndex}`
+            document.getElementById(`h${pieceIndex}`).appendChild(token)
+        }
     })
 
     const params = new URLSearchParams(window.location.search)
@@ -163,7 +182,7 @@ function moveDice() {
 
     targetContainer.appendChild(diceElement)
 
-    if (autoplay) {
+    if (autoplay || playerTypes[currentPlayerIndex] === "BOT") {
         rollDice()
     }
 }
@@ -223,7 +242,11 @@ function animateMovablePieces() {
         diceElement.classList.remove("animate-bounce")
         diceElement.removeEventListener("click", rollDice)
 
-        if (autoplay) {
+        if (playerTypes[currentPlayerIndex] === "BOT") {
+            // todo: make bot smarter
+            const tokenElementId = getPieceElementId(movableTokenIndexes[movableTokenIndexes.length - 1]);
+            document.getElementById(tokenElementId).click()
+        } else if (autoplay) {
             const tokenIndexPositions = movableTokenIndexes
                 .map(tokenIndex => positions[tokenIndex])
             const uniqueTokenIndexPositions = new Set(tokenIndexPositions)
@@ -299,21 +322,53 @@ function updatePiecePositionAndMove($event) {
 
     movePiece(pieceIndex)
 
-    if (!capturedOpponent && currentDiceRoll !== 6) {
-        updateCurrentPlayer();
-    }
-
     const diceElement = document.getElementById("wc-dice");
     diceElement.classList.add("animate-bounce")
     diceElement.addEventListener("click", rollDice)
 
-    if (autoplay) {
-        diceElement.click()
+    if (!capturedOpponent && currentDiceRoll !== 6) {
+        updateCurrentPlayer();
+    } else {
+        if (autoplay || playerTypes[currentPlayerIndex] === "BOT") {
+            diceElement.click()
+        }
     }
 }
 
 function updateCurrentPlayer() {
     consecutiveSixesCount = 0
-    currentPlayerIndex = (currentPlayerIndex + 1) % 4
+
+    do {
+        currentPlayerIndex = (currentPlayerIndex + 1) % 4
+    } while (playerTypes[currentPlayerIndex] === undefined)
+
     moveDice()
+}
+
+/**
+ *
+ * @param {string} quickStartId
+ * @return {PlayerType[]}
+ */
+function getPlayerTypes(quickStartId) {
+    switch (quickStartId) {
+        case "qs,1,1":
+            return ["PLAYER", undefined, "BOT", undefined]
+        case "qs,1,2":
+            return ["PLAYER", "BOT", undefined, "BOT"]
+        case "qs,1,3":
+            return ["PLAYER", "BOT", "BOT", "BOT"]
+        case "qs,2,0":
+            return ["PLAYER", undefined, "PLAYER", undefined]
+        case "qs,2,1":
+            return ["PLAYER", "BOT", "PLAYER", undefined]
+        case "qs,2,2":
+            return ["PLAYER", "BOT", "PLAYER", "BOT"]
+        case "qs,3,0":
+            return ["PLAYER", "PLAYER", "PLAYER", undefined]
+        case "qs,3,1":
+            return ["PLAYER", "PLAYER", "PLAYER", "BOT"]
+        case "qs,4,0":
+            return ["PLAYER", "PLAYER", "PLAYER", "PLAYER"]
+    }
 }

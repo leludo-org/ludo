@@ -1,7 +1,7 @@
 /**
- * 
+ *
  * @param {string} html
- * @returns {HTMLElement} 
+ * @returns {HTMLElement}
  */
 export function htmlToElement(html) {
     const element = document.createElement('template')
