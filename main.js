@@ -33,14 +33,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setInitialState()
 
-    document.getElementById("mm-start").addEventListener("click", () => {
-        document.getElementById("main-menu").classList.add("hidden")
-        document.getElementById("game").classList.remove("hidden")
-
-        if (autoplay) {
-            rollDice()
-        }
-    })
+    // document.getElementById("mm-start").addEventListener("click", () => {
+    //     document.getElementById("main-menu").classList.add("hidden")
+    //     document.getElementById("game").classList.remove("hidden")
+    //
+    //     if (autoplay) {
+    //         rollDice()
+    //     }
+    // })
 
     document.getElementById("g-pause").addEventListener("click", () => {
         document.getElementById("game").classList.add("hidden")

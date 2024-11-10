@@ -7,10 +7,11 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
+          rel="stylesheet">
 
     <script type="module" src="utils.js"></script>
-    <script type="module" src="components/index.js"></script>
+    <script type="module" src="components/registry.js"></script>
     <script type="module" src="main.js"></script>
     <link rel="stylesheet" href="output.css"/>
 
@@ -21,25 +22,16 @@
 <wc-header></wc-header>
 
 <div id="root" class="flex-1 flex items-start justify-center bg-background py-12">
-    <div id="main-menu" class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] grid grid-cols-3 gap-6 text-xl text-center">
-        <wc-button id="mm-start" button-text="1+1"></wc-button>
-        <wc-button id="mm-start" button-text="1+2"></wc-button>
-        <wc-button id="mm-start" button-text="1+3"></wc-button>
-        <wc-button id="mm-start" button-text="2+0"></wc-button>
-        <wc-button id="mm-start" button-text="2+1"></wc-button>
-        <wc-button id="mm-start" button-text="2+2"></wc-button>
-        <wc-button id="mm-start" button-text="3+0"></wc-button>
-        <wc-button id="mm-start" button-text="3+1"></wc-button>
-        <wc-button id="mm-start" button-text="4+0"></wc-button>
-    </div>
+
+    <wc-quick-start id="main-menu" class="w-4/5 sm:w-auto sm:h-3/5"></wc-quick-start>
 
     <div id="pause-menu"
-         class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] flex flex-col gap-6 text-xl text-center hidden">
+         class="w-4/5 sm:w-auto sm:h-3/5 flex flex-col gap-6 text-xl text-center hidden">
         <wc-button id="pm-resume" button-text="Resume"></wc-button>
         <wc-button id="pm-exit" button-text="Exit"></wc-button>
     </div>
 
-    <div id="game" class="w-4/5 sm:w-auto sm:h-3/5 aspect-[5/7] grid grid-rows-7 grid-cols-5 hidden">
+    <div id="game" class="w-4/5 sm:w-auto sm:h-3/5 grid grid-rows-7 grid-cols-5 hidden">
 
         <div class="absolute bottom-12">
             <wc-button id="g-pause" button-text="Pause"></wc-button>
