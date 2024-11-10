@@ -242,13 +242,16 @@ function animateMovablePieces() {
         diceElement.classList.remove("animate-bounce")
         diceElement.removeEventListener("click", rollDice)
 
-        if (autoplay || playerTypes[currentPlayerIndex] === "BOT") {
+        if (playerTypes[currentPlayerIndex] === "BOT") {
+            // todo: make bot smarter
+            const tokenElementId = getPieceElementId(movableTokenIndexes[movableTokenIndexes.length - 1]);
+            document.getElementById(tokenElementId).click()
+        } else if (autoplay) {
             const tokenIndexPositions = movableTokenIndexes
                 .map(tokenIndex => positions[tokenIndex])
             const uniqueTokenIndexPositions = new Set(tokenIndexPositions)
 
-            // todo: make bot smarter
-            if (uniqueTokenIndexPositions.size === 1 || playerTypes[currentPlayerIndex] === "BOT") {
+            if (uniqueTokenIndexPositions.size === 1) {
                 const tokenElementId = getPieceElementId(movableTokenIndexes[0]);
                 document.getElementById(tokenElementId).click()
             }
@@ -319,16 +322,16 @@ function updatePiecePositionAndMove($event) {
 
     movePiece(pieceIndex)
 
-    if (!capturedOpponent && currentDiceRoll !== 6) {
-        updateCurrentPlayer();
-    }
-
     const diceElement = document.getElementById("wc-dice");
     diceElement.classList.add("animate-bounce")
     diceElement.addEventListener("click", rollDice)
 
-    if (autoplay || playerTypes[currentPlayerIndex] === "BOT") {
-        diceElement.click()
+    if (!capturedOpponent && currentDiceRoll !== 6) {
+        updateCurrentPlayer();
+    } else {
+        if (autoplay || playerTypes[currentPlayerIndex] === "BOT") {
+            diceElement.click()
+        }
     }
 }
 
