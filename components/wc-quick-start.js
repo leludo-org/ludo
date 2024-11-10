@@ -2,7 +2,7 @@ import {htmlToElement} from "../utils.js";
 
 const QUICK_START_HTML = `
 <div class="flex flex-col gap-6 text-xl">
-        <div class="flex gap-6">
+        <div class="flex gap-6 opacity-25">
             <label class="p-2">
                 1
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -56,7 +56,7 @@ const QUICK_START_HTML = `
             </div>
         </div>
 
-        <div class="flex gap-6">
+        <div class="flex gap-6 opacity-25">
             <label class="p-2">
                 2
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -111,7 +111,7 @@ const QUICK_START_HTML = `
             </div>
         </div>
 
-        <div class="flex gap-6">
+        <div class="flex gap-6 opacity-25">
             <label class="p-2">
                 3
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
