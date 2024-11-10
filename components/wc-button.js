@@ -21,8 +21,6 @@ class Button extends HTMLElement {
      */
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === "button-text") {
-            this.classList.add("block")
-
             const buttonElement = htmlToElement(BUTTON_HTML)
             buttonElement.children[0].textContent = newValue
             this.appendChild(buttonElement)

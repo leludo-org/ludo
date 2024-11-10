@@ -141,28 +141,18 @@ function movePiece(pieceIndex) {
     const element = document.getElementById(pieceElementId)
     const targetContainer = document.getElementById(targetContainerId)
 
-    const initialPosition = element.getBoundingClientRect()
-    const finalPosition = targetContainer.getBoundingClientRect()
+    const previousContainer = element.parentElement
 
-    const offsetX = finalPosition.left - initialPosition.left
-    const offsetY = finalPosition.top - initialPosition.top
+    targetContainer.appendChild(element)
+    if (targetContainer.children.length > 1) {
+        element.style.marginTop = `-100%`;
+    } else {
+        element.style.marginTop = "0";
+    }
 
-    element.style.transform = `translate(${offsetX}px, ${offsetY}px)`
-    setTimeout(() => {
-        const previousContainer = element.parentElement
-
-        targetContainer.appendChild(element)
-        element.style.transform = `translate(0px, 0px)`
-        if (targetContainer.children.length > 1) {
-            element.style.marginTop = `-100%`;
-        } else {
-            element.style.marginTop = "0";
-        }
-
-        if (previousContainer.children.length > 0) {
-            previousContainer.children[0].style.marginTop = '0';
-        }
-    }, 1)
+    if (previousContainer.children.length > 0) {
+        previousContainer.children[0].style.marginTop = '0';
+    }
 }
 
 function moveDice() {
