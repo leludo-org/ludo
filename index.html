@@ -24,17 +24,17 @@
 <body class="h-full flex flex-col">
 <wc-header></wc-header>
 
-<div id="root" class="flex-1 flex items-start justify-center bg-background py-12">
+<div id="root" class="flex-1 flex items-center justify-center bg-background p-2">
 
-    <wc-quick-start id="main-menu" class="w-4/5 sm:w-auto sm:h-3/5"></wc-quick-start>
+    <wc-quick-start id="main-menu" class="w-full max-w-96"></wc-quick-start>
 
     <div id="pause-menu"
-         class="w-4/5 sm:w-auto sm:h-3/5 flex flex-col gap-6 text-xl text-center hidden">
+         class="w-full max-w-96 flex flex-col gap-6 text-xl text-center hidden">
         <wc-button id="pm-resume" button-text="Resume"></wc-button>
         <wc-button id="pm-exit" button-text="Exit"></wc-button>
     </div>
 
-    <div id="game" class="w-4/5 sm:w-auto sm:h-3/5 grid grid-rows-7 grid-cols-5 hidden">
+    <div id="game" class="w-full max-w-96 grid grid-rows-7 grid-cols-5 hidden">
 
         <div class="absolute bottom-12">
             <wc-button id="g-pause" button-text="Pause"></wc-button>
