@@ -76,6 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 function setInitialState() {
+    const params = new URLSearchParams(window.location.search)
+    const initPositions = params.get("positions")?.split(",")
+    
     positions.forEach((position, pieceIndex) => {
         const playerIndex = Math.floor(pieceIndex / 4);
         if (playerTypes[playerIndex]) {
@@ -83,16 +86,13 @@ function setInitialState() {
             token.setAttribute("token-index", pieceIndex.toString())
             token.id = `p${pieceIndex}`
             document.getElementById(`h${pieceIndex}`).appendChild(token)
+
+            if (initPositions[pieceIndex] !== undefined) {
+                positions[pieceIndex] = +initPositions[pieceIndex]
+                movePiece(pieceIndex)    
+            }
         }
     })
-
-    const params = new URLSearchParams(window.location.search)
-    params.get("positions")
-        ?.split(",")
-        .forEach(((position, pieceIndex) => {
-            positions[pieceIndex] = +position
-            movePiece(pieceIndex)
-        }))
 
     const player = params.get("player");
     if (player) {
@@ -318,6 +318,9 @@ function updatePiecePositionAndMove($event) {
         positions[pieceIndex] = positions[pieceIndex] + currentDiceRoll
     }
 
+    const isTripComplete = positions[pieceIndex] === 56
+
+    // todo: no need to check if position is one of the safe position
     const capturedOpponent = captureOpponentPieces(pieceIndex);
 
     movePiece(pieceIndex)
@@ -326,7 +329,7 @@ function updatePiecePositionAndMove($event) {
     diceElement.classList.add("animate-bounce")
     diceElement.addEventListener("click", rollDice)
 
-    if (!capturedOpponent && currentDiceRoll !== 6) {
+    if (!isTripComplete && !capturedOpponent && currentDiceRoll !== 6) {
         updateCurrentPlayer();
     } else {
         if (autoplay || playerTypes[currentPlayerIndex] === "BOT") {
