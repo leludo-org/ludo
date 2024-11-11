@@ -1,58 +1,24 @@
-/**
- *
- * @typedef {'PLAYER'|'BOT'|undefined} PlayerType
- */
+import {GameState} from "./gamestate.js" 
 
 /**
- *
- * @type {number}
+ * @type {GameState}
  */
-let currentPlayerIndex = 2;
-
-/**
- *
- * @type {number}
- */
-let currentDiceRoll = 1;
-
-/**
- *
- * @type {number[]}
- */
-const positions = new Array(16).fill(-1)
-
-/**
- * @type {number}
- */
-let consecutiveSixesCount = 0
-
-/**
- *
- * @type {boolean}
- */
-let autoplay = false
-
-/**
- *
- * @type {PlayerType[]}
- */
-const playerTypes = new Array(4)
-
+const gameState = new GameState()
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("audio-pop").volume = 0.4
+    document.getElementById("audio-pop").volume = 0.6
 
     document.querySelectorAll(".quick-start").forEach((el) => {
         const quickStartId = el.id
 
         el.addEventListener("click", () => {
-            getPlayerTypes(quickStartId).forEach((type, index) => playerTypes[index] = type)
+            gameState.initPlayers(quickStartId)
             setInitialState()
 
             document.getElementById("main-menu").classList.add("hidden")
             document.getElementById("game").classList.remove("hidden")
 
-            if (autoplay || playerTypes[currentPlayerIndex] === "BOT") {
+            if (gameState.isAutoplay()) {
                 rollDice()
             }
         })
@@ -81,7 +47,8 @@ function setInitialState() {
     
     positions.forEach((position, pieceIndex) => {
         const playerIndex = Math.floor(pieceIndex / 4);
-        if (playerTypes[playerIndex]) {
+
+        if (gameState.playerStates[playerIndex]) {
             const token = document.createElement("wc-token")
             token.setAttribute("token-index", pieceIndex.toString())
             token.id = `p${pieceIndex}`
@@ -96,7 +63,7 @@ function setInitialState() {
 
     const player = params.get("player");
     if (player) {
-        currentPlayerIndex = +player
+        gameState.currentPlayerIndex = +player
     }
     moveDice()
 }
@@ -107,7 +74,7 @@ export function rollDice() {
 
     let counter = 0;
     const interval = setInterval(() => {
-        const lastDiceRoll = currentDiceRoll
+        const lastDiceRoll = gameState.currentDiceRoll
 
 
         if (counter === 6) {
@@ -117,23 +84,23 @@ export function rollDice() {
             const cumulativeWeights = weights.map((sum => value => sum += value)(0));
             const maxWeight = cumulativeWeights[cumulativeWeights.length - 1];
             const randomValue = Math.random() * maxWeight;
-            currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
+            gameState.currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
 
-            if (currentDiceRoll === 6) {
-                consecutiveSixesCount++
+            if (gameState.currentDiceRoll === 6) {
+                gameState.consecutiveSixesCount++
             }
 
-            if (consecutiveSixesCount === 3) {
+            if (gameState.consecutiveSixesCount === 3) {
                 updateCurrentPlayer()
             } else {
                 animateMovablePieces()
             }
         } else {
-            currentDiceRoll = (currentDiceRoll % 6) + 1
+            gameState.currentDiceRoll = (currentDiceRoll % 6) + 1
         }
 
         document.getElementById(`d${lastDiceRoll}`).classList.add("hidden")
-        document.getElementById(`d${currentDiceRoll}`).classList.remove("hidden")
+        document.getElementById(`d${gameState.currentDiceRoll}`).classList.remove("hidden")
 
         counter++
     }, 20)
@@ -175,14 +142,14 @@ function movePiece(pieceIndex) {
 }
 
 function moveDice() {
-    const targetContainerId = `b${currentPlayerIndex}`
+    const targetContainerId = `b${gameState.currentPlayerIndex}`
 
     const diceElement = document.getElementById("wc-dice")
     const targetContainer = document.getElementById(targetContainerId)
 
     targetContainer.appendChild(diceElement)
 
-    if (autoplay || playerTypes[currentPlayerIndex] === "BOT") {
+    if (gameState.isAutoplay()) {
         rollDice()
     }
 }
@@ -194,12 +161,13 @@ function moveDice() {
  * @return {string}
  */
 function findTargetPieceContainerId(pieceIndex) {
-    const piecePosition = positions[pieceIndex]
+    const playerIndex = Math.floor(pieceIndex / 4)
+
+    const piecePosition = gameState.playerStates[playerIndex].tokenPositions[pieceIndex % 4]
     if (piecePosition === -1) {
         return `h${pieceIndex}`
     }
 
-    const playerIndex = Math.floor(pieceIndex / 4)
     if (piecePosition > 50) {
         const safeIndex = piecePosition % 50;
         return `p${playerIndex}s${safeIndex}`
@@ -214,20 +182,21 @@ function findTargetPieceContainerId(pieceIndex) {
  * @param {number} pieceIndex
  */
 function isPieceMovable(pieceIndex) {
-    const piecePosition = positions[pieceIndex];
+    const playerIndex = Math.floor(pieceIndex / 4)
+    const piecePosition = gameState.playerStates[playerIndex].tokenPositions[pieceIndex % 4]
 
-    if (currentDiceRoll === 6 && piecePosition === -1) {
+    if (gameState.currentDiceRoll === 6 && piecePosition === -1) {
         return true
     }
 
-    return piecePosition >= 0 && (piecePosition + currentDiceRoll) <= 56
+    return piecePosition >= 0 && (piecePosition + gameState.currentDiceRoll) <= 56
 }
 
 
 // todo: optimize to remove unwarranted actions during autoplay
 function animateMovablePieces() {
     const movableTokenIndexes = []
-    for (let pieceIndex = currentPlayerIndex * 4; pieceIndex < (currentPlayerIndex + 1) * 4; pieceIndex++) {
+    for (let pieceIndex = gameState.currentPlayerIndex * 4; pieceIndex < (gameState.currentPlayerIndex + 1) * 4; pieceIndex++) {
         if (isPieceMovable(pieceIndex)) {
             movableTokenIndexes.push(pieceIndex)
             const pieceElementId = getPieceElementId(pieceIndex)
@@ -242,13 +211,13 @@ function animateMovablePieces() {
         diceElement.classList.remove("animate-bounce")
         diceElement.removeEventListener("click", rollDice)
 
-        if (playerTypes[currentPlayerIndex] === "BOT") {
+        if (gameState.isCurrentPlayerBot()) {
             // todo: make bot smarter
             const tokenElementId = getPieceElementId(movableTokenIndexes[movableTokenIndexes.length - 1]);
             document.getElementById(tokenElementId).click()
-        } else if (autoplay) {
+        } else if (gameState.autoplay) {
             const tokenIndexPositions = movableTokenIndexes
-                .map(tokenIndex => positions[tokenIndex])
+                .map(tokenIndex => this.gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4])
             const uniqueTokenIndexPositions = new Set(tokenIndexPositions)
 
             if (uniqueTokenIndexPositions.size === 1) {
@@ -267,10 +236,11 @@ function animateMovablePieces() {
  * @returns {boolean}
  */
 function captureOpponentPieces(pieceIndex) {
-    const isUnsafePosition = ![0, 8, 13, 21, 26, 34, 39, 47].includes(positions[pieceIndex]) && positions[pieceIndex] < 51;
+    const tokenPosition = this.gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4]
+    const isUnsafePosition = ![0, 8, 13, 21, 26, 34, 39, 47].includes(tokenPosition) && tokenPosition < 51;
     if (isUnsafePosition) {
         const targetPieceContainerId = findTargetPieceContainerId(pieceIndex);
-        const currentPlayerPieceIndexStart = currentPlayerIndex * 4;
+        const currentPlayerPieceIndexStart = gameState.currentPlayerIndex * 4;
         const piecesAlreadyThere = positions.map((position, pi) => {
             if (!(pi >= currentPlayerPieceIndexStart && pi < (currentPlayerPieceIndexStart + 4)) &&
                 targetPieceContainerId === findTargetPieceContainerId(pi)
@@ -346,32 +316,4 @@ function updateCurrentPlayer() {
     } while (playerTypes[currentPlayerIndex] === undefined)
 
     moveDice()
-}
-
-/**
- *
- * @param {string} quickStartId
- * @return {PlayerType[]}
- */
-function getPlayerTypes(quickStartId) {
-    switch (quickStartId) {
-        case "qs,1,1":
-            return ["BOT", undefined, "PLAYER", undefined]
-        case "qs,1,2":
-            return [undefined, "BOT", "PLAYER", "BOT"]
-        case "qs,1,3":
-            return ["BOT", "BOT", "PLAYER", "BOT"]
-        case "qs,2,0":
-            return ["PLAYER", undefined, "PLAYER", undefined]
-        case "qs,2,1":
-            return ["PLAYER", undefined, "PLAYER", "BOT"]
-        case "qs,2,2":
-            return ["PLAYER", "BOT", "PLAYER", "BOT"]
-        case "qs,3,0":
-            return ["PLAYER", undefined, "PLAYER", "PLAYER"]
-        case "qs,3,1":
-            return ["PLAYER", "BOT", "PLAYER", "PLAYER"]
-        case "qs,4,0":
-            return ["PLAYER", "PLAYER", "PLAYER", "PLAYER"]
-    }
 }
