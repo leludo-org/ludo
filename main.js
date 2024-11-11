@@ -7,7 +7,7 @@
  *
  * @type {number}
  */
-let currentPlayerIndex = 0;
+let currentPlayerIndex = 2;
 
 /**
  *
@@ -97,8 +97,8 @@ function setInitialState() {
     const player = params.get("player");
     if (player) {
         currentPlayerIndex = +player
-        moveDice()
     }
+    moveDice()
 }
 
 
@@ -353,21 +353,21 @@ function updateCurrentPlayer() {
 function getPlayerTypes(quickStartId) {
     switch (quickStartId) {
         case "qs,1,1":
-            return ["PLAYER", undefined, "BOT", undefined]
+            return ["BOT", undefined, "PLAYER", undefined]
         case "qs,1,2":
-            return ["PLAYER", "BOT", undefined, "BOT"]
+            return [undefined, "BOT", "PLAYER", "BOT"]
         case "qs,1,3":
-            return ["PLAYER", "BOT", "BOT", "BOT"]
+            return ["BOT", "BOT", "PLAYER", "BOT"]
         case "qs,2,0":
             return ["PLAYER", undefined, "PLAYER", undefined]
         case "qs,2,1":
-            return ["PLAYER", "BOT", "PLAYER", undefined]
+            return ["PLAYER", undefined, "PLAYER", "BOT"]
         case "qs,2,2":
             return ["PLAYER", "BOT", "PLAYER", "BOT"]
         case "qs,3,0":
-            return ["PLAYER", "PLAYER", "PLAYER", undefined]
+            return ["PLAYER", undefined, "PLAYER", "PLAYER"]
         case "qs,3,1":
-            return ["PLAYER", "PLAYER", "PLAYER", "BOT"]
+            return ["PLAYER", "BOT", "PLAYER", "PLAYER"]
         case "qs,4,0":
             return ["PLAYER", "PLAYER", "PLAYER", "PLAYER"]
     }
