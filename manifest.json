@@ -1,0 +1,15 @@
+{
+  "name": "leludo.org",
+  "short_name": "leludo",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "assets/icons/award.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
