@@ -87,7 +87,7 @@ function setInitialState() {
             token.id = `p${pieceIndex}`
             document.getElementById(`h${pieceIndex}`).appendChild(token)
 
-            if (initPositions[pieceIndex] !== undefined) {
+            if (initPositions && initPositions[pieceIndex] !== undefined) {
                 positions[pieceIndex] = +initPositions[pieceIndex]
                 movePiece(pieceIndex)    
             }
