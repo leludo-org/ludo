@@ -671,12 +671,16 @@ video {
   width: 33.333333%;
 }
 
-.w-4\/5 {
-  width: 80%;
+.w-full {
+  width: 100%;
 }
 
 .min-w-full {
   min-width: 100%;
+}
+
+.max-w-96 {
+  max-width: 24rem;
 }
 
 .flex-1 {
@@ -762,10 +766,6 @@ video {
 
 .flex-col {
   flex-direction: column;
-}
-
-.items-start {
-  align-items: flex-start;
 }
 
 .items-end {
@@ -880,11 +880,6 @@ video {
   padding: 2%;
 }
 
-.py-12 {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-}
-
 .text-center {
   text-align: center;
 }
@@ -949,16 +944,6 @@ video {
   --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-@media (min-width: 640px) {
-  .sm\:h-3\/5 {
-    height: 60%;
-  }
-
-  .sm\:w-auto {
-    width: auto;
-  }
 }
 
 .\[\&\>wc-token\]\:col-start-3>wc-token {
