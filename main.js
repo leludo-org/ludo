@@ -1,9 +1,10 @@
 import {gameState, publishGameEvent} from "./game-events.js"
 import {generateDiceRoll, getTokenNewPosition, isTokenMovable, isUnsafePosition} from "./game-logic.js";
 import {
+    activateToken, activeDice,
     animateDiceRoll,
     getTokenContainerId,
-    getTokenElementId, inactiveTokens,
+    getTokenElementId, inactiveDice, inactiveTokens,
     updateDiceFace,
     updateTokenContainer
 } from "./render-logic.js";
@@ -102,20 +103,14 @@ function animateMovablePieces() {
     gameState.getCurrentPlayerTokenPositions().forEach((tokenPosition, tokenIndex) => {
         if (isTokenMovable(tokenPosition, gameState.currentDiceRoll)) {
             const tokenElementId = getTokenElementId(gameState.currentPlayerIndex, tokenIndex)
-
-            const tokenElement = document.getElementById(tokenElementId);
-            ["animate-bounce", "z-20"].forEach(c => tokenElement.children[0].classList.add(c))
-            tokenElement.addEventListener("click", updatePiecePositionAndMove)
-
+            activateToken(tokenElementId);
             movableTokenElementIds.push(tokenElementId)
         }
     })
 
 
     if (movableTokenElementIds.length > 0) {
-        const diceElement = document.getElementById("wc-dice")
-        diceElement.classList.remove("animate-bounce")
-        diceElement.removeEventListener("click", rollDice)
+        inactiveDice();
 
         if (gameState.isCurrentPlayerBot()) {
             // todo: make bot smarter
@@ -182,6 +177,7 @@ function captureOpponentPieces(currentPlayerIndex, currentTokenIndex) {
 }
 
 
+
 /**
  *
  * @param {PointerEvent} $event
@@ -218,10 +214,9 @@ export function updatePiecePositionAndMove($event) {
         }
     }
 
-    const diceElement = document.getElementById("wc-dice");
-    diceElement.classList.add("animate-bounce")
-    diceElement.addEventListener("click", rollDice)
+    activeDice();
 
+    const diceElement = document.getElementById("wc-dice");
     if (!isTripComplete && !capturedOpponent && gameState.currentDiceRoll !== 6) {
         gameState.updateCurrentPlayer();
     } else {

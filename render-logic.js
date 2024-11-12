@@ -1,4 +1,4 @@
-import {updatePiecePositionAndMove} from "./main.js";
+import {rollDice, updatePiecePositionAndMove} from "./main.js";
 
 function playPopSound() {
     document.getElementById("audio-pop").play()
@@ -101,9 +101,31 @@ export function updateTokenContainer(playerIndex, tokenIndex, tokenPosition) {
     }
 }
 
+/**
+ *
+ * @param {string} tokenElementId
+ */
+export function activateToken(tokenElementId) {
+    const tokenElement = document.getElementById(tokenElementId);
+    ["animate-bounce", "z-20"].forEach(c => tokenElement.children[0].classList.add(c))
+    tokenElement.addEventListener("click", updatePiecePositionAndMove)// todo: should not be imported here: updatePiecePositionAndMove
+}
+
 export function inactiveTokens() {
     document.querySelectorAll(".animate-bounce").forEach(element => {
         ["animate-bounce", "z-20"].forEach(c => element.classList.remove(c))
         element.parentElement.removeEventListener("click", updatePiecePositionAndMove) // todo: should not be imported here: updatePiecePositionAndMove
     })
+}
+
+export function activeDice() {
+    const diceElement = document.getElementById("wc-dice");
+    diceElement.classList.add("animate-bounce")
+    diceElement.addEventListener("click", rollDice)// todo: should not be imported here: rollDice
+}
+
+export function inactiveDice() {
+    const diceElement = document.getElementById("wc-dice")
+    diceElement.classList.remove("animate-bounce")
+    diceElement.removeEventListener("click", rollDice) // todo: should not be imported here: rollDice
 }
