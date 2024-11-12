@@ -1,5 +1,6 @@
 import {gameState, publishGameEvent} from "./game-events.js"
-import {moveDice} from "./components/wc-dice.js";
+import {isTokenMovable} from "./game-logic.js";
+import {getTokenContainerId} from "./render-logic.js";
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -124,7 +125,8 @@ function moveToken(tokenElementId) {
     const playerIndex = +tokenIdTokens[1];
     const tokenIndex = +tokenIdTokens[2];
 
-    const targetContainerId = findTargetPieceContainerId(playerIndex, tokenIndex)
+    const tokenPosition = gameState.playerStates[playerIndex].tokenPositions[tokenIndex]
+    const targetContainerId = getTokenContainerId(playerIndex, tokenIndex, tokenPosition)
 
     const element = document.getElementById(tokenElementId)
     const targetContainer = document.getElementById(targetContainerId)
@@ -144,48 +146,12 @@ function moveToken(tokenElementId) {
 }
 
 
-/**
- *
- * @param {number} playerIndex
- * @param {number} tokenIndex
- * @return {string}
- */
-function findTargetPieceContainerId(playerIndex, tokenIndex) {
-    const tokenPosition = gameState.playerStates[playerIndex].tokenPositions[tokenIndex];
-    if (tokenPosition === -1) {
-        return `h-${playerIndex}-${tokenIndex}`
-    }
-    if (tokenPosition > 50) {
-        const safeIndex = tokenPosition % 50;
-        return `p${playerIndex}s${safeIndex}`
-    }
-
-    const markIndex = (tokenPosition + (13 * playerIndex)) % 52
-    return `m${markIndex}`
-}
-
-/**
- *
- * @param {number} playerIndex
- * @param {number} tokenIndex
- */
-function isPieceMovable(playerIndex, tokenIndex) {
-    const piecePosition = gameState.playerStates[playerIndex].tokenPositions[tokenIndex]
-
-    if (gameState.currentDiceRoll === 6 && piecePosition === -1) {
-        return true
-    }
-
-    return piecePosition >= 0 && (piecePosition + gameState.currentDiceRoll) <= 56
-}
-
-
 // todo: optimize to remove unwarranted actions during autoplay
 function animateMovablePieces() {
     const movableTokenElementIds = []
 
     gameState.getCurrentPlayerTokenPositions().forEach((tokenPosition, tokenIndex) => {
-        if (isPieceMovable(gameState.currentPlayerIndex, tokenIndex)) {
+        if (isTokenMovable(tokenPosition, gameState.currentDiceRoll)) {
             const tokenElementId = getTokenElementId(gameState.currentPlayerIndex, tokenIndex)
 
             const tokenElement = document.getElementById(tokenElementId);
@@ -230,13 +196,13 @@ function captureOpponentPieces(currentPlayerIndex, currentTokenIndex) {
     const tokenPosition = gameState.playerStates[currentPlayerIndex].tokenPositions[currentTokenIndex]
     const isUnsafePosition = ![0, 8, 13, 21, 26, 34, 39, 47].includes(tokenPosition) && tokenPosition < 51;
     if (isUnsafePosition) {
-        const targetPieceContainerId = findTargetPieceContainerId(currentPlayerIndex, currentTokenIndex);
+        const targetPieceContainerId = getTokenContainerId(currentPlayerIndex, currentTokenIndex, tokenPosition);
         const piecesAlreadyThere = [];
 
         gameState.playerStates.forEach((playerState, playerIndex) => {
             if (playerIndex !== currentPlayerIndex && playerState) {
                 playerState.tokenPositions.forEach((tokenPosition, tokenIndex) => {
-                    if (targetPieceContainerId === findTargetPieceContainerId(playerIndex, tokenIndex)) {
+                    if (targetPieceContainerId === getTokenContainerId(playerIndex, tokenIndex, tokenPosition)) {
                         piecesAlreadyThere.push(getTokenElementId(playerIndex, tokenIndex))
                     }
                 })

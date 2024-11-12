@@ -9,9 +9,10 @@
  * @property {function} equal
  */
 
+import {isTokenMovable} from "../game-logic.js";
 
-QUnit.module('add', function () {
-    QUnit.test('two numbers', function (assert) {
-        assert.equal(1,1);
+QUnit.module('game-logic', function () {
+    QUnit.test('is token movable - home, less than 6', function (assert) {
+        assert.equal(isTokenMovable(-1, 5), false);
     });
 });
