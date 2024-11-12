@@ -34,8 +34,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("game").classList.remove("hidden")
     })
 
-    document.getElementById("pm-exit").addEventListener("click", () => {
-        window.location.href = window.location.origin
+    document.querySelectorAll(".restart-game").forEach(el => {
+        el.addEventListener("click", () => {
+            window.location.href = window.location.origin
+        })
     })
 
 })
@@ -305,6 +307,20 @@ function updatePiecePositionAndMove($event) {
     const capturedOpponent = captureOpponentPieces(playerIndex, tokenIndex);
 
     moveToken($event.currentTarget.id)
+
+    if (isTripComplete && gameState.playerStates[gameState.currentPlayerIndex].isFinished()) {
+        let numberOfRemainingPlayers = 0;
+        gameState.playerStates.forEach((playerState) => {
+            if (playerState && !playerState.isFinished()) {
+                numberOfRemainingPlayers++;
+            }
+        })
+
+        if (numberOfRemainingPlayers === 1) {
+            document.getElementById("game-end").classList.remove("hidden")
+            document.getElementById("game").classList.add("hidden")
+        }
+    }
 
     const diceElement = document.getElementById("wc-dice");
     diceElement.classList.add("animate-bounce")

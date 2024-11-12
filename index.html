@@ -31,7 +31,12 @@
     <div id="pause-menu"
          class="w-full max-w-96 flex flex-col gap-6 text-xl text-center hidden">
         <wc-button id="pm-resume" button-text="Resume"></wc-button>
-        <wc-button id="pm-exit" button-text="Exit"></wc-button>
+        <wc-button class="restart-game" button-text="Exit"></wc-button>
+    </div>
+
+    <div id="game-end" class="hidden">
+        Game Ends
+        <wc-button class="restart-game" button-text="Okay!"></wc-button>
     </div>
 
     <div id="game" class="w-full max-w-96 grid grid-rows-7 grid-cols-5 hidden">

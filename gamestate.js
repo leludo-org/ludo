@@ -26,6 +26,13 @@ class PlayerState {
         return this.playerType === "BOT"
     }
 
+    /**
+     * @returns {boolean}
+     */
+    isFinished() {
+        return this.tokenPositions.find(tp => tp !== 56) === undefined
+    }
+
 
     /**
      *
@@ -103,7 +110,7 @@ export class GameState {
 
         do {
             this.currentPlayerIndex = (this.currentPlayerIndex + 1) % 4
-        } while (this.playerStates[this.currentPlayerIndex] === undefined)
+        } while (this.playerStates[this.currentPlayerIndex] === undefined || this.playerStates[this.currentPlayerIndex].isFinished())
 
         moveDice()
     }
