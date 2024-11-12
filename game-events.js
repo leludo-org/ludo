@@ -3,7 +3,7 @@
  * @typedef {'PLAYER_UPDATED'|'DICE_MOVED'} GameEvent
  */
 
-import {moveDice} from "./components/wc-dice";
+import {moveDice} from "./components/wc-dice.js";
 import {rollDice} from "./main.js";
 import {GameState} from "./gamestate.js";
 

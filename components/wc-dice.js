@@ -1,6 +1,6 @@
 import {htmlToElement} from "../utils.js"
 import {rollDice} from "../main.js"
-import {publishGameEvent} from "../game-events";
+import {publishGameEvent} from "../game-events.js";
 
 //language=HTML
 const DICE_HTML = `
