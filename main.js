@@ -93,8 +93,7 @@ export function rollDice() {
             const cumulativeWeights = weights.map((sum => value => sum += value)(0));
             const maxWeight = cumulativeWeights[cumulativeWeights.length - 1];
             const randomValue = Math.random() * maxWeight;
-            // gameState.currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
-            gameState.currentDiceRoll = 1;
+            gameState.currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
 
             if (gameState.currentDiceRoll === 6) {
                 gameState.consecutiveSixesCount++
