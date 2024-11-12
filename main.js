@@ -1,5 +1,5 @@
 import {gameState, publishGameEvent} from "./game-events.js"
-import {isTokenMovable} from "./game-logic.js";
+import {isTokenMovable, isUnsafePosition} from "./game-logic.js";
 import {getTokenContainerId} from "./render-logic.js";
 
 
@@ -194,8 +194,7 @@ function animateMovablePieces() {
  */
 function captureOpponentPieces(currentPlayerIndex, currentTokenIndex) {
     const tokenPosition = gameState.playerStates[currentPlayerIndex].tokenPositions[currentTokenIndex]
-    const isUnsafePosition = ![0, 8, 13, 21, 26, 34, 39, 47].includes(tokenPosition) && tokenPosition < 51;
-    if (isUnsafePosition) {
+    if (isUnsafePosition(tokenPosition)) {
         const targetPieceContainerId = getTokenContainerId(currentPlayerIndex, currentTokenIndex, tokenPosition);
         const piecesAlreadyThere = [];
 
