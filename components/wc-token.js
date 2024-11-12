@@ -12,7 +12,7 @@ const TOKEN_HTML = (playerIndex) => `
 `
 
 class Token extends HTMLElement {
-    static observedAttributes = ["token-index"]
+    static observedAttributes = ["id"]
 
     constructor() {
         super()
@@ -25,12 +25,12 @@ class Token extends HTMLElement {
      * @param {string} newValue
      */
     attributeChangedCallback(name, oldValue, newValue) {
-        if (name === "token-index") {
+        if (name === "id") {
 
             this.classList.add("block")
 
-            const tokenIndex = +newValue
-            const playerIndex = Math.floor(tokenIndex / 4)
+            const idTokens = newValue.split("-")
+            const playerIndex = idTokens[1]
             let tokenHTML = TOKEN_HTML(playerIndex);
             const tokenElement = htmlToElement(tokenHTML)
             this.appendChild(tokenElement) // fixme: if triggered multiple time would cause issues

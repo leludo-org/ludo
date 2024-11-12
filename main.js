@@ -1,58 +1,24 @@
-/**
- *
- * @typedef {'PLAYER'|'BOT'|undefined} PlayerType
- */
+import {GameState} from "./gamestate.js"
 
 /**
- *
- * @type {number}
+ * @type {GameState}
  */
-let currentPlayerIndex = 2;
-
-/**
- *
- * @type {number}
- */
-let currentDiceRoll = 1;
-
-/**
- *
- * @type {number[]}
- */
-const positions = new Array(16).fill(-1)
-
-/**
- * @type {number}
- */
-let consecutiveSixesCount = 0
-
-/**
- *
- * @type {boolean}
- */
-let autoplay = false
-
-/**
- *
- * @type {PlayerType[]}
- */
-const playerTypes = new Array(4)
-
+const gameState = new GameState()
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("audio-pop").volume = 0.4
+    document.getElementById("audio-pop").volume = 0.6
 
     document.querySelectorAll(".quick-start").forEach((el) => {
         const quickStartId = el.id
 
         el.addEventListener("click", () => {
-            getPlayerTypes(quickStartId).forEach((type, index) => playerTypes[index] = type)
+            gameState.initPlayers(quickStartId)
             setInitialState()
 
             document.getElementById("main-menu").classList.add("hidden")
             document.getElementById("game").classList.remove("hidden")
 
-            if (autoplay || playerTypes[currentPlayerIndex] === "BOT") {
+            if (gameState.isAutoplay()) {
                 rollDice()
             }
         })
@@ -68,35 +34,47 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("game").classList.remove("hidden")
     })
 
-    document.getElementById("pm-exit").addEventListener("click", () => {
-        window.location.href = window.location.origin
+    document.querySelectorAll(".restart-game").forEach(el => {
+        el.addEventListener("click", () => {
+            window.location.href = window.location.origin
+        })
     })
 
 })
 
 
+/**
+ *
+ * @param {number} playerIndex
+ * @param {number} tokenIndex
+ * @returns {string}
+ */
+function getTokenElementId(playerIndex, tokenIndex) {
+    return `p-${playerIndex}-${tokenIndex}`;
+}
+
 function setInitialState() {
     const params = new URLSearchParams(window.location.search)
     const initPositions = params.get("positions")?.split(",")
-    
-    positions.forEach((position, pieceIndex) => {
-        const playerIndex = Math.floor(pieceIndex / 4);
-        if (playerTypes[playerIndex]) {
-            const token = document.createElement("wc-token")
-            token.setAttribute("token-index", pieceIndex.toString())
-            token.id = `p${pieceIndex}`
-            document.getElementById(`h${pieceIndex}`).appendChild(token)
 
-            if (initPositions && initPositions[pieceIndex] !== undefined) {
-                positions[pieceIndex] = +initPositions[pieceIndex]
-                movePiece(pieceIndex)    
-            }
+    gameState.playerStates.forEach((playerState, playerIndex) => {
+        if (playerState) {
+            playerState.tokenPositions.forEach((tokenPosition, tokenIndex) => {
+                const token = document.createElement("wc-token")
+                token.setAttribute("id", getTokenElementId(playerIndex, tokenIndex))
+                document.getElementById(`h-${playerIndex}-${tokenIndex}`).appendChild(token)
+
+                if (initPositions && initPositions[(playerIndex * 4) + tokenIndex] !== undefined) {
+                    playerState.tokenPositions[tokenIndex] = +initPositions[(playerIndex * 4) + tokenIndex]
+                    moveToken(token.id)
+                }
+            })
         }
     })
 
     const player = params.get("player");
     if (player) {
-        currentPlayerIndex = +player
+        gameState.currentPlayerIndex = +player
     }
     moveDice()
 }
@@ -107,7 +85,7 @@ export function rollDice() {
 
     let counter = 0;
     const interval = setInterval(() => {
-        const lastDiceRoll = currentDiceRoll
+        const lastDiceRoll = gameState.currentDiceRoll
 
 
         if (counter === 6) {
@@ -117,47 +95,40 @@ export function rollDice() {
             const cumulativeWeights = weights.map((sum => value => sum += value)(0));
             const maxWeight = cumulativeWeights[cumulativeWeights.length - 1];
             const randomValue = Math.random() * maxWeight;
-            currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
+            gameState.currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
 
-            if (currentDiceRoll === 6) {
-                consecutiveSixesCount++
+            if (gameState.currentDiceRoll === 6) {
+                gameState.consecutiveSixesCount++
             }
 
-            if (consecutiveSixesCount === 3) {
-                updateCurrentPlayer()
+            if (gameState.consecutiveSixesCount === 3) {
+                gameState.updateCurrentPlayer()
             } else {
                 animateMovablePieces()
             }
         } else {
-            currentDiceRoll = (currentDiceRoll % 6) + 1
+            gameState.currentDiceRoll = (gameState.currentDiceRoll % 6) + 1
         }
 
         document.getElementById(`d${lastDiceRoll}`).classList.add("hidden")
-        document.getElementById(`d${currentDiceRoll}`).classList.remove("hidden")
+        document.getElementById(`d${gameState.currentDiceRoll}`).classList.remove("hidden")
 
         counter++
     }, 20)
 }
 
-
 /**
  *
- * @param {number} pieceIndex
- * @returns {string}
+ * @param {string} tokenElementId
  */
-function getPieceElementId(pieceIndex) {
-    return `p${pieceIndex}`;
-}
+function moveToken(tokenElementId) {
+    const tokenIdTokens = tokenElementId.split("-")
+    const playerIndex = +tokenIdTokens[1];
+    const tokenIndex = +tokenIdTokens[2];
 
-/**
- *
- * @param {number} pieceIndex
- */
-function movePiece(pieceIndex) {
-    const pieceElementId = getPieceElementId(pieceIndex);
-    const targetContainerId = findTargetPieceContainerId(pieceIndex)
+    const targetContainerId = findTargetPieceContainerId(playerIndex, tokenIndex)
 
-    const element = document.getElementById(pieceElementId)
+    const element = document.getElementById(tokenElementId)
     const targetContainer = document.getElementById(targetContainerId)
 
     const previousContainer = element.parentElement
@@ -174,15 +145,15 @@ function movePiece(pieceIndex) {
     }
 }
 
-function moveDice() {
-    const targetContainerId = `b${currentPlayerIndex}`
+export function moveDice() {
+    const targetContainerId = `b${gameState.currentPlayerIndex}`
 
     const diceElement = document.getElementById("wc-dice")
     const targetContainer = document.getElementById(targetContainerId)
 
     targetContainer.appendChild(diceElement)
 
-    if (autoplay || playerTypes[currentPlayerIndex] === "BOT") {
+    if (gameState.isAutoplay()) {
         rollDice()
     }
 }
@@ -190,105 +161,113 @@ function moveDice() {
 
 /**
  *
- * @param {number} pieceIndex
+ * @param {number} playerIndex
+ * @param {number} tokenIndex
  * @return {string}
  */
-function findTargetPieceContainerId(pieceIndex) {
-    const piecePosition = positions[pieceIndex]
-    if (piecePosition === -1) {
-        return `h${pieceIndex}`
+function findTargetPieceContainerId(playerIndex, tokenIndex) {
+    const tokenPosition = gameState.playerStates[playerIndex].tokenPositions[tokenIndex];
+    if (tokenPosition === -1) {
+        return `h-${playerIndex}-${tokenIndex}`
     }
-
-    const playerIndex = Math.floor(pieceIndex / 4)
-    if (piecePosition > 50) {
-        const safeIndex = piecePosition % 50;
+    if (tokenPosition > 50) {
+        const safeIndex = tokenPosition % 50;
         return `p${playerIndex}s${safeIndex}`
     }
 
-    const markIndex = (piecePosition + (13 * playerIndex)) % 52
+    const markIndex = (tokenPosition + (13 * playerIndex)) % 52
     return `m${markIndex}`
 }
 
 /**
  *
- * @param {number} pieceIndex
+ * @param {number} playerIndex
+ * @param {number} tokenIndex
  */
-function isPieceMovable(pieceIndex) {
-    const piecePosition = positions[pieceIndex];
+function isPieceMovable(playerIndex, tokenIndex) {
+    const piecePosition = gameState.playerStates[playerIndex].tokenPositions[tokenIndex]
 
-    if (currentDiceRoll === 6 && piecePosition === -1) {
+    if (gameState.currentDiceRoll === 6 && piecePosition === -1) {
         return true
     }
 
-    return piecePosition >= 0 && (piecePosition + currentDiceRoll) <= 56
+    return piecePosition >= 0 && (piecePosition + gameState.currentDiceRoll) <= 56
 }
 
 
 // todo: optimize to remove unwarranted actions during autoplay
 function animateMovablePieces() {
-    const movableTokenIndexes = []
-    for (let pieceIndex = currentPlayerIndex * 4; pieceIndex < (currentPlayerIndex + 1) * 4; pieceIndex++) {
-        if (isPieceMovable(pieceIndex)) {
-            movableTokenIndexes.push(pieceIndex)
-            const pieceElementId = getPieceElementId(pieceIndex)
-            const pieceElement = document.getElementById(pieceElementId);
-            ["animate-bounce", "z-20"].forEach(c => pieceElement.children[0].classList.add(c))
-            pieceElement.addEventListener("click", updatePiecePositionAndMove)
-        }
-    }
+    const movableTokenElementIds = []
 
-    if (movableTokenIndexes.length > 0) {
+    gameState.getCurrentPlayerTokenPositions().forEach((tokenPosition, tokenIndex) => {
+        if (isPieceMovable(gameState.currentPlayerIndex, tokenIndex)) {
+            const tokenElementId = getTokenElementId(gameState.currentPlayerIndex, tokenIndex)
+
+            const tokenElement = document.getElementById(tokenElementId);
+            ["animate-bounce", "z-20"].forEach(c => tokenElement.children[0].classList.add(c))
+            tokenElement.addEventListener("click", updatePiecePositionAndMove)
+
+            movableTokenElementIds.push(tokenElementId)
+        }
+    })
+
+
+    if (movableTokenElementIds.length > 0) {
         const diceElement = document.getElementById("wc-dice")
         diceElement.classList.remove("animate-bounce")
         diceElement.removeEventListener("click", rollDice)
 
-        if (playerTypes[currentPlayerIndex] === "BOT") {
+        if (gameState.isCurrentPlayerBot()) {
             // todo: make bot smarter
-            const tokenElementId = getPieceElementId(movableTokenIndexes[movableTokenIndexes.length - 1]);
-            document.getElementById(tokenElementId).click()
-        } else if (autoplay) {
-            const tokenIndexPositions = movableTokenIndexes
-                .map(tokenIndex => positions[tokenIndex])
-            const uniqueTokenIndexPositions = new Set(tokenIndexPositions)
-
-            if (uniqueTokenIndexPositions.size === 1) {
-                const tokenElementId = getPieceElementId(movableTokenIndexes[0]);
-                document.getElementById(tokenElementId).click()
-            }
+            document.getElementById(movableTokenElementIds[movableTokenElementIds.length - 1]).click()
+        } else if (gameState.autoplay) {
+            // const tokenIndexPositions = movableTokenElementIds
+            //     .map(tokenIndex => gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4])
+            // const uniqueTokenIndexPositions = new Set(tokenIndexPositions)
+            //
+            // if (uniqueTokenIndexPositions.size === 1) {
+            //     const tokenElementId = getPieceElementId(movableTokenElementIds[0]);
+            //     document.getElementById(tokenElementId).click()
+            // }
         }
     } else {
-        updateCurrentPlayer()
+        gameState.updateCurrentPlayer()
     }
 }
 
 /**
  *
- * @param {number} pieceIndex
+ * @param {number} currentPlayerIndex
+ * @param {number} currentTokenIndex
  * @returns {boolean}
  */
-function captureOpponentPieces(pieceIndex) {
-    const isUnsafePosition = ![0, 8, 13, 21, 26, 34, 39, 47].includes(positions[pieceIndex]) && positions[pieceIndex] < 51;
+function captureOpponentPieces(currentPlayerIndex, currentTokenIndex) {
+    const tokenPosition = gameState.playerStates[currentPlayerIndex].tokenPositions[currentTokenIndex]
+    const isUnsafePosition = ![0, 8, 13, 21, 26, 34, 39, 47].includes(tokenPosition) && tokenPosition < 51;
     if (isUnsafePosition) {
-        const targetPieceContainerId = findTargetPieceContainerId(pieceIndex);
-        const currentPlayerPieceIndexStart = currentPlayerIndex * 4;
-        const piecesAlreadyThere = positions.map((position, pi) => {
-            if (!(pi >= currentPlayerPieceIndexStart && pi < (currentPlayerPieceIndexStart + 4)) &&
-                targetPieceContainerId === findTargetPieceContainerId(pi)
-            ) {
-                return pi
+        const targetPieceContainerId = findTargetPieceContainerId(currentPlayerIndex, currentTokenIndex);
+        const piecesAlreadyThere = [];
+
+        gameState.playerStates.forEach((playerState, playerIndex) => {
+            if (playerIndex !== currentPlayerIndex && playerState) {
+                playerState.tokenPositions.forEach((tokenPosition, tokenIndex) => {
+                    if (targetPieceContainerId === findTargetPieceContainerId(playerIndex, tokenIndex)) {
+                        piecesAlreadyThere.push(getTokenElementId(playerIndex, tokenIndex))
+                    }
+                })
             }
-        }).filter(pi => pi !== undefined)
+        })
 
         const numberOfPieceByPlayer = new Array(4).fill(0)
         piecesAlreadyThere.forEach(pi => {
-            numberOfPieceByPlayer[Math.floor(pi / 4)] += 1
+            numberOfPieceByPlayer[+pi.split("-")[1]] += 1
         })
 
         let captured = false
         piecesAlreadyThere.forEach(pi => {
-            if (numberOfPieceByPlayer[Math.floor(pi / 4)] !== 2) {
-                positions[pi] = -1
-                movePiece(pi)
+            if (numberOfPieceByPlayer[+pi.split("-")[1]] !== 2) {
+                gameState.playerStates[+pi.split("-")[1]].tokenPositions[+pi.split("-")[2]] = -1
+                moveToken(pi)
                 captured = true
             }
         })
@@ -311,67 +290,47 @@ function updatePiecePositionAndMove($event) {
         element.parentElement.removeEventListener("click", updatePiecePositionAndMove)
     })
 
-    const pieceIndex = +$event.currentTarget.id.substring(1)
-    if (positions[pieceIndex] === -1) {
-        positions[pieceIndex] = 0
+    const tokenElementIdTokens = $event.currentTarget.id.split("-")
+    const playerIndex = +tokenElementIdTokens[1]
+    const tokenIndex = +tokenElementIdTokens[2]
+
+
+    if (gameState.getCurrentPlayerTokenPositions()[tokenIndex] === -1) {
+        gameState.getCurrentPlayerTokenPositions()[tokenIndex] = 0
     } else {
-        positions[pieceIndex] = positions[pieceIndex] + currentDiceRoll
+        gameState.getCurrentPlayerTokenPositions()[tokenIndex] = gameState.getCurrentPlayerTokenPositions()[tokenIndex] + gameState.currentDiceRoll
     }
 
-    const isTripComplete = positions[pieceIndex] === 56
+    const isTripComplete = gameState.getCurrentPlayerTokenPositions()[tokenIndex] === 56
 
     // todo: no need to check if position is one of the safe position
-    const capturedOpponent = captureOpponentPieces(pieceIndex);
+    const capturedOpponent = captureOpponentPieces(playerIndex, tokenIndex);
 
-    movePiece(pieceIndex)
+    moveToken($event.currentTarget.id)
+
+    if (isTripComplete && gameState.playerStates[gameState.currentPlayerIndex].isFinished()) {
+        let numberOfRemainingPlayers = 0;
+        gameState.playerStates.forEach((playerState) => {
+            if (playerState && !playerState.isFinished()) {
+                numberOfRemainingPlayers++;
+            }
+        })
+
+        if (numberOfRemainingPlayers === 1) {
+            document.getElementById("game-end").classList.remove("hidden")
+            document.getElementById("game").classList.add("hidden")
+        }
+    }
 
     const diceElement = document.getElementById("wc-dice");
     diceElement.classList.add("animate-bounce")
     diceElement.addEventListener("click", rollDice)
 
-    if (!isTripComplete && !capturedOpponent && currentDiceRoll !== 6) {
-        updateCurrentPlayer();
+    if (!isTripComplete && !capturedOpponent && gameState.currentDiceRoll !== 6) {
+        gameState.updateCurrentPlayer();
     } else {
-        if (autoplay || playerTypes[currentPlayerIndex] === "BOT") {
+        if (gameState.isAutoplay()) {
             diceElement.click()
         }
-    }
-}
-
-function updateCurrentPlayer() {
-    consecutiveSixesCount = 0
-
-    do {
-        currentPlayerIndex = (currentPlayerIndex + 1) % 4
-    } while (playerTypes[currentPlayerIndex] === undefined)
-
-    moveDice()
-}
-
-/**
- *
- * @param {string} quickStartId
- * @return {PlayerType[]}
- */
-function getPlayerTypes(quickStartId) {
-    switch (quickStartId) {
-        case "qs,1,1":
-            return ["BOT", undefined, "PLAYER", undefined]
-        case "qs,1,2":
-            return [undefined, "BOT", "PLAYER", "BOT"]
-        case "qs,1,3":
-            return ["BOT", "BOT", "PLAYER", "BOT"]
-        case "qs,2,0":
-            return ["PLAYER", undefined, "PLAYER", undefined]
-        case "qs,2,1":
-            return ["PLAYER", undefined, "PLAYER", "BOT"]
-        case "qs,2,2":
-            return ["PLAYER", "BOT", "PLAYER", "BOT"]
-        case "qs,3,0":
-            return ["PLAYER", undefined, "PLAYER", "PLAYER"]
-        case "qs,3,1":
-            return ["PLAYER", "BOT", "PLAYER", "PLAYER"]
-        case "qs,4,0":
-            return ["PLAYER", "PLAYER", "PLAYER", "PLAYER"]
     }
 }
