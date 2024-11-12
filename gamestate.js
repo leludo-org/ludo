@@ -1,6 +1,7 @@
 /**
  * @typedef {'PLAYER'|'BOT'} PlayerType
  */
+import {moveDice} from "./main.js";
 
 class PlayerState {
 
@@ -9,7 +10,7 @@ class PlayerState {
      * @type {PlayerType}
      */
     playerType;
-    
+
 
     /**
      *
@@ -60,7 +61,7 @@ export class GameState {
      * @type {boolean}
      */
     autoplay = false
-    
+
     /**
      *
      * @type {PlayerState[]}
@@ -81,7 +82,7 @@ export class GameState {
     }
 
     /**
-     * 
+     *
      * @returns {boolean}
      */
     isCurrentPlayerBot() {
@@ -89,13 +90,23 @@ export class GameState {
     }
 
     /**
-     * 
+     *
      * @returns {boolean}
      */
     isAutoplay() {
         return this.autoplay || this.isCurrentPlayerBot()
     }
 
+
+    updateCurrentPlayer() {
+        this.consecutiveSixesCount = 0
+
+        do {
+            this.currentPlayerIndex = (this.currentPlayerIndex + 1) % 4
+        } while (this.playerStates[this.currentPlayerIndex] === undefined)
+
+        moveDice()
+    }
 }
 
 

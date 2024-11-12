@@ -100,7 +100,7 @@ export function rollDice() {
             }
 
             if (gameState.consecutiveSixesCount === 3) {
-                updateCurrentPlayer()
+                gameState.updateCurrentPlayer()
             } else {
                 animateMovablePieces()
             }
@@ -143,7 +143,7 @@ function moveToken(tokenElementId) {
     }
 }
 
-function moveDice() {
+export function moveDice() {
     const targetContainerId = `b${gameState.currentPlayerIndex}`
 
     const diceElement = document.getElementById("wc-dice")
@@ -229,7 +229,7 @@ function animateMovablePieces() {
             // }
         }
     } else {
-        updateCurrentPlayer()
+        gameState.updateCurrentPlayer()
     }
 }
 
@@ -311,20 +311,10 @@ function updatePiecePositionAndMove($event) {
     diceElement.addEventListener("click", rollDice)
 
     if (!isTripComplete && !capturedOpponent && gameState.currentDiceRoll !== 6) {
-        updateCurrentPlayer();
+        gameState.updateCurrentPlayer();
     } else {
         if (gameState.isAutoplay()) {
             diceElement.click()
         }
     }
-}
-
-function updateCurrentPlayer() {
-    gameState.consecutiveSixesCount = 0
-
-    do {
-        gameState.currentPlayerIndex = (gameState.currentPlayerIndex + 1) % 4
-    } while (gameState.playerStates[gameState.currentPlayerIndex] === undefined)
-
-    moveDice()
 }
