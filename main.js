@@ -1,6 +1,6 @@
 import {gameState, publishGameEvent} from "./game-events.js"
-import {isTokenMovable, isUnsafePosition} from "./game-logic.js";
-import {getTokenContainerId} from "./render-logic.js";
+import {generateDiceRoll, isTokenMovable, isUnsafePosition} from "./game-logic.js";
+import {animateDiceRoll, getTokenContainerId, updateDiceFace} from "./render-logic.js";
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -80,21 +80,12 @@ function setInitialState() {
 
 
 export function rollDice() {
-    document.getElementById("audio-pop").play()
+    animateDiceRoll(gameState.currentDiceRoll)
+        .then(() => {
+            const lastDiceRoll = gameState.currentDiceRoll
+            gameState.currentDiceRoll = generateDiceRoll();
 
-    let counter = 0;
-    const interval = setInterval(() => {
-        const lastDiceRoll = gameState.currentDiceRoll
-
-
-        if (counter === 6) {
-            clearInterval(interval)
-
-            const weights = [1, 2, 2, 1, 2, 2];
-            const cumulativeWeights = weights.map((sum => value => sum += value)(0));
-            const maxWeight = cumulativeWeights[cumulativeWeights.length - 1];
-            const randomValue = Math.random() * maxWeight;
-            gameState.currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
+            updateDiceFace(lastDiceRoll, gameState.currentDiceRoll);
 
             if (gameState.currentDiceRoll === 6) {
                 gameState.consecutiveSixesCount++
@@ -105,15 +96,7 @@ export function rollDice() {
             } else {
                 animateMovablePieces()
             }
-        } else {
-            gameState.currentDiceRoll = (gameState.currentDiceRoll % 6) + 1
-        }
-
-        document.getElementById(`d${lastDiceRoll}`).classList.add("hidden")
-        document.getElementById(`d${gameState.currentDiceRoll}`).classList.remove("hidden")
-
-        counter++
-    }, 20)
+        });
 }
 
 /**

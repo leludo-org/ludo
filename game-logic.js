@@ -21,3 +21,14 @@ export function isTokenMovable(tokenPosition, diceRoll) {
 export function isUnsafePosition(tokenPosition) {
     return ![0, 8, 13, 21, 26, 34, 39, 47].includes(tokenPosition) && tokenPosition < 51;
 }
+
+/**
+ * @returns {number}
+ */
+export function generateDiceRoll() {
+    const weights = [1, 2, 2, 1, 2, 2];
+    const cumulativeWeights = weights.map((sum => value => sum += value)(0));
+    const maxWeight = cumulativeWeights[cumulativeWeights.length - 1];
+    const randomValue = Math.random() * maxWeight;
+    return cumulativeWeights.findIndex(cw => randomValue < cw) + 1
+}
