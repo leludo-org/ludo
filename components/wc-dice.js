@@ -1,5 +1,6 @@
 import {htmlToElement} from "../utils.js"
 import {rollDice} from "../main.js"
+import {publishGameEvent} from "../game-events";
 
 //language=HTML
 const DICE_HTML = `
@@ -53,3 +54,16 @@ class Dice extends HTMLElement {
 }
 
 window.customElements.define("wc-dice", Dice)
+
+
+/**
+ *
+ * @param {string} targetContainerId
+ */
+export function moveDice(targetContainerId) {
+    const diceElement = document.getElementById("wc-dice")
+    const targetContainer = document.getElementById(targetContainerId)
+    targetContainer.appendChild(diceElement)
+
+    publishGameEvent("DICE_MOVED")
+}

@@ -1,17 +1,31 @@
 /**
  *
- * @typedef {'PLAYER_UPDATED'} GameEvent
+ * @typedef {'PLAYER_UPDATED'|'DICE_MOVED'} GameEvent
  */
 
+import {moveDice} from "./components/wc-dice";
+import {rollDice} from "./main.js";
+import {GameState} from "./gamestate.js";
 
-import {moveDice} from "./main.js";
+
+/**
+ * @type {GameState}
+ */
+export const gameState = new GameState()
+
 
 /**
  * @type {Record<GameEvent, CallableFunction>}
  */
 const gameEventHandlers = {
     PLAYER_UPDATED: () => {
-        moveDice()
+        const targetContainerId = `b${gameState.currentPlayerIndex}`
+        moveDice(targetContainerId)
+    },
+    DICE_MOVED: () => {
+        if (gameState.isAutoplay()) {
+            rollDice()
+        }
     }
 }
 

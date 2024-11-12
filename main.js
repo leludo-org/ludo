@@ -1,9 +1,6 @@
-import {GameState} from "./gamestate.js"
+import {gameState, publishGameEvent} from "./game-events.js"
+import {moveDice} from "./components/wc-dice.js";
 
-/**
- * @type {GameState}
- */
-const gameState = new GameState()
 
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("audio-pop").volume = 0.6
@@ -76,7 +73,8 @@ function setInitialState() {
     if (player) {
         gameState.currentPlayerIndex = +player
     }
-    moveDice()
+
+    publishGameEvent("PLAYER_UPDATED")
 }
 
 
@@ -142,19 +140,6 @@ function moveToken(tokenElementId) {
 
     if (previousContainer.children.length > 0) {
         previousContainer.children[0].style.marginTop = '0';
-    }
-}
-
-export function moveDice() {
-    const targetContainerId = `b${gameState.currentPlayerIndex}`
-
-    const diceElement = document.getElementById("wc-dice")
-    const targetContainer = document.getElementById(targetContainerId)
-
-    targetContainer.appendChild(diceElement)
-
-    if (gameState.isAutoplay()) {
-        rollDice()
     }
 }
 
