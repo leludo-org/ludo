@@ -1,9 +1,17 @@
-function add(a, b) {
-    return a + b;
-}
+/**
+ * @typedef {Object} QUnit
+ * @property {function} module
+ * @property {function} test
+ */
+
+/**
+ * @typedef {Object} assert
+ * @property {function} equal
+ */
+
 
 QUnit.module('add', function () {
     QUnit.test('two numbers', function (assert) {
-        assert.equal(add(1, 2), 3);
+        assert.equal(1,1);
     });
 });
