@@ -36,7 +36,7 @@ class PlayerState {
 }
 
 
-class GameState {
+export class GameState {
 
     /**
      *

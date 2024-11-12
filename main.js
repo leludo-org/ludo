@@ -1,4 +1,4 @@
-import {GameState} from "./gamestate.js" 
+import {GameState} from "./gamestate.js"
 
 /**
  * @type {GameState}
@@ -44,20 +44,21 @@ document.addEventListener("DOMContentLoaded", () => {
 function setInitialState() {
     const params = new URLSearchParams(window.location.search)
     const initPositions = params.get("positions")?.split(",")
-    
-    positions.forEach((position, pieceIndex) => {
-        const playerIndex = Math.floor(pieceIndex / 4);
 
-        if (gameState.playerStates[playerIndex]) {
-            const token = document.createElement("wc-token")
-            token.setAttribute("token-index", pieceIndex.toString())
-            token.id = `p${pieceIndex}`
-            document.getElementById(`h${pieceIndex}`).appendChild(token)
+    gameState.playerStates.forEach((playerState, playerIndex) => {
+        if (playerState) {
+            playerState.tokenPositions.forEach((tokenPosition, tokenIndex) => {
+                const pieceIndex = playerIndex * 4 + tokenIndex
+                const token = document.createElement("wc-token")
+                token.setAttribute("token-index", pieceIndex.toString())
+                token.id = `p${pieceIndex}`
+                document.getElementById(`h${pieceIndex}`).appendChild(token)
 
-            if (initPositions && initPositions[pieceIndex] !== undefined) {
-                positions[pieceIndex] = +initPositions[pieceIndex]
-                movePiece(pieceIndex)    
-            }
+                if (initPositions && initPositions[pieceIndex] !== undefined) {
+                    playerState.tokenPositions[tokenIndex] = +initPositions[pieceIndex]
+                    movePiece(pieceIndex)
+                }
+            })
         }
     })
 
@@ -96,7 +97,7 @@ export function rollDice() {
                 animateMovablePieces()
             }
         } else {
-            gameState.currentDiceRoll = (currentDiceRoll % 6) + 1
+            gameState.currentDiceRoll = (gameState.currentDiceRoll % 6) + 1
         }
 
         document.getElementById(`d${lastDiceRoll}`).classList.add("hidden")
@@ -217,7 +218,7 @@ function animateMovablePieces() {
             document.getElementById(tokenElementId).click()
         } else if (gameState.autoplay) {
             const tokenIndexPositions = movableTokenIndexes
-                .map(tokenIndex => this.gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4])
+                .map(tokenIndex => gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4])
             const uniqueTokenIndexPositions = new Set(tokenIndexPositions)
 
             if (uniqueTokenIndexPositions.size === 1) {
@@ -232,22 +233,29 @@ function animateMovablePieces() {
 
 /**
  *
- * @param {number} pieceIndex
+ * @param {number} tokenIndex
  * @returns {boolean}
  */
-function captureOpponentPieces(pieceIndex) {
-    const tokenPosition = this.gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4]
+function captureOpponentPieces(tokenIndex) {
+    const tokenPosition = gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4]
     const isUnsafePosition = ![0, 8, 13, 21, 26, 34, 39, 47].includes(tokenPosition) && tokenPosition < 51;
     if (isUnsafePosition) {
-        const targetPieceContainerId = findTargetPieceContainerId(pieceIndex);
+        const targetPieceContainerId = findTargetPieceContainerId(tokenIndex);
         const currentPlayerPieceIndexStart = gameState.currentPlayerIndex * 4;
-        const piecesAlreadyThere = positions.map((position, pi) => {
-            if (!(pi >= currentPlayerPieceIndexStart && pi < (currentPlayerPieceIndexStart + 4)) &&
-                targetPieceContainerId === findTargetPieceContainerId(pi)
-            ) {
-                return pi
+        const piecesAlreadyThere = [];
+
+        gameState.playerStates.forEach((playerState, playerIndex) => {
+            if (playerState) {
+                playerState.tokenPositions.forEach((tokenPosition, playerTokenPosition) => {
+                    const pi = playerIndex * 4 + playerTokenPosition;
+                    if (!(pi >= currentPlayerPieceIndexStart && pi < (currentPlayerPieceIndexStart + 4)) &&
+                        targetPieceContainerId === findTargetPieceContainerId(pi)
+                    ) {
+                        piecesAlreadyThere.push(pi)
+                    }
+                })
             }
-        }).filter(pi => pi !== undefined)
+        })
 
         const numberOfPieceByPlayer = new Array(4).fill(0)
         piecesAlreadyThere.forEach(pi => {
@@ -257,7 +265,7 @@ function captureOpponentPieces(pieceIndex) {
         let captured = false
         piecesAlreadyThere.forEach(pi => {
             if (numberOfPieceByPlayer[Math.floor(pi / 4)] !== 2) {
-                positions[pi] = -1
+                gameState.playerStates[Math.floor(pi / 4)][pi % 4] = -1
                 movePiece(pi)
                 captured = true
             }
@@ -281,39 +289,39 @@ function updatePiecePositionAndMove($event) {
         element.parentElement.removeEventListener("click", updatePiecePositionAndMove)
     })
 
-    const pieceIndex = +$event.currentTarget.id.substring(1)
-    if (positions[pieceIndex] === -1) {
-        positions[pieceIndex] = 0
+    const tokenIndex = +$event.currentTarget.id.substring(1)
+    if (gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4] === -1) {
+        gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4] = 0
     } else {
-        positions[pieceIndex] = positions[pieceIndex] + currentDiceRoll
+        gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4] = gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4] + gameState.currentDiceRoll
     }
 
-    const isTripComplete = positions[pieceIndex] === 56
+    const isTripComplete = gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4] === 56
 
     // todo: no need to check if position is one of the safe position
-    const capturedOpponent = captureOpponentPieces(pieceIndex);
+    const capturedOpponent = captureOpponentPieces(tokenIndex);
 
-    movePiece(pieceIndex)
+    movePiece(tokenIndex)
 
     const diceElement = document.getElementById("wc-dice");
     diceElement.classList.add("animate-bounce")
     diceElement.addEventListener("click", rollDice)
 
-    if (!isTripComplete && !capturedOpponent && currentDiceRoll !== 6) {
+    if (!isTripComplete && !capturedOpponent && gameState.currentDiceRoll !== 6) {
         updateCurrentPlayer();
     } else {
-        if (autoplay || playerTypes[currentPlayerIndex] === "BOT") {
+        if (gameState.isAutoplay()) {
             diceElement.click()
         }
     }
 }
 
 function updateCurrentPlayer() {
-    consecutiveSixesCount = 0
+    gameState.consecutiveSixesCount = 0
 
     do {
-        currentPlayerIndex = (currentPlayerIndex + 1) % 4
-    } while (playerTypes[currentPlayerIndex] === undefined)
+        gameState.currentPlayerIndex = (gameState.currentPlayerIndex + 1) % 4
+    } while (gameState.playerStates[gameState.currentPlayerIndex] === undefined)
 
     moveDice()
 }
