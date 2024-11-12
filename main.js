@@ -93,7 +93,8 @@ export function rollDice() {
             const cumulativeWeights = weights.map((sum => value => sum += value)(0));
             const maxWeight = cumulativeWeights[cumulativeWeights.length - 1];
             const randomValue = Math.random() * maxWeight;
-            gameState.currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
+            // gameState.currentDiceRoll = cumulativeWeights.findIndex(cw => randomValue < cw) + 1;
+            gameState.currentDiceRoll = 1;
 
             if (gameState.currentDiceRoll === 6) {
                 gameState.consecutiveSixesCount++
@@ -258,13 +259,13 @@ function captureOpponentPieces(currentPlayerIndex, currentTokenIndex) {
 
         const numberOfPieceByPlayer = new Array(4).fill(0)
         piecesAlreadyThere.forEach(pi => {
-            numberOfPieceByPlayer[pi.split["-"][1]] += 1
+            numberOfPieceByPlayer[+pi.split("-")[1]] += 1
         })
 
         let captured = false
         piecesAlreadyThere.forEach(pi => {
-            if (numberOfPieceByPlayer[pi.split["-"][1]] !== 2) {
-                gameState.playerStates[pi.split["-"][1]].tokenPositions[pi.split["-"][2]] = -1
+            if (numberOfPieceByPlayer[+pi.split("-")[1]] !== 2) {
+                gameState.playerStates[+pi.split("-")[1]].tokenPositions[+pi.split("-")[2]] = -1
                 moveToken(pi)
                 captured = true
             }
