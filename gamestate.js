@@ -107,6 +107,14 @@ export class GameState {
 
         moveDice()
     }
+
+    /**
+     *
+     * @returns {number[]}
+     */
+    getCurrentPlayerTokenPositions() {
+        return this.playerStates[this.currentPlayerIndex].tokenPositions
+    }
 }
 
 

@@ -197,7 +197,7 @@ function isPieceMovable(playerIndex, tokenIndex) {
 function animateMovablePieces() {
     const movableTokenElementIds = []
 
-    gameState.playerStates[gameState.currentPlayerIndex].tokenPositions.forEach((tokenPosition, tokenIndex) => {
+    gameState.getCurrentPlayerTokenPositions().forEach((tokenPosition, tokenIndex) => {
         if (isPieceMovable(gameState.currentPlayerIndex, tokenIndex)) {
             const tokenElementId = getTokenElementId(gameState.currentPlayerIndex, tokenIndex)
 
@@ -293,13 +293,13 @@ function updatePiecePositionAndMove($event) {
     const tokenIndex = +tokenElementIdTokens[2]
 
 
-    if (gameState.playerStates[playerIndex].tokenPositions[tokenIndex] === -1) {
-        gameState.playerStates[playerIndex].tokenPositions[tokenIndex] = 0
+    if (gameState.getCurrentPlayerTokenPositions()[tokenIndex] === -1) {
+        gameState.getCurrentPlayerTokenPositions()[tokenIndex] = 0
     } else {
-        gameState.playerStates[playerIndex].tokenPositions[tokenIndex] = gameState.playerStates[playerIndex].tokenPositions[tokenIndex] + gameState.currentDiceRoll
+        gameState.getCurrentPlayerTokenPositions()[tokenIndex] = gameState.getCurrentPlayerTokenPositions()[tokenIndex] + gameState.currentDiceRoll
     }
 
-    const isTripComplete = gameState.playerStates[playerIndex].tokenPositions[tokenIndex] === 56
+    const isTripComplete = gameState.getCurrentPlayerTokenPositions()[tokenIndex] === 56
 
     // todo: no need to check if position is one of the safe position
     const capturedOpponent = captureOpponentPieces(playerIndex, tokenIndex);
