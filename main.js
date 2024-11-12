@@ -1,9 +1,9 @@
 import {gameState, publishGameEvent} from "./game-events.js"
-import {generateDiceRoll, isTokenMovable, isUnsafePosition} from "./game-logic.js";
+import {generateDiceRoll, getTokenNewPosition, isTokenMovable, isUnsafePosition} from "./game-logic.js";
 import {
     animateDiceRoll,
     getTokenContainerId,
-    getTokenElementId,
+    getTokenElementId, inactiveTokens,
     updateDiceFace,
     updateTokenContainer
 } from "./render-logic.js";
@@ -181,33 +181,28 @@ function captureOpponentPieces(currentPlayerIndex, currentTokenIndex) {
     }
 }
 
+
 /**
  *
  * @param {PointerEvent} $event
  */
-function updatePiecePositionAndMove($event) {
-    document.querySelectorAll(".animate-bounce").forEach(element => {
-        ["animate-bounce", "z-20"].forEach(c => element.classList.remove(c))
-        element.parentElement.removeEventListener("click", updatePiecePositionAndMove)
-    })
+export function updatePiecePositionAndMove($event) {
+    inactiveTokens();
 
     const tokenElementIdTokens = $event.currentTarget.id.split("-")
     const playerIndex = +tokenElementIdTokens[1]
     const tokenIndex = +tokenElementIdTokens[2]
 
 
-    if (gameState.getCurrentPlayerTokenPositions()[tokenIndex] === -1) {
-        gameState.getCurrentPlayerTokenPositions()[tokenIndex] = 0
-    } else {
-        gameState.getCurrentPlayerTokenPositions()[tokenIndex] = gameState.getCurrentPlayerTokenPositions()[tokenIndex] + gameState.currentDiceRoll
-    }
+    const tokenNewPosition = getTokenNewPosition(gameState.getCurrentPlayerTokenPositions()[tokenIndex], gameState.currentDiceRoll)
+    gameState.getCurrentPlayerTokenPositions()[tokenIndex] = tokenNewPosition
 
-    const isTripComplete = gameState.getCurrentPlayerTokenPositions()[tokenIndex] === 56
+    const isTripComplete = tokenNewPosition === 56
 
     // todo: no need to check if position is one of the safe position
     const capturedOpponent = captureOpponentPieces(playerIndex, tokenIndex);
 
-    updateTokenContainer(playerIndex, tokenIndex, gameState.getCurrentPlayerTokenPositions()[tokenIndex])
+    updateTokenContainer(playerIndex, tokenIndex, tokenNewPosition)
 
     if (isTripComplete && gameState.playerStates[gameState.currentPlayerIndex].isFinished()) {
         let numberOfRemainingPlayers = 0;

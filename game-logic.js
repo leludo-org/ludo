@@ -32,3 +32,17 @@ export function generateDiceRoll() {
     const randomValue = Math.random() * maxWeight;
     return cumulativeWeights.findIndex(cw => randomValue < cw) + 1
 }
+
+/**
+ *
+ * @param {number} currentPosition
+ * @param {number} diceRoll
+ * @returns {number}
+ */
+export function getTokenNewPosition(currentPosition, diceRoll) {
+    if (currentPosition === -1) {
+        return 0;
+    }
+
+    return currentPosition + diceRoll
+}

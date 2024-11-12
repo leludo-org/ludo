@@ -1,3 +1,5 @@
+import {updatePiecePositionAndMove} from "./main.js";
+
 function playPopSound() {
     document.getElementById("audio-pop").play()
 }
@@ -97,4 +99,11 @@ export function updateTokenContainer(playerIndex, tokenIndex, tokenPosition) {
     if (previousContainer.children.length > 0) {
         previousContainer.children[0].style.marginTop = '0';
     }
+}
+
+export function inactiveTokens() {
+    document.querySelectorAll(".animate-bounce").forEach(element => {
+        ["animate-bounce", "z-20"].forEach(c => element.classList.remove(c))
+        element.parentElement.removeEventListener("click", updatePiecePositionAndMove) // todo: should not be imported here: updatePiecePositionAndMove
+    })
 }
