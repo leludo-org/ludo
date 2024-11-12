@@ -1,7 +1,7 @@
 /**
  * @typedef {'PLAYER'|'BOT'} PlayerType
  */
-import {moveDice, rollDice} from "./main.js";
+
 import {publishGameEvent} from "./game-events.js";
 
 class PlayerState {
@@ -112,8 +112,6 @@ export class GameState {
         do {
             this.currentPlayerIndex = (this.currentPlayerIndex + 1) % 4
         } while (this.playerStates[this.currentPlayerIndex] === undefined || this.playerStates[this.currentPlayerIndex].isFinished())
-
-        moveDice()
 
         publishGameEvent("PLAYER_UPDATED")
     }

@@ -4,12 +4,14 @@
  */
 
 
+import {moveDice} from "./main.js";
+
 /**
  * @type {Record<GameEvent, CallableFunction>}
  */
 const gameEventHandlers = {
     PLAYER_UPDATED: () => {
-        console.log("this is player updated handler which doesn't do anything....yet")
+        moveDice()
     }
 }
 
@@ -26,12 +28,12 @@ export const publishGameEvent = (gameEvent) => {
  * @param {GameEvent} gameEvent
  */
 const handleGameEvent = (gameEvent) => {
-    console.log("handling GameEvent", gameEvent);
+    console.debug("handling GameEvent", gameEvent);
 
     const handler = gameEventHandlers[gameEvent]
     handler.call()
 
-    console.log("handled GameEvent", gameEvent);
+    console.debug("handled GameEvent", gameEvent);
 }
 
 window.addEventListener("message", (event) => handleGameEvent(event.data));
