@@ -1,6 +1,12 @@
 import {gameState, publishGameEvent} from "./game-events.js"
 import {generateDiceRoll, isTokenMovable, isUnsafePosition} from "./game-logic.js";
-import {animateDiceRoll, getTokenContainerId, updateDiceFace} from "./render-logic.js";
+import {
+    animateDiceRoll,
+    getTokenContainerId,
+    getTokenElementId,
+    updateDiceFace,
+    updateTokenContainer
+} from "./render-logic.js";
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -40,17 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 })
 
-
-/**
- *
- * @param {number} playerIndex
- * @param {number} tokenIndex
- * @returns {string}
- */
-function getTokenElementId(playerIndex, tokenIndex) {
-    return `p-${playerIndex}-${tokenIndex}`;
-}
-
 function setInitialState() {
     const params = new URLSearchParams(window.location.search)
     const initPositions = params.get("positions")?.split(",")
@@ -64,7 +59,7 @@ function setInitialState() {
 
                 if (initPositions && initPositions[(playerIndex * 4) + tokenIndex] !== undefined) {
                     playerState.tokenPositions[tokenIndex] = +initPositions[(playerIndex * 4) + tokenIndex]
-                    moveToken(token.id)
+                    updateTokenContainer(playerIndex, tokenIndex, playerState.tokenPositions[tokenIndex])
                 }
             })
         }
@@ -97,35 +92,6 @@ export function rollDice() {
                 animateMovablePieces()
             }
         });
-}
-
-/**
- *
- * @param {string} tokenElementId
- */
-function moveToken(tokenElementId) {
-    const tokenIdTokens = tokenElementId.split("-")
-    const playerIndex = +tokenIdTokens[1];
-    const tokenIndex = +tokenIdTokens[2];
-
-    const tokenPosition = gameState.playerStates[playerIndex].tokenPositions[tokenIndex]
-    const targetContainerId = getTokenContainerId(playerIndex, tokenIndex, tokenPosition)
-
-    const element = document.getElementById(tokenElementId)
-    const targetContainer = document.getElementById(targetContainerId)
-
-    const previousContainer = element.parentElement
-
-    targetContainer.appendChild(element)
-    if (targetContainer.children.length > 1) {
-        element.style.marginTop = `-100%`;
-    } else {
-        element.style.marginTop = "0";
-    }
-
-    if (previousContainer.children.length > 0) {
-        previousContainer.children[0].style.marginTop = '0';
-    }
 }
 
 
@@ -198,9 +164,11 @@ function captureOpponentPieces(currentPlayerIndex, currentTokenIndex) {
 
         let captured = false
         piecesAlreadyThere.forEach(pi => {
-            if (numberOfPieceByPlayer[+pi.split("-")[1]] !== 2) {
-                gameState.playerStates[+pi.split("-")[1]].tokenPositions[+pi.split("-")[2]] = -1
-                moveToken(pi)
+            const playerIndex = +pi.split("-")[1];
+            const tokenIndex = +pi.split("-")[2];
+            if (numberOfPieceByPlayer[playerIndex] !== 2) {
+                gameState.playerStates[playerIndex].tokenPositions[tokenIndex] = -1
+                updateTokenContainer(playerIndex, tokenIndex, -1)
                 captured = true
             }
         })
@@ -239,7 +207,7 @@ function updatePiecePositionAndMove($event) {
     // todo: no need to check if position is one of the safe position
     const capturedOpponent = captureOpponentPieces(playerIndex, tokenIndex);
 
-    moveToken($event.currentTarget.id)
+    updateTokenContainer(playerIndex, tokenIndex, gameState.getCurrentPlayerTokenPositions()[tokenIndex])
 
     if (isTripComplete && gameState.playerStates[gameState.currentPlayerIndex].isFinished()) {
         let numberOfRemainingPlayers = 0;

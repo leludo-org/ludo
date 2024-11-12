@@ -25,6 +25,16 @@ export function getTokenContainerId(playerIndex, tokenIndex, tokenPosition) {
 
 /**
  *
+ * @param {number} playerIndex
+ * @param {number} tokenIndex
+ * @returns {string}
+ */
+export function getTokenElementId(playerIndex, tokenIndex) {
+    return `p-${playerIndex}-${tokenIndex}`;
+}
+
+/**
+ *
  * @param {number} lastDiceRoll
  * @param {number} diceRoll
  */
@@ -60,4 +70,31 @@ export function animateDiceRoll(currentDiceRoll) {
             counter++
         }, 20)
     });
+}
+
+/**
+ *
+ * @param {number} playerIndex
+ * @param {number} tokenIndex
+ * @param {number} tokenPosition
+ */
+export function updateTokenContainer(playerIndex, tokenIndex, tokenPosition) {
+    const targetContainerId = getTokenContainerId(playerIndex, tokenIndex, tokenPosition)
+
+    const tokenElementId = getTokenElementId(playerIndex, tokenIndex)
+    const element = document.getElementById(tokenElementId)
+    const targetContainer = document.getElementById(targetContainerId)
+
+    const previousContainer = element.parentElement
+
+    targetContainer.appendChild(element)
+    if (targetContainer.children.length > 1) {
+        element.style.marginTop = `-100%`;
+    } else {
+        element.style.marginTop = "0";
+    }
+
+    if (previousContainer.children.length > 0) {
+        previousContainer.children[0].style.marginTop = '0';
+    }
 }
