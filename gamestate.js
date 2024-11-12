@@ -68,7 +68,11 @@ export class GameState {
     playerStates = new Array(4)
 
 
-    initPlayers() {
+    /**
+     *
+     * @param {string} quickStartId
+     */
+    initPlayers(quickStartId) {
         getPlayerTypes(quickStartId).forEach((type, index) => {
             if (type) {
                 this.playerStates[index] = new PlayerState(type)
@@ -81,7 +85,7 @@ export class GameState {
      * @returns {boolean}
      */
     isCurrentPlayerBot() {
-        return this.playerStates[this.currentPlayerIndex].isBot
+        return this.playerStates[this.currentPlayerIndex].isBot()
     }
 
     /**
