@@ -1,11 +1,10 @@
 import {htmlToElement} from "../utils.js"
-import {rollDice} from "../main.js"
 import {publishGameEvent} from "../game-events.js";
 
 //language=HTML
 const DICE_HTML = `
     <div id="dice"
-         class="size-full rounded aspect-square p-[2%] shadow-xl bg-white cursor-pointer transition-all duration-200 animate-bounce">
+         class="size-full rounded aspect-square p-[2%] shadow-xl bg-white cursor-pointer transition-all duration-200">
         <div id="d1" class="size-full grid grid-rows-3 grid-cols-3 gap-[10%]">
             <div class="bg-black rounded-full row-start-2 col-start-2"></div>
         </div>
@@ -46,24 +45,13 @@ class Dice extends HTMLElement {
     constructor() {
         super()
 
+        this.classList.add("animate-bounce")
+
         const diceElement = htmlToElement(DICE_HTML)
         this.appendChild(diceElement)
 
-        this.addEventListener("click", rollDice)
+        this.addEventListener("click", () => publishGameEvent("ON_DICE_ROLLED"))
     }
 }
 
 window.customElements.define("wc-dice", Dice)
-
-
-/**
- *
- * @param {string} targetContainerId
- */
-export function moveDice(targetContainerId) {
-    const diceElement = document.getElementById("wc-dice")
-    const targetContainer = document.getElementById(targetContainerId)
-    targetContainer.appendChild(diceElement)
-
-    publishGameEvent("DICE_MOVED")
-}

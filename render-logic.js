@@ -1,4 +1,5 @@
-import {rollDice, updatePiecePositionAndMove} from "./main.js";
+import {updatePiecePositionAndMove} from "./main.js";
+import {publishGameEvent} from "./game-events.js";
 
 function playPopSound() {
     document.getElementById("audio-pop").play()
@@ -118,14 +119,41 @@ export function inactiveTokens() {
     })
 }
 
-export function activeDice() {
+export function activateDice() {
     const diceElement = document.getElementById("wc-dice");
     diceElement.classList.add("animate-bounce")
-    diceElement.addEventListener("click", rollDice)// todo: should not be imported here: rollDice
 }
 
 export function inactiveDice() {
     const diceElement = document.getElementById("wc-dice")
     diceElement.classList.remove("animate-bounce")
-    diceElement.removeEventListener("click", rollDice) // todo: should not be imported here: rollDice
+}
+
+export function showGame() {
+    document.getElementById("main-menu").classList.add("hidden")
+    document.getElementById("game").classList.remove("hidden")
+}
+
+export function showPauseMenu() {
+    document.getElementById("game").classList.add("hidden")
+    document.getElementById("pause-menu").classList.remove("hidden")
+}
+
+export function resumeGame() {
+    document.getElementById("pause-menu").classList.add("hidden")
+    document.getElementById("game").classList.remove("hidden")
+
+    document.getElementById("pm-resume").removeEventListener("click", resumeGame)
+}
+
+/**
+ *
+ * @param {string} targetContainerId
+ */
+export function moveDice(targetContainerId) {
+    const diceElement = document.getElementById("wc-dice")
+    const targetContainer = document.getElementById(targetContainerId)
+    targetContainer.appendChild(diceElement)
+
+    publishGameEvent("DICE_MOVED")
 }

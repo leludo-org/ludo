@@ -1,134 +1,11 @@
-import {gameState, publishGameEvent} from "./game-events.js"
-import {generateDiceRoll, getTokenNewPosition, isTokenMovable, isUnsafePosition} from "./game-logic.js";
+import {gameState} from "./game-events.js"
+import {getTokenNewPosition, isUnsafePosition} from "./game-logic.js";
 import {
-    activateToken, activeDice,
-    animateDiceRoll,
+    activateDice,
     getTokenContainerId,
-    getTokenElementId, inactiveDice, inactiveTokens,
-    updateDiceFace,
+    getTokenElementId, inactiveTokens,
     updateTokenContainer
 } from "./render-logic.js";
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("audio-pop").volume = 0.6
-
-    document.querySelectorAll(".quick-start").forEach((el) => {
-        const quickStartId = el.id
-
-        el.addEventListener("click", () => {
-            gameState.initPlayers(quickStartId)
-            setInitialState()
-
-            document.getElementById("main-menu").classList.add("hidden")
-            document.getElementById("game").classList.remove("hidden")
-
-            if (gameState.isAutoplay()) {
-                rollDice()
-            }
-        })
-    })
-
-    document.getElementById("g-pause").addEventListener("click", () => {
-        document.getElementById("game").classList.add("hidden")
-        document.getElementById("pause-menu").classList.remove("hidden")
-    })
-
-    document.getElementById("pm-resume").addEventListener("click", () => {
-        document.getElementById("pause-menu").classList.add("hidden")
-        document.getElementById("game").classList.remove("hidden")
-    })
-
-    document.querySelectorAll(".restart-game").forEach(el => {
-        el.addEventListener("click", () => {
-            window.location.href = window.location.origin
-        })
-    })
-
-})
-
-function setInitialState() {
-    const params = new URLSearchParams(window.location.search)
-    const initPositions = params.get("positions")?.split(",")
-
-    gameState.playerStates.forEach((playerState, playerIndex) => {
-        if (playerState) {
-            playerState.tokenPositions.forEach((tokenPosition, tokenIndex) => {
-                const token = document.createElement("wc-token")
-                token.setAttribute("id", getTokenElementId(playerIndex, tokenIndex))
-                document.getElementById(`h-${playerIndex}-${tokenIndex}`).appendChild(token)
-
-                if (initPositions && initPositions[(playerIndex * 4) + tokenIndex] !== undefined) {
-                    playerState.tokenPositions[tokenIndex] = +initPositions[(playerIndex * 4) + tokenIndex]
-                    updateTokenContainer(playerIndex, tokenIndex, playerState.tokenPositions[tokenIndex])
-                }
-            })
-        }
-    })
-
-    const player = params.get("player");
-    if (player) {
-        gameState.currentPlayerIndex = +player
-    }
-
-    publishGameEvent("PLAYER_UPDATED")
-}
-
-
-export function rollDice() {
-    animateDiceRoll(gameState.currentDiceRoll)
-        .then(() => {
-            const lastDiceRoll = gameState.currentDiceRoll
-            gameState.currentDiceRoll = generateDiceRoll();
-
-            updateDiceFace(lastDiceRoll, gameState.currentDiceRoll);
-
-            if (gameState.currentDiceRoll === 6) {
-                gameState.consecutiveSixesCount++
-            }
-
-            if (gameState.consecutiveSixesCount === 3) {
-                gameState.updateCurrentPlayer()
-            } else {
-                animateMovablePieces()
-            }
-        });
-}
-
-
-// todo: optimize to remove unwarranted actions during autoplay
-function animateMovablePieces() {
-    const movableTokenElementIds = []
-
-    gameState.getCurrentPlayerTokenPositions().forEach((tokenPosition, tokenIndex) => {
-        if (isTokenMovable(tokenPosition, gameState.currentDiceRoll)) {
-            const tokenElementId = getTokenElementId(gameState.currentPlayerIndex, tokenIndex)
-            activateToken(tokenElementId);
-            movableTokenElementIds.push(tokenElementId)
-        }
-    })
-
-
-    if (movableTokenElementIds.length > 0) {
-        inactiveDice();
-
-        if (gameState.isCurrentPlayerBot()) {
-            // todo: make bot smarter
-            document.getElementById(movableTokenElementIds[movableTokenElementIds.length - 1]).click()
-        } else if (gameState.autoplay) {
-            // const tokenIndexPositions = movableTokenElementIds
-            //     .map(tokenIndex => gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4])
-            // const uniqueTokenIndexPositions = new Set(tokenIndexPositions)
-            //
-            // if (uniqueTokenIndexPositions.size === 1) {
-            //     const tokenElementId = getPieceElementId(movableTokenElementIds[0]);
-            //     document.getElementById(tokenElementId).click()
-            // }
-        }
-    } else {
-        gameState.updateCurrentPlayer()
-    }
-}
 
 /**
  *
@@ -177,7 +54,6 @@ function captureOpponentPieces(currentPlayerIndex, currentTokenIndex) {
 }
 
 
-
 /**
  *
  * @param {PointerEvent} $event
@@ -214,7 +90,7 @@ export function updatePiecePositionAndMove($event) {
         }
     }
 
-    activeDice();
+    activateDice();
 
     const diceElement = document.getElementById("wc-dice");
     if (!isTripComplete && !capturedOpponent && gameState.currentDiceRoll !== 6) {
