@@ -1,9 +1,8 @@
 /**
  *
- * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'DICE_ROLLED'|'DICE_MOVED'} GameEvent
+ * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'ON_DICE_ROLLED'|'AFTER_DICE_ROLLED'|'DICE_MOVED'} GameEvent
  */
 
-import {animateMovablePieces} from "./main.js";
 import {GameState} from "./gamestate.js";
 import {
     getTokenElementId,
@@ -11,9 +10,9 @@ import {
     showGame,
     showPauseMenu,
     resumeGame,
-    animateDiceRoll, updateDiceFace, moveDice
+    animateDiceRoll, updateDiceFace, moveDice, activateToken, inactiveDice
 } from "./render-logic.js";
-import {generateDiceRoll} from "./game-logic.js";
+import {generateDiceRoll, isTokenMovable} from "./game-logic.js";
 
 
 /**
@@ -71,7 +70,7 @@ const gameEventHandlers = {
         publishGameEvent("PLAYER_UPDATED")
 
         if (gameState.isAutoplay()) {
-            publishGameEvent("DICE_ROLLED")
+            publishGameEvent("ON_DICE_ROLLED")
         }
     },
     GAME_PAUSED: () => {
@@ -89,7 +88,7 @@ const gameEventHandlers = {
         const targetContainerId = `b${gameState.currentPlayerIndex}`
         moveDice(targetContainerId)
     },
-    DICE_ROLLED: () => {
+    ON_DICE_ROLLED: () => {
         const isDiceActive = document.getElementById("wc-dice").classList.contains("animate-bounce");
         if (!isDiceActive) {
             return
@@ -106,16 +105,48 @@ const gameEventHandlers = {
                     gameState.consecutiveSixesCount++
                 }
 
-                if (gameState.consecutiveSixesCount === 3) {
-                    gameState.updateCurrentPlayer()
-                } else {
-                    animateMovablePieces()
-                }
+                publishGameEvent("AFTER_DICE_ROLLED")
             });
+    },
+    AFTER_DICE_ROLLED: () => {
+        if (gameState.consecutiveSixesCount === 3) {
+            gameState.updateCurrentPlayer()
+        } else {
+            const movableTokenElementIds = []
+
+            gameState.getCurrentPlayerTokenPositions().forEach((tokenPosition, tokenIndex) => {
+                if (isTokenMovable(tokenPosition, gameState.currentDiceRoll)) {
+                    const tokenElementId = getTokenElementId(gameState.currentPlayerIndex, tokenIndex)
+                    activateToken(tokenElementId);
+                    movableTokenElementIds.push(tokenElementId)
+                }
+            })
+
+
+            if (movableTokenElementIds.length > 0) {
+                inactiveDice();
+
+                if (gameState.isCurrentPlayerBot()) {
+                    // todo: make bot smarter
+                    document.getElementById(movableTokenElementIds[movableTokenElementIds.length - 1]).click()
+                } else if (gameState.autoplay) {
+                    // const tokenIndexPositions = movableTokenElementIds
+                    //     .map(tokenIndex => gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4])
+                    // const uniqueTokenIndexPositions = new Set(tokenIndexPositions)
+                    //
+                    // if (uniqueTokenIndexPositions.size === 1) {
+                    //     const tokenElementId = getPieceElementId(movableTokenElementIds[0]);
+                    //     document.getElementById(tokenElementId).click()
+                    // }
+                }
+            } else {
+                gameState.updateCurrentPlayer()
+            }
+        }
     },
     DICE_MOVED: () => {
         if (gameState.isAutoplay()) {
-            publishGameEvent("DICE_ROLLED")
+            publishGameEvent("ON_DICE_ROLLED")
         }
     }
 }

@@ -1,46 +1,11 @@
 import {gameState} from "./game-events.js"
-import {getTokenNewPosition, isTokenMovable, isUnsafePosition} from "./game-logic.js";
+import {getTokenNewPosition, isUnsafePosition} from "./game-logic.js";
 import {
-    activateToken, activateDice,
+    activateDice,
     getTokenContainerId,
-    getTokenElementId, inactiveDice, inactiveTokens,
+    getTokenElementId, inactiveTokens,
     updateTokenContainer
 } from "./render-logic.js";
-
-
-// todo: optimize to remove unwarranted actions during autoplay
-export function animateMovablePieces() {
-    const movableTokenElementIds = []
-
-    gameState.getCurrentPlayerTokenPositions().forEach((tokenPosition, tokenIndex) => {
-        if (isTokenMovable(tokenPosition, gameState.currentDiceRoll)) {
-            const tokenElementId = getTokenElementId(gameState.currentPlayerIndex, tokenIndex)
-            activateToken(tokenElementId);
-            movableTokenElementIds.push(tokenElementId)
-        }
-    })
-
-
-    if (movableTokenElementIds.length > 0) {
-        inactiveDice();
-
-        if (gameState.isCurrentPlayerBot()) {
-            // todo: make bot smarter
-            document.getElementById(movableTokenElementIds[movableTokenElementIds.length - 1]).click()
-        } else if (gameState.autoplay) {
-            // const tokenIndexPositions = movableTokenElementIds
-            //     .map(tokenIndex => gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4])
-            // const uniqueTokenIndexPositions = new Set(tokenIndexPositions)
-            //
-            // if (uniqueTokenIndexPositions.size === 1) {
-            //     const tokenElementId = getPieceElementId(movableTokenElementIds[0]);
-            //     document.getElementById(tokenElementId).click()
-            // }
-        }
-    } else {
-        gameState.updateCurrentPlayer()
-    }
-}
 
 /**
  *

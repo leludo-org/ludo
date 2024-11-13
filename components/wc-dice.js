@@ -50,7 +50,7 @@ class Dice extends HTMLElement {
         const diceElement = htmlToElement(DICE_HTML)
         this.appendChild(diceElement)
 
-        this.addEventListener("click", () => publishGameEvent("DICE_ROLLED"))
+        this.addEventListener("click", () => publishGameEvent("ON_DICE_ROLLED"))
     }
 }
 
