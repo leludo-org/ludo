@@ -1,12 +1,19 @@
 /**
  *
- * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'DICE_MOVED'} GameEvent
+ * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'DICE_ROLLED'|'DICE_MOVED'} GameEvent
  */
 
-import {moveDice} from "./components/wc-dice.js";
-import {rollDice} from "./main.js";
+import {animateMovablePieces} from "./main.js";
 import {GameState} from "./gamestate.js";
-import {getTokenElementId, updateTokenContainer, showGame, showPauseMenu, resumeGame} from "./render-logic.js";
+import {
+    getTokenElementId,
+    updateTokenContainer,
+    showGame,
+    showPauseMenu,
+    resumeGame,
+    animateDiceRoll, updateDiceFace, moveDice
+} from "./render-logic.js";
+import {generateDiceRoll} from "./game-logic.js";
 
 
 /**
@@ -64,7 +71,7 @@ const gameEventHandlers = {
         publishGameEvent("PLAYER_UPDATED")
 
         if (gameState.isAutoplay()) {
-            rollDice()
+            publishGameEvent("DICE_ROLLED")
         }
     },
     GAME_PAUSED: () => {
@@ -82,9 +89,33 @@ const gameEventHandlers = {
         const targetContainerId = `b${gameState.currentPlayerIndex}`
         moveDice(targetContainerId)
     },
+    DICE_ROLLED: () => {
+        const isDiceActive = document.getElementById("wc-dice").classList.contains("animate-bounce");
+        if (!isDiceActive) {
+            return
+        }
+
+        animateDiceRoll(gameState.currentDiceRoll)
+            .then(() => {
+                const lastDiceRoll = gameState.currentDiceRoll
+                gameState.currentDiceRoll = generateDiceRoll();
+
+                updateDiceFace(lastDiceRoll, gameState.currentDiceRoll);
+
+                if (gameState.currentDiceRoll === 6) {
+                    gameState.consecutiveSixesCount++
+                }
+
+                if (gameState.consecutiveSixesCount === 3) {
+                    gameState.updateCurrentPlayer()
+                } else {
+                    animateMovablePieces()
+                }
+            });
+    },
     DICE_MOVED: () => {
         if (gameState.isAutoplay()) {
-            rollDice()
+            publishGameEvent("DICE_ROLLED")
         }
     }
 }

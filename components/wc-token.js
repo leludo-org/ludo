@@ -1,5 +1,4 @@
 import {htmlToElement} from "../utils.js"
-import {rollDice} from "../main.js"
 
 //language=HTML
 const TOKEN_HTML = (playerIndex) => `

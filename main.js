@@ -1,38 +1,15 @@
-import {gameState, publishGameEvent} from "./game-events.js"
-import {generateDiceRoll, getTokenNewPosition, isTokenMovable, isUnsafePosition} from "./game-logic.js";
+import {gameState} from "./game-events.js"
+import {getTokenNewPosition, isTokenMovable, isUnsafePosition} from "./game-logic.js";
 import {
-    activateToken, activeDice,
-    animateDiceRoll,
+    activateToken, activateDice,
     getTokenContainerId,
     getTokenElementId, inactiveDice, inactiveTokens,
-    updateDiceFace,
     updateTokenContainer
 } from "./render-logic.js";
 
 
-export function rollDice() {
-    animateDiceRoll(gameState.currentDiceRoll)
-        .then(() => {
-            const lastDiceRoll = gameState.currentDiceRoll
-            gameState.currentDiceRoll = generateDiceRoll();
-
-            updateDiceFace(lastDiceRoll, gameState.currentDiceRoll);
-
-            if (gameState.currentDiceRoll === 6) {
-                gameState.consecutiveSixesCount++
-            }
-
-            if (gameState.consecutiveSixesCount === 3) {
-                gameState.updateCurrentPlayer()
-            } else {
-                animateMovablePieces()
-            }
-        });
-}
-
-
 // todo: optimize to remove unwarranted actions during autoplay
-function animateMovablePieces() {
+export function animateMovablePieces() {
     const movableTokenElementIds = []
 
     gameState.getCurrentPlayerTokenPositions().forEach((tokenPosition, tokenIndex) => {
@@ -112,7 +89,6 @@ function captureOpponentPieces(currentPlayerIndex, currentTokenIndex) {
 }
 
 
-
 /**
  *
  * @param {PointerEvent} $event
@@ -149,7 +125,7 @@ export function updatePiecePositionAndMove($event) {
         }
     }
 
-    activeDice();
+    activateDice();
 
     const diceElement = document.getElementById("wc-dice");
     if (!isTripComplete && !capturedOpponent && gameState.currentDiceRoll !== 6) {
