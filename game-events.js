@@ -1,11 +1,12 @@
 /**
  *
- * @typedef {'PLAYER_UPDATED'|'DICE_MOVED'} GameEvent
+ * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'DICE_MOVED'} GameEvent
  */
 
 import {moveDice} from "./components/wc-dice.js";
 import {rollDice} from "./main.js";
 import {GameState} from "./gamestate.js";
+import {getTokenElementId, updateTokenContainer, showGame, showPauseMenu, resumeGame} from "./render-logic.js";
 
 
 /**
@@ -18,6 +19,65 @@ export const gameState = new GameState()
  * @type {Record<GameEvent, CallableFunction>}
  */
 const gameEventHandlers = {
+    GAME_LOADED: () => {
+        document.getElementById("audio-pop").volume = 0.6
+
+        document.querySelectorAll(".quick-start").forEach((el) => {
+            const quickStartId = el.id
+
+            el.addEventListener("click", () => {
+                gameState.initPlayers(quickStartId)
+                publishGameEvent("GAME_STARTED")
+            })
+        })
+    },
+    GAME_STARTED: () => {
+        showGame();
+
+        document.getElementById("g-pause").addEventListener("click", () => {
+            publishGameEvent("GAME_PAUSED")
+        })
+
+        const params = new URLSearchParams(window.location.search)
+        const initPositions = params.get("positions")?.split(",")
+
+        gameState.playerStates.forEach((playerState, playerIndex) => {
+            if (playerState) {
+                playerState.tokenPositions.forEach((tokenPosition, tokenIndex) => {
+                    const token = document.createElement("wc-token")
+                    token.setAttribute("id", getTokenElementId(playerIndex, tokenIndex))
+                    document.getElementById(`h-${playerIndex}-${tokenIndex}`).appendChild(token)
+
+                    if (initPositions && initPositions[(playerIndex * 4) + tokenIndex] !== undefined) {
+                        playerState.tokenPositions[tokenIndex] = +initPositions[(playerIndex * 4) + tokenIndex]
+                        updateTokenContainer(playerIndex, tokenIndex, playerState.tokenPositions[tokenIndex])
+                    }
+                })
+            }
+        })
+
+        const player = params.get("player");
+        if (player) {
+            gameState.currentPlayerIndex = +player
+        }
+
+        publishGameEvent("PLAYER_UPDATED")
+
+        if (gameState.isAutoplay()) {
+            rollDice()
+        }
+    },
+    GAME_PAUSED: () => {
+        showPauseMenu();
+
+        document.getElementById("pm-resume").addEventListener("click", resumeGame)
+
+        document.querySelectorAll(".restart-game").forEach(el => {
+            el.addEventListener("click", () => {
+                window.location.href = window.location.origin
+            })
+        })
+    },
     PLAYER_UPDATED: () => {
         const targetContainerId = `b${gameState.currentPlayerIndex}`
         moveDice(targetContainerId)
@@ -51,3 +111,7 @@ const handleGameEvent = (gameEvent) => {
 }
 
 window.addEventListener("message", (event) => handleGameEvent(event.data));
+
+document.addEventListener("DOMContentLoaded", () => {
+    publishGameEvent("GAME_LOADED")
+})

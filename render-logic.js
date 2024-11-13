@@ -129,3 +129,20 @@ export function inactiveDice() {
     diceElement.classList.remove("animate-bounce")
     diceElement.removeEventListener("click", rollDice) // todo: should not be imported here: rollDice
 }
+
+export function showGame() {
+    document.getElementById("main-menu").classList.add("hidden")
+    document.getElementById("game").classList.remove("hidden")
+}
+
+export function showPauseMenu() {
+    document.getElementById("game").classList.add("hidden")
+    document.getElementById("pause-menu").classList.remove("hidden")
+}
+
+export function resumeGame() {
+    document.getElementById("pause-menu").classList.add("hidden")
+    document.getElementById("game").classList.remove("hidden")
+
+    document.getElementById("pm-resume").removeEventListener("click", resumeGame)
+}
