@@ -5,10 +5,6 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400&display=swap" rel="stylesheet">
-
     <script type="module" src="utils.js"></script>
     <script type="module" src="components/registry.js"></script>
     <script type="module" src="main.js"></script>
@@ -25,17 +21,12 @@
 
 <div id="root" class="flex-1 flex items-center justify-center bg-background p-2">
 
-    <div class="w-full max-w-96">
-        <wc-quick-start id="main-menu"></wc-quick-start>
+    <div id="game-container" class="w-full max-w-96">
+        <wc-quick-start id="main-menu" class=""></wc-quick-start>
 
         <div id="pause-menu" class="flex flex-col gap-6 text-xl text-center hidden">
             <wc-button id="pm-resume" button-text="Resume"></wc-button>
             <wc-button class="restart-game" button-text="Exit"></wc-button>
-        </div>
-
-        <div id="game-end" class="hidden">
-            Game Ends
-            <wc-button class="restart-game" button-text="Okay!"></wc-button>
         </div>
 
         <wc-board id="game" class="hidden"></wc-board>

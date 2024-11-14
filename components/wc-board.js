@@ -8,7 +8,7 @@ const BOARD_HTML = `
             <wc-button id="g-pause" button-text="Pause"></wc-button>
 
             <audio id="audio-pop">
-                <source src="assets/music/pop.ogg" type="audio/ogg">
+                <source src="assets/sounds/pop.ogg" type="audio/ogg">
             </audio>
         </div>
 
@@ -244,7 +244,7 @@ const BOARD_HTML = `
 
     </div>`
 
-class Button extends HTMLElement {
+class Board extends HTMLElement {
     constructor() {
         super()
         const boardElement = htmlToElement(BOARD_HTML)
@@ -252,4 +252,4 @@ class Button extends HTMLElement {
     }
 }
 
-window.customElements.define("wc-board", Button)
+window.customElements.define("wc-board", Board)
