@@ -19,6 +19,24 @@ class PlayerState {
      */
     tokenPositions = new Array(4).fill(-1)
 
+    /**
+     * @type {number}
+     */
+    rank;
+
+    /**
+     * time taken to complete game, in milliseconds
+     * @type {number}
+     */
+    time;
+
+
+    /**
+     * number of opponents captured in game
+     * @type {number}
+     */
+    captures = 0
+
 
     /**
      * @returns {boolean}
@@ -75,6 +93,17 @@ export class GameState {
      * @type {PlayerState[]}
      */
     playerStates = new Array(4)
+
+    /**
+     *
+     * @type {number}
+     */
+    lastRank = 0
+
+    /**
+     * @type {number}
+     */
+    startAt = new Date().getTime()
 
 
     /**

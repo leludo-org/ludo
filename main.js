@@ -11,7 +11,7 @@ import {
  *
  * @param {number} currentPlayerIndex
  * @param {number} currentTokenIndex
- * @returns {boolean}
+ * @returns {number}
  */
 function captureOpponentPieces(currentPlayerIndex, currentTokenIndex) {
     const tokenPosition = gameState.playerStates[currentPlayerIndex].tokenPositions[currentTokenIndex]
@@ -34,23 +34,25 @@ function captureOpponentPieces(currentPlayerIndex, currentTokenIndex) {
             numberOfPieceByPlayer[+pi.split("-")[1]] += 1
         })
 
-        let captured = false
+        let numberOfCapture = 0
         piecesAlreadyThere.forEach(pi => {
             const playerIndex = +pi.split("-")[1];
             const tokenIndex = +pi.split("-")[2];
             if (numberOfPieceByPlayer[playerIndex] !== 2) {
                 gameState.playerStates[playerIndex].tokenPositions[tokenIndex] = -1
                 updateTokenContainer(playerIndex, tokenIndex, -1)
-                captured = true
+                numberOfCapture++
             }
         })
 
-        if (captured) {
+        if (numberOfCapture > 0) {
             document.getElementById("audio-pop").play()
         }
 
-        return captured
+        return numberOfCapture
     }
+
+    return 0
 }
 
 
@@ -72,11 +74,18 @@ export function updatePiecePositionAndMove($event) {
     const isTripComplete = tokenNewPosition === 56
 
     // todo: no need to check if position is one of the safe position
-    const capturedOpponent = captureOpponentPieces(playerIndex, tokenIndex);
+    const numberOfCaptures = captureOpponentPieces(playerIndex, tokenIndex);
+    gameState.playerStates[gameState.currentPlayerIndex].captures += numberOfCaptures
 
     updateTokenContainer(playerIndex, tokenIndex, tokenNewPosition)
 
-    if (isTripComplete && gameState.playerStates[gameState.currentPlayerIndex].isFinished()) {
+    const currentPlayerState = gameState.playerStates[gameState.currentPlayerIndex];
+    if (isTripComplete && currentPlayerState.isFinished()) {
+        currentPlayerState.rank = gameState.lastRank + 1
+        currentPlayerState.time = new Date().getTime() - gameState.startAt
+
+        gameState.lastRank = currentPlayerState.rank
+
         let numberOfRemainingPlayers = 0;
         gameState.playerStates.forEach((playerState) => {
             if (playerState && !playerState.isFinished()) {
@@ -85,7 +94,13 @@ export function updatePiecePositionAndMove($event) {
         })
 
         if (numberOfRemainingPlayers === 1) {
-            document.getElementById("game-end").classList.remove("hidden")
+            const lastPlayerState = gameState.playerStates.find(ps => !ps.rank)
+            lastPlayerState.rank = gameState.lastRank + 1
+            lastPlayerState.time = new Date().getTime() - gameState.startAt
+
+            document.getElementById("game-container").appendChild(
+                document.createElement("wc-game-end")
+            )
             document.getElementById("game").classList.add("hidden")
         }
     }
@@ -93,7 +108,7 @@ export function updatePiecePositionAndMove($event) {
     activateDice();
 
     const diceElement = document.getElementById("wc-dice");
-    if (!isTripComplete && !capturedOpponent && gameState.currentDiceRoll !== 6) {
+    if (!isTripComplete && numberOfCaptures === 0 && gameState.currentDiceRoll !== 6) {
         gameState.updateCurrentPlayer();
     } else {
         if (gameState.isAutoplay()) {

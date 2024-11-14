@@ -8,6 +8,12 @@ This open-source Ludo game includes the following public domain assets with prop
 
 - **pop.ogg**  
   - Source: [Freesound.org](https://freesound.org/people/SunnySideSound/sounds/67088/)
+---
+
+## Fonts
+
+- **Merriweather**  
+  - Source: [Google Fonts](https://fonts.google.com/specimen/Merriweather)
 
 ---
 
