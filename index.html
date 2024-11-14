@@ -25,20 +25,21 @@
 
 <div id="root" class="flex-1 flex items-center justify-center bg-background p-2">
 
-    <wc-quick-start id="main-menu" class="w-full max-w-96"></wc-quick-start>
+    <div class="w-full max-w-96">
+        <wc-quick-start id="main-menu"></wc-quick-start>
 
-    <div id="pause-menu"
-         class="w-full max-w-96 flex flex-col gap-6 text-xl text-center hidden">
-        <wc-button id="pm-resume" button-text="Resume"></wc-button>
-        <wc-button class="restart-game" button-text="Exit"></wc-button>
+        <div id="pause-menu" class="flex flex-col gap-6 text-xl text-center hidden">
+            <wc-button id="pm-resume" button-text="Resume"></wc-button>
+            <wc-button class="restart-game" button-text="Exit"></wc-button>
+        </div>
+
+        <div id="game-end" class="hidden">
+            Game Ends
+            <wc-button class="restart-game" button-text="Okay!"></wc-button>
+        </div>
+
+        <wc-board id="game" class="hidden"></wc-board>
     </div>
-
-    <div id="game-end" class="hidden">
-        Game Ends
-        <wc-button class="restart-game" button-text="Okay!"></wc-button>
-    </div>
-
-    <wc-board></wc-board>
 
 </div>
 </body>

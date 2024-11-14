@@ -2,7 +2,7 @@ import {htmlToElement} from "../utils.js"
 
 //language=HTML
 const BOARD_HTML = `
-    <div id="game" class="w-full max-w-96 grid grid-rows-7 grid-cols-5 hidden">
+    <div class="grid grid-rows-7 grid-cols-5">
 
         <div class="absolute bottom-12">
             <wc-button id="g-pause" button-text="Pause"></wc-button>
