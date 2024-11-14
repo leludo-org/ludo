@@ -130,14 +130,18 @@ const gameEventHandlers = {
                     // todo: make bot smarter
                     document.getElementById(movableTokenElementIds[movableTokenElementIds.length - 1]).click()
                 } else if (gameState.autoplay) {
-                    // const tokenIndexPositions = movableTokenElementIds
-                    //     .map(tokenIndex => gameState.playerStates[Math.floor(tokenIndex / 4)][tokenIndex % 4])
-                    // const uniqueTokenIndexPositions = new Set(tokenIndexPositions)
-                    //
-                    // if (uniqueTokenIndexPositions.size === 1) {
-                    //     const tokenElementId = getPieceElementId(movableTokenElementIds[0]);
-                    //     document.getElementById(tokenElementId).click()
-                    // }
+                    const tokenIndexPositions = movableTokenElementIds
+                        .map(movableTokenElementId => {
+                            const temp = movableTokenElementId.split("-");
+                            return gameState.playerStates[+temp[1]].tokenPositions[+temp[2]]
+                        })
+                    const uniqueTokenIndexPositions = new Set(tokenIndexPositions)
+
+                    if (uniqueTokenIndexPositions.size === 1) {
+                        const temp = movableTokenElementIds[0].split("-");
+                        const tokenElementId = getTokenElementId(+temp[1], +temp[2]);
+                        document.getElementById(tokenElementId).click()
+                    }
                 }
             } else {
                 gameState.updateCurrentPlayer()
