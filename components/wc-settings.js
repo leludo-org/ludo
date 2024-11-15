@@ -37,8 +37,9 @@ function updateTheme(theme) {
         : theme;
     rootElement.classList.add(themeToApply)
 
+    const navElementStyles = getComputedStyle(rootElement.querySelector("#header"));
     document.querySelector('meta[name="theme-color"]')
-        .setAttribute('content', getComputedStyle(rootElement).backgroundColor);
+        .setAttribute('content', navElementStyles.backgroundColor);
 
     localStorage.setItem("theme", theme)
 }
