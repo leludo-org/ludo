@@ -93,6 +93,7 @@ const gameEventHandlers = {
     PLAYER_UPDATED: () => {
         const targetContainerId = `b${gameState.currentPlayerIndex}`
         moveDice(targetContainerId)
+        publishGameEvent("DICE_MOVED")
     },
     ON_DICE_ROLLED: () => {
         const isDiceActive = document.getElementById("wc-dice").classList.contains("animate-bounce");
@@ -177,20 +178,19 @@ const gameEventHandlers = {
         const isTripComplete = tokenNewPosition === 56
 
         // todo: no need to check if position is one of the safe position
-        const capturedTokenIds = findCapturedOpponents(playerIndex, tokenIndex, gameState.playerStates.map(ps => ps?.tokenPositions));
-
-        if (capturedTokenIds.length > 0) {
-            document.getElementById("audio-pop").play()
-
-            capturedTokenIds.forEach(tId => {
-                const pi = +tId.split("-")[1];
-                const ti = +tId.split("-")[2];
-
+        const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, tokenIndex, gameState.playerStates.map(ps => ps?.tokenPositions));
+        let captureCount = 0
+        otherPlayerTokensOnThatMarkIndex.forEach((pt, pi) => {
+            pt.forEach((ti) => {
                 gameState.playerStates[pi].tokenPositions[ti] = -1
                 updateTokenContainer(pi, ti, -1)
+                captureCount++
             })
+        })
 
-            gameState.playerStates[gameState.currentPlayerIndex].captures += capturedTokenIds.length
+        if (captureCount > 0) {
+            document.getElementById("audio-pop").play()
+            gameState.playerStates[gameState.currentPlayerIndex].captures += captureCount
         }
 
         updateTokenContainer(playerIndex, tokenIndex, tokenNewPosition)
@@ -224,7 +224,7 @@ const gameEventHandlers = {
         activateDice();
 
         const diceElement = document.getElementById("wc-dice");
-        if (!isTripComplete && capturedTokenIds === 0 && gameState.currentDiceRoll !== 6) {
+        if (!isTripComplete && captureCount === 0 && gameState.currentDiceRoll !== 6) {
             gameState.updateCurrentPlayer();
         } else {
             if (gameState.isAutoplay()) {

@@ -1,5 +1,3 @@
-import {getTokenContainerId, getTokenElementId, updateTokenContainer} from "./render-logic.js"; // todo: should not depend on any render logic here
-
 /**
  *
  * @param {number} tokenPosition
@@ -12,6 +10,19 @@ export function isTokenMovable(tokenPosition, diceRoll) {
     }
 
     return tokenPosition >= 0 && (tokenPosition + diceRoll) <= 56
+}
+
+/**
+ * @param playerIndex
+ * @param tokenPosition
+ * @returns {undefined|number}
+ */
+export function getMarkIndex(playerIndex, tokenPosition) {
+    if (tokenPosition === -1 || tokenPosition > 50) {
+        return undefined
+    }
+
+    return (tokenPosition + (13 * playerIndex)) % 52;
 }
 
 
@@ -54,44 +65,35 @@ export function getTokenNewPosition(currentPosition, diceRoll) {
  * @param {number} playerIndex
  * @param {number} tokenIndex
  * @param {number[][]} tokenPositions
- * @returns {string[]}
+ * @returns {number[][]}
  */
 export function findCapturedOpponents(playerIndex, tokenIndex, tokenPositions) {
-    // todo: refactor such that there is no use of any render logic here, for example game logic based on token ids
-
     const tokenPosition = tokenPositions[playerIndex][tokenIndex]
 
     if (isSafePosition(tokenPosition)) {
-        return []
+        return new Array(0)
     }
 
-    const tokenTargetContainerId = getTokenContainerId(playerIndex, tokenIndex, tokenPosition);
-    const piecesAlreadyThere = [];
+    const tokenMarkIndex = getMarkIndex(playerIndex, tokenPosition);
+    const otherPlayerTokensOnThatMarkIndex = new Array(4).fill([]);
 
     tokenPositions.forEach((ptp, pi) => {
         if (ptp && pi !== playerIndex) {
             ptp.forEach((tp, ti) => {
-                const tContainerId = getTokenContainerId(pi, ti, tp);
-                if (tokenTargetContainerId === tContainerId) {
-                    piecesAlreadyThere.push(getTokenElementId(pi, ti))
+                const tMarkIndex = getMarkIndex(pi, tp);
+                if (tokenMarkIndex === tMarkIndex) {
+                    otherPlayerTokensOnThatMarkIndex[pi].push(ti)
                 }
             })
         }
     })
 
-    const numberOfPieceByPlayer = new Array(4).fill(0)
-    piecesAlreadyThere.forEach(pi => {
-        numberOfPieceByPlayer[+pi.split("-")[1]] += 1
-    })
-
-    const capturedTokenIds = []
-    piecesAlreadyThere.forEach(pat => {
-        const pi = +pat.split("-")[1];
-        const ti = +pat.split("-")[2];
-        if (numberOfPieceByPlayer[pi] !== 2) {
-            capturedTokenIds.push(getTokenElementId(pi, ti))
+    // if 2 tokens then that player is safe
+    otherPlayerTokensOnThatMarkIndex.forEach((pt, pi) => {
+        if (pt.length === 2) {
+            otherPlayerTokensOnThatMarkIndex[pi] = new Array(0)
         }
     })
 
-    return capturedTokenIds
+    return otherPlayerTokensOnThatMarkIndex
 }

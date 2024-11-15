@@ -1,4 +1,4 @@
-import {publishGameEvent} from "./game-events.js";
+import {getMarkIndex} from "./game-logic.js";
 
 function playPopSound() {
     document.getElementById("audio-pop").play()
@@ -21,7 +21,7 @@ export function getTokenContainerId(playerIndex, tokenIndex, tokenPosition) {
         return `p${playerIndex}s${safeIndex}`
     }
 
-    const markIndex = (tokenPosition + (13 * playerIndex)) % 52
+    const markIndex = getMarkIndex(playerIndex, tokenPosition)
     return `m${markIndex}`
 }
 
@@ -151,6 +151,4 @@ export function moveDice(targetContainerId) {
     const diceElement = document.getElementById("wc-dice")
     const targetContainer = document.getElementById(targetContainerId)
     targetContainer.appendChild(diceElement)
-
-    publishGameEvent("DICE_MOVED")
 }
