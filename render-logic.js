@@ -1,5 +1,4 @@
-import {updatePiecePositionAndMove} from "./main.js";
-import {publishGameEvent} from "./game-events.js";
+import {getMarkIndex} from "./game-logic.js";
 
 function playPopSound() {
     document.getElementById("audio-pop").play()
@@ -22,7 +21,7 @@ export function getTokenContainerId(playerIndex, tokenIndex, tokenPosition) {
         return `p${playerIndex}s${safeIndex}`
     }
 
-    const markIndex = (tokenPosition + (13 * playerIndex)) % 52
+    const markIndex = getMarkIndex(playerIndex, tokenPosition)
     return `m${markIndex}`
 }
 
@@ -109,13 +108,11 @@ export function updateTokenContainer(playerIndex, tokenIndex, tokenPosition) {
 export function activateToken(tokenElementId) {
     const tokenElement = document.getElementById(tokenElementId);
     ["animate-bounce", "z-20"].forEach(c => tokenElement.children[0].classList.add(c))
-    tokenElement.addEventListener("click", updatePiecePositionAndMove)// todo: should not be imported here: updatePiecePositionAndMove
 }
 
 export function inactiveTokens() {
     document.querySelectorAll(".animate-bounce").forEach(element => {
         ["animate-bounce", "z-20"].forEach(c => element.classList.remove(c))
-        element.parentElement.removeEventListener("click", updatePiecePositionAndMove) // todo: should not be imported here: updatePiecePositionAndMove
     })
 }
 
@@ -154,6 +151,4 @@ export function moveDice(targetContainerId) {
     const diceElement = document.getElementById("wc-dice")
     const targetContainer = document.getElementById(targetContainerId)
     targetContainer.appendChild(diceElement)
-
-    publishGameEvent("DICE_MOVED")
 }

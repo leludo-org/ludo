@@ -1,6 +1,6 @@
 /**
  *
- * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'ON_DICE_ROLLED'|'AFTER_DICE_ROLLED'|'DICE_MOVED'} GameEvent
+ * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'ON_DICE_ROLLED'|'AFTER_DICE_ROLLED'|'ON_TOKEN_MOVE'|'AFTER_TOKEN_MOVE'|'DICE_MOVED'} GameEvent
  */
 
 import {GameState} from "./gamestate.js";
@@ -10,9 +10,15 @@ import {
     showGame,
     showPauseMenu,
     resumeGame,
-    animateDiceRoll, updateDiceFace, moveDice, activateToken, inactiveDice
+    animateDiceRoll,
+    updateDiceFace,
+    moveDice,
+    activateToken,
+    inactiveDice,
+    inactiveTokens,
+    activateDice,
 } from "./render-logic.js";
-import {generateDiceRoll, isTokenMovable} from "./game-logic.js";
+import {findCapturedOpponents, generateDiceRoll, getTokenNewPosition, isTokenMovable} from "./game-logic.js";
 
 
 /**
@@ -87,6 +93,7 @@ const gameEventHandlers = {
     PLAYER_UPDATED: () => {
         const targetContainerId = `b${gameState.currentPlayerIndex}`
         moveDice(targetContainerId)
+        publishGameEvent("DICE_MOVED")
     },
     ON_DICE_ROLLED: () => {
         const isDiceActive = document.getElementById("wc-dice").classList.contains("animate-bounce");
@@ -148,6 +155,86 @@ const gameEventHandlers = {
             }
         }
     },
+    /**
+     *
+     * @param {string} tokenId
+     */
+    ON_TOKEN_MOVE: (tokenId) => {
+        const isTokenActive = document.getElementById(tokenId).children[0].classList.contains("animate-bounce");
+        if (!isTokenActive) {
+            return
+        }
+
+        inactiveTokens();
+
+        const tokenElementIdTokens = tokenId.split("-")
+        const playerIndex = +tokenElementIdTokens[1]
+        const tokenIndex = +tokenElementIdTokens[2]
+
+
+        const tokenNewPosition = getTokenNewPosition(gameState.getCurrentPlayerTokenPositions()[tokenIndex], gameState.currentDiceRoll)
+        gameState.getCurrentPlayerTokenPositions()[tokenIndex] = tokenNewPosition
+
+        const isTripComplete = tokenNewPosition === 56
+
+        // todo: no need to check if position is one of the safe position
+        const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, tokenIndex, gameState.playerStates.map(ps => ps?.tokenPositions));
+        let captureCount = 0
+        otherPlayerTokensOnThatMarkIndex.forEach((pt, pi) => {
+            pt.forEach((ti) => {
+                gameState.playerStates[pi].tokenPositions[ti] = -1
+                updateTokenContainer(pi, ti, -1)
+                captureCount++
+            })
+        })
+
+        if (captureCount > 0) {
+            document.getElementById("audio-pop").play()
+            gameState.playerStates[gameState.currentPlayerIndex].captures += captureCount
+        }
+
+        updateTokenContainer(playerIndex, tokenIndex, tokenNewPosition)
+
+        const currentPlayerState = gameState.playerStates[gameState.currentPlayerIndex];
+        if (isTripComplete && currentPlayerState.isFinished()) {
+            currentPlayerState.rank = gameState.lastRank + 1
+            currentPlayerState.time = new Date().getTime() - gameState.startAt
+
+            gameState.lastRank = currentPlayerState.rank
+
+            let numberOfRemainingPlayers = 0;
+            gameState.playerStates.forEach((playerState) => {
+                if (playerState && !playerState.isFinished()) {
+                    numberOfRemainingPlayers++;
+                }
+            })
+
+            if (numberOfRemainingPlayers === 1) {
+                const lastPlayerState = gameState.playerStates.find(ps => !ps.rank)
+                lastPlayerState.rank = gameState.lastRank + 1
+                lastPlayerState.time = new Date().getTime() - gameState.startAt
+
+                document.getElementById("game-container").appendChild(
+                    document.createElement("wc-game-end")
+                )
+                document.getElementById("game").classList.add("hidden")
+            }
+        }
+
+        activateDice();
+
+        const diceElement = document.getElementById("wc-dice");
+        if (!isTripComplete && captureCount === 0 && gameState.currentDiceRoll !== 6) {
+            gameState.updateCurrentPlayer();
+        } else {
+            if (gameState.isAutoplay()) {
+                diceElement.click()
+            }
+        }
+    },
+    AFTER_TOKEN_MOVE: () => {
+
+    },
     DICE_MOVED: () => {
         if (gameState.isAutoplay()) {
             publishGameEvent("ON_DICE_ROLLED")
@@ -158,20 +245,22 @@ const gameEventHandlers = {
 
 /**
  * @param {GameEvent} gameEvent
+ * @param {any} [data]
  */
-export const publishGameEvent = (gameEvent) => {
-    window.postMessage(gameEvent);
+export const publishGameEvent = (gameEvent, data) => {
+    window.postMessage({gameEvent, data});
 }
 
 
 /**
  * @param {GameEvent} gameEvent
+ * @param {any} [data]
  */
-const handleGameEvent = (gameEvent) => {
+const handleGameEvent = ({gameEvent, data}) => {
     console.debug("handling GameEvent", gameEvent);
 
     const handler = gameEventHandlers[gameEvent]
-    handler.call()
+    handler(data)
 
     console.debug("handled GameEvent", gameEvent);
 }

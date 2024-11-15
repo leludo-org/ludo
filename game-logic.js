@@ -12,14 +12,27 @@ export function isTokenMovable(tokenPosition, diceRoll) {
     return tokenPosition >= 0 && (tokenPosition + diceRoll) <= 56
 }
 
+/**
+ * @param playerIndex
+ * @param tokenPosition
+ * @returns {undefined|number}
+ */
+export function getMarkIndex(playerIndex, tokenPosition) {
+    if (tokenPosition === -1 || tokenPosition > 50) {
+        return undefined
+    }
+
+    return (tokenPosition + (13 * playerIndex)) % 52;
+}
+
 
 /**
  *
  * @param {number} tokenPosition
  * @returns {boolean}
  */
-export function isUnsafePosition(tokenPosition) {
-    return ![0, 8, 13, 21, 26, 34, 39, 47].includes(tokenPosition) && tokenPosition < 51;
+export function isSafePosition(tokenPosition) {
+    return [0, 8, 13, 21, 26, 34, 39, 47].includes(tokenPosition) || tokenPosition > 50;
 }
 
 /**
@@ -45,4 +58,43 @@ export function getTokenNewPosition(currentPosition, diceRoll) {
     }
 
     return currentPosition + diceRoll
+}
+
+/**
+ *
+ * @param {number} playerIndex
+ * @param {number} tokenIndex
+ * @param {number[][]} tokenPositions
+ * @returns {number[][]}
+ */
+export function findCapturedOpponents(playerIndex, tokenIndex, tokenPositions) {
+    const tokenPosition = tokenPositions[playerIndex][tokenIndex]
+
+    if (isSafePosition(tokenPosition)) {
+        return new Array(0)
+    }
+
+    const tokenMarkIndex = getMarkIndex(playerIndex, tokenPosition);
+    const otherPlayerTokensOnThatMarkIndex = new Array(4);
+
+    tokenPositions.forEach((ptp, pi) => {
+        otherPlayerTokensOnThatMarkIndex[pi] = [];
+        if (ptp && pi !== playerIndex) {
+            ptp.forEach((tp, ti) => {
+                const tMarkIndex = getMarkIndex(pi, tp);
+                if (tokenMarkIndex === tMarkIndex) {
+                    otherPlayerTokensOnThatMarkIndex[pi].push(ti)
+                }
+            })
+        }
+    })
+
+    // if 2 tokens then that player is safe
+    otherPlayerTokensOnThatMarkIndex.forEach((pt, pi) => {
+        if (pt.length === 2) {
+            otherPlayerTokensOnThatMarkIndex[pi] = new Array(0)
+        }
+    })
+
+    return otherPlayerTokensOnThatMarkIndex
 }
