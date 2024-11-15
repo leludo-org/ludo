@@ -17,9 +17,8 @@ import {
     inactiveDice,
     inactiveTokens,
     activateDice,
-    getTokenContainerId
 } from "./render-logic.js";
-import {generateDiceRoll, getTokenNewPosition, isTokenMovable, isUnsafePosition} from "./game-logic.js";
+import {findCapturedOpponents, generateDiceRoll, getTokenNewPosition, isTokenMovable} from "./game-logic.js";
 
 
 /**
@@ -178,8 +177,21 @@ const gameEventHandlers = {
         const isTripComplete = tokenNewPosition === 56
 
         // todo: no need to check if position is one of the safe position
-        const numberOfCaptures = captureOpponentPieces(playerIndex, tokenIndex);
-        gameState.playerStates[gameState.currentPlayerIndex].captures += numberOfCaptures
+        const capturedTokenIds = findCapturedOpponents(playerIndex, tokenIndex, gameState.playerStates.map(ps => ps?.tokenPositions));
+
+        if (capturedTokenIds.length > 0) {
+            document.getElementById("audio-pop").play()
+
+            capturedTokenIds.forEach(tId => {
+                const pi = +tId.split("-")[1];
+                const ti = +tId.split("-")[2];
+
+                gameState.playerStates[pi].tokenPositions[ti] = -1
+                updateTokenContainer(pi, ti, -1)
+            })
+
+            gameState.playerStates[gameState.currentPlayerIndex].captures += capturedTokenIds.length
+        }
 
         updateTokenContainer(playerIndex, tokenIndex, tokenNewPosition)
 
@@ -212,7 +224,7 @@ const gameEventHandlers = {
         activateDice();
 
         const diceElement = document.getElementById("wc-dice");
-        if (!isTripComplete && numberOfCaptures === 0 && gameState.currentDiceRoll !== 6) {
+        if (!isTripComplete && capturedTokenIds === 0 && gameState.currentDiceRoll !== 6) {
             gameState.updateCurrentPlayer();
         } else {
             if (gameState.isAutoplay()) {
@@ -258,52 +270,3 @@ window.addEventListener("message", (event) => handleGameEvent(event.data));
 document.addEventListener("DOMContentLoaded", () => {
     publishGameEvent("GAME_LOADED")
 })
-
-// todo: needs to removed from here with refactoring
-/**
- *
- * @param {number} currentPlayerIndex
- * @param {number} currentTokenIndex
- * @returns {number}
- */
-function captureOpponentPieces(currentPlayerIndex, currentTokenIndex) {
-    const tokenPosition = gameState.playerStates[currentPlayerIndex].tokenPositions[currentTokenIndex]
-    if (isUnsafePosition(tokenPosition)) {
-        const targetPieceContainerId = getTokenContainerId(currentPlayerIndex, currentTokenIndex, tokenPosition);
-        const piecesAlreadyThere = [];
-
-        gameState.playerStates.forEach((playerState, playerIndex) => {
-            if (playerIndex !== currentPlayerIndex && playerState) {
-                playerState.tokenPositions.forEach((tokenPosition, tokenIndex) => {
-                    if (targetPieceContainerId === getTokenContainerId(playerIndex, tokenIndex, tokenPosition)) {
-                        piecesAlreadyThere.push(getTokenElementId(playerIndex, tokenIndex))
-                    }
-                })
-            }
-        })
-
-        const numberOfPieceByPlayer = new Array(4).fill(0)
-        piecesAlreadyThere.forEach(pi => {
-            numberOfPieceByPlayer[+pi.split("-")[1]] += 1
-        })
-
-        let numberOfCapture = 0
-        piecesAlreadyThere.forEach(pi => {
-            const playerIndex = +pi.split("-")[1];
-            const tokenIndex = +pi.split("-")[2];
-            if (numberOfPieceByPlayer[playerIndex] !== 2) {
-                gameState.playerStates[playerIndex].tokenPositions[tokenIndex] = -1
-                updateTokenContainer(playerIndex, tokenIndex, -1)
-                numberOfCapture++
-            }
-        })
-
-        if (numberOfCapture > 0) {
-            document.getElementById("audio-pop").play()
-        }
-
-        return numberOfCapture
-    }
-
-    return 0
-}
