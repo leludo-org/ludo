@@ -37,7 +37,7 @@
         font-family: "Merriweather", sans-serif;
     }
 
-    body {
+    html {
         @apply bg-background text-foreground;
     }
 }

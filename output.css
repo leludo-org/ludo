@@ -593,7 +593,7 @@ video {
   font-family: "Merriweather", sans-serif;
 }
 
-body {
+html {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
 }
@@ -995,29 +995,8 @@ body {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.outline-none {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-.outline {
-  outline-style: solid;
-}
-
-.outline-1 {
-  outline-width: 1px;
-}
-
-.outline-0 {
-  outline-width: 0px;
-}
-
 .\!outline-0 {
   outline-width: 0px !important;
-}
-
-.outline-border {
-  outline-color: hsl(var(--border));
 }
 
 .transition-all {
@@ -1034,11 +1013,6 @@ body {
   background-color: hsl(var(--card) / 0.9);
 }
 
-.hover\:bg-gray-100:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
-}
-
 .hover\:shadow-2xl:hover {
   --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
@@ -1051,10 +1025,6 @@ body {
 
 .\[\&\>div\]\:outline-1>div {
   outline-width: 1px;
-}
-
-.\[\&\>div\]\:outline-offset-0>div {
-  outline-offset: 0px;
 }
 
 .\[\&\>div\]\:outline-border>div {
