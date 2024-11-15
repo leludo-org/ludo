@@ -863,6 +863,10 @@ body {
   gap: 10%;
 }
 
+.gap-\[1px\] {
+  gap: 1px;
+}
+
 .overflow-clip {
   overflow: clip;
 }
@@ -877,16 +881,6 @@ body {
 
 .border {
   border-width: 1px;
-}
-
-.border-x {
-  border-left-width: 1px;
-  border-right-width: 1px;
-}
-
-.border-y {
-  border-top-width: 1px;
-  border-bottom-width: 1px;
 }
 
 .bg-background {
@@ -1024,6 +1018,22 @@ body {
   --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.\[\&\>div\]\:outline>div {
+  outline-style: solid;
+}
+
+.\[\&\>div\]\:outline-1>div {
+  outline-width: 1px;
+}
+
+.\[\&\>div\]\:outline-offset-0>div {
+  outline-offset: 0px;
+}
+
+.\[\&\>div\]\:outline-border>div {
+  outline-color: hsl(var(--border));
 }
 
 .\[\&\>wc-token\]\:col-start-3>wc-token {
