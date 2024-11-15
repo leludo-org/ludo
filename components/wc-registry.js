@@ -5,3 +5,4 @@ export * from './wc-header.js';
 export * from './wc-quick-start.js';
 export * from './wc-board.js';
 export * from './wc-game-end.js';
+export * from './wc-settings.js';
