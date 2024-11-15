@@ -75,9 +75,10 @@ export function findCapturedOpponents(playerIndex, tokenIndex, tokenPositions) {
     }
 
     const tokenMarkIndex = getMarkIndex(playerIndex, tokenPosition);
-    const otherPlayerTokensOnThatMarkIndex = new Array(4).fill([]);
+    const otherPlayerTokensOnThatMarkIndex = new Array(4);
 
     tokenPositions.forEach((ptp, pi) => {
+        otherPlayerTokensOnThatMarkIndex[pi] = [];
         if (ptp && pi !== playerIndex) {
             ptp.forEach((tp, ti) => {
                 const tMarkIndex = getMarkIndex(pi, tp);
