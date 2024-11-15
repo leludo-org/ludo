@@ -6,10 +6,19 @@
     :root {
         --border: 0 0% 0%;
         --background: 220 13% 91%;
+        --foreground: 224 71.4% 4.1%;
+        --card: 0 0% 100%;
         --player-0: 0 72% 51%;
         --player-1: 142 76% 36%;
         --player-2: 41 96% 40%;
         --player-3: 200 98% 39%;
+    }
+
+    .dark {
+        --border: 0 0% 100%;
+        --background: 224 71.4% 4.1%;
+        --foreground: 210 20% 98%;
+        --card: 0, 0%, 18%;
     }
 
     /* latin */
@@ -26,5 +35,9 @@
     * {
         @apply border-border;
         font-family: "Merriweather", sans-serif;
+    }
+
+    body {
+        @apply bg-background text-foreground;
     }
 }

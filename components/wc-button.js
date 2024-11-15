@@ -2,7 +2,7 @@ import {htmlToElement} from "../utils.js"
 
 //language=HTML
 const BUTTON_HTML = `
-    <div class="rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100 cursor-pointer">
+    <div class="rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90 cursor-pointer">
     </div>
 `
 

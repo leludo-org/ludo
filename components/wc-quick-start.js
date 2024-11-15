@@ -1,181 +1,91 @@
 import {htmlToElement} from "../utils.js";
 
+//language=HTML
 const QUICK_START_HTML = `
-<div class="flex flex-col gap-6 text-xl">
+    <div class="flex flex-col gap-6 text-xl">
         <div class="flex gap-6">
-            <label class="p-2">
+            <label class="flex items-center gap-1 p-2">
                 1
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="user inline">
-                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                </svg>
+                <wc-user-icon></wc-user-icon>
             </label>
 
             <div class="flex-1 grid grid-cols-3 gap-2">
-                <button id="qs,1,1" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,1,1"
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     1
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                         class="bot inline">
-                        <path d="M12 8V4H8"/>
-                        <rect width="16" height="12" x="4" y="8" rx="2"/>
-                        <path d="M2 14h2"/>
-                        <path d="M20 14h2"/>
-                        <path d="M15 13v2"/>
-                        <path d="M9 13v2"/>
-                    </svg>
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
-                <button id="qs,1,2" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,1,2"
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     2
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                         class="bot inline">
-                        <path d="M12 8V4H8"/>
-                        <rect width="16" height="12" x="4" y="8" rx="2"/>
-                        <path d="M2 14h2"/>
-                        <path d="M20 14h2"/>
-                        <path d="M15 13v2"/>
-                        <path d="M9 13v2"/>
-                    </svg>
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
-                <button id="qs,1,3" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,1,3"
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     3
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                         class="bot inline">
-                        <path d="M12 8V4H8"/>
-                        <rect width="16" height="12" x="4" y="8" rx="2"/>
-                        <path d="M2 14h2"/>
-                        <path d="M20 14h2"/>
-                        <path d="M15 13v2"/>
-                        <path d="M9 13v2"/>
-                    </svg>
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
             </div>
         </div>
 
         <div class="flex gap-6">
-            <label class="p-2">
+            <label class="flex items-center gap-1 p-2">
                 2
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="user inline">
-                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                </svg>
+                <wc-user-icon></wc-user-icon>
             </label>
-
+            
             <div class="flex-1 grid grid-cols-3 gap-2">
-                <button id="qs,2,0" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,2,0"
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     0
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                         class="bot inline">
-                        <path d="M12 8V4H8"/>
-                        <rect width="16" height="12" x="4" y="8" rx="2"/>
-                        <path d="M2 14h2"/>
-                        <path d="M20 14h2"/>
-                        <path d="M15 13v2"/>
-                        <path d="M9 13v2"/>
-                    </svg>
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
-                <button id="qs,2,1" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,2,1"
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     1
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                         class="bot inline">
-                        <path d="M12 8V4H8"/>
-                        <rect width="16" height="12" x="4" y="8" rx="2"/>
-                        <path d="M2 14h2"/>
-                        <path d="M20 14h2"/>
-                        <path d="M15 13v2"/>
-                        <path d="M9 13v2"/>
-                    </svg>
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
-                <button id="qs,2,2" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,2,2"
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     2
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                         class="bot inline">
-                        <path d="M12 8V4H8"/>
-                        <rect width="16" height="12" x="4" y="8" rx="2"/>
-                        <path d="M2 14h2"/>
-                        <path d="M20 14h2"/>
-                        <path d="M15 13v2"/>
-                        <path d="M9 13v2"/>
-                    </svg>
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
-
             </div>
         </div>
 
         <div class="flex gap-6">
-            <label class="p-2">
+            <label class="flex items-center gap-1 p-2">
                 3
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="user inline">
-                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                </svg>
+                <wc-user-icon></wc-user-icon>
             </label>
 
             <div class="flex-1 grid grid-cols-2 gap-2">
-                <button id="qs,3,0" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,3,0"
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     0
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                         class="bot inline">
-                        <path d="M12 8V4H8"/>
-                        <rect width="16" height="12" x="4" y="8" rx="2"/>
-                        <path d="M2 14h2"/>
-                        <path d="M20 14h2"/>
-                        <path d="M15 13v2"/>
-                        <path d="M9 13v2"/>
-                    </svg>
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
-                <button id="qs,3,1" class="quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                <button id="qs,3,1"
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     1
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                         class="bot inline">
-                        <path d="M12 8V4H8"/>
-                        <rect width="16" height="12" x="4" y="8" rx="2"/>
-                        <path d="M2 14h2"/>
-                        <path d="M20 14h2"/>
-                        <path d="M15 13v2"/>
-                        <path d="M9 13v2"/>
-                    </svg>
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
             </div>
         </div>
 
         <div class="flex gap-6">
-            <label class="p-2">
+            <label class="flex items-center gap-1 p-2">
                 4
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="user inline">
-                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                </svg>
+                <wc-user-icon></wc-user-icon>
             </label>
 
-            <button id="qs,4,0" class="quick-start flex-1 rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
-                0
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="bot inline">
-                    <path d="M12 8V4H8"/>
-                    <rect width="16" height="12" x="4" y="8" rx="2"/>
-                    <path d="M2 14h2"/>
-                    <path d="M20 14h2"/>
-                    <path d="M15 13v2"/>
-                    <path d="M9 13v2"/>
-                </svg>
-            </button>
+            <div class="flex-1 grid grid-cols-1 gap-2">
+                <button id="qs,4,0"
+                        class="flex-1 flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
+                    0
+                    <wc-bot-icon></wc-bot-icon>
+                </button>
+            </div>
         </div>
 
     </div>

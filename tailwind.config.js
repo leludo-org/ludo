@@ -8,6 +8,8 @@ export default {
             colors: {
                 "border": 'hsl(var(--border))',
                 "background": "hsl(var(--background))",
+                "foreground": "hsl(var(--foreground))",
+                "card": "hsl(var(--card))",
                 "player-0": "hsl(var(--player-0))",
                 "player-1": "hsl(var(--player-1))",
                 "player-2": "hsl(var(--player-2))",
