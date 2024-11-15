@@ -15,6 +15,7 @@ const SETTINGS_HTML = `
         <div class="text-sm flex justify-between">
             <label for="s-theme">Theme</label>
             <select id="s-theme" class="bg-background">
+                <option value="system">System</option>
                 <option value="light">Light</option>
                 <option value="dark">Dark</option>
             </select>
@@ -24,12 +25,20 @@ const SETTINGS_HTML = `
 
 /**
  *
- * @param {'dark'|'light'} theme
+ * @param {'dark'|'light'|'system'} theme
  */
 function updateTheme(theme) {
     const rootElement = window.document.documentElement
-    rootElement.classList.remove("dark", "light")
-    rootElement.classList.add(theme)
+    rootElement.classList.remove("dark", "light", "system")
+
+    // note: didn't subscribe to watch for system change yet...
+    const themeToApply = theme === "system"
+        ? (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light")
+        : theme;
+    rootElement.classList.add(themeToApply)
+
+    document.querySelector('meta[name="theme-color"]')
+        .setAttribute('content', getComputedStyle(rootElement).backgroundColor);
 
     localStorage.setItem("theme", theme)
 }
@@ -60,7 +69,7 @@ class Header extends HTMLElement {
             settingsIcon.click() // todo: should close on outside click instead
         })
 
-        themeSettingElement.value = localStorage.getItem("theme") || "light"
+        themeSettingElement.value = localStorage.getItem("theme") || "system"
         updateTheme(themeSettingElement.value)
 
         this.appendChild(settingsElement)
