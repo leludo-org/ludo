@@ -2,7 +2,7 @@ import {htmlToElement} from "../utils.js"
 
 //language=HTML
 const HEADER_HTML = `
-    <nav class="p-2 gap-2 h-12 flex justify-between bg-card">
+    <nav id="header" class="p-2 gap-2 h-12 flex justify-between bg-card">
         <a href="/" class="font-bold text-xl">leludo.org</a>
         <div class="flex gap-3 items-center">
             <wc-settings></wc-settings>
