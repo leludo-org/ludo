@@ -57,6 +57,7 @@ class Header extends HTMLElement {
         themeSettingElement.addEventListener("change", ($event) => {
             const theme = $event.target.value;
             updateTheme(theme);
+            settingsIcon.click() // todo: should close on outside click instead
         })
 
         themeSettingElement.value = localStorage.getItem("theme") || "light"

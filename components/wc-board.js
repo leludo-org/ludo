@@ -2,7 +2,7 @@ import {htmlToElement} from "../utils.js"
 
 //language=HTML
 const BOARD_HTML = `
-    <div class="grid grid-rows-7 grid-cols-5">
+    <div class="grid grid-rows-7 grid-cols-5 gap-[1px] [&>div]:outline [&>div]:outline-1 [&>div]:outline-border">
 
         <div class="absolute bottom-12">
             <wc-button id="g-pause" button-text="Pause"></wc-button>
@@ -12,7 +12,7 @@ const BOARD_HTML = `
             </audio>
         </div>
 
-        <div class="col-span-full grid grid-cols-3">
+        <div class="col-span-full grid grid-cols-3 !outline-0">
 
             <div id="b0" class="flex flex-col">
                 <wc-dice id="wc-dice" class="w-1/3"></wc-dice>
@@ -22,23 +22,23 @@ const BOARD_HTML = `
         </div>
 
         <div class="bg-player-0  row-span-2 col-span-2 flex items-center justify-center">
-            <div class="bg-background size-4/6  grid grid-cols-2 grid-rows-2">
+            <div class="bg-background size-4/6  grid grid-cols-2 grid-rows-2 border">
                 <div class="flex items-center justify-center">
-                    <div id="h-0-0" class="size-1/2 rounded-full bg-player-0 "></div>
+                    <div id="h-0-0" class="size-1/2 rounded-full bg-player-0 border"></div>
                 </div>
                 <div class="flex items-center justify-center">
-                    <div id="h-0-1" class="size-1/2 rounded-full bg-player-0 "></div>
+                    <div id="h-0-1" class="size-1/2 rounded-full bg-player-0 border"></div>
                 </div>
                 <div class="flex items-center justify-center">
-                    <div id="h-0-2" class="size-1/2 rounded-full bg-player-0 "></div>
+                    <div id="h-0-2" class="size-1/2 rounded-full bg-player-0 border"></div>
                 </div>
                 <div class="flex items-center justify-center">
-                    <div id="h-0-3" class="size-1/2 rounded-full bg-player-0 "></div>
+                    <div id="h-0-3" class="size-1/2 rounded-full bg-player-0 border"></div>
                 </div>
             </div>
         </div>
 
-        <div class="-y row-span-2 grid gap-[1px] grid-cols-3 grid-rows-6 [&>div]:outline-border [&>div]:outline-1 [&>div]:outline">
+        <div class="-y row-span-2 grid grid-cols-3 grid-rows-6 gap-[1px] [&>div]:outline [&>div]:outline-1 [&>div]:outline-border">
             <div id="m10" class=""></div>
             <div id="m11" class="">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -74,23 +74,23 @@ const BOARD_HTML = `
         </div>
 
         <div class="bg-player-1  row-span-2 col-span-2 flex items-center justify-center">
-            <div class="bg-background size-4/6  grid grid-cols-2 grid-rows-2">
+            <div class="bg-background size-4/6  grid grid-cols-2 grid-rows-2 border">
                 <div class="flex items-center justify-center">
-                    <div id="h-1-0" class="size-1/2 rounded-full bg-player-1 "></div>
+                    <div id="h-1-0" class="size-1/2 rounded-full bg-player-1 border"></div>
                 </div>
                 <div class="flex items-center justify-center">
-                    <div id="h-1-1" class="size-1/2 rounded-full bg-player-1 "></div>
+                    <div id="h-1-1" class="size-1/2 rounded-full bg-player-1 border"></div>
                 </div>
                 <div class="flex items-center justify-center">
-                    <div id="h-1-2" class="size-1/2 rounded-full bg-player-1 "></div>
+                    <div id="h-1-2" class="size-1/2 rounded-full bg-player-1 border"></div>
                 </div>
                 <div class="flex items-center justify-center">
-                    <div id="h-1-3" class="size-1/2 rounded-full bg-player-1 "></div>
+                    <div id="h-1-3" class="size-1/2 rounded-full bg-player-1 border"></div>
                 </div>
             </div>
         </div>
 
-        <div class="-x col-span-2 grid grid-cols-6 grid-rows-3">
+        <div class="-x col-span-2 grid grid-cols-6 grid-rows-3 gap-[1px] [&>div]:outline [&>div]:outline-1 [&>div]:outline-border">
             <div id="m51" class=""></div>
             <div id="m0" class="bg-player-0 "></div>
             <div id="m1" class=""></div>
@@ -133,7 +133,7 @@ const BOARD_HTML = `
             <div id="p2s6" class="absolute size-full  bg-player-2 rotate-45 translate-x-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token]:row-start-3"></div>
         </div>
 
-        <div class="-x col-span-2 grid grid-cols-6 grid-rows-3">
+        <div class="-x col-span-2 grid grid-cols-6 grid-rows-3 gap-[1px] [&>div]:outline [&>div]:outline-1 [&>div]:outline-border">
             <div id="m18" class=""></div>
             <div id="m19" class=""></div>
             <div id="m20" class=""></div>
@@ -169,23 +169,23 @@ const BOARD_HTML = `
         </div>
 
         <div class="bg-player-3  row-span-2 col-span-2 flex items-center justify-center">
-            <div class="bg-background size-4/6  grid grid-cols-2 grid-rows-2">
+            <div class="bg-background size-4/6  grid grid-cols-2 grid-rows-2 border">
                 <div class="flex items-center justify-center">
-                    <div id="h-3-0" class="size-1/2 rounded-full bg-player-3 "></div>
+                    <div id="h-3-0" class="size-1/2 rounded-full bg-player-3 border"></div>
                 </div>
                 <div class="flex items-center justify-center">
-                    <div id="h-3-1" class="size-1/2 rounded-full bg-player-3 "></div>
+                    <div id="h-3-1" class="size-1/2 rounded-full bg-player-3 border"></div>
                 </div>
                 <div class="flex items-center justify-center">
-                    <div id="h-3-2" class="size-1/2 rounded-full bg-player-3 "></div>
+                    <div id="h-3-2" class="size-1/2 rounded-full bg-player-3 border"></div>
                 </div>
                 <div class="flex items-center justify-center">
-                    <div id="h-3-3" class="size-1/2 rounded-full bg-player-3 "></div>
+                    <div id="h-3-3" class="size-1/2 rounded-full bg-player-3 border"></div>
                 </div>
             </div>
         </div>
 
-        <div class="-y row-span-2 grid grid-cols-3 grid-rows-6">
+        <div class="-y row-span-2 grid grid-cols-3 grid-rows-6 gap-[1px] [&>div]:outline [&>div]:outline-1 [&>div]:outline-border">
             <div id="m43" class=""></div>
             <div id="p3s5" class="bg-player-3 "></div>
             <div id="m31" class=""></div>
@@ -221,23 +221,23 @@ const BOARD_HTML = `
         </div>
 
         <div class="bg-player-2  row-span-2 col-span-2 flex items-center justify-center">
-            <div class="bg-background size-4/6  grid grid-cols-2 grid-rows-2">
+            <div class="bg-background size-4/6  grid grid-cols-2 grid-rows-2 border">
                 <div class="flex items-center justify-center">
-                    <div id="h-2-0" class="size-1/2 rounded-full bg-player-2 "></div>
+                    <div id="h-2-0" class="size-1/2 rounded-full bg-player-2 border"></div>
                 </div>
                 <div class="flex items-center justify-center">
-                    <div id="h-2-1" class="size-1/2 rounded-full bg-player-2 "></div>
+                    <div id="h-2-1" class="size-1/2 rounded-full bg-player-2 border"></div>
                 </div>
                 <div class="flex items-center justify-center">
-                    <div id="h-2-2" class="size-1/2 rounded-full bg-player-2 "></div>
+                    <div id="h-2-2" class="size-1/2 rounded-full bg-player-2 border"></div>
                 </div>
                 <div class="flex items-center justify-center">
-                    <div id="h-2-3" class="size-1/2 rounded-full bg-player-2 "></div>
+                    <div id="h-2-3" class="size-1/2 rounded-full bg-player-2 border"></div>
                 </div>
             </div>
         </div>
 
-        <div class="col-span-full grid grid-cols-3">
+        <div class="col-span-full grid grid-cols-3 !outline-0">
             <div id="b3" class="flex flex-col justify-end"></div>
             <div id="b2" class="col-start-3  flex flex-col justify-end items-end"></div>
         </div>
