@@ -6,24 +6,24 @@ const QUICK_START_HTML = `
         <div class="flex gap-6">
             <label class="flex items-center gap-1 p-2">
                 1
-                <img src="/assets/icons/user.svg" class="size-6" alt="user">
+                <wc-user-icon></wc-user-icon>
             </label>
 
             <div class="flex-1 grid grid-cols-3 gap-2">
                 <button id="qs,1,1"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     1
-                    <img src="/assets/icons/bot.svg" class="size-6" alt="user">
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
                 <button id="qs,1,2"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     2
-                    <img src="/assets/icons/bot.svg" class="size-6" alt="user">
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
                 <button id="qs,1,3"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     3
-                    <img src="/assets/icons/bot.svg" class="size-6" alt="user">
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
             </div>
         </div>
@@ -31,24 +31,24 @@ const QUICK_START_HTML = `
         <div class="flex gap-6">
             <label class="flex items-center gap-1 p-2">
                 2
-                <img src="/assets/icons/user.svg" class="size-6" alt="user">
+                <wc-user-icon></wc-user-icon>
             </label>
             
             <div class="flex-1 grid grid-cols-3 gap-2">
                 <button id="qs,2,0"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     0
-                    <img src="/assets/icons/bot.svg" class="size-6" alt="user">
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
                 <button id="qs,2,1"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     1
-                    <img src="/assets/icons/bot.svg" class="size-6" alt="user">
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
                 <button id="qs,2,2"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     2
-                    <img src="/assets/icons/bot.svg" class="size-6" alt="user">
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
             </div>
         </div>
@@ -56,19 +56,19 @@ const QUICK_START_HTML = `
         <div class="flex gap-6">
             <label class="flex items-center gap-1 p-2">
                 3
-                <img src="/assets/icons/user.svg" class="size-6" alt="user">
+                <wc-user-icon></wc-user-icon>
             </label>
 
             <div class="flex-1 grid grid-cols-2 gap-2">
                 <button id="qs,3,0"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     0
-                    <img src="/assets/icons/bot.svg" class="size-6" alt="user">
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
                 <button id="qs,3,1"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     1
-                    <img src="/assets/icons/bot.svg" class="size-6" alt="user">
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
             </div>
         </div>
@@ -76,14 +76,14 @@ const QUICK_START_HTML = `
         <div class="flex gap-6">
             <label class="flex items-center gap-1 p-2">
                 4
-                <img src="/assets/icons/user.svg" class="size-6" alt="user">
+                <wc-user-icon></wc-user-icon>
             </label>
 
             <div class="flex-1 grid grid-cols-1 gap-2">
                 <button id="qs,4,0"
-                        class="flex-1 flex items-center gap-1 justify-center quick-start rounded p-2 bg-white shadow hover:shadow-2xl hover:bg-gray-100">
+                        class="flex-1 flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90">
                     0
-                    <img src="/assets/icons/bot.svg" class="size-6" alt="user">
+                    <wc-bot-icon></wc-bot-icon>
                 </button>
             </div>
         </div>

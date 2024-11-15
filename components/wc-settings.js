@@ -10,10 +10,29 @@ const SETTINGS_HTML = `
             <circle cx="12" cy="12" r="3"/>
         </svg>
     </button>
-    <div id="settings-container" class="fixed bg-white p-2 right-8 top-12" hidden>
-        <div>Settings</div>
+    <div id="settings-container" class="fixed flex flex-col bg-card p-2 gap-2 right-8 top-12 w-48 hidden">
+        <h1>Settings</h1>
+        <div class="text-sm flex justify-between">
+            <label for="s-theme">Theme</label>
+            <select id="s-theme" class="bg-background">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+            </select>
+        </div>
     </div>
 `
+
+/**
+ *
+ * @param {'dark'|'light'} theme
+ */
+function updateTheme(theme) {
+    const rootElement = window.document.documentElement
+    rootElement.classList.remove("dark", "light")
+    rootElement.classList.add(theme)
+
+    localStorage.setItem("theme", theme)
+}
 
 class Header extends HTMLElement {
     constructor() {
@@ -25,9 +44,23 @@ class Header extends HTMLElement {
 
         const settingsIcon = settingsElement.querySelector("#settings-icon")
         const settingsContainer = settingsElement.querySelector("#settings-container")
+
         settingsIcon.addEventListener("click", () => {
-            settingsContainer.hidden = !settingsContainer.hidden
+            if (settingsContainer.classList.contains("hidden")) {
+                settingsContainer.classList.remove("hidden")
+            } else {
+                settingsContainer.classList.add("hidden")
+            }
         })
+
+        const themeSettingElement = settingsContainer.querySelector("#s-theme");
+        themeSettingElement.addEventListener("change", ($event) => {
+            const theme = $event.target.value;
+            updateTheme(theme);
+        })
+
+        themeSettingElement.value = localStorage.getItem("theme") || "light"
+        updateTheme(themeSettingElement.value)
 
         this.appendChild(settingsElement)
     }
