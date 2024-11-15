@@ -1,6 +1,6 @@
 /**
  *
- * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'ON_DICE_ROLLED'|'AFTER_DICE_ROLLED'|'DICE_MOVED'} GameEvent
+ * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'ON_DICE_ROLLED'|'AFTER_DICE_ROLLED'|'ON_TOKEN_MOVE'|'AFTER_TOKEN_MOVE'|'DICE_MOVED'} GameEvent
  */
 
 import {GameState} from "./gamestate.js";
@@ -10,9 +10,16 @@ import {
     showGame,
     showPauseMenu,
     resumeGame,
-    animateDiceRoll, updateDiceFace, moveDice, activateToken, inactiveDice
+    animateDiceRoll,
+    updateDiceFace,
+    moveDice,
+    activateToken,
+    inactiveDice,
+    inactiveTokens,
+    activateDice,
+    getTokenContainerId
 } from "./render-logic.js";
-import {generateDiceRoll, isTokenMovable} from "./game-logic.js";
+import {generateDiceRoll, getTokenNewPosition, isTokenMovable, isUnsafePosition} from "./game-logic.js";
 
 
 /**
@@ -148,6 +155,74 @@ const gameEventHandlers = {
             }
         }
     },
+    /**
+     *
+     * @param {string} tokenId
+     */
+    ON_TOKEN_MOVE: (tokenId) => {
+        const isTokenActive = document.getElementById(tokenId).children[0].classList.contains("animate-bounce");
+        if (!isTokenActive) {
+            return
+        }
+
+        inactiveTokens();
+
+        const tokenElementIdTokens = tokenId.split("-")
+        const playerIndex = +tokenElementIdTokens[1]
+        const tokenIndex = +tokenElementIdTokens[2]
+
+
+        const tokenNewPosition = getTokenNewPosition(gameState.getCurrentPlayerTokenPositions()[tokenIndex], gameState.currentDiceRoll)
+        gameState.getCurrentPlayerTokenPositions()[tokenIndex] = tokenNewPosition
+
+        const isTripComplete = tokenNewPosition === 56
+
+        // todo: no need to check if position is one of the safe position
+        const numberOfCaptures = captureOpponentPieces(playerIndex, tokenIndex);
+        gameState.playerStates[gameState.currentPlayerIndex].captures += numberOfCaptures
+
+        updateTokenContainer(playerIndex, tokenIndex, tokenNewPosition)
+
+        const currentPlayerState = gameState.playerStates[gameState.currentPlayerIndex];
+        if (isTripComplete && currentPlayerState.isFinished()) {
+            currentPlayerState.rank = gameState.lastRank + 1
+            currentPlayerState.time = new Date().getTime() - gameState.startAt
+
+            gameState.lastRank = currentPlayerState.rank
+
+            let numberOfRemainingPlayers = 0;
+            gameState.playerStates.forEach((playerState) => {
+                if (playerState && !playerState.isFinished()) {
+                    numberOfRemainingPlayers++;
+                }
+            })
+
+            if (numberOfRemainingPlayers === 1) {
+                const lastPlayerState = gameState.playerStates.find(ps => !ps.rank)
+                lastPlayerState.rank = gameState.lastRank + 1
+                lastPlayerState.time = new Date().getTime() - gameState.startAt
+
+                document.getElementById("game-container").appendChild(
+                    document.createElement("wc-game-end")
+                )
+                document.getElementById("game").classList.add("hidden")
+            }
+        }
+
+        activateDice();
+
+        const diceElement = document.getElementById("wc-dice");
+        if (!isTripComplete && numberOfCaptures === 0 && gameState.currentDiceRoll !== 6) {
+            gameState.updateCurrentPlayer();
+        } else {
+            if (gameState.isAutoplay()) {
+                diceElement.click()
+            }
+        }
+    },
+    AFTER_TOKEN_MOVE: () => {
+
+    },
     DICE_MOVED: () => {
         if (gameState.isAutoplay()) {
             publishGameEvent("ON_DICE_ROLLED")
@@ -158,20 +233,22 @@ const gameEventHandlers = {
 
 /**
  * @param {GameEvent} gameEvent
+ * @param {any} [data]
  */
-export const publishGameEvent = (gameEvent) => {
-    window.postMessage(gameEvent);
+export const publishGameEvent = (gameEvent, data) => {
+    window.postMessage({gameEvent, data});
 }
 
 
 /**
  * @param {GameEvent} gameEvent
+ * @param {any} [data]
  */
-const handleGameEvent = (gameEvent) => {
+const handleGameEvent = ({gameEvent, data}) => {
     console.debug("handling GameEvent", gameEvent);
 
     const handler = gameEventHandlers[gameEvent]
-    handler.call()
+    handler(data)
 
     console.debug("handled GameEvent", gameEvent);
 }
@@ -181,3 +258,52 @@ window.addEventListener("message", (event) => handleGameEvent(event.data));
 document.addEventListener("DOMContentLoaded", () => {
     publishGameEvent("GAME_LOADED")
 })
+
+// todo: needs to removed from here with refactoring
+/**
+ *
+ * @param {number} currentPlayerIndex
+ * @param {number} currentTokenIndex
+ * @returns {number}
+ */
+function captureOpponentPieces(currentPlayerIndex, currentTokenIndex) {
+    const tokenPosition = gameState.playerStates[currentPlayerIndex].tokenPositions[currentTokenIndex]
+    if (isUnsafePosition(tokenPosition)) {
+        const targetPieceContainerId = getTokenContainerId(currentPlayerIndex, currentTokenIndex, tokenPosition);
+        const piecesAlreadyThere = [];
+
+        gameState.playerStates.forEach((playerState, playerIndex) => {
+            if (playerIndex !== currentPlayerIndex && playerState) {
+                playerState.tokenPositions.forEach((tokenPosition, tokenIndex) => {
+                    if (targetPieceContainerId === getTokenContainerId(playerIndex, tokenIndex, tokenPosition)) {
+                        piecesAlreadyThere.push(getTokenElementId(playerIndex, tokenIndex))
+                    }
+                })
+            }
+        })
+
+        const numberOfPieceByPlayer = new Array(4).fill(0)
+        piecesAlreadyThere.forEach(pi => {
+            numberOfPieceByPlayer[+pi.split("-")[1]] += 1
+        })
+
+        let numberOfCapture = 0
+        piecesAlreadyThere.forEach(pi => {
+            const playerIndex = +pi.split("-")[1];
+            const tokenIndex = +pi.split("-")[2];
+            if (numberOfPieceByPlayer[playerIndex] !== 2) {
+                gameState.playerStates[playerIndex].tokenPositions[tokenIndex] = -1
+                updateTokenContainer(playerIndex, tokenIndex, -1)
+                numberOfCapture++
+            }
+        })
+
+        if (numberOfCapture > 0) {
+            document.getElementById("audio-pop").play()
+        }
+
+        return numberOfCapture
+    }
+
+    return 0
+}

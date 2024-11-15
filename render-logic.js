@@ -1,4 +1,3 @@
-import {updatePiecePositionAndMove} from "./main.js";
 import {publishGameEvent} from "./game-events.js";
 
 function playPopSound() {
@@ -109,13 +108,11 @@ export function updateTokenContainer(playerIndex, tokenIndex, tokenPosition) {
 export function activateToken(tokenElementId) {
     const tokenElement = document.getElementById(tokenElementId);
     ["animate-bounce", "z-20"].forEach(c => tokenElement.children[0].classList.add(c))
-    tokenElement.addEventListener("click", updatePiecePositionAndMove)// todo: should not be imported here: updatePiecePositionAndMove
 }
 
 export function inactiveTokens() {
     document.querySelectorAll(".animate-bounce").forEach(element => {
         ["animate-bounce", "z-20"].forEach(c => element.classList.remove(c))
-        element.parentElement.removeEventListener("click", updatePiecePositionAndMove) // todo: should not be imported here: updatePiecePositionAndMove
     })
 }
 

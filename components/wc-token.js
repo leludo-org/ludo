@@ -1,4 +1,5 @@
 import {htmlToElement} from "../utils.js"
+import {publishGameEvent} from "../game-events.js";
 
 //language=HTML
 const TOKEN_HTML = (playerIndex) => `
@@ -28,11 +29,17 @@ class Token extends HTMLElement {
 
             this.classList.add("block")
 
-            const idTokens = newValue.split("-")
+            const id = newValue;
+            const idTokens = id.split("-")
             const playerIndex = idTokens[1]
             let tokenHTML = TOKEN_HTML(playerIndex);
             const tokenElement = htmlToElement(tokenHTML)
             this.appendChild(tokenElement) // fixme: if triggered multiple time would cause issues
+
+            this.addEventListener("click", () => {
+                console.log(id)
+                publishGameEvent("ON_TOKEN_MOVE", id)
+            })
         }
     }
 }
