@@ -614,8 +614,16 @@ html {
   position: relative;
 }
 
+.bottom-0 {
+  bottom: 0px;
+}
+
 .bottom-12 {
   bottom: 3rem;
+}
+
+.right-0 {
+  right: 0px;
 }
 
 .right-8 {
@@ -937,6 +945,10 @@ html {
   fill: hsl(var(--player-3));
 }
 
+.p-1 {
+  padding: 0.25rem;
+}
+
 .p-2 {
   padding: 0.5rem;
 }
@@ -965,6 +977,10 @@ html {
 
 .text-foreground {
   color: hsl(var(--foreground));
+}
+
+.text-foreground\/30 {
+  color: hsl(var(--foreground) / 0.3);
 }
 
 .text-player-0 {
