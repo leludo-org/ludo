@@ -90,15 +90,6 @@ export function updateTokenContainer(playerIndex, tokenIndex, tokenPosition) {
     const previousContainer = element.parentElement
 
     targetContainer.appendChild(element)
-    if (targetContainer.children.length > 1) {
-        element.style.marginTop = `-100%`;
-    } else {
-        element.style.marginTop = "0";
-    }
-
-    if (previousContainer.children.length > 0) {
-        previousContainer.children[0].style.marginTop = '0';
-    }
 }
 
 /**
