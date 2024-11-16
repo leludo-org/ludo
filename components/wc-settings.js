@@ -10,15 +10,14 @@ const SETTINGS_HTML = /*html*/ `
         <circle cx="12" cy="12" r="3" />
     </svg>
 </button>
-<div id="settings-container" class="fixed flex flex-col bg-card p-2 gap-2 right-8 top-12 w-48 hidden">
+<div id="settings-container" class="fixed flex flex-col bg-card p-2 gap-2 right-8 top-12 w-56 hidden">
     <h1>Settings</h1>
-    <div class="text-sm flex justify-between">
-        <label for="s-theme">Theme</label>
-        <select id="s-theme" class="bg-background">
-            <option value="system">System</option>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-        </select>
+    <div class="text-sm flex flex-col">
+        <div class="grid grid-cols-3 text-center gap-[1px] [&>input:checked+label]:bg-background [&>input]:hidden [&>label]:outline [&>label]:outline-1 [&>label]: outline-border [&>label]:p-1">
+            <input type="radio" name="s-theme" id="theme-system" value="system"> <label for="theme-system">System</label>
+            <input type="radio" name="s-theme" id="theme-light" value="light"> <label for="theme-light">Light</label>
+            <input type="radio" name="s-theme" id="theme-dark" value="dark"> <label for="theme-dark">Dark</label>
+        </div>
     </div>
 </div>
 `
@@ -63,15 +62,25 @@ class Header extends HTMLElement {
             }
         })
 
-        const themeSettingElement = settingsContainer.querySelector("#s-theme");
-        themeSettingElement.addEventListener("change", ($event) => {
-            const theme = $event.target.value;
-            updateTheme(theme);
-            settingsIcon.click() // todo: should close on outside click instead
+        settingsContainer.querySelectorAll("input[name='s-theme']").forEach((themeSettingElement) => {
+            themeSettingElement.addEventListener("click", ($event) => {
+                const theme = $event.target.value;
+                updateTheme(theme);
+            })
         })
 
-        themeSettingElement.value = localStorage.getItem("theme") || "system"
-        updateTheme(themeSettingElement.value)
+        document.addEventListener("click", ($event) => {
+            const isOutsideClick = !this.contains($event.target)
+            if (isOutsideClick) {
+                settingsIcon.click()
+            }
+        })
+
+
+        const defaultTheme = localStorage.getItem("theme") || "system"
+        updateTheme(defaultTheme)
+
+        settingsContainer.querySelector(`#theme-${defaultTheme}`).setAttribute("checked", defaultTheme)
 
         this.appendChild(settingsElement)
     }

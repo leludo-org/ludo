@@ -734,6 +734,10 @@ html {
   width: 100%;
 }
 
+.w-56 {
+  width: 14rem;
+}
+
 .min-w-full {
   min-width: 100%;
 }
@@ -1011,8 +1015,20 @@ html {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.outline {
+  outline-style: solid;
+}
+
 .\!outline-0 {
   outline-width: 0px !important;
+}
+
+.outline-1 {
+  outline-width: 1px;
+}
+
+.outline-border {
+  outline-color: hsl(var(--border));
 }
 
 .transition-all {
@@ -1045,6 +1061,47 @@ html {
 
 .\[\&\>div\]\:outline-border>div {
   outline-color: hsl(var(--border));
+}
+
+.\[\&\>input\:checked\+label\]\:bg-red-100>input:checked+label {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
+}
+
+.\[\&\>input\:checked\+label\]\:bg-background>input:checked+label {
+  background-color: hsl(var(--background));
+}
+
+.\[\&\>input\:checked\]\:inline>input:checked {
+  display: inline;
+}
+
+.\[\&\>input\]\:hidden>input {
+  display: none;
+}
+
+.\[\&\>label\]\:rounded>label {
+  border-radius: 0.25rem;
+}
+
+.\[\&\>label\]\:border>label {
+  border-width: 1px;
+}
+
+.\[\&\>label\]\:p-2>label {
+  padding: 0.5rem;
+}
+
+.\[\&\>label\]\:p-1>label {
+  padding: 0.25rem;
+}
+
+.\[\&\>label\]\:outline>label {
+  outline-style: solid;
+}
+
+.\[\&\>label\]\:outline-1>label {
+  outline-width: 1px;
 }
 
 .\[\&\>wc-token\]\:col-start-3>wc-token {
