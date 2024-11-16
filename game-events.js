@@ -17,6 +17,7 @@ import {
     inactiveDice,
     inactiveTokens,
     activateDice,
+    playPopSound,
 } from "./render-logic.js";
 import {findCapturedOpponents, generateDiceRoll, getTokenNewPosition, isTokenMovable} from "./game-logic.js";
 
@@ -189,7 +190,7 @@ const gameEventHandlers = {
         })
 
         if (captureCount > 0) {
-            document.getElementById("audio-pop").play()
+            playPopSound()
             gameState.playerStates[gameState.currentPlayerIndex].captures += captureCount
         }
 
@@ -210,7 +211,7 @@ const gameEventHandlers = {
             })
 
             if (numberOfRemainingPlayers === 1) {
-                const lastPlayerState = gameState.playerStates.find(ps => !ps.rank)
+                const lastPlayerState = gameState.playerStates.find(ps => ps && !ps.rank)
                 lastPlayerState.rank = gameState.lastRank + 1
                 lastPlayerState.time = new Date().getTime() - gameState.startAt
 

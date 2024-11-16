@@ -1,7 +1,10 @@
 import {getMarkIndex} from "./game-logic.js";
 
-function playPopSound() {
-    document.getElementById("audio-pop").play()
+export function playPopSound() {
+    const popSound = document.getElementById("audio-pop");
+    popSound.pause();
+    popSound.currentTime = 0;
+    popSound.play()
 }
 
 /**
