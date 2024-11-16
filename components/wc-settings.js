@@ -13,10 +13,14 @@ const SETTINGS_HTML = /*html*/ `
 <div id="settings-container" class="fixed flex flex-col bg-card p-2 gap-2 right-8 top-12 w-56 hidden">
     <h1>Settings</h1>
     <div class="text-sm flex flex-col">
-        <div class="grid grid-cols-3 text-center gap-[1px] [&>input:checked+label]:bg-background [&>input]:hidden [&>label]:outline [&>label]:outline-1 [&>label]: outline-border [&>label]:p-1">
-            <input type="radio" name="s-theme" id="theme-system" value="system"> <label for="theme-system">System</label>
-            <input type="radio" name="s-theme" id="theme-light" value="light"> <label for="theme-light">Light</label>
-            <input type="radio" name="s-theme" id="theme-dark" value="dark"> <label for="theme-dark">Dark</label>
+        <div class="flex flex-col gap-1">
+            <div>Theme</div>
+
+            <div class="grid grid-cols-3 text-center gap-[1px] [&>input:checked+label]:bg-background [&>input]:hidden [&>label]:outline [&>label]:outline-1 [&>label]: outline-border [&>label]:p-1">
+                <input type="radio" name="s-theme" id="theme-system" value="system"> <label for="theme-system">System</label>
+                <input type="radio" name="s-theme" id="theme-light" value="light"> <label for="theme-light">Light</label>
+                <input type="radio" name="s-theme" id="theme-dark" value="dark"> <label for="theme-dark">Dark</label>
+            </div>
         </div>
     </div>
 </div>
@@ -72,7 +76,7 @@ class Header extends HTMLElement {
         document.addEventListener("click", ($event) => {
             const isOutsideClick = !this.contains($event.target)
             if (isOutsideClick) {
-                settingsIcon.click()
+                settingsContainer.classList.add("hidden")
             }
         })
 
