@@ -80,7 +80,7 @@ class Header extends HTMLElement {
         const defaultTheme = localStorage.getItem("theme") || "system"
         updateTheme(defaultTheme)
 
-        settingsContainer.querySelector(`#theme-${defaultTheme}`).setAttribute("checked", defaultTheme)
+        settingsContainer.querySelector(`#theme-${defaultTheme}`).setAttribute("checked", "checked")
 
         this.appendChild(settingsElement)
     }
