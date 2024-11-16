@@ -210,7 +210,7 @@ const gameEventHandlers = {
             })
 
             if (numberOfRemainingPlayers === 1) {
-                const lastPlayerState = gameState.playerStates.find(ps => !ps.rank)
+                const lastPlayerState = gameState.playerStates.find(ps => ps && !ps.rank)
                 lastPlayerState.rank = gameState.lastRank + 1
                 lastPlayerState.time = new Date().getTime() - gameState.startAt
 

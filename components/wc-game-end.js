@@ -22,42 +22,56 @@ const GAME_END_HTML = /*html*/ `
         </tbody>
     </table>
     <wc-button id="play-again" button-text="Play Again"></wc-button>
-</div>`
+</div>`;
+
+/**
+ * @param {type} milliseconds
+ * @returns {string}
+ */
+function formatGameTime(milliseconds) {
+    const seconds = Math.ceil(milliseconds / 1000);
+    if (seconds < 60) {
+        return `${seconds}s`;
+    }
+    const minutes = Math.ceil(seconds / 60);
+    return `${minutes}m`;
+}
 
 class GameEnd extends HTMLElement {
     constructor() {
-        super()
+        super();
     }
 
     connectedCallback() {
-        const boardElement = htmlToElement(GAME_END_HTML)
+        const boardElement = htmlToElement(GAME_END_HTML);
         const tableBody = boardElement.querySelector("tbody");
         boardElement.querySelector("#play-again").addEventListener("click", () => {
-            window.location.href = window.location.origin
-        })
+            window.location.href = window.location.origin;
+        });
 
-        const ranks = []
+        const ranks = [];
         gameState.playerStates
             .sort((p1, p2) => p1.rank - p2.rank)
             .forEach(((playerState, playerIndex) => {
                 if (playerState) {
                     const row = htmlToElement(
                         //language=HTML
+                        /*html*/
                         `
-<tr>
-    <td>${playerState.rank}</td>
-    <td>${playerState.playerType} ${playerIndex}</td>
-    <td>${playerState.captures}</td>
-    <td>${playerState.time}</td>
-</tr>
-`
-                    )
-                    tableBody.appendChild(row)
+    <tr>
+        <td>${playerState.rank}</td>
+        <td>${playerState.playerType} ${playerIndex}</td>
+        <td>${playerState.captures}</td>
+        <td>${formatGameTime(playerState.time)}</td>
+    </tr>
+    `
+                    );
+                    tableBody.appendChild(row);
                 }
-            }))
+            }));
 
-        this.appendChild(boardElement)
+        this.appendChild(boardElement);
     }
 }
 
-window.customElements.define("wc-game-end", GameEnd)
+window.customElements.define("wc-game-end", GameEnd);
