@@ -1,4 +1,7 @@
 import {
+    publishGameEvent
+} from "../game-events.js";
+import {
     htmlToElement
 } from "../utils.js"
 
@@ -10,9 +13,9 @@ const SETTINGS_HTML = /*html*/ `
         <circle cx="12" cy="12" r="3" />
     </svg>
 </button>
-<div id="settings-container" class="fixed flex flex-col bg-card p-2 gap-2 right-8 top-12 w-56">
+<div id="settings-container" class="fixed flex flex-col bg-card p-2 gap-2 right-8 top-12 w-56 hidden">
     <h1 class="font-bold">Settings</h1>
-    <div class="text-sm flex flex-col gap-3">
+    <div class="text-sm flex flex-col gap-4">
         <div class="flex flex-col gap-1">
             <div>Theme</div>
 
@@ -91,14 +94,18 @@ class Header extends HTMLElement {
             })
         })
 
-        const defaultAssistMode = (localStorage.getItem("assist-mode") || "false") === "true"
+        const defaultAssistMode = (localStorage.getItem("assist-mode") || "false") === "true";
+
         if (defaultAssistMode) {
-            settingsContainer.querySelector("#s-assist-mode").setAttribute("checked", "checked")
+            settingsContainer.querySelector("#s-assist-mode").setAttribute("checked", "checked");
+            publishGameEvent("ASSIST_MODE_CHANGED", true);
         }
+
         settingsContainer.querySelector("#s-assist-mode").addEventListener("change", ($event) => {
-            const defaultAssistMode = $event.target.checked
-            localStorage.setItem("assist-mode", defaultAssistMode)
-        })
+            const assistMode = $event.target.checked;
+            localStorage.setItem("assist-mode", assistMode);
+            publishGameEvent("ASSIST_MODE_CHANGED", assistMode);
+        });
 
 
         this.appendChild(settingsElement)
