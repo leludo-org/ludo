@@ -1,6 +1,6 @@
 /**
  *
- * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'ON_DICE_ROLLED'|'AFTER_DICE_ROLLED'|'ON_TOKEN_MOVE'|'AFTER_TOKEN_MOVE'|'DICE_MOVED'} GameEvent
+ * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'ON_DICE_ROLLED'|'AFTER_DICE_ROLLED'|'ON_TOKEN_MOVE'|'AFTER_TOKEN_MOVE'|'DICE_MOVED'|'ASSIST_MODE_CHANGED'} GameEvent
  */
 
 import {GameState} from "./gamestate.js";
@@ -197,6 +197,7 @@ const gameEventHandlers = {
         updateTokenContainer(playerIndex, tokenIndex, tokenNewPosition)
 
         const currentPlayerState = gameState.playerStates[gameState.currentPlayerIndex];
+        let isGameDone = false;
         if (isTripComplete && currentPlayerState.isFinished()) {
             currentPlayerState.rank = gameState.lastRank + 1
             currentPlayerState.time = new Date().getTime() - gameState.startAt
@@ -219,17 +220,20 @@ const gameEventHandlers = {
                     document.createElement("wc-game-end")
                 )
                 document.getElementById("game").classList.add("hidden")
+                isGameDone = true;
             }
         }
 
-        activateDice();
+        if (!isGameDone) {
+            activateDice();
 
-        const diceElement = document.getElementById("wc-dice");
-        if (!isTripComplete && captureCount === 0 && gameState.currentDiceRoll !== 6) {
-            gameState.updateCurrentPlayer();
-        } else {
-            if (gameState.isAutoplay()) {
-                diceElement.click()
+            const diceElement = document.getElementById("wc-dice");
+            if (!isTripComplete && captureCount === 0 && gameState.currentDiceRoll !== 6) {
+                gameState.updateCurrentPlayer();
+            } else {
+                if (gameState.isAutoplay()) {
+                    diceElement.click()
+                }
             }
         }
     },
@@ -240,6 +244,13 @@ const gameEventHandlers = {
         if (gameState.isAutoplay()) {
             publishGameEvent("ON_DICE_ROLLED")
         }
+    },
+    /**
+     * @param {boolean} assistMode
+     */
+    ASSIST_MODE_CHANGED: (assistMode) => {
+        gameState.autoplay = assistMode
+        // todo: start assisting right away...
     }
 }
 

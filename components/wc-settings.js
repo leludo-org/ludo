@@ -1,4 +1,7 @@
 import {
+    publishGameEvent
+} from "../game-events.js";
+import {
     htmlToElement
 } from "../utils.js"
 
@@ -11,16 +14,23 @@ const SETTINGS_HTML = /*html*/ `
     </svg>
 </button>
 <div id="settings-container" class="fixed flex flex-col bg-card p-2 gap-2 right-8 top-12 w-56 hidden">
-    <h1>Settings</h1>
-    <div class="text-sm flex flex-col">
+    <h1 class="font-bold">Settings</h1>
+    <div class="text-sm flex flex-col gap-4">
         <div class="flex flex-col gap-1">
             <div>Theme</div>
 
-            <div class="grid grid-cols-3 text-center gap-[1px] [&>input:checked+label]:bg-background [&>input]:hidden [&>label]:outline [&>label]:outline-1 [&>label]: outline-border [&>label]:p-1">
-                <input type="radio" name="s-theme" id="theme-system" value="system"> <label for="theme-system">System</label>
-                <input type="radio" name="s-theme" id="theme-light" value="light"> <label for="theme-light">Light</label>
-                <input type="radio" name="s-theme" id="theme-dark" value="dark"> <label for="theme-dark">Dark</label>
+            <div class="grid grid-cols-3 text-center cursor-pointer gap-[1px] [&>input:checked+label]:bg-background [&>input]:hidden [&>label]:outline [&>label]:outline-1 [&>label]: outline-border [&>label]:p-1">
+                <input type="radio" name="s-theme" id="theme-system" value="system" /> <label for="theme-system">System</label>
+                <input type="radio" name="s-theme" id="theme-light" value="light" /> <label for="theme-light">Light</label>
+                <input type="radio" name="s-theme" id="theme-dark" value="dark" /> <label for="theme-dark">Dark</label>
             </div>
+        </div>
+        <div class="flex justify-between gap-1">
+            <label for="s-assist-mode" class="cursor-pointer">Asist Mode</label>
+            <input type="checkbox" id="s-assist-mode" class="hidden [&:checked+label]:justify-end" />
+            <label for="s-assist-mode" class="w-10 bg-foreground rounded-full flex items-center p-[2px] cursor-pointer">
+                <div class="size-4 rounded-full bg-background">
+            </label>
         </div>
     </div>
 </div>
@@ -66,13 +76,6 @@ class Header extends HTMLElement {
             }
         })
 
-        settingsContainer.querySelectorAll("input[name='s-theme']").forEach((themeSettingElement) => {
-            themeSettingElement.addEventListener("click", ($event) => {
-                const theme = $event.target.value;
-                updateTheme(theme);
-            })
-        })
-
         document.addEventListener("click", ($event) => {
             const isOutsideClick = !this.contains($event.target)
             if (isOutsideClick) {
@@ -83,8 +86,27 @@ class Header extends HTMLElement {
 
         const defaultTheme = localStorage.getItem("theme") || "system"
         updateTheme(defaultTheme)
-
         settingsContainer.querySelector(`#theme-${defaultTheme}`).setAttribute("checked", "checked")
+        settingsContainer.querySelectorAll("input[name='s-theme']").forEach((themeSettingElement) => {
+            themeSettingElement.addEventListener("change", ($event) => {
+                const theme = $event.target.value;
+                updateTheme(theme);
+            })
+        })
+
+        const defaultAssistMode = (localStorage.getItem("assist-mode") || "false") === "true";
+
+        if (defaultAssistMode) {
+            settingsContainer.querySelector("#s-assist-mode").setAttribute("checked", "checked");
+            publishGameEvent("ASSIST_MODE_CHANGED", true);
+        }
+
+        settingsContainer.querySelector("#s-assist-mode").addEventListener("change", ($event) => {
+            const assistMode = $event.target.checked;
+            localStorage.setItem("assist-mode", assistMode);
+            publishGameEvent("ASSIST_MODE_CHANGED", assistMode);
+        });
+
 
         this.appendChild(settingsElement)
     }

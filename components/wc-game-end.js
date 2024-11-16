@@ -25,16 +25,17 @@ const GAME_END_HTML = /*html*/ `
 </div>`;
 
 /**
- * @param {type} milliseconds
+ * @param {type} ms
  * @returns {string}
  */
-function formatGameTime(milliseconds) {
-    const seconds = Math.ceil(milliseconds / 1000);
-    if (seconds < 60) {
-        return `${seconds}s`;
-    }
-    const minutes = Math.ceil(seconds / 60);
-    return `${minutes}m`;
+function formatGameTime(ms) {
+    const seconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    return minutes > 0 ?
+        `${minutes}m ${remainingSeconds}s` :
+        `${remainingSeconds}s`;
 }
 
 class GameEnd extends HTMLElement {
@@ -58,13 +59,13 @@ class GameEnd extends HTMLElement {
                         //language=HTML
                         /*html*/
                         `
-    <tr>
-        <td>${playerState.rank}</td>
-        <td>${playerState.playerType} ${playerIndex}</td>
-        <td>${playerState.captures}</td>
-        <td>${formatGameTime(playerState.time)}</td>
-    </tr>
-    `
+<tr>
+    <td>${playerState.rank}</td>
+    <td>${playerState.playerType} ${playerIndex}</td>
+    <td>${playerState.captures}</td>
+    <td>${formatGameTime(playerState.time)}</td>
+</tr>
+`
                     );
                     tableBody.appendChild(row);
                 }
