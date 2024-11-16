@@ -1,24 +1,28 @@
-import {htmlToElement} from "../utils.js"
-import {gameState} from "../game-events.js";
+import {
+    htmlToElement
+} from "../utils.js"
+import {
+    gameState
+} from "../game-events.js";
 
 //language=HTML
-const GAME_END_HTML = `
-    <div class="display flex flex-col gap-6 text-center">
-        <div class="text-xl font-bold">Game Concluded! Final Standings</div>
-        <table class="">
-            <thead class="font-bold text-underline">
+const GAME_END_HTML = /*html*/ `
+<div class="display flex flex-col gap-6 text-center">
+    <div class="text-xl font-bold">Game Concluded! Final Standings</div>
+    <table class="">
+        <thead class="font-bold text-underline">
             <tr>
                 <td>Rank</td>
                 <td>Player</td>
                 <td>Captures</td>
                 <td>Time</td>
             </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-        <wc-button id="play-again" button-text="Play Again"></wc-button>
-    </div>`
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <wc-button id="play-again" button-text="Play Again"></wc-button>
+</div>`
 
 class GameEnd extends HTMLElement {
     constructor() {
@@ -40,13 +44,13 @@ class GameEnd extends HTMLElement {
                     const row = htmlToElement(
                         //language=HTML
                         `
-                            <tr>
-                                <td>${playerState.rank}</td>
-                                <td>${playerState.playerType} ${playerIndex}</td>
-                                <td>${playerState.captures}</td>
-                                <td>${playerState.time}</td>
-                            </tr>
-                        `
+<tr>
+    <td>${playerState.rank}</td>
+    <td>${playerState.playerType} ${playerIndex}</td>
+    <td>${playerState.captures}</td>
+    <td>${playerState.time}</td>
+</tr>
+`
                     )
                     tableBody.appendChild(row)
                 }

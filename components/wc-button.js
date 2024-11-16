@@ -1,9 +1,11 @@
-import {htmlToElement} from "../utils.js"
+import {
+    htmlToElement
+} from "../utils.js"
 
 //language=HTML
-const BUTTON_HTML = `
-    <div class="rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90 cursor-pointer">
-    </div>
+const BUTTON_HTML = /*html*/ `
+<div class="rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90 cursor-pointer">
+</div>
 `
 
 class Button extends HTMLElement {
