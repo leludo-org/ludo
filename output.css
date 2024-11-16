@@ -775,6 +775,11 @@ html {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.-rotate-45 {
+  --tw-rotate: -45deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 @keyframes bounce {
   0%, 100% {
     transform: translateY(-25%);
@@ -1120,12 +1125,52 @@ html {
   margin-top: -100%;
 }
 
+.\[\&\>wc-token\:nth-of-type\(2\)\]\:mt-\[-200\%\]>wc-token:nth-of-type(2) {
+  margin-top: -200%;
+}
+
+.\[\&\>wc-token\:nth-of-type\(2\)\]\:mr-\[-200\%\]>wc-token:nth-of-type(2) {
+  margin-right: -200%;
+}
+
+.\[\&\>wc-token\:nth-of-type\(2\)\]\:ml-\[-200\%\]>wc-token:nth-of-type(2) {
+  margin-left: -200%;
+}
+
 .\[\&\>wc-token\:nth-of-type\(3\)\]\:mt-\[-400\%\]>wc-token:nth-of-type(3) {
   margin-top: -400%;
 }
 
+.\[\&\>wc-token\:nth-of-type\(3\)\]\:mr-\[-400\%\]>wc-token:nth-of-type(3) {
+  margin-right: -400%;
+}
+
+.\[\&\>wc-token\:nth-of-type\(3\)\]\:ml-\[-400\%\]>wc-token:nth-of-type(3) {
+  margin-left: -400%;
+}
+
 .\[\&\>wc-token\:nth-of-type\(4\)\]\:mt-\[-600\%\]>wc-token:nth-of-type(4) {
   margin-top: -600%;
+}
+
+.\[\&\>wc-token\:nth-of-type\(4\)\]\:mt-\[-500\%\]>wc-token:nth-of-type(4) {
+  margin-top: -500%;
+}
+
+.\[\&\>wc-token\:nth-of-type\(4\)\]\:mr-\[-500\%\]>wc-token:nth-of-type(4) {
+  margin-right: -500%;
+}
+
+.\[\&\>wc-token\:nth-of-type\(4\)\]\:ml-\[-500\%\]>wc-token:nth-of-type(4) {
+  margin-left: -500%;
+}
+
+.\[\&\>wc-token\:nth-of-type\(4\)\]\:mt-\[-100\%\]>wc-token:nth-of-type(4) {
+  margin-top: -100%;
+}
+
+.\[\&\>wc-token\:nth-of-type\(4\)\]\:mt-\[-200\%\]>wc-token:nth-of-type(4) {
+  margin-top: -200%;
 }
 
 .\[\&\>wc-token\:nth-of-type\]\:col-start-3>wc-token:nth-of-type {
@@ -1140,7 +1185,16 @@ html {
   grid-row-start: 3;
 }
 
+.\[\&\>wc-token\]\:mt-\[200\%\]>wc-token {
+  margin-top: 200%;
+}
+
 .\[\&\>wc-token\]\:-rotate-45>wc-token {
   --tw-rotate: -45deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.\[\&\>wc-token\]\:rotate-45>wc-token {
+  --tw-rotate: 45deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }

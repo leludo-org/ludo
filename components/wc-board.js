@@ -119,10 +119,10 @@ const BOARD_HTML = /*html*/ `
 
     <!-- todo: needs to be precise -->
     <div class="relative overflow-clip">
-        <div id="p0s6" class="absolute size-full  bg-player-0 rotate-45 -translate-x-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token]:col-start-3 [&>wc-token:nth-of-type(1)]:mt-0 [&>wc-token:nth-of-type(2)]:mt-[-100%] [&>wc-token:nth-of-type(3)]:mt-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-600%]"></div>
+        <div id="p0s6" class="absolute size-full  bg-player-0 rotate-45 -translate-x-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token]:col-start-3 [&>wc-token:nth-of-type(2)]:mt-[-200%] [&>wc-token:nth-of-type(3)]:mt-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-500%]"></div>
         <div id="p1s6" class="absolute size-full  bg-player-1 rotate-45 -translate-y-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token]:col-start-3 [&>wc-token]:row-start-3"></div>
-        <div id="p3s6" class="absolute size-full  bg-player-3 rotate-45 translate-y-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45"></div>
-        <div id="p2s6" class="absolute size-full  bg-player-2 rotate-45 translate-x-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token]:row-start-3"></div>
+        <div id="p3s6" class="absolute size-full  bg-player-3 rotate-45 translate-y-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token:nth-of-type(2)]:ml-[-200%] [&>wc-token:nth-of-type(3)]:ml-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-200%]"></div>
+        <div id="p2s6" class="absolute size-full  bg-player-2 -rotate-45 translate-x-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:rotate-45 [&>wc-token:nth-of-type(2)]:ml-[-200%] [&>wc-token:nth-of-type(3)]:ml-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-200%]"></div>
     </div>
 
     <div class="-x col-span-2 grid grid-cols-6 grid-rows-3 gap-[1px] [&>div]:outline [&>div]:outline-1 [&>div]:outline-border">
