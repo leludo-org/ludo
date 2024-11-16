@@ -1104,6 +1104,34 @@ html {
   outline-width: 1px;
 }
 
+.\[\&\>wc-token\:not\(\:first-child\)\]\:mt-\[-100\%\]>wc-token:not(:first-child) {
+  margin-top: -100%;
+}
+
+.\[\&\>wc-token\:nth-of-type\(1\)\:mt-0\]\:col-start-3>wc-token:nth-of-type(1):mt-0 {
+  grid-column-start: 3;
+}
+
+.\[\&\>wc-token\:nth-of-type\(1\)\]\:mt-0>wc-token:nth-of-type(1) {
+  margin-top: 0px;
+}
+
+.\[\&\>wc-token\:nth-of-type\(2\)\]\:mt-\[-100\%\]>wc-token:nth-of-type(2) {
+  margin-top: -100%;
+}
+
+.\[\&\>wc-token\:nth-of-type\(3\)\]\:mt-\[-400\%\]>wc-token:nth-of-type(3) {
+  margin-top: -400%;
+}
+
+.\[\&\>wc-token\:nth-of-type\(4\)\]\:mt-\[-600\%\]>wc-token:nth-of-type(4) {
+  margin-top: -600%;
+}
+
+.\[\&\>wc-token\:nth-of-type\]\:col-start-3>wc-token:nth-of-type {
+  grid-column-start: 3;
+}
+
 .\[\&\>wc-token\]\:col-start-3>wc-token {
   grid-column-start: 3;
 }
