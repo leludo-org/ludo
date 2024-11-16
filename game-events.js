@@ -17,6 +17,7 @@ import {
     inactiveDice,
     inactiveTokens,
     activateDice,
+    playPopSound,
 } from "./render-logic.js";
 import {findCapturedOpponents, generateDiceRoll, getTokenNewPosition, isTokenMovable} from "./game-logic.js";
 
@@ -189,7 +190,7 @@ const gameEventHandlers = {
         })
 
         if (captureCount > 0) {
-            document.getElementById("audio-pop").play()
+            playPopSound()
             gameState.playerStates[gameState.currentPlayerIndex].captures += captureCount
         }
 
