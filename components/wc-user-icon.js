@@ -1,6 +1,6 @@
 import {
     htmlToElement
-} from "./index.v0.2.0.js"
+} from "./index.js"
 
 //language=HTML
 const USER_ICON_SVG = /*html*/ `

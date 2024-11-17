@@ -1,4 +1,4 @@
-import {getMarkIndex} from "./index.v0.2.0.js";
+import {getMarkIndex} from "./index.js";
 
 export function playPopSound() {
     const popSound = document.getElementById("audio-pop");
