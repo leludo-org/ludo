@@ -3,8 +3,9 @@
  * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'ON_DICE_ROLLED'|'AFTER_DICE_ROLLED'|'ON_TOKEN_MOVE'|'AFTER_TOKEN_MOVE'|'DICE_MOVED'|'ASSIST_MODE_CHANGED'} GameEvent
  */
 
-import {GameState} from "./game-state.js";
 import {
+    GameState,
+
     getTokenElementId,
     updateTokenContainer,
     showGame,
@@ -18,14 +19,13 @@ import {
     inactiveTokens,
     activateDice,
     playPopSound,
-} from "./render-logic.js";
-import {
+
     findCapturedOpponents,
     generateDiceRoll,
     getTokenNewPosition,
     isTokenMovable,
     isTripComplete
-} from "./game-logic.js";
+} from "./index.js";
 
 
 /**
@@ -49,8 +49,7 @@ const gameEventHandlers = {
                 publishGameEvent("GAME_STARTED")
             })
         })
-    },
-    GAME_STARTED: () => {
+    }, GAME_STARTED: () => {
         showGame();
 
         document.getElementById("g-pause").addEventListener("click", () => {
@@ -85,8 +84,7 @@ const gameEventHandlers = {
         if (gameState.isAutoplay()) {
             publishGameEvent("ON_DICE_ROLLED")
         }
-    },
-    GAME_PAUSED: () => {
+    }, GAME_PAUSED: () => {
         showPauseMenu();
 
         document.getElementById("pm-resume").addEventListener("click", resumeGame)
@@ -96,13 +94,11 @@ const gameEventHandlers = {
                 window.location.href = window.location.origin
             })
         })
-    },
-    PLAYER_UPDATED: () => {
+    }, PLAYER_UPDATED: () => {
         const targetContainerId = `b${gameState.currentPlayerIndex}`
         moveDice(targetContainerId)
         publishGameEvent("DICE_MOVED")
-    },
-    ON_DICE_ROLLED: () => {
+    }, ON_DICE_ROLLED: () => {
         animateDiceRoll(gameState.currentDiceRoll)
             .then(() => {
                 const lastDiceRoll = gameState.currentDiceRoll
@@ -116,8 +112,7 @@ const gameEventHandlers = {
 
                 publishGameEvent("AFTER_DICE_ROLLED")
             });
-    },
-    AFTER_DICE_ROLLED: () => {
+    }, AFTER_DICE_ROLLED: () => {
         if (gameState.consecutiveSixesCount === 3) {
             gameState.updateCurrentPlayer()
         } else {
@@ -156,8 +151,7 @@ const gameEventHandlers = {
                 gameState.updateCurrentPlayer()
             }
         }
-    },
-    /**
+    }, /**
      *
      * @param {string} tokenId
      */
@@ -192,8 +186,7 @@ const gameEventHandlers = {
         updateTokenContainer(playerIndex, tokenIndex, tokenNewPosition)
 
         publishGameEvent("AFTER_TOKEN_MOVE", {tripComplete, captureCount}) // todo: need to avoid passing data here
-    },
-    /**
+    }, /**
      *
      * @param {boolean} tripComplete
      * @param {number} captureCount
@@ -220,9 +213,7 @@ const gameEventHandlers = {
                 lastPlayerState.rank = gameState.lastRank + 1
                 lastPlayerState.time = new Date().getTime() - gameState.startAt
 
-                document.getElementById("game-container").appendChild(
-                    document.createElement("wc-game-end")
-                )
+                document.getElementById("game-container").appendChild(document.createElement("wc-game-end"))
                 document.getElementById("game").classList.add("hidden")
                 isGameDone = true;
             }
@@ -240,13 +231,11 @@ const gameEventHandlers = {
                 }
             }
         }
-    },
-    DICE_MOVED: () => {
+    }, DICE_MOVED: () => {
         if (gameState.isAutoplay()) {
             publishGameEvent("ON_DICE_ROLLED")
         }
-    },
-    /**
+    }, /**
      * @param {boolean} assistMode
      */
     ASSIST_MODE_CHANGED: (assistMode) => {

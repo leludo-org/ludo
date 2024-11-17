@@ -1,6 +1,6 @@
 import {
     htmlToElement
-} from "./utils.js"
+} from "./index.js"
 import {
     gameState
 } from "../scripts/game-events.js";

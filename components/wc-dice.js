@@ -1,9 +1,9 @@
 import {
     htmlToElement
-} from "./utils.js"
+} from "./index.js"
 import {
     publishGameEvent
-} from "../scripts/game-events.js";
+} from "../scripts/index.js";
 
 //language=HTML
 const DICE_HTML = /*html*/ `

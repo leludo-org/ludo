@@ -1,4 +1,4 @@
-import {getMarkIndex} from "./game-logic.js";
+import {getMarkIndex} from "./index.js";
 
 export function playPopSound() {
     const popSound = document.getElementById("audio-pop");
