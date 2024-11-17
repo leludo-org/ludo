@@ -569,7 +569,7 @@ video {
   --border: 0 0% 100%;
   --background: 224 71.4% 4.1%;
   --foreground: 210 20% 98%;
-  --card: 0, 0%, 18%;
+  --card: 0 0% 18%;
 }
 
 /* latin */
@@ -616,10 +616,6 @@ html {
 
 .bottom-0 {
   bottom: 0px;
-}
-
-.bottom-12 {
-  bottom: 3rem;
 }
 
 .right-0 {
@@ -873,6 +869,10 @@ html {
   gap: 0.25rem;
 }
 
+.gap-12 {
+  gap: 3rem;
+}
+
 .gap-2 {
   gap: 0.5rem;
 }
@@ -1065,8 +1065,8 @@ html {
   transition-duration: 200ms;
 }
 
-.hover\:bg-card\/90:hover {
-  background-color: hsl(var(--card) / 0.9);
+.hover\:bg-card\/80:hover {
+  background-color: hsl(var(--card) / 0.8);
 }
 
 .hover\:shadow-2xl:hover {
