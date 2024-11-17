@@ -1,9 +1,9 @@
 import {
     htmlToElement
-} from "../utils.js"
+} from "./utils.js"
 import {
     publishGameEvent
-} from "../game-events.js";
+} from "../scripts/game-events.js";
 
 //language=HTML
 const TOKEN_HTML = (playerIndex) => /*html*/ `

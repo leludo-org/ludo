@@ -1,6 +1,6 @@
 import {
     htmlToElement
-} from "../utils.js"
+} from "./utils.js"
 
 //language=HTML
 const BOARD_HTML = /*html*/ `

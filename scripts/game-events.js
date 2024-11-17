@@ -3,7 +3,7 @@
  * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'ON_DICE_ROLLED'|'AFTER_DICE_ROLLED'|'ON_TOKEN_MOVE'|'AFTER_TOKEN_MOVE'|'DICE_MOVED'|'ASSIST_MODE_CHANGED'} GameEvent
  */
 
-import {GameState} from "./gamestate.js";
+import {GameState} from "./game-state.js";
 import {
     getTokenElementId,
     updateTokenContainer,
