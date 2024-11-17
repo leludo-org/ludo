@@ -1065,10 +1065,6 @@ html {
   transition-duration: 200ms;
 }
 
-.hover\:bg-card\/90:hover {
-  background-color: hsl(var(--card) / 0.9);
-}
-
 .hover\:bg-card\/80:hover {
   background-color: hsl(var(--card) / 0.8);
 }
