@@ -25,7 +25,7 @@ import {
     getTokenNewPosition,
     isTokenMovable,
     isTripComplete
-} from "./index.js";
+} from "./index.v0.2.0.js";
 
 
 /**

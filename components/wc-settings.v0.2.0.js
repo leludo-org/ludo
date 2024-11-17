@@ -1,9 +1,9 @@
 import {
     publishGameEvent
-} from "../scripts/index.js";
+} from "../scripts/index.v0.2.0.js";
 import {
     htmlToElement
-} from "./index.js"
+} from "./index.v0.2.0.js"
 
 //language=HTML
 const SETTINGS_HTML = /*html*/ `

@@ -2,7 +2,7 @@
  * @typedef {'PLAYER'|'BOT'} PlayerType
  */
 
-import {publishGameEvent} from "./index.js";
+import {publishGameEvent} from "./index.v0.2.0.js";
 
 class PlayerState {
 

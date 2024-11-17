@@ -9,7 +9,7 @@
  * @property {function} equal
  */
 
-import {isTokenMovable, isSafePosition} from "../scripts/game-logic.js";
+import {isTokenMovable, isSafePosition} from "../scripts/game-logic.v0.2.0.js";
 
 QUnit.module('game-logic', function () {
     QUnit.test('is token movable - home, less than 6', function (assert) {
