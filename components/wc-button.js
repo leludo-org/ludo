@@ -4,7 +4,7 @@ import {
 
 //language=HTML
 const BUTTON_HTML = /*html*/ `
-<div class="rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90 cursor-pointer">
+<div class="rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/90 cursor-pointer text-center">
 </div>
 `
 
