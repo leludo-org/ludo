@@ -120,7 +120,7 @@ const BOARD_HTML = /*html*/ `
             </div>
 
             <!-- todo: needs to be precise -->
-            <div class="relative overflow-clip">
+            <div class="relative overflow-clip [&>div]:outline [&>div]:outline-1 [&>div]:outline-border">
                 <div id="p0s6"
                      class="absolute size-full  bg-player-0 rotate-45 -translate-x-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token]:col-start-3 [&>wc-token:nth-of-type(2)]:mt-[-200%] [&>wc-token:nth-of-type(3)]:mt-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-500%]"></div>
                 <div id="p1s6"
