@@ -53,7 +53,12 @@ class Dice extends HTMLElement {
         const diceElement = htmlToElement(DICE_HTML)
         this.appendChild(diceElement)
 
-        this.addEventListener("click", () => publishGameEvent("ON_DICE_ROLLED"))
+        this.addEventListener("click", () => {
+            const isDiceActive = this.classList.contains("animate-bounce");
+            if (isDiceActive) {
+                publishGameEvent("ON_DICE_ROLLED")
+            }
+        })
     }
 }
 

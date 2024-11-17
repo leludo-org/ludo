@@ -38,7 +38,12 @@ class Token extends HTMLElement {
             const tokenElement = htmlToElement(tokenHTML)
             this.appendChild(tokenElement) // fixme: if triggered multiple time would cause issues
 
-            this.addEventListener("click", () => publishGameEvent("ON_TOKEN_MOVE", id))
+            this.addEventListener("click", () => {
+                const isTokenActive = this.children[0].classList.contains("animate-bounce");
+                if (isTokenActive) {
+                    publishGameEvent("ON_TOKEN_MOVE", id)
+                }
+            })
         }
     }
 }

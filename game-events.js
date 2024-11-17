@@ -97,11 +97,6 @@ const gameEventHandlers = {
         publishGameEvent("DICE_MOVED")
     },
     ON_DICE_ROLLED: () => {
-        const isDiceActive = document.getElementById("wc-dice").classList.contains("animate-bounce");
-        if (!isDiceActive) {
-            return
-        }
-
         animateDiceRoll(gameState.currentDiceRoll)
             .then(() => {
                 const lastDiceRoll = gameState.currentDiceRoll
@@ -161,11 +156,6 @@ const gameEventHandlers = {
      * @param {string} tokenId
      */
     ON_TOKEN_MOVE: (tokenId) => {
-        const isTokenActive = document.getElementById(tokenId).children[0].classList.contains("animate-bounce");
-        if (!isTokenActive) {
-            return
-        }
-
         inactiveTokens();
 
         const tokenElementIdTokens = tokenId.split("-")
