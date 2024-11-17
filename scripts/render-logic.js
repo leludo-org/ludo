@@ -82,17 +82,21 @@ export function animateDiceRoll(currentDiceRoll) {
  * @param {number} playerIndex
  * @param {number} tokenIndex
  * @param {number} tokenPosition
+ * @returns {Promise<void>}
  */
 export function updateTokenContainer(playerIndex, tokenIndex, tokenPosition) {
-    const targetContainerId = getTokenContainerId(playerIndex, tokenIndex, tokenPosition)
+    return new Promise((resolve) => {
+        const targetContainerId = getTokenContainerId(playerIndex, tokenIndex, tokenPosition)
 
-    const tokenElementId = getTokenElementId(playerIndex, tokenIndex)
-    const element = document.getElementById(tokenElementId)
-    const targetContainer = document.getElementById(targetContainerId)
+        const tokenElementId = getTokenElementId(playerIndex, tokenIndex)
+        const element = document.getElementById(tokenElementId)
+        const targetContainer = document.getElementById(targetContainerId)
 
-    const previousContainer = element.parentElement
+        const previousContainer = element.parentElement
 
-    targetContainer.appendChild(element)
+        targetContainer.appendChild(element)
+        resolve()
+    })
 }
 
 /**

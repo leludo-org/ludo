@@ -68,7 +68,7 @@ const gameEventHandlers = {
 
                     if (initPositions && initPositions[(playerIndex * 4) + tokenIndex] !== undefined) {
                         playerState.tokenPositions[tokenIndex] = +initPositions[(playerIndex * 4) + tokenIndex]
-                        updateTokenContainer(playerIndex, tokenIndex, playerState.tokenPositions[tokenIndex])
+                        updateTokenContainer(playerIndex, tokenIndex, playerState.tokenPositions[tokenIndex]).then()
                     }
                 })
             }
@@ -183,9 +183,9 @@ const gameEventHandlers = {
             gameState.playerStates[gameState.currentPlayerIndex].captures += captureCount
         }
 
-        updateTokenContainer(playerIndex, tokenIndex, tokenNewPosition)
-
-        publishGameEvent("AFTER_TOKEN_MOVE", {tripComplete, captureCount}) // todo: need to avoid passing data here
+        updateTokenContainer(playerIndex, tokenIndex, tokenNewPosition).then(() => {
+            publishGameEvent("AFTER_TOKEN_MOVE", {tripComplete, captureCount}) // todo: need to avoid passing data here
+        })
     }, /**
      *
      * @param {boolean} tripComplete
