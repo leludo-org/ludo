@@ -29,7 +29,7 @@ class Token extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === "id") {
 
-            this.classList.add("block")
+            ["block", "transition-transform"].forEach(c => this.classList.add(c))
 
             const id = newValue;
             const idTokens = id.split("-")

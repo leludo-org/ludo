@@ -81,18 +81,36 @@ export function animateDiceRoll(currentDiceRoll) {
  *
  * @param {number} playerIndex
  * @param {number} tokenIndex
- * @param {number} tokenPosition
+ * @param {number} currentTokenPosition
+ * @param {number} newTokenPosition
+ * @returns {Promise<void>}
  */
-export function updateTokenContainer(playerIndex, tokenIndex, tokenPosition) {
-    const targetContainerId = getTokenContainerId(playerIndex, tokenIndex, tokenPosition)
+export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPosition, newTokenPosition) {
+    let nextTokenPosition = [-1, 0].includes(newTokenPosition) ? newTokenPosition : currentTokenPosition + 1;
+    return new Promise((resolve) => {
+        const newContainerId = getTokenContainerId(playerIndex, tokenIndex, nextTokenPosition)
 
-    const tokenElementId = getTokenElementId(playerIndex, tokenIndex)
-    const element = document.getElementById(tokenElementId)
-    const targetContainer = document.getElementById(targetContainerId)
+        const tokenElementId = getTokenElementId(playerIndex, tokenIndex)
+        const element = document.getElementById(tokenElementId)
+        const targetContainer = document.getElementById(newContainerId)
 
-    const previousContainer = element.parentElement
+        const initialPosition = element.getBoundingClientRect()
+        const finalPosition = targetContainer.getBoundingClientRect()
 
-    targetContainer.appendChild(element)
+        const offsetX = finalPosition.left - initialPosition.left
+        const offsetY = finalPosition.top - initialPosition.top
+
+        element.style.transform = `translate(${offsetX}px, ${offsetY}px)`
+        setTimeout(() => {
+            element.style.removeProperty("transform");
+            targetContainer.appendChild(element)
+            if (nextTokenPosition === newTokenPosition) {
+                resolve()
+            } else {
+                return updateTokenContainer(playerIndex, tokenIndex, nextTokenPosition, newTokenPosition).then(() => resolve())
+            }
+        }, 120)
+    })
 }
 
 /**

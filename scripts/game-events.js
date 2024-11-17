@@ -68,7 +68,7 @@ const gameEventHandlers = {
 
                     if (initPositions && initPositions[(playerIndex * 4) + tokenIndex] !== undefined) {
                         playerState.tokenPositions[tokenIndex] = +initPositions[(playerIndex * 4) + tokenIndex]
-                        updateTokenContainer(playerIndex, tokenIndex, playerState.tokenPositions[tokenIndex])
+                        updateTokenContainer(playerIndex, tokenIndex, -1, playerState.tokenPositions[tokenIndex]).then()
                     }
                 })
             }
@@ -163,6 +163,7 @@ const gameEventHandlers = {
         const tokenIndex = +tokenElementIdTokens[2]
 
 
+        const tokenOldPosition = gameState.getCurrentPlayerTokenPositions()[tokenIndex]
         const tokenNewPosition = getTokenNewPosition(gameState.getCurrentPlayerTokenPositions()[tokenIndex], gameState.currentDiceRoll)
         gameState.getCurrentPlayerTokenPositions()[tokenIndex] = tokenNewPosition
 
@@ -172,8 +173,8 @@ const gameEventHandlers = {
         let captureCount = 0
         otherPlayerTokensOnThatMarkIndex.forEach((pt, pi) => {
             pt.forEach((ti) => {
+                updateTokenContainer(pi, ti, gameState.playerStates[pi].tokenPositions[ti], -1).then()
                 gameState.playerStates[pi].tokenPositions[ti] = -1
-                updateTokenContainer(pi, ti, -1)
                 captureCount++
             })
         })
@@ -183,9 +184,9 @@ const gameEventHandlers = {
             gameState.playerStates[gameState.currentPlayerIndex].captures += captureCount
         }
 
-        updateTokenContainer(playerIndex, tokenIndex, tokenNewPosition)
-
-        publishGameEvent("AFTER_TOKEN_MOVE", {tripComplete, captureCount}) // todo: need to avoid passing data here
+        updateTokenContainer(playerIndex, tokenIndex, tokenOldPosition, tokenNewPosition).then(() => {
+            publishGameEvent("AFTER_TOKEN_MOVE", {tripComplete, captureCount}) // todo: need to avoid passing data here
+        })
     }, /**
      *
      * @param {boolean} tripComplete
