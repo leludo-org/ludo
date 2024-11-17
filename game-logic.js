@@ -98,3 +98,12 @@ export function findCapturedOpponents(playerIndex, tokenIndex, tokenPositions) {
 
     return otherPlayerTokensOnThatMarkIndex
 }
+
+/**
+ *
+ * @param {number} tokenPosition
+ * @returns {boolean}
+ */
+export function isTripComplete(tokenPosition) {
+    return tokenPosition === 56;
+}

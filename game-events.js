@@ -19,7 +19,13 @@ import {
     activateDice,
     playPopSound,
 } from "./render-logic.js";
-import {findCapturedOpponents, generateDiceRoll, getTokenNewPosition, isTokenMovable} from "./game-logic.js";
+import {
+    findCapturedOpponents,
+    generateDiceRoll,
+    getTokenNewPosition,
+    isTokenMovable,
+    isTripComplete
+} from "./game-logic.js";
 
 
 /**
@@ -166,9 +172,8 @@ const gameEventHandlers = {
         const tokenNewPosition = getTokenNewPosition(gameState.getCurrentPlayerTokenPositions()[tokenIndex], gameState.currentDiceRoll)
         gameState.getCurrentPlayerTokenPositions()[tokenIndex] = tokenNewPosition
 
-        const isTripComplete = tokenNewPosition === 56
+        const tripComplete = isTripComplete(tokenNewPosition)
 
-        // todo: no need to check if position is one of the safe position
         const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, tokenIndex, gameState.playerStates.map(ps => ps?.tokenPositions));
         let captureCount = 0
         otherPlayerTokensOnThatMarkIndex.forEach((pt, pi) => {
@@ -186,9 +191,18 @@ const gameEventHandlers = {
 
         updateTokenContainer(playerIndex, tokenIndex, tokenNewPosition)
 
+        publishGameEvent("AFTER_TOKEN_MOVE", {tripComplete, captureCount}) // todo: need to avoid passing data here
+    },
+    /**
+     *
+     * @param {boolean} tripComplete
+     * @param {number} captureCount
+     * @constructor
+     */
+    AFTER_TOKEN_MOVE: ({tripComplete, captureCount}) => {
         const currentPlayerState = gameState.playerStates[gameState.currentPlayerIndex];
         let isGameDone = false;
-        if (isTripComplete && currentPlayerState.isFinished()) {
+        if (tripComplete && currentPlayerState.isFinished()) {
             currentPlayerState.rank = gameState.lastRank + 1
             currentPlayerState.time = new Date().getTime() - gameState.startAt
 
@@ -218,7 +232,7 @@ const gameEventHandlers = {
             activateDice();
 
             const diceElement = document.getElementById("wc-dice");
-            if (!isTripComplete && captureCount === 0 && gameState.currentDiceRoll !== 6) {
+            if (!tripComplete && captureCount === 0 && gameState.currentDiceRoll !== 6) {
                 gameState.updateCurrentPlayer();
             } else {
                 if (gameState.isAutoplay()) {
@@ -226,9 +240,6 @@ const gameEventHandlers = {
                 }
             }
         }
-    },
-    AFTER_TOKEN_MOVE: () => {
-
     },
     DICE_MOVED: () => {
         if (gameState.isAutoplay()) {
