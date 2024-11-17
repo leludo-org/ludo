@@ -1,6 +1,6 @@
 import {
     htmlToElement
-} from "../utils.js"
+} from "./index.js"
 
 //language=HTML
 const BOT_ICON_SVG = /*html*/ `

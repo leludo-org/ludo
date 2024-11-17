@@ -3,8 +3,9 @@
  * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'ON_DICE_ROLLED'|'AFTER_DICE_ROLLED'|'ON_TOKEN_MOVE'|'AFTER_TOKEN_MOVE'|'DICE_MOVED'|'ASSIST_MODE_CHANGED'} GameEvent
  */
 
-import {GameState} from "./gamestate.js";
 import {
+    GameState,
+
     getTokenElementId,
     updateTokenContainer,
     showGame,
@@ -18,8 +19,13 @@ import {
     inactiveTokens,
     activateDice,
     playPopSound,
-} from "./render-logic.js";
-import {findCapturedOpponents, generateDiceRoll, getTokenNewPosition, isTokenMovable} from "./game-logic.js";
+
+    findCapturedOpponents,
+    generateDiceRoll,
+    getTokenNewPosition,
+    isTokenMovable,
+    isTripComplete
+} from "./index.js";
 
 
 /**
@@ -43,8 +49,7 @@ const gameEventHandlers = {
                 publishGameEvent("GAME_STARTED")
             })
         })
-    },
-    GAME_STARTED: () => {
+    }, GAME_STARTED: () => {
         showGame();
 
         document.getElementById("g-pause").addEventListener("click", () => {
@@ -79,8 +84,7 @@ const gameEventHandlers = {
         if (gameState.isAutoplay()) {
             publishGameEvent("ON_DICE_ROLLED")
         }
-    },
-    GAME_PAUSED: () => {
+    }, GAME_PAUSED: () => {
         showPauseMenu();
 
         document.getElementById("pm-resume").addEventListener("click", resumeGame)
@@ -90,18 +94,11 @@ const gameEventHandlers = {
                 window.location.href = window.location.origin
             })
         })
-    },
-    PLAYER_UPDATED: () => {
+    }, PLAYER_UPDATED: () => {
         const targetContainerId = `b${gameState.currentPlayerIndex}`
         moveDice(targetContainerId)
         publishGameEvent("DICE_MOVED")
-    },
-    ON_DICE_ROLLED: () => {
-        const isDiceActive = document.getElementById("wc-dice").classList.contains("animate-bounce");
-        if (!isDiceActive) {
-            return
-        }
-
+    }, ON_DICE_ROLLED: () => {
         animateDiceRoll(gameState.currentDiceRoll)
             .then(() => {
                 const lastDiceRoll = gameState.currentDiceRoll
@@ -115,8 +112,7 @@ const gameEventHandlers = {
 
                 publishGameEvent("AFTER_DICE_ROLLED")
             });
-    },
-    AFTER_DICE_ROLLED: () => {
+    }, AFTER_DICE_ROLLED: () => {
         if (gameState.consecutiveSixesCount === 3) {
             gameState.updateCurrentPlayer()
         } else {
@@ -155,17 +151,11 @@ const gameEventHandlers = {
                 gameState.updateCurrentPlayer()
             }
         }
-    },
-    /**
+    }, /**
      *
      * @param {string} tokenId
      */
     ON_TOKEN_MOVE: (tokenId) => {
-        const isTokenActive = document.getElementById(tokenId).children[0].classList.contains("animate-bounce");
-        if (!isTokenActive) {
-            return
-        }
-
         inactiveTokens();
 
         const tokenElementIdTokens = tokenId.split("-")
@@ -176,9 +166,8 @@ const gameEventHandlers = {
         const tokenNewPosition = getTokenNewPosition(gameState.getCurrentPlayerTokenPositions()[tokenIndex], gameState.currentDiceRoll)
         gameState.getCurrentPlayerTokenPositions()[tokenIndex] = tokenNewPosition
 
-        const isTripComplete = tokenNewPosition === 56
+        const tripComplete = isTripComplete(tokenNewPosition)
 
-        // todo: no need to check if position is one of the safe position
         const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, tokenIndex, gameState.playerStates.map(ps => ps?.tokenPositions));
         let captureCount = 0
         otherPlayerTokensOnThatMarkIndex.forEach((pt, pi) => {
@@ -196,9 +185,17 @@ const gameEventHandlers = {
 
         updateTokenContainer(playerIndex, tokenIndex, tokenNewPosition)
 
+        publishGameEvent("AFTER_TOKEN_MOVE", {tripComplete, captureCount}) // todo: need to avoid passing data here
+    }, /**
+     *
+     * @param {boolean} tripComplete
+     * @param {number} captureCount
+     * @constructor
+     */
+    AFTER_TOKEN_MOVE: ({tripComplete, captureCount}) => {
         const currentPlayerState = gameState.playerStates[gameState.currentPlayerIndex];
         let isGameDone = false;
-        if (isTripComplete && currentPlayerState.isFinished()) {
+        if (tripComplete && currentPlayerState.isFinished()) {
             currentPlayerState.rank = gameState.lastRank + 1
             currentPlayerState.time = new Date().getTime() - gameState.startAt
 
@@ -216,9 +213,7 @@ const gameEventHandlers = {
                 lastPlayerState.rank = gameState.lastRank + 1
                 lastPlayerState.time = new Date().getTime() - gameState.startAt
 
-                document.getElementById("game-container").appendChild(
-                    document.createElement("wc-game-end")
-                )
+                document.getElementById("game-container").appendChild(document.createElement("wc-game-end"))
                 document.getElementById("game").classList.add("hidden")
                 isGameDone = true;
             }
@@ -228,7 +223,7 @@ const gameEventHandlers = {
             activateDice();
 
             const diceElement = document.getElementById("wc-dice");
-            if (!isTripComplete && captureCount === 0 && gameState.currentDiceRoll !== 6) {
+            if (!tripComplete && captureCount === 0 && gameState.currentDiceRoll !== 6) {
                 gameState.updateCurrentPlayer();
             } else {
                 if (gameState.isAutoplay()) {
@@ -236,16 +231,11 @@ const gameEventHandlers = {
                 }
             }
         }
-    },
-    AFTER_TOKEN_MOVE: () => {
-
-    },
-    DICE_MOVED: () => {
+    }, DICE_MOVED: () => {
         if (gameState.isAutoplay()) {
             publishGameEvent("ON_DICE_ROLLED")
         }
-    },
-    /**
+    }, /**
      * @param {boolean} assistMode
      */
     ASSIST_MODE_CHANGED: (assistMode) => {

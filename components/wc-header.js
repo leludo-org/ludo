@@ -1,6 +1,6 @@
 import {
     htmlToElement
-} from "../utils.js"
+} from "./index.js"
 
 //language=HTML
 const HEADER_HTML = /*html*/ `

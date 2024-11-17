@@ -1,6 +1,6 @@
 import {
     htmlToElement
-} from "../utils.js";
+} from "./index.js";
 
 //language=HTML
 const QUICK_START_HTML = /*html*/ `
