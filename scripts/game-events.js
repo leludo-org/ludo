@@ -1,6 +1,6 @@
 /**
  *
- * @typedef {'GAME_LOADED'|'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'ON_DICE_ROLLED'|'AFTER_DICE_ROLLED'|'ON_TOKEN_MOVE'|'AFTER_TOKEN_MOVE'|'DICE_MOVED'|'ASSIST_MODE_CHANGED'} GameEvent
+ * @typedef {'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'ON_DICE_ROLLED'|'AFTER_DICE_ROLLED'|'ON_TOKEN_MOVE'|'AFTER_TOKEN_MOVE'|'DICE_MOVED'|'ASSIST_MODE_CHANGED'} GameEvent
  */
 
 import {
@@ -38,18 +38,9 @@ export const gameState = new GameState()
  * @type {Record<GameEvent, CallableFunction>}
  */
 const gameEventHandlers = {
-    GAME_LOADED: () => {
-        document.getElementById("audio-pop").volume = 0.6
+    GAME_STARTED: (quickStartId) => {
+        gameState.initPlayers(quickStartId)
 
-        document.querySelectorAll(".quick-start").forEach((el) => {
-            const quickStartId = el.id
-
-            el.addEventListener("click", () => {
-                gameState.initPlayers(quickStartId)
-                publishGameEvent("GAME_STARTED")
-            })
-        })
-    }, GAME_STARTED: () => {
         showGame();
 
         document.getElementById("g-pause").addEventListener("click", () => {
@@ -269,7 +260,3 @@ const handleGameEvent = ({gameEvent, data}) => {
 }
 
 window.addEventListener("message", (event) => handleGameEvent(event.data));
-
-document.addEventListener("DOMContentLoaded", () => {
-    publishGameEvent("GAME_LOADED")
-})
