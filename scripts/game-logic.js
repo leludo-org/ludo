@@ -107,3 +107,31 @@ export function findCapturedOpponents(playerIndex, tokenIndex, tokenPositions) {
 export function isTripComplete(tokenPosition) {
     return tokenPosition === 56;
 }
+
+/**
+ *
+ * @param {string} quickStartId
+ * @return {PlayerType[]}
+ */
+export function getPlayerTypes(quickStartId) {
+    switch (quickStartId) {
+        case "qs,1,1":
+            return ["BOT", undefined, "PLAYER", undefined]
+        case "qs,1,2":
+            return [undefined, "BOT", "PLAYER", "BOT"]
+        case "qs,1,3":
+            return ["BOT", "BOT", "PLAYER", "BOT"]
+        case "qs,2,0":
+            return ["PLAYER", undefined, "PLAYER", undefined]
+        case "qs,2,1":
+            return ["PLAYER", undefined, "PLAYER", "BOT"]
+        case "qs,2,2":
+            return ["PLAYER", "BOT", "PLAYER", "BOT"]
+        case "qs,3,0":
+            return ["PLAYER", undefined, "PLAYER", "PLAYER"]
+        case "qs,3,1":
+            return ["PLAYER", "BOT", "PLAYER", "PLAYER"]
+        case "qs,4,0":
+            return ["PLAYER", "PLAYER", "PLAYER", "PLAYER"]
+    }
+}
