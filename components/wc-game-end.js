@@ -3,26 +3,26 @@ import {
 } from "./index.js"
 import {
     gameState
-} from "../scripts/game-events.js";
+} from "../scripts/index.js";
 
 //language=HTML
 const GAME_END_HTML = /*html*/ `
-<div class="display flex flex-col gap-6 text-center">
-    <div class="text-xl font-bold">Game Concluded! Final Standings</div>
-    <table class="">
-        <thead class="font-bold text-underline">
+    <div class="display flex flex-col gap-6 text-center">
+        <div class="text-xl font-bold">Game Concluded! Final Standings</div>
+        <table class="">
+            <thead class="font-bold text-underline">
             <tr>
                 <td>Rank</td>
                 <td>Player</td>
                 <td>Captures</td>
                 <td>Time</td>
             </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-    <wc-button id="play-again" button-text="Play Again"></wc-button>
-</div>`;
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <wc-button id="play-again" button-text="Play Again"></wc-button>
+    </div>`;
 
 /**
  * @param {type} ms
@@ -59,13 +59,13 @@ class GameEnd extends HTMLElement {
                         //language=HTML
                         /*html*/
                         `
-<tr>
-    <td>${playerState.rank}</td>
-    <td>${playerState.playerType} ${playerIndex}</td>
-    <td>${playerState.captures}</td>
-    <td>${formatGameTime(playerState.time)}</td>
-</tr>
-`
+                            <tr>
+                                <td>${playerState.rank}</td>
+                                <td>${playerState.playerType} ${playerIndex}</td>
+                                <td>${playerState.captures}</td>
+                                <td>${formatGameTime(playerState.time)}</td>
+                            </tr>
+                        `
                     );
                     tableBody.appendChild(row);
                 }
