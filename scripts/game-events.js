@@ -1,8 +1,3 @@
-/**
- *
- * @typedef {'GAME_STARTED'|'GAME_PAUSED'|'PLAYER_UPDATED'|'ON_DICE_ROLLED'|'AFTER_DICE_ROLLED'|'ON_TOKEN_MOVE'|'AFTER_TOKEN_MOVE'|'DICE_MOVED'|'ASSIST_MODE_CHANGED'} GameEvent
- */
-
 import {
     GameState,
 
@@ -37,7 +32,7 @@ export const gameState = new GameState()
  *
  * @param {string} quickStartId
  */
-function handleGameStart(quickStartId) {
+export function handleGameStart(quickStartId) {
     gameState.initPlayers(quickStartId)
 
     showGame();
@@ -65,15 +60,15 @@ function handleGameStart(quickStartId) {
         gameState.currentPlayerIndex = +player
     }
 
-    publishGameEvent("PLAYER_UPDATED")
+    handlePayerUpdated()
 
     if (gameState.isAutoplay()) {
-        publishGameEvent("ON_DICE_ROLLED")
+        handleDiceRoll()
     }
 }
 
 
-function handleGamePause() {
+export function handleGamePause() {
     showPauseMenu();
 
     document.getElementById("pm-resume").addEventListener("click", resumeGame)
@@ -86,14 +81,14 @@ function handleGamePause() {
 }
 
 
-function handlePayerUpdated() {
+export function handlePayerUpdated() {
     const targetContainerId = `b${gameState.currentPlayerIndex}`
     moveDice(targetContainerId)
-    publishGameEvent("DICE_MOVED")
+    handleDiceMoved()
 }
 
 
-function handleDiceRoll() {
+export function handleDiceRoll() {
 
     animateDiceRoll(gameState.currentDiceRoll)
         .then(() => {
@@ -106,7 +101,7 @@ function handleDiceRoll() {
                 gameState.consecutiveSixesCount++
             }
 
-            publishGameEvent("AFTER_DICE_ROLLED")
+            handleAfterDiceRoll()
         });
 }
 
@@ -157,7 +152,7 @@ function handleAfterDiceRoll() {
  *
  * @param {string} tokenId
  */
-function handleOnTokenMove(tokenId) {
+export function handleOnTokenMove(tokenId) {
     inactiveTokens();
 
     const tokenElementIdTokens = tokenId.split("-")
@@ -187,7 +182,7 @@ function handleOnTokenMove(tokenId) {
     }
 
     updateTokenContainer(playerIndex, tokenIndex, tokenOldPosition, tokenNewPosition).then(() => {
-        publishGameEvent("AFTER_TOKEN_MOVE", {tripComplete, captureCount}) // todo: need to avoid passing data here
+        handleAfterTokenMove(tripComplete, captureCount)
     })
 }
 
@@ -198,7 +193,7 @@ function handleOnTokenMove(tokenId) {
  * @param {number} captureCount
  * @constructor
  */
-function handleAfterTokenMove({tripComplete, captureCount}) {
+function handleAfterTokenMove(tripComplete, captureCount) {
     const currentPlayerState = gameState.playerStates[gameState.currentPlayerIndex];
     let isGameDone = false;
     if (tripComplete && currentPlayerState.isFinished()) {
@@ -242,7 +237,7 @@ function handleAfterTokenMove({tripComplete, captureCount}) {
 
 function handleDiceMoved() {
     if (gameState.isAutoplay()) {
-        publishGameEvent("ON_DICE_ROLLED")
+        handleDiceRoll()
     }
 }
 
@@ -250,48 +245,7 @@ function handleDiceMoved() {
 /**
  * @param {boolean} assistMode
  */
-function handleAssistModeChanged(assistMode) {
+export function handleAssistModeChanged(assistMode) {
     gameState.autoplay = assistMode
     // todo: start assisting right away...
 }
-
-
-/**
- * @type {Record<GameEvent, CallableFunction>}
- */
-const gameEventHandlers = {
-    GAME_STARTED: handleGameStart,
-    GAME_PAUSED: handleGamePause,
-    PLAYER_UPDATED: handlePayerUpdated,
-    ON_DICE_ROLLED: handleDiceRoll,
-    AFTER_DICE_ROLLED: handleAfterDiceRoll,
-    ON_TOKEN_MOVE: handleOnTokenMove,
-    AFTER_TOKEN_MOVE: handleAfterTokenMove,
-    DICE_MOVED: handleDiceMoved,
-    ASSIST_MODE_CHANGED: handleAssistModeChanged
-}
-
-
-/**
- * @param {GameEvent} gameEvent
- * @param {any} [data]
- */
-export const publishGameEvent = (gameEvent, data) => {
-    window.postMessage({gameEvent, data});
-}
-
-
-/**
- * @param {GameEvent} gameEvent
- * @param {any} [data]
- */
-const handleGameEvent = ({gameEvent, data}) => {
-    console.debug("handling GameEvent", gameEvent);
-
-    const handler = gameEventHandlers[gameEvent]
-    handler(data)
-
-    console.debug("handled GameEvent", gameEvent);
-}
-
-window.addEventListener("message", (event) => handleGameEvent(event.data));

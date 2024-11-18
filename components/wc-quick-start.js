@@ -1,7 +1,7 @@
 import {
     htmlToElement
 } from "./index.js";
-import {publishGameEvent} from "../scripts/index.js";
+import {handleGameStart} from "../scripts/index.js";
 
 //language=HTML
 const QUICK_START_HTML = /*html*/ `
@@ -106,7 +106,7 @@ class QuickStart extends HTMLElement {
             const quickStartId = el.id
 
             el.addEventListener("click", () => {
-                publishGameEvent("GAME_STARTED", quickStartId)
+                handleGameStart(quickStartId)
             })
         })
 

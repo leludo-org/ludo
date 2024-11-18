@@ -2,7 +2,7 @@ import {
     htmlToElement
 } from "./index.js"
 import {
-    publishGameEvent
+    handleDiceRoll,
 } from "../scripts/index.js";
 
 //language=HTML
@@ -56,7 +56,7 @@ class Dice extends HTMLElement {
         this.addEventListener("click", () => {
             const isDiceActive = this.classList.contains("animate-bounce");
             if (isDiceActive) {
-                publishGameEvent("ON_DICE_ROLLED")
+                handleDiceRoll()
             }
         })
     }
