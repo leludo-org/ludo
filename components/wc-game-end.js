@@ -2,7 +2,10 @@ import {
     htmlToElement
 } from "./index.js"
 import {
-    gameState
+    playerCaptures,
+    playerRanks,
+    playerTimes,
+    playerTypes
 } from "../scripts/index.js";
 
 //language=HTML
@@ -25,7 +28,7 @@ const GAME_END_HTML = /*html*/ `
     </div>`;
 
 /**
- * @param {type} ms
+ * @param {number} ms
  * @returns {string}
  */
 function formatGameTime(ms) {
@@ -50,20 +53,19 @@ class GameEnd extends HTMLElement {
             window.location.href = window.location.origin;
         });
 
-        const ranks = [];
-        gameState.playerStates
-            .sort((p1, p2) => p1.rank - p2.rank)
-            .forEach(((playerState, playerIndex) => {
-                if (playerState) {
+        playerTypes
+            // .sort((p1, p2) => p1.rank - p2.rank)
+            .forEach(((playerType, playerIndex) => {
+                if (playerType) {
                     const row = htmlToElement(
                         //language=HTML
                         /*html*/
                         `
                             <tr>
-                                <td>${playerState.rank}</td>
-                                <td>${playerState.playerType} ${playerIndex}</td>
-                                <td>${playerState.captures}</td>
-                                <td>${formatGameTime(playerState.time)}</td>
+                                <td>${playerRanks[playerIndex]}</td>
+                                <td>${playerType} ${playerIndex}</td>
+                                <td>${playerCaptures[playerIndex]}</td>
+                                <td>${formatGameTime(playerTimes[playerIndex])}</td>
                             </tr>
                         `
                     );

@@ -26,7 +26,7 @@ const SETTINGS_HTML = /*html*/ `
             </div>
         </div>
         <div class="flex justify-between gap-1">
-            <label for="s-assist-mode" class="cursor-pointer">Asist Mode</label>
+            <label for="s-assist-mode" class="cursor-pointer">Assist Mode</label>
             <input type="checkbox" id="s-assist-mode" class="hidden [&:checked+label]:justify-end" />
             <label for="s-assist-mode" class="w-10 bg-foreground rounded-full flex items-center p-[2px] cursor-pointer">
                 <div class="size-4 rounded-full bg-background">
