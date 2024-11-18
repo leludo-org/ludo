@@ -43,10 +43,6 @@ const gameEventHandlers = {
 
         showGame();
 
-        document.getElementById("g-pause").addEventListener("click", () => {
-            publishGameEvent("GAME_PAUSED")
-        })
-
         const params = new URLSearchParams(window.location.search)
         const initPositions = params.get("positions")?.split(",")
 
