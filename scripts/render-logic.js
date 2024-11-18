@@ -64,7 +64,6 @@ export function animateDiceRoll(currentDiceRoll) {
 
             if (counter === 8) {
                 clearInterval(interval)
-                console.debug(lastDiceRoll, currentDiceRoll);
                 updateDiceFace(lastDiceRoll, currentDiceRoll);
                 resolve()
             } else {

@@ -1,6 +1,7 @@
 import {
     htmlToElement
 } from "./index.js"
+import {handleGamePause} from "../scripts/index.js";
 
 //language=HTML
 const BOARD_HTML = /*html*/ `
@@ -252,7 +253,15 @@ const BOARD_HTML = /*html*/ `
 class Board extends HTMLElement {
     constructor() {
         super()
+    }
+
+    connectedCallback() {
         const boardElement = htmlToElement(BOARD_HTML)
+
+        boardElement.querySelector("#g-pause").addEventListener("click", () => {
+            handleGamePause()
+        })
+
         this.appendChild(boardElement)
     }
 }

@@ -2,7 +2,7 @@
  * @typedef {'PLAYER'|'BOT'} PlayerType
  */
 
-import {publishGameEvent} from "./index.js";
+import {handlePayerUpdated} from "./index.js";
 
 class PlayerState {
 
@@ -142,7 +142,7 @@ export class GameState {
             this.currentPlayerIndex = (this.currentPlayerIndex + 1) % 4
         } while (this.playerStates[this.currentPlayerIndex] === undefined || this.playerStates[this.currentPlayerIndex].isFinished())
 
-        publishGameEvent("PLAYER_UPDATED")
+        handlePayerUpdated()
     }
 
     /**

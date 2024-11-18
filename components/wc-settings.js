@@ -1,5 +1,5 @@
 import {
-    publishGameEvent
+    handleAssistModeChanged,
 } from "../scripts/index.js";
 import {
     htmlToElement
@@ -98,13 +98,13 @@ class Header extends HTMLElement {
 
         if (defaultAssistMode) {
             settingsContainer.querySelector("#s-assist-mode").setAttribute("checked", "checked");
-            publishGameEvent("ASSIST_MODE_CHANGED", true);
+            handleAssistModeChanged(true)
         }
 
         settingsContainer.querySelector("#s-assist-mode").addEventListener("change", ($event) => {
             const assistMode = $event.target.checked;
             localStorage.setItem("assist-mode", assistMode);
-            publishGameEvent("ASSIST_MODE_CHANGED", assistMode);
+            handleAssistModeChanged(assistMode);
         });
 
 
