@@ -191,7 +191,6 @@ export function handleOnTokenMove(tokenId) {
  *
  * @param {boolean} tripComplete
  * @param {number} captureCount
- * @constructor
  */
 function handleAfterTokenMove(tripComplete, captureCount) {
     const currentPlayerState = gameState.playerStates[gameState.currentPlayerIndex];
