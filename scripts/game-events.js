@@ -138,11 +138,7 @@ export function handleGameStart(quickStartId) {
         currentPlayerIndex = +player
     }
 
-    handlePayerUpdated()
-
-    if (isAutoplay()) {
-        handleDiceRoll()
-    }
+    moveDice(currentPlayerIndex)
 }
 
 
@@ -160,14 +156,12 @@ export function handleGamePause() {
 
 
 export function handlePayerUpdated() {
-    const targetContainerId = `b${currentPlayerIndex}`
-    moveDice(targetContainerId)
+    moveDice(currentPlayerIndex)
     handleDiceMoved()
 }
 
 
 export function handleDiceRoll() {
-
     animateDiceRoll(currentDiceRoll)
         .then(() => {
             const lastDiceRoll = currentDiceRoll
@@ -244,22 +238,22 @@ export function handleOnTokenMove(tokenId) {
 
     const tripComplete = isTripComplete(tokenNewPosition)
 
-    const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, tokenIndex, playerTokenPositions);
-    let captureCount = 0
-    otherPlayerTokensOnThatMarkIndex.forEach((pt, pi) => {
-        pt.forEach((ti) => {
-            updateTokenContainer(pi, ti, playerTokenPositions[pi][ti], -1).then()
-            playerTokenPositions[pi][ti] = -1
-            captureCount++
-        })
-    })
-
-    if (captureCount > 0) {
-        playPopSound()
-        playerCaptures[currentPlayerIndex] += captureCount
-    }
-
     updateTokenContainer(playerIndex, tokenIndex, tokenOldPosition, tokenNewPosition).then(() => {
+        const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, tokenIndex, playerTokenPositions);
+        let captureCount = 0
+        otherPlayerTokensOnThatMarkIndex.forEach((pt, pi) => {
+            pt.forEach((ti) => {
+                updateTokenContainer(pi, ti, playerTokenPositions[pi][ti], -1).then()
+                playerTokenPositions[pi][ti] = -1
+                captureCount++
+            })
+        })
+
+        if (captureCount > 0) {
+            playPopSound()
+            playerCaptures[currentPlayerIndex] += captureCount
+        }
+
         handleAfterTokenMove(tripComplete, captureCount)
     })
 }

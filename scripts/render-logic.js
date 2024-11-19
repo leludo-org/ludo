@@ -156,9 +156,10 @@ export function resumeGame() {
 
 /**
  *
- * @param {string} targetContainerId
+ * @param {number} currentPlayerIndex
  */
-export function moveDice(targetContainerId) {
+export function moveDice(currentPlayerIndex) {
+    const targetContainerId = `b${currentPlayerIndex}`
     const diceElement = document.getElementById("wc-dice")
     const targetContainer = document.getElementById(targetContainerId)
     targetContainer.appendChild(diceElement)
