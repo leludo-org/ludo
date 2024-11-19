@@ -138,11 +138,8 @@ export function handleGameStart(quickStartId) {
         currentPlayerIndex = +player
     }
 
-    handlePayerUpdated()
-
-    if (isAutoplay()) {
-        handleDiceRoll()
-    }
+    const targetContainerId = `b${currentPlayerIndex}`
+    moveDice(targetContainerId)
 }
 
 
