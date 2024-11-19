@@ -138,8 +138,7 @@ export function handleGameStart(quickStartId) {
         currentPlayerIndex = +player
     }
 
-    const targetContainerId = `b${currentPlayerIndex}`
-    moveDice(targetContainerId)
+    moveDice(currentPlayerIndex)
 }
 
 
@@ -157,8 +156,7 @@ export function handleGamePause() {
 
 
 export function handlePayerUpdated() {
-    const targetContainerId = `b${currentPlayerIndex}`
-    moveDice(targetContainerId)
+    moveDice(currentPlayerIndex)
     handleDiceMoved()
 }
 
