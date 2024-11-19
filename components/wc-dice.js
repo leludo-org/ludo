@@ -54,11 +54,22 @@ class Dice extends HTMLElement {
         this.appendChild(diceElement)
 
         this.addEventListener("click", () => {
-            const isDiceActive = this.classList.contains("animate-bounce");
-            if (isDiceActive) {
-                handleDiceRoll()
+            this.handleDiceClick();
+        })
+
+
+        document.addEventListener("keyup", ($event) =>  {
+            if ($event.key === " ") {
+                this.handleDiceClick()
             }
         })
+    }
+
+    handleDiceClick() {
+        const isDiceActive = this.classList.contains("animate-bounce");
+        if (isDiceActive) {
+            handleDiceRoll()
+        }
     }
 }
 
