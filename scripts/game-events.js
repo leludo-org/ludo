@@ -56,9 +56,6 @@ export const playerCaptures = new Array(4).fill(0)
  * @type {number[][]}
  */
 const playerTokenPositions = new Array(4);
-for (let playerIndex = 0; playerIndex < playerTokenPositions.length; playerIndex++){
-    playerTokenPositions[playerIndex] = new Array(4).fill(-1)
-}
 
 
 /**
@@ -82,8 +79,9 @@ function isAutoplay() {
  * @param {string} quickStartId
  */
 function initPlayers(quickStartId) {
-    getPlayerTypes(quickStartId).forEach((type, index) => {
-        playerTypes[index] = type
+    getPlayerTypes(quickStartId).forEach((playerType, playerIndex) => {
+        playerTypes[playerIndex] = playerType
+        playerTokenPositions[playerIndex] = new Array(4).fill(-1)
     })
 }
 
