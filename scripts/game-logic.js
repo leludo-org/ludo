@@ -63,13 +63,11 @@ export function getTokenNewPosition(currentPosition, diceRoll) {
 /**
  *
  * @param {number} playerIndex
- * @param {number} tokenIndex
+ * @param {number} tokenPosition
  * @param {number[][]} tokenPositions
  * @returns {number[][]}
  */
-export function findCapturedOpponents(playerIndex, tokenIndex, tokenPositions) {
-    const tokenPosition = tokenPositions[playerIndex][tokenIndex]
-
+export function findCapturedOpponents(playerIndex, tokenPosition, tokenPositions) {
     if (isSafePosition(tokenPosition)) {
         return new Array(0)
     }
@@ -154,37 +152,47 @@ export function getUniqueTokenPositions(playerIndex, movableTokenIndexes, player
     return new Set(tokenIndexPositions);
 }
 
-function hasPossibleCaptures(playerIndex, tokenIndex, playerTokenPositions) {
-    const possibleCaptures = findCapturedOpponents(playerIndex, tokenIndex, playerTokenPositions);
-    const hasPossibleCaptures = possibleCaptures.findIndex(pc => pc.length > 0) !== -1
-    return hasPossibleCaptures;
+/**
+ *
+ * @param {number} playerIndex
+ * @param {number} tokenPosition
+ * @param {number[][]} playerTokenPositions
+ * @returns {boolean}
+ */
+function hasPossibleCaptures(playerIndex, tokenPosition, playerTokenPositions) {
+    const possibleCaptures = findCapturedOpponents(playerIndex, tokenPosition, playerTokenPositions);
+    return possibleCaptures.findIndex(pc => pc.length > 0) !== -1;
 }
 
 /**
  *
  * @param {number} playerIndex
  * @param {number[]} movableTokenIndexes
+ * @param {number} diceRoll
  * @param {number[][]} playerTokenPositions
  * @returns {number}
  */
-export function getBestPossibleTokenIndexForMove(playerIndex, movableTokenIndexes, playerTokenPositions) {
-    let maxTokenWeight = 0;
+export function getBestPossibleTokenIndexForMove(playerIndex, movableTokenIndexes,diceRoll, playerTokenPositions) {
+    let maxTokenWeight = -1000;
     let maxWeightedTokenIndex = 0;
 
     for (let i = 0; i < movableTokenIndexes.length; i++) {
         let tokenWeight = 0;
 
         const tokenIndex = movableTokenIndexes[i];
-        const tokenPosition = playerTokenPositions[playerIndex][tokenIndex];
+        const tokenCurrentPosition = playerTokenPositions[playerIndex][tokenIndex];
+        const tokenNewPosition = getTokenNewPosition(tokenCurrentPosition, diceRoll);
 
-        if (tokenPosition === 56) {
+        if (tokenNewPosition === 56) {
             tokenWeight += 20;
-        } else if (hasPossibleCaptures(playerIndex, tokenIndex, playerTokenPositions)) {
+        } else if (hasPossibleCaptures(playerIndex, tokenNewPosition, playerTokenPositions)) {
             tokenWeight += 10;
-        } else if (tokenPosition === 0) {
+        } else if (tokenNewPosition === 0) {
             tokenWeight += 3;
-        } else if (isSafePosition(tokenPosition)) {
+        } else if (isSafePosition(tokenNewPosition)) {
             tokenWeight += 5;
+        } else if (isSafePosition(tokenCurrentPosition)) {
+            tokenWeight -= 5;
         } else {
             tokenWeight += 1;
         }
