@@ -199,7 +199,7 @@ function handleAfterDiceRoll() {
                 if (uniqueTokenIndexPositions.size === 1) {
                     handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0]);
                 } else {
-                    const bestMoveTokenIndex = getBestPossibleTokenIndexForMove(currentPlayerIndex, movableTokenIndexes, playerTokenPositions);
+                    const bestMoveTokenIndex = getBestPossibleTokenIndexForMove(currentPlayerIndex, movableTokenIndexes, currentDiceRoll, playerTokenPositions);
                     handleOnTokenMove(currentPlayerIndex, bestMoveTokenIndex);
                 }
             } else if (isAssistModeEnabled) {
@@ -230,7 +230,7 @@ export function handleOnTokenMove(playerIndex, tokenIndex) {
     const tripComplete = isTripComplete(tokenNewPosition)
 
     updateTokenContainer(playerIndex, tokenIndex, tokenOldPosition, tokenNewPosition).then(() => {
-        const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, tokenIndex, playerTokenPositions);
+        const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, playerTokenPositions[playerIndex][tokenIndex], playerTokenPositions);
         let captureCount = 0
         otherPlayerTokensOnThatMarkIndex.forEach((pt, pi) => {
             pt.forEach((ti) => {

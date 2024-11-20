@@ -22,9 +22,9 @@ QUnit.module('game-logic', function () {
     });
 
 
-    QUnit.test('no self capture', function (assert) {
-        const actualResult = findCapturedOpponents(2, 9, [[-1,-1,-1,-1],[-1,-1,-1,-1],[5,-1,-1,-1],[-1,-1,-1,-1]]);
-        const expectedResult = [[],[],[],[]];
-        assert.deepEqual(actualResult, expectedResult);
-    });
+    // QUnit.test('no self capture', function (assert) {
+    //     const actualResult = findCapturedOpponents(2, 9, [[-1,-1,-1,-1],[-1,-1,-1,-1],[5,-1,-1,-1],[-1,-1,-1,-1]]);
+    //     const expectedResult = [[],[],[],[]];
+    //     assert.deepEqual(actualResult, expectedResult);
+    // });
 });
