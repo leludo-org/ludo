@@ -185,6 +185,8 @@ export function getBestPossibleTokenIndexForMove(playerIndex, movableTokenIndexe
             tokenWeight += 3;
         } else if (isSafePosition(tokenPosition)) {
             tokenWeight += 5;
+        } else {
+            tokenWeight += 1;
         }
 
         if (tokenWeight > maxTokenWeight) {

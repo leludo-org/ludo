@@ -85,6 +85,8 @@ export function animateDiceRoll(currentDiceRoll) {
  * @returns {Promise<void>}
  */
 export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPosition, newTokenPosition) {
+    console.debug("updateTokenContainer", playerIndex, tokenIndex, currentTokenPosition, newTokenPosition)
+
     let nextTokenPosition = [-1, 0].includes(newTokenPosition) ? newTokenPosition : currentTokenPosition + 1;
     return new Promise((resolve) => {
         const newContainerId = getTokenContainerId(playerIndex, tokenIndex, nextTokenPosition)
