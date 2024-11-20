@@ -172,7 +172,7 @@ function hasPossibleCaptures(playerIndex, tokenPosition, playerTokenPositions) {
  * @param {number[][]} playerTokenPositions
  * @returns {number}
  */
-export function getBestPossibleTokenIndexForMove(playerIndex, movableTokenIndexes,diceRoll, playerTokenPositions) {
+export function getBestPossibleTokenIndexForMove(playerIndex, movableTokenIndexes, diceRoll, playerTokenPositions) {
     let maxTokenWeight = -1000;
     let maxWeightedTokenIndex = 0;
 
