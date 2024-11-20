@@ -114,9 +114,11 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
 
 /**
  *
- * @param {string} tokenElementId
+ * @param {number} currentPlayerIndex
+ * @param {number} tokenIndex
  */
-export function activateToken(tokenElementId) {
+export function activateToken(currentPlayerIndex, tokenIndex) {
+    const tokenElementId = getTokenElementId(currentPlayerIndex, tokenIndex)
     const tokenElement = document.getElementById(tokenElementId);
     ["animate-bounce", "z-20"].forEach(c => tokenElement.children[0].classList.add(c))
 }

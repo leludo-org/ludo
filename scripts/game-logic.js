@@ -77,24 +77,27 @@ export function findCapturedOpponents(playerIndex, tokenIndex, tokenPositions) {
     const tokenMarkIndex = getMarkIndex(playerIndex, tokenPosition);
     const otherPlayerTokensOnThatMarkIndex = new Array(4);
 
-    tokenPositions.forEach((ptp, pi) => {
+    for (let pi = 0; pi < tokenPositions.length; pi++){
+        const ptp = tokenPositions[pi];
         otherPlayerTokensOnThatMarkIndex[pi] = [];
         if (ptp && pi !== playerIndex) {
-            ptp.forEach((tp, ti) => {
+            for (let ti = 0; ti < ptp.length; ti++){
+                const tp = ptp[ti];
                 const tMarkIndex = getMarkIndex(pi, tp);
                 if (tokenMarkIndex === tMarkIndex) {
                     otherPlayerTokensOnThatMarkIndex[pi].push(ti)
                 }
-            })
+            }
         }
-    })
+    }
 
     // if 2 tokens then that player is safe
-    otherPlayerTokensOnThatMarkIndex.forEach((pt, pi) => {
+    for (let pi = 0; pi < otherPlayerTokensOnThatMarkIndex.length; pi++){
+        const pt = otherPlayerTokensOnThatMarkIndex[pi];
         if (pt.length === 2) {
             otherPlayerTokensOnThatMarkIndex[pi] = new Array(0)
         }
-    })
+    }
 
     return otherPlayerTokensOnThatMarkIndex
 }
@@ -134,4 +137,19 @@ export function getPlayerTypes(quickStartId) {
         case "qs,4,0":
             return ["PLAYER", "PLAYER", "PLAYER", "PLAYER"]
     }
+}
+
+/**
+ *
+ * @param {number} playerIndex
+ * @param {number[]} movableTokenIndexes
+ * @param {number[][]} playerTokenPositions
+ * @returns {Set<any>}
+ */
+export function getUniqueTokenPositions(playerIndex, movableTokenIndexes, playerTokenPositions) {
+    const tokenIndexPositions = movableTokenIndexes
+        .map(movableTokenIndex => {
+            return playerTokenPositions[playerIndex][movableTokenIndex]
+        })
+    return new Set(tokenIndexPositions);
 }
