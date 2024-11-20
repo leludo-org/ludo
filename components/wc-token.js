@@ -35,28 +35,33 @@ class Token extends HTMLElement {
 
             const id = newValue;
             const idTokens = id.split("-")
-            const playerIndex = idTokens[1]
-            const tokenIndex = idTokens[2]
+            const playerIndex = +idTokens[1]
+            const tokenIndex = +idTokens[2]
             let tokenHTML = TOKEN_HTML(playerIndex);
             const tokenElement = htmlToElement(tokenHTML)
             this.appendChild(tokenElement) // fixme: if triggered multiple time would cause issues
 
             this.addEventListener("click", () => {
-                this.handleTokenClick(id);
+                this.handleTokenClick(playerIndex, tokenIndex);
             })
 
             document.addEventListener("keyup", ($event) =>  {
                 if ($event.key === (+tokenIndex + 1).toString()) {
-                    this.handleTokenClick(id)
+                    this.handleTokenClick(playerIndex, tokenIndex)
                 }
             })
         }
     }
 
-    handleTokenClick(id) {
+    /**
+     *
+     * @param {number} playerIndex
+     * @param {number} tokenIndex
+     */
+    handleTokenClick(playerIndex, tokenIndex) {
         const isTokenActive = this.children[0].classList.contains("animate-bounce");
         if (isTokenActive) {
-            handleOnTokenMove(id)
+            handleOnTokenMove(playerIndex, tokenIndex)
         }
     }
 }

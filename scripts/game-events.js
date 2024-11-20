@@ -1,23 +1,23 @@
 import {
-    getTokenElementId,
-    updateTokenContainer,
-    showGame,
-    showPauseMenu,
-    resumeGame,
-    animateDiceRoll,
-    updateDiceFace,
-    moveDice,
+    activateDice,
     activateToken,
+    animateDiceRoll,
+    findCapturedOpponents,
+    generateDiceRoll, getBestPossibleTokenIndexForMove,
+    getPlayerTypes,
+    getTokenElementId,
+    getTokenNewPosition, getUniqueTokenPositions,
     inactiveDice,
     inactiveTokens,
-    activateDice,
-    playPopSound,
-
-    findCapturedOpponents,
-    generateDiceRoll,
-    getTokenNewPosition,
     isTokenMovable,
-    isTripComplete, getPlayerTypes
+    isTripComplete,
+    moveDice,
+    playPopSound,
+    resumeGame,
+    showGame,
+    showPauseMenu,
+    updateDiceFace,
+    updateTokenContainer
 } from "./index.js";
 
 /**
@@ -177,44 +177,39 @@ export function handleDiceRoll() {
         });
 }
 
-
 function handleAfterDiceRoll() {
     if (consecutiveSixesCount === 3) {
-        updateCurrentPlayer()
+        updateCurrentPlayer();
     } else {
-        const movableTokenElementIds = []
+        const movableTokenIndexes = [];
 
         playerTokenPositions[currentPlayerIndex].forEach((tokenPosition, tokenIndex) => {
             if (isTokenMovable(tokenPosition, currentDiceRoll)) {
-                const tokenElementId = getTokenElementId(currentPlayerIndex, tokenIndex)
-                activateToken(tokenElementId);
-                movableTokenElementIds.push(tokenElementId)
+                activateToken(currentPlayerIndex, tokenIndex);
+                movableTokenIndexes.push(tokenIndex);
             }
         })
 
 
-        if (movableTokenElementIds.length > 0) {
+        if (movableTokenIndexes.length > 0) {
             inactiveDice();
 
             if (isCurrentPlayerBot()) {
-                // todo: make bot smarter
-                document.getElementById(movableTokenElementIds[movableTokenElementIds.length - 1]).click()
-            } else if (isAssistModeEnabled) {
-                const tokenIndexPositions = movableTokenElementIds
-                    .map(movableTokenElementId => {
-                        const temp = movableTokenElementId.split("-");
-                        return playerTokenPositions[+temp[1]][+temp[2]]
-                    })
-                const uniqueTokenIndexPositions = new Set(tokenIndexPositions)
-
+                const uniqueTokenIndexPositions = getUniqueTokenPositions(currentPlayerIndex, movableTokenIndexes, playerTokenPositions);
                 if (uniqueTokenIndexPositions.size === 1) {
-                    const temp = movableTokenElementIds[0].split("-");
-                    const tokenElementId = getTokenElementId(+temp[1], +temp[2]);
-                    document.getElementById(tokenElementId).click()
+                    handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0]);
+                } else {
+                    const bestMoveTokenIndex = getBestPossibleTokenIndexForMove(currentPlayerIndex, movableTokenIndexes, playerTokenPositions);
+                    handleOnTokenMove(currentPlayerIndex, bestMoveTokenIndex);
+                }
+            } else if (isAssistModeEnabled) {
+                const uniqueTokenIndexPositions = getUniqueTokenPositions(currentPlayerIndex, movableTokenIndexes, playerTokenPositions);
+                if (uniqueTokenIndexPositions.size === 1) {
+                    handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0]);
                 }
             }
         } else {
-            updateCurrentPlayer()
+            updateCurrentPlayer();
         }
     }
 }
@@ -222,15 +217,11 @@ function handleAfterDiceRoll() {
 
 /**
  *
- * @param {string} tokenId
+ * @param {number} playerIndex
+ * @param {number} tokenIndex
  */
-export function handleOnTokenMove(tokenId) {
+export function handleOnTokenMove(playerIndex, tokenIndex) {
     inactiveTokens();
-
-    const tokenElementIdTokens = tokenId.split("-")
-    const playerIndex = +tokenElementIdTokens[1]
-    const tokenIndex = +tokenElementIdTokens[2]
-
 
     const tokenOldPosition = playerTokenPositions[currentPlayerIndex][tokenIndex]
     const tokenNewPosition = getTokenNewPosition(playerTokenPositions[currentPlayerIndex][tokenIndex], currentDiceRoll)

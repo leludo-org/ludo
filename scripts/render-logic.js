@@ -85,6 +85,8 @@ export function animateDiceRoll(currentDiceRoll) {
  * @returns {Promise<void>}
  */
 export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPosition, newTokenPosition) {
+    console.debug("updateTokenContainer", playerIndex, tokenIndex, currentTokenPosition, newTokenPosition)
+
     let nextTokenPosition = [-1, 0].includes(newTokenPosition) ? newTokenPosition : currentTokenPosition + 1;
     return new Promise((resolve) => {
         const newContainerId = getTokenContainerId(playerIndex, tokenIndex, nextTokenPosition)
@@ -114,9 +116,11 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
 
 /**
  *
- * @param {string} tokenElementId
+ * @param {number} currentPlayerIndex
+ * @param {number} tokenIndex
  */
-export function activateToken(tokenElementId) {
+export function activateToken(currentPlayerIndex, tokenIndex) {
+    const tokenElementId = getTokenElementId(currentPlayerIndex, tokenIndex)
     const tokenElement = document.getElementById(tokenElementId);
     ["animate-bounce", "z-20"].forEach(c => tokenElement.children[0].classList.add(c))
 }
