@@ -77,11 +77,11 @@ export function findCapturedOpponents(playerIndex, tokenIndex, tokenPositions) {
     const tokenMarkIndex = getMarkIndex(playerIndex, tokenPosition);
     const otherPlayerTokensOnThatMarkIndex = new Array(4);
 
-    for (let pi = 0; pi < tokenPositions.length; pi++){
+    for (let pi = 0; pi < tokenPositions.length; pi++) {
         const ptp = tokenPositions[pi];
         otherPlayerTokensOnThatMarkIndex[pi] = [];
         if (ptp && pi !== playerIndex) {
-            for (let ti = 0; ti < ptp.length; ti++){
+            for (let ti = 0; ti < ptp.length; ti++) {
                 const tp = ptp[ti];
                 const tMarkIndex = getMarkIndex(pi, tp);
                 if (tokenMarkIndex === tMarkIndex) {
@@ -92,7 +92,7 @@ export function findCapturedOpponents(playerIndex, tokenIndex, tokenPositions) {
     }
 
     // if 2 tokens then that player is safe
-    for (let pi = 0; pi < otherPlayerTokensOnThatMarkIndex.length; pi++){
+    for (let pi = 0; pi < otherPlayerTokensOnThatMarkIndex.length; pi++) {
         const pt = otherPlayerTokensOnThatMarkIndex[pi];
         if (pt.length === 2) {
             otherPlayerTokensOnThatMarkIndex[pi] = new Array(0)
@@ -144,7 +144,7 @@ export function getPlayerTypes(quickStartId) {
  * @param {number} playerIndex
  * @param {number[]} movableTokenIndexes
  * @param {number[][]} playerTokenPositions
- * @returns {Set<any>}
+ * @returns {Set<number>}
  */
 export function getUniqueTokenPositions(playerIndex, movableTokenIndexes, playerTokenPositions) {
     const tokenIndexPositions = movableTokenIndexes
@@ -152,4 +152,46 @@ export function getUniqueTokenPositions(playerIndex, movableTokenIndexes, player
             return playerTokenPositions[playerIndex][movableTokenIndex]
         })
     return new Set(tokenIndexPositions);
+}
+
+function hasPossibleCaptures(playerIndex, tokenIndex, playerTokenPositions) {
+    const possibleCaptures = findCapturedOpponents(playerIndex, tokenIndex, playerTokenPositions);
+    const hasPossibleCaptures = possibleCaptures.findIndex(pc => pc.length > 0) !== -1
+    return hasPossibleCaptures;
+}
+
+/**
+ *
+ * @param {number} playerIndex
+ * @param {number[]} movableTokenIndexes
+ * @param {number[][]} playerTokenPositions
+ * @returns {number}
+ */
+export function getBestPossibleTokenIndexForMove(playerIndex, movableTokenIndexes, playerTokenPositions) {
+    let maxTokenWeight = 0;
+    let maxWeightedTokenIndex = 0;
+
+    for (let i = 0; i < movableTokenIndexes.length; i++) {
+        let tokenWeight = 0;
+
+        const tokenIndex = movableTokenIndexes[i];
+        const tokenPosition = playerTokenPositions[playerIndex][tokenIndex];
+
+        if (tokenPosition === 56) {
+            tokenWeight += 20;
+        } else if (hasPossibleCaptures(playerIndex, tokenIndex, playerTokenPositions)) {
+            tokenWeight += 10;
+        } else if (tokenPosition === 0) {
+            tokenWeight += 3;
+        } else if (isSafePosition(tokenPosition)) {
+            tokenWeight += 5;
+        }
+
+        if (tokenWeight > maxTokenWeight) {
+            maxTokenWeight = tokenWeight;
+            maxWeightedTokenIndex = tokenIndex;
+        }
+    }
+
+    return maxWeightedTokenIndex
 }

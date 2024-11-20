@@ -3,7 +3,7 @@ import {
     activateToken,
     animateDiceRoll,
     findCapturedOpponents,
-    generateDiceRoll,
+    generateDiceRoll, getBestPossibleTokenIndexForMove,
     getPlayerTypes,
     getTokenElementId,
     getTokenNewPosition, getUniqueTokenPositions,
@@ -179,14 +179,14 @@ export function handleDiceRoll() {
 
 function handleAfterDiceRoll() {
     if (consecutiveSixesCount === 3) {
-        updateCurrentPlayer()
+        updateCurrentPlayer();
     } else {
-        const movableTokenIndexes = []
+        const movableTokenIndexes = [];
 
         playerTokenPositions[currentPlayerIndex].forEach((tokenPosition, tokenIndex) => {
             if (isTokenMovable(tokenPosition, currentDiceRoll)) {
                 activateToken(currentPlayerIndex, tokenIndex);
-                movableTokenIndexes.push(tokenIndex)
+                movableTokenIndexes.push(tokenIndex);
             }
         })
 
@@ -195,16 +195,21 @@ function handleAfterDiceRoll() {
             inactiveDice();
 
             if (isCurrentPlayerBot()) {
-                // todo: make bot smarter
-                handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0])
+                const uniqueTokenIndexPositions = getUniqueTokenPositions(currentPlayerIndex, movableTokenIndexes, playerTokenPositions);
+                if (uniqueTokenIndexPositions.size === 1) {
+                    handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0]);
+                } else {
+                    const bestMoveTokenIndex = getBestPossibleTokenIndexForMove(currentPlayerIndex, movableTokenIndexes, playerTokenPositions);
+                    handleOnTokenMove(currentPlayerIndex, bestMoveTokenIndex);
+                }
             } else if (isAssistModeEnabled) {
                 const uniqueTokenIndexPositions = getUniqueTokenPositions(currentPlayerIndex, movableTokenIndexes, playerTokenPositions);
                 if (uniqueTokenIndexPositions.size === 1) {
-                    handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0])
+                    handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0]);
                 }
             }
         } else {
-            updateCurrentPlayer()
+            updateCurrentPlayer();
         }
     }
 }
