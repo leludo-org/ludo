@@ -1,6 +1,6 @@
 import {
     handleAssistModeChanged,
-} from "../scripts";
+} from "../scripts/index.js";
 import {
     htmlToElement
 } from "./index.js"

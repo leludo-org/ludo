@@ -3,7 +3,7 @@ import {
 } from "./index.js"
 import {
     handleDiceRoll,
-} from "../scripts";
+} from "../scripts/index.js";
 
 //language=HTML
 const DICE_HTML = /*html*/ `

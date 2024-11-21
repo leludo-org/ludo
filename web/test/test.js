@@ -10,7 +10,7 @@
  * @property {function} deepEqual
  */
 
-import {isTokenMovable, isSafePosition, findCapturedOpponents} from "../scripts/game-logic.js";
+import {isTokenMovable, isSafePosition, findCapturedOpponents} from "../scripts/index.js/game-logic.js";
 
 QUnit.module('game-logic', function () {
     QUnit.test('is token movable - home, less than 6', function (assert) {

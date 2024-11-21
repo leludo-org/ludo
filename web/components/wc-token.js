@@ -3,7 +3,7 @@ import {
 } from "./index.js"
 import {
     handleOnTokenMove,
-} from "../scripts";
+} from "../scripts/index.js";
 
 //language=HTML
 const TOKEN_HTML = (playerIndex) => /*html*/ `

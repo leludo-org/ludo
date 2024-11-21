@@ -1,7 +1,7 @@
 import {
     htmlToElement
 } from "./index.js";
-import {handleGameStart} from "../scripts";
+import {handleGameStart} from "../scripts/index.js";
 
 //language=HTML
 const QUICK_START_HTML = /*html*/ `
