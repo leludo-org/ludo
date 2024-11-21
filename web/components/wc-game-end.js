@@ -6,7 +6,7 @@ import {
     playerRanks,
     playerTimes,
     playerTypes
-} from "../scripts/index.js";
+} from "../scripts";
 
 //language=HTML
 const GAME_END_HTML = /*html*/ `

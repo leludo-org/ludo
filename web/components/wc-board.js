@@ -1,7 +1,7 @@
 import {
     htmlToElement
 } from "./index.js"
-import {handleGamePause} from "../scripts/index.js";
+import {handleGamePause} from "../scripts";
 
 //language=HTML
 const BOARD_HTML = /*html*/ `
