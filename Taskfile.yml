@@ -7,7 +7,7 @@ tasks:
         task: task-{{.ITEM}}
   task-ls:
     cmds:
-      - live-server --open=web --port=8888
+      - live-server --open=docs --port=8888
   task-css:
     cmds:
-      - tailwindcss -c web/tailwind.config.js -i web/input.css -o web/output.css --watch
+      - tailwindcss -c docs/tailwind.config.js -i docs/input.css -o docs/output.css --watch
