@@ -1,12 +1,5 @@
-import {
-    htmlToElement
-} from "./index.js"
-import {
-    playerCaptures,
-    playerRanks,
-    playerTimes,
-    playerTypes
-} from "../scripts/index.js";
+import {htmlToElement} from "./index.js"
+import {playerCaptures, playerRanks, playerTimes, playerTypes} from "../scripts/index.js";
 
 //language=HTML
 const GAME_END_HTML = /*html*/ `
@@ -53,25 +46,31 @@ class GameEnd extends HTMLElement {
             window.location.href = window.location.origin;
         });
 
-        playerTypes
-            // .sort((p1, p2) => p1.rank - p2.rank)
-            .forEach(((playerType, playerIndex) => {
-                if (playerType) {
-                    const row = htmlToElement(
-                        //language=HTML
-                        /*html*/
-                        `
+        const rankArray = new Array(4);
+        for (let playerIndex = 0; playerIndex < playerRanks.length; playerIndex++) {
+            if (playerRanks[playerIndex] > 0) {
+                rankArray[playerRanks[playerIndex] - 1] = playerIndex
+            }
+        }
+
+        for (let playerRank = 0; playerRank < rankArray.length; playerRank++) {
+            const playerIndex = rankArray[playerRank];
+            if (playerIndex !== undefined) {
+                const row = htmlToElement(
+                    //language=HTML
+                    /*html*/
+                    `
                             <tr>
-                                <td>${playerRanks[playerIndex]}</td>
-                                <td>${playerType} ${playerIndex}</td>
+                                <td>${playerRank + 1}</td>
+                                <td>${playerTypes[playerIndex]} ${playerIndex}</td>
                                 <td>${playerCaptures[playerIndex]}</td>
                                 <td>${formatGameTime(playerTimes[playerIndex])}</td>
                             </tr>
                         `
-                    );
-                    tableBody.appendChild(row);
-                }
-            }));
+                );
+                tableBody.appendChild(row);
+            }
+        }
 
         this.appendChild(boardElement);
     }
