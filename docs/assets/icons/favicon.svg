@@ -1,5 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#c88a04" stroke="currentColor"
-     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award">
-    <path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/>
-    <circle cx="12" cy="8" r="6"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Ludo board - 4 colored quadrants with home triangles -->
+  <rect x="1" y="1" width="30" height="30" rx="3" fill="#1a1f2e"/>
+  <!-- Red quadrant - top left -->
+  <rect x="2" y="2" width="13" height="13" rx="2" fill="#d93347" opacity="0.85"/>
+  <!-- Green quadrant - top right -->
+  <rect x="17" y="2" width="13" height="13" rx="2" fill="#2ca86a" opacity="0.85"/>
+  <!-- Yellow quadrant - bottom left -->
+  <rect x="2" y="17" width="13" height="13" rx="2" fill="#f0a808" opacity="0.85"/>
+  <!-- Blue quadrant - bottom right -->
+  <rect x="17" y="17" width="13" height="13" rx="2" fill="#2960d6" opacity="0.85"/>
+  <!-- Center diamond -->
+  <polygon points="16,10 22,16 16,22 10,16" fill="#1a1f2e"/>
+  <!-- Home triangles pointing to center -->
+  <polygon points="16,10 22,16 16,12.5" fill="#d93347"/>
+  <polygon points="22,16 16,22 19.5,16" fill="#2ca86a"/>
+  <polygon points="16,22 10,16 16,19.5" fill="#2960d6"/>
+  <polygon points="10,16 16,10 12.5,16" fill="#f0a808"/>
+  <!-- Pawn dots in each quadrant -->
+  <circle cx="7" cy="7" r="2" fill="white" opacity="0.9"/>
+  <circle cx="11" cy="7" r="2" fill="white" opacity="0.9"/>
+  <circle cx="7" cy="11" r="2" fill="white" opacity="0.9"/>
+  <circle cx="11" cy="11" r="2" fill="white" opacity="0.9"/>
+  <circle cx="21" cy="7" r="2" fill="white" opacity="0.9"/>
+  <circle cx="25" cy="7" r="2" fill="white" opacity="0.9"/>
+  <circle cx="21" cy="11" r="2" fill="white" opacity="0.9"/>
+  <circle cx="25" cy="11" r="2" fill="white" opacity="0.9"/>
+  <circle cx="7" cy="21" r="2" fill="white" opacity="0.9"/>
+  <circle cx="11" cy="21" r="2" fill="white" opacity="0.9"/>
+  <circle cx="7" cy="25" r="2" fill="white" opacity="0.9"/>
+  <circle cx="11" cy="25" r="2" fill="white" opacity="0.9"/>
+  <circle cx="21" cy="21" r="2" fill="white" opacity="0.9"/>
+  <circle cx="25" cy="21" r="2" fill="white" opacity="0.9"/>
+  <circle cx="21" cy="25" r="2" fill="white" opacity="0.9"/>
+  <circle cx="25" cy="25" r="2" fill="white" opacity="0.9"/>
 </svg>
