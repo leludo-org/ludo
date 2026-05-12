@@ -168,7 +168,7 @@ export function animateDiceRoll(currentDiceRoll) {
     return new Promise(resolve => {
         let diceRoll = currentDiceRoll
         let counter = 0;
-        const delays = [20, 20, 20, 20, 20, 40, 60, 80];
+        const delays = [40, 40, 40, 50, 60, 80, 100, 140];
         let lastTime = 0;
 
         function tick(timestamp) {
@@ -259,7 +259,7 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
             };
 
             element.addEventListener('transitionend', settle, { once: true });
-            const fallbackTimer = setTimeout(settle, 200);
+            const fallbackTimer = setTimeout(settle, 400);
         }
 
         requestAnimationFrame(step);

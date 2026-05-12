@@ -98,7 +98,7 @@
 }
 
 .dice-rolling {
-    animation: dice-shake 0.22s ease-in-out;
+    animation: dice-shake 0.45s ease-in-out;
 }
 
 @keyframes capture-pulse {
@@ -108,7 +108,7 @@
 }
 
 .token-captured {
-    animation: capture-pulse 0.3s ease-in forwards;
+    animation: capture-pulse 0.5s ease-in forwards;
 }
 
 @keyframes board-shake {
@@ -120,7 +120,7 @@
 }
 
 .board-shake {
-    animation: board-shake 0.3s ease-in-out;
+    animation: board-shake 0.5s ease-in-out;
 }
 
 wc-token, wc-dice {

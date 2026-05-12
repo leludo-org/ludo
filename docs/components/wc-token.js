@@ -9,7 +9,7 @@ import {
 //language=HTML
 const TOKEN_HTML = (playerIndex) => /*html*/ `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
-         class="text-player-${playerIndex} relative size-full min-w-full transition-transform duration-150 ease-out"
+         class="text-player-${playerIndex} relative size-full min-w-full transition-transform duration-300 ease-out"
          style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));">
         <defs>
             <linearGradient id="pb${playerIndex}" x1="0.2" y1="0" x2="0.8" y2="1">

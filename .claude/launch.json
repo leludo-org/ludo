@@ -1,0 +1,12 @@
+{
+  "version": "0.0.2",
+  "configurations": [
+    {
+      "name": "ludo-dev",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8888"],
+      "port": 8888,
+      "cwd": "docs"
+    }
+  ]
+}

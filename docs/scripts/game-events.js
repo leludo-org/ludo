@@ -207,13 +207,15 @@ function handleAfterDiceRoll() {
             inactiveDice();
 
             if (isCurrentPlayerBot()) {
-                const uniqueTokenIndexPositions = getUniqueTokenPositions(currentPlayerIndex, movableTokenIndexes, playerTokenPositions);
-                if (uniqueTokenIndexPositions.size === 1) {
-                    handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0]);
-                } else {
-                    const bestMoveTokenIndex = getBestPossibleTokenIndexForMove(currentPlayerIndex, movableTokenIndexes, currentDiceRoll, playerTokenPositions);
-                    handleOnTokenMove(currentPlayerIndex, bestMoveTokenIndex);
-                }
+                setTimeout(() => {
+                    const uniqueTokenIndexPositions = getUniqueTokenPositions(currentPlayerIndex, movableTokenIndexes, playerTokenPositions);
+                    if (uniqueTokenIndexPositions.size === 1) {
+                        handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0]);
+                    } else {
+                        const bestMoveTokenIndex = getBestPossibleTokenIndexForMove(currentPlayerIndex, movableTokenIndexes, currentDiceRoll, playerTokenPositions);
+                        handleOnTokenMove(currentPlayerIndex, bestMoveTokenIndex);
+                    }
+                }, 400);
             } else if (isAssistModeEnabled) {
                 const uniqueTokenIndexPositions = getUniqueTokenPositions(currentPlayerIndex, movableTokenIndexes, playerTokenPositions);
                 if (uniqueTokenIndexPositions.size === 1) {
@@ -253,7 +255,7 @@ export async function handleOnTokenMove(playerIndex, tokenIndex) {
             const capturedSvg = capturedToken?.children[0];
             if (capturedSvg) {
                 capturedSvg.classList.add("token-captured");
-                await new Promise(r => setTimeout(r, 250));
+                await new Promise(r => setTimeout(r, 500));
                 capturedSvg.classList.remove("token-captured");
             }
             await updateTokenContainer(pi, ti, playerTokenPositions[pi][ti], -1)
@@ -313,7 +315,7 @@ function handleAfterTokenMove(tripComplete, captureCount) {
             updateCurrentPlayer();
         } else {
             if (isAutoplay()) {
-                diceElement.click()
+                setTimeout(() => diceElement.click(), 600)
             }
         }
     }
@@ -322,7 +324,7 @@ function handleAfterTokenMove(tripComplete, captureCount) {
 
 function handleDiceMoved() {
     if (isAutoplay()) {
-        handleDiceRoll()
+        setTimeout(() => handleDiceRoll(), 600)
     }
 }
 
