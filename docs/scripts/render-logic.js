@@ -327,6 +327,14 @@ export function resumeGame() {
  *
  * @param {number} currentPlayerIndex
  */
+export function applyColorMap(colorMap) {
+    const root = document.documentElement
+    colorMap.forEach((originalColor, position) => {
+        root.style.setProperty(`--player-${position}`, `var(--base-color-${originalColor})`)
+        root.style.setProperty(`--player-${position}-light`, `var(--base-color-${originalColor}-light)`)
+    })
+}
+
 export function moveDice(currentPlayerIndex) {
     const targetContainer = document.getElementById(`b${currentPlayerIndex}`)
     const holder = document.getElementById("dice-holder")

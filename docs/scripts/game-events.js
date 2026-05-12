@@ -4,7 +4,7 @@ import {
     animateDiceRoll,
     findCapturedOpponents,
     generateDiceRoll, getBestPossibleTokenIndexForMove,
-    getPlayerTypes,
+    applyColorMap, getPlayerTypes,
     getTokenElementId,
     getTokenNewPosition, getUniqueTokenPositions,
     inactiveDice,
@@ -80,10 +80,12 @@ function isAutoplay() {
  * @param {string} quickStartId
  */
 function initPlayers(quickStartId) {
-    getPlayerTypes(quickStartId).forEach((playerType, playerIndex) => {
+    const result = getPlayerTypes(quickStartId)
+    result.playerTypes.forEach((playerType, playerIndex) => {
         playerTypes[playerIndex] = playerType
         playerTokenPositions[playerIndex] = new Array(4).fill(-1)
     })
+    applyColorMap(result.colorMap)
 }
 
 /**
@@ -114,7 +116,9 @@ export function handleGameStart(quickStartId) {
 
     initPlayers(quickStartId)
 
-    currentPlayerIndex = playerTypes.findIndex(t => t !== undefined)
+    currentPlayerIndex = playerTypes.includes("PLAYER")
+        ? 2
+        : playerTypes.findIndex(t => t !== undefined)
 
     showGame();
 
@@ -142,6 +146,7 @@ export function handleGameStart(quickStartId) {
     }
 
     moveDice(currentPlayerIndex)
+    handleDiceMoved()
 }
 
 

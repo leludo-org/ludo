@@ -560,14 +560,22 @@ video {
   --foreground: 224 71.4% 4.1%;
   --card: 0 0% 99%;
   --card-hover: 220 14% 96%;
-  --player-0: 355 72% 52%;
-  --player-1: 152 56% 39%;
-  --player-2: 42 88% 50%;
-  --player-3: 220 68% 50%;
-  --player-0-light: 355 80% 88%;
-  --player-1-light: 152 50% 85%;
-  --player-2-light: 42 85% 87%;
-  --player-3-light: 220 70% 88%;
+  --base-color-0: 355 72% 52%;
+  --base-color-1: 152 56% 39%;
+  --base-color-2: 42 88% 50%;
+  --base-color-3: 220 68% 50%;
+  --base-color-0-light: 355 80% 88%;
+  --base-color-1-light: 152 50% 85%;
+  --base-color-2-light: 42 85% 87%;
+  --base-color-3-light: 220 70% 88%;
+  --player-0: var(--base-color-0);
+  --player-1: var(--base-color-1);
+  --player-2: var(--base-color-2);
+  --player-3: var(--base-color-3);
+  --player-0-light: var(--base-color-0-light);
+  --player-1-light: var(--base-color-1-light);
+  --player-2-light: var(--base-color-2-light);
+  --player-3-light: var(--base-color-3-light);
   --board-cell: 40 20% 96%;
   --board-border: 220 10% 82%;
 }
@@ -578,14 +586,22 @@ video {
   --foreground: 210 20% 92%;
   --card: 224 20% 16%;
   --card-hover: 224 20% 20%;
-  --player-0: 355 72% 58%;
-  --player-1: 152 50% 45%;
-  --player-2: 42 85% 55%;
-  --player-3: 220 65% 56%;
-  --player-0-light: 355 50% 22%;
-  --player-1-light: 152 35% 20%;
-  --player-2-light: 42 45% 20%;
-  --player-3-light: 220 40% 22%;
+  --base-color-0: 355 72% 58%;
+  --base-color-1: 152 50% 45%;
+  --base-color-2: 42 85% 55%;
+  --base-color-3: 220 65% 56%;
+  --base-color-0-light: 355 50% 22%;
+  --base-color-1-light: 152 35% 20%;
+  --base-color-2-light: 42 45% 20%;
+  --base-color-3-light: 220 40% 22%;
+  --player-0: var(--base-color-0);
+  --player-1: var(--base-color-1);
+  --player-2: var(--base-color-2);
+  --player-3: var(--base-color-3);
+  --player-0-light: var(--base-color-0-light);
+  --player-1-light: var(--base-color-1-light);
+  --player-2-light: var(--base-color-2-light);
+  --player-3-light: var(--base-color-3-light);
   --board-cell: 224 12% 24%;
   --board-border: 220 12% 30%;
 }
@@ -687,14 +703,6 @@ html {
 
 .mt-1 {
   margin-top: 0.25rem;
-}
-
-.mt-2 {
-  margin-top: 0.5rem;
-}
-
-.mt-3 {
-  margin-top: 0.75rem;
 }
 
 .block {
@@ -931,10 +939,6 @@ html {
   gap: 1rem;
 }
 
-.gap-5 {
-  gap: 1.25rem;
-}
-
 .gap-6 {
   gap: 1.5rem;
 }
@@ -949,10 +953,6 @@ html {
 
 .gap-\[1px\] {
   gap: 1px;
-}
-
-.overflow-hidden {
-  overflow: hidden;
 }
 
 .overflow-clip {
@@ -1473,12 +1473,6 @@ table td {
 .hover\:shadow-lg:hover {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.hover\:shadow-md:hover {
-  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 

@@ -9,14 +9,22 @@
         --foreground: 224 71.4% 4.1%;
         --card: 0 0% 99%;
         --card-hover: 220 14% 96%;
-        --player-0: 355 72% 52%;
-        --player-1: 152 56% 39%;
-        --player-2: 42 88% 50%;
-        --player-3: 220 68% 50%;
-        --player-0-light: 355 80% 88%;
-        --player-1-light: 152 50% 85%;
-        --player-2-light: 42 85% 87%;
-        --player-3-light: 220 70% 88%;
+        --base-color-0: 355 72% 52%;
+        --base-color-1: 152 56% 39%;
+        --base-color-2: 42 88% 50%;
+        --base-color-3: 220 68% 50%;
+        --base-color-0-light: 355 80% 88%;
+        --base-color-1-light: 152 50% 85%;
+        --base-color-2-light: 42 85% 87%;
+        --base-color-3-light: 220 70% 88%;
+        --player-0: var(--base-color-0);
+        --player-1: var(--base-color-1);
+        --player-2: var(--base-color-2);
+        --player-3: var(--base-color-3);
+        --player-0-light: var(--base-color-0-light);
+        --player-1-light: var(--base-color-1-light);
+        --player-2-light: var(--base-color-2-light);
+        --player-3-light: var(--base-color-3-light);
         --board-cell: 40 20% 96%;
         --board-border: 220 10% 82%;
     }
@@ -27,14 +35,22 @@
         --foreground: 210 20% 92%;
         --card: 224 20% 16%;
         --card-hover: 224 20% 20%;
-        --player-0: 355 72% 58%;
-        --player-1: 152 50% 45%;
-        --player-2: 42 85% 55%;
-        --player-3: 220 65% 56%;
-        --player-0-light: 355 50% 22%;
-        --player-1-light: 152 35% 20%;
-        --player-2-light: 42 45% 20%;
-        --player-3-light: 220 40% 22%;
+        --base-color-0: 355 72% 58%;
+        --base-color-1: 152 50% 45%;
+        --base-color-2: 42 85% 55%;
+        --base-color-3: 220 65% 56%;
+        --base-color-0-light: 355 50% 22%;
+        --base-color-1-light: 152 35% 20%;
+        --base-color-2-light: 42 45% 20%;
+        --base-color-3-light: 220 40% 22%;
+        --player-0: var(--base-color-0);
+        --player-1: var(--base-color-1);
+        --player-2: var(--base-color-2);
+        --player-3: var(--base-color-3);
+        --player-0-light: var(--base-color-0-light);
+        --player-1-light: var(--base-color-1-light);
+        --player-2-light: var(--base-color-2-light);
+        --player-3-light: var(--base-color-3-light);
         --board-cell: 224 12% 24%;
         --board-border: 220 12% 30%;
     }
@@ -114,6 +130,7 @@ wc-token, wc-dice {
 wc-quick-start {
     display: block;
 }
+
 
 /* ====== Premium Board Styling ====== */
 

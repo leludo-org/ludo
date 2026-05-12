@@ -118,28 +118,50 @@ export function getPlayerTypes(quickStartId) {
     const parts = quickStartId.split(",")
     const humanCount = +parts[1]
     const botCount = +parts[2]
-    const totalPlayers = humanCount + botCount
 
     if (humanCount === 4) {
-        return ["PLAYER", "PLAYER", "PLAYER", "PLAYER"]
-    }
-
-    const chosenColors = parts.slice(3).map(Number)
-    const result = new Array(4).fill(undefined)
-
-    chosenColors.forEach(colorIndex => {
-        result[colorIndex] = "PLAYER"
-    })
-
-    let botsPlaced = 0
-    for (let i = 0; i < 4 && botsPlaced < botCount; i++) {
-        if (result[i] === undefined) {
-            result[i] = "BOT"
-            botsPlaced++
+        return {
+            playerTypes: ["PLAYER", "PLAYER", "PLAYER", "PLAYER"],
+            colorMap: [0, 1, 2, 3]
         }
     }
 
-    return result
+    const chosenColors = parts.slice(3).map(Number)
+    const preferredPositions = [2, 0, 1, 3]
+
+    const playerTypes = new Array(4).fill(undefined)
+    const colorMap = new Array(4).fill(-1)
+    const usedColors = new Set()
+    const usedPositions = new Set()
+
+    chosenColors.forEach((color, i) => {
+        const pos = preferredPositions[i]
+        playerTypes[pos] = "PLAYER"
+        colorMap[pos] = color
+        usedColors.add(color)
+        usedPositions.add(pos)
+    })
+
+    const remainingColors = [0, 1, 2, 3].filter(c => !usedColors.has(c))
+    let botIdx = 0
+    let colorIdx = 0
+
+    for (let pos = 0; pos < 4 && botIdx < botCount; pos++) {
+        if (!usedPositions.has(pos)) {
+            playerTypes[pos] = "BOT"
+            colorMap[pos] = remainingColors[colorIdx++]
+            usedPositions.add(pos)
+            botIdx++
+        }
+    }
+
+    for (let pos = 0; pos < 4; pos++) {
+        if (colorMap[pos] === -1) {
+            colorMap[pos] = remainingColors[colorIdx++]
+        }
+    }
+
+    return { playerTypes, colorMap }
 }
 
 /**
