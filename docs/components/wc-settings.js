@@ -84,7 +84,7 @@ class Header extends HTMLElement {
         })
 
 
-        const defaultTheme = localStorage.getItem("theme") || "system"
+        const defaultTheme = localStorage.getItem("theme") || "light"
         updateTheme(defaultTheme)
         settingsContainer.querySelector(`#theme-${defaultTheme}`).setAttribute("checked", "checked")
         settingsContainer.querySelectorAll("input[name='s-theme']").forEach((themeSettingElement) => {

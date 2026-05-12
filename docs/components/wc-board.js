@@ -5,35 +5,38 @@ import {handleGamePause, playClickSound} from "../scripts/index.js";
 
 //language=HTML
 const BOARD_HTML = /*html*/ `
-    <div class="flex flex-col gap-12">
-        <div class="grid grid-rows-7 grid-cols-5 gap-[1px] [&>div]:outline [&>div]:outline-1 [&>div]:outline-border">
-            <div class="col-span-full grid grid-cols-3 !outline-0">
-
-                <div id="b0" class="flex flex-col">
-                    <wc-dice id="wc-dice" class="w-1/3"></wc-dice>
+    <div class="flex flex-col gap-6">
+        <div class="relative">
+            <div id="b0" class="absolute w-[11%] z-10" style="top: -3%; left: -3%;">
+                <div id="dice-holder" class="relative flex items-center justify-center">
+                    <div class="dice-ripple absolute rounded-full bg-current"></div>
+                    <div class="dice-ripple absolute rounded-full bg-current" style="animation-delay: 0.6s;"></div>
+                    <wc-dice id="wc-dice" class="relative w-full"></wc-dice>
                 </div>
-
-                <div id="b1" class="col-start-3 flex flex-col items-end"></div>
             </div>
+            <div id="b1" class="absolute w-[11%] z-10" style="top: -3%; right: -3%;"></div>
+            <div id="b2" class="absolute w-[11%] z-10" style="bottom: -3%; right: -3%;"></div>
+            <div id="b3" class="absolute w-[11%] z-10" style="bottom: -3%; left: -3%;"></div>
+            <div class="grid grid-rows-5 grid-cols-5 gap-0 overflow-clip">
 
             <div class="bg-player-0  row-span-2 col-span-2 flex items-center justify-center">
-                <div class="bg-background size-4/6  grid grid-cols-2 grid-rows-2 border">
+                <div class="bg-player-0-light size-4/6 grid grid-cols-2 grid-rows-2 rounded-lg shadow-inner border border-board-border/30">
                     <div class="flex items-center justify-center">
-                        <div id="h-0-0" class="size-1/2 rounded-full bg-player-0 border"></div>
+                        <div id="h-0-0" class="size-1/2 rounded-full bg-background border-2 border-player-0"></div>
                     </div>
                     <div class="flex items-center justify-center">
-                        <div id="h-0-1" class="size-1/2 rounded-full bg-player-0 border"></div>
+                        <div id="h-0-1" class="size-1/2 rounded-full bg-background border-2 border-player-0"></div>
                     </div>
                     <div class="flex items-center justify-center">
-                        <div id="h-0-2" class="size-1/2 rounded-full bg-player-0 border"></div>
+                        <div id="h-0-2" class="size-1/2 rounded-full bg-background border-2 border-player-0"></div>
                     </div>
                     <div class="flex items-center justify-center">
-                        <div id="h-0-3" class="size-1/2 rounded-full bg-player-0 border"></div>
+                        <div id="h-0-3" class="size-1/2 rounded-full bg-background border-2 border-player-0"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="-y row-span-2 grid grid-cols-3 grid-rows-6 gap-[1px] [&>div]:outline [&>div]:outline-1 [&>div]:outline-border">
+            <div class="-y row-span-2 grid grid-cols-3 grid-rows-6 gap-px [&>div]:border [&>div]:border-board-border/40">
                 <div id="m10" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m11" class="[&>wc-token:not(:first-child)]:mt-[-100%]">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -69,23 +72,23 @@ const BOARD_HTML = /*html*/ `
             </div>
 
             <div class="bg-player-1  row-span-2 col-span-2 flex items-center justify-center">
-                <div class="bg-background size-4/6  grid grid-cols-2 grid-rows-2 border">
+                <div class="bg-player-1-light size-4/6 grid grid-cols-2 grid-rows-2 rounded-lg shadow-inner border border-board-border/30">
                     <div class="flex items-center justify-center">
-                        <div id="h-1-0" class="size-1/2 rounded-full bg-player-1 border"></div>
+                        <div id="h-1-0" class="size-1/2 rounded-full bg-background border-2 border-player-1"></div>
                     </div>
                     <div class="flex items-center justify-center">
-                        <div id="h-1-1" class="size-1/2 rounded-full bg-player-1 border"></div>
+                        <div id="h-1-1" class="size-1/2 rounded-full bg-background border-2 border-player-1"></div>
                     </div>
                     <div class="flex items-center justify-center">
-                        <div id="h-1-2" class="size-1/2 rounded-full bg-player-1 border"></div>
+                        <div id="h-1-2" class="size-1/2 rounded-full bg-background border-2 border-player-1"></div>
                     </div>
                     <div class="flex items-center justify-center">
-                        <div id="h-1-3" class="size-1/2 rounded-full bg-player-1 border"></div>
+                        <div id="h-1-3" class="size-1/2 rounded-full bg-background border-2 border-player-1"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="-x col-span-2 grid grid-cols-6 grid-rows-3 gap-[1px] [&>div]:outline [&>div]:outline-1 [&>div]:outline-border">
+            <div class="-x col-span-2 grid grid-cols-6 grid-rows-3 gap-px [&>div]:border [&>div]:border-board-border/40">
                 <div id="m51" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m0" class="bg-player-0 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m1" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
@@ -121,7 +124,7 @@ const BOARD_HTML = /*html*/ `
             </div>
 
             <!-- todo: needs to be precise -->
-            <div class="relative overflow-clip [&>div]:outline [&>div]:outline-1 [&>div]:outline-border">
+            <div class="relative overflow-clip bg-board-cell">
                 <div id="p0s6"
                      class="absolute size-full  bg-player-0 rotate-45 -translate-x-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token]:col-start-3 [&>wc-token:nth-of-type(2)]:mt-[-200%] [&>wc-token:nth-of-type(3)]:mt-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-500%]"></div>
                 <div id="p1s6"
@@ -132,7 +135,7 @@ const BOARD_HTML = /*html*/ `
                      class="absolute size-full  bg-player-2 -rotate-45 translate-x-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:rotate-45 [&>wc-token:nth-of-type(2)]:ml-[-200%] [&>wc-token:nth-of-type(3)]:ml-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-200%]"></div>
             </div>
 
-            <div class="-x col-span-2 grid grid-cols-6 grid-rows-3 gap-[1px] [&>div]:outline [&>div]:outline-1 [&>div]:outline-border">
+            <div class="-x col-span-2 grid grid-cols-6 grid-rows-3 gap-px [&>div]:border [&>div]:border-board-border/40">
                 <div id="m18" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m19" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m20" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
@@ -168,23 +171,23 @@ const BOARD_HTML = /*html*/ `
             </div>
 
             <div class="bg-player-3  row-span-2 col-span-2 flex items-center justify-center">
-                <div class="bg-background size-4/6  grid grid-cols-2 grid-rows-2 border">
+                <div class="bg-player-3-light size-4/6 grid grid-cols-2 grid-rows-2 rounded-lg shadow-inner border border-board-border/30">
                     <div class="flex items-center justify-center">
-                        <div id="h-3-0" class="size-1/2 rounded-full bg-player-3 border"></div>
+                        <div id="h-3-0" class="size-1/2 rounded-full bg-background border-2 border-player-3"></div>
                     </div>
                     <div class="flex items-center justify-center">
-                        <div id="h-3-1" class="size-1/2 rounded-full bg-player-3 border"></div>
+                        <div id="h-3-1" class="size-1/2 rounded-full bg-background border-2 border-player-3"></div>
                     </div>
                     <div class="flex items-center justify-center">
-                        <div id="h-3-2" class="size-1/2 rounded-full bg-player-3 border"></div>
+                        <div id="h-3-2" class="size-1/2 rounded-full bg-background border-2 border-player-3"></div>
                     </div>
                     <div class="flex items-center justify-center">
-                        <div id="h-3-3" class="size-1/2 rounded-full bg-player-3 border"></div>
+                        <div id="h-3-3" class="size-1/2 rounded-full bg-background border-2 border-player-3"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="-y row-span-2 grid grid-cols-3 grid-rows-6 gap-[1px] [&>div]:outline [&>div]:outline-1 [&>div]:outline-border">
+            <div class="-y row-span-2 grid grid-cols-3 grid-rows-6 gap-px [&>div]:border [&>div]:border-board-border/40">
                 <div id="m43" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="p3s5" class="bg-player-3 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m31" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
@@ -220,25 +223,22 @@ const BOARD_HTML = /*html*/ `
             </div>
 
             <div class="bg-player-2  row-span-2 col-span-2 flex items-center justify-center">
-                <div class="bg-background size-4/6  grid grid-cols-2 grid-rows-2 border">
+                <div class="bg-player-2-light size-4/6 grid grid-cols-2 grid-rows-2 rounded-lg shadow-inner border border-board-border/30">
                     <div class="flex items-center justify-center">
-                        <div id="h-2-0" class="size-1/2 rounded-full bg-player-2 border"></div>
+                        <div id="h-2-0" class="size-1/2 rounded-full bg-background border-2 border-player-2"></div>
                     </div>
                     <div class="flex items-center justify-center">
-                        <div id="h-2-1" class="size-1/2 rounded-full bg-player-2 border"></div>
+                        <div id="h-2-1" class="size-1/2 rounded-full bg-background border-2 border-player-2"></div>
                     </div>
                     <div class="flex items-center justify-center">
-                        <div id="h-2-2" class="size-1/2 rounded-full bg-player-2 border"></div>
+                        <div id="h-2-2" class="size-1/2 rounded-full bg-background border-2 border-player-2"></div>
                     </div>
                     <div class="flex items-center justify-center">
-                        <div id="h-2-3" class="size-1/2 rounded-full bg-player-2 border"></div>
+                        <div id="h-2-3" class="size-1/2 rounded-full bg-background border-2 border-player-2"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-span-full grid grid-cols-3 !outline-0">
-                <div id="b3" class="flex flex-col justify-end"></div>
-                <div id="b2" class="col-start-3  flex flex-col justify-end items-end"></div>
             </div>
         </div>
         <div class="flex justify-end">

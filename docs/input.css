@@ -4,21 +4,39 @@
 
 @layer base {
     :root {
-        --border: 0 0% 0%;
-        --background: 220 13% 91%;
+        --border: 220 13% 78%;
+        --background: 220 14% 93%;
         --foreground: 224 71.4% 4.1%;
-        --card: 0 0% 100%;
-        --player-0: 0 72% 51%;
-        --player-1: 142 76% 36%;
-        --player-2: 41 96% 40%;
-        --player-3: 200 98% 39%;
+        --card: 0 0% 99%;
+        --card-hover: 220 14% 96%;
+        --player-0: 355 72% 52%;
+        --player-1: 152 56% 39%;
+        --player-2: 42 88% 50%;
+        --player-3: 220 68% 50%;
+        --player-0-light: 355 80% 88%;
+        --player-1-light: 152 50% 85%;
+        --player-2-light: 42 85% 87%;
+        --player-3-light: 220 70% 88%;
+        --board-cell: 40 20% 96%;
+        --board-border: 220 10% 82%;
     }
 
     .dark {
-        --border: 0 0% 100%;
-        --background: 224 71.4% 4.1%;
-        --foreground: 210 20% 98%;
-        --card: 0 0% 18%;
+        --border: 220 10% 30%;
+        --background: 224 30% 10%;
+        --foreground: 210 20% 92%;
+        --card: 224 20% 16%;
+        --card-hover: 224 20% 20%;
+        --player-0: 355 72% 58%;
+        --player-1: 152 50% 45%;
+        --player-2: 42 85% 55%;
+        --player-3: 220 65% 56%;
+        --player-0-light: 355 50% 22%;
+        --player-1-light: 152 35% 20%;
+        --player-2-light: 42 45% 20%;
+        --player-3-light: 220 40% 22%;
+        --board-cell: 224 12% 24%;
+        --board-border: 220 12% 30%;
     }
 
     /* latin */
@@ -42,38 +60,109 @@
     }
 }
 
+/* ====== Animations ====== */
+
+@keyframes dice-ripple {
+    0% { width: 80%; height: 80%; opacity: 0.5; }
+    100% { width: 220%; height: 220%; opacity: 0; }
+}
+
+.dice-ripple {
+    animation: dice-ripple 1.8s ease-out infinite;
+    pointer-events: none;
+}
+
 @keyframes dice-shake {
-    0% { transform: scale(1); }
-    30% { transform: scale(0.9) rotate(-3deg); }
-    70% { transform: scale(1.05) rotate(2deg); }
-    100% { transform: scale(1); }
+    0% { transform: scale(1) rotate(0deg); }
+    20% { transform: scale(0.92) rotate(-5deg); }
+    40% { transform: scale(0.95) rotate(3deg); }
+    60% { transform: scale(1.04) rotate(-2deg); }
+    80% { transform: scale(1.02) rotate(1deg); }
+    100% { transform: scale(1) rotate(0deg); }
 }
 
 .dice-rolling {
-    animation: dice-shake 0.16s ease-in-out;
+    animation: dice-shake 0.22s ease-in-out;
 }
 
 @keyframes capture-pulse {
     0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(0.3); opacity: 0.5; }
+    30% { transform: scale(1.15); opacity: 0.8; }
     100% { transform: scale(0); opacity: 0; }
 }
 
 .token-captured {
-    animation: capture-pulse 0.25s ease-in forwards;
+    animation: capture-pulse 0.3s ease-in forwards;
 }
 
 @keyframes board-shake {
     0%, 100% { transform: translate(0); }
-    25% { transform: translate(-2px, 1px); }
-    50% { transform: translate(2px, -1px); }
-    75% { transform: translate(-1px, 2px); }
+    15% { transform: translate(-3px, 1px); }
+    35% { transform: translate(3px, -2px); }
+    55% { transform: translate(-2px, 2px); }
+    75% { transform: translate(1px, -1px); }
 }
 
 .board-shake {
-    animation: board-shake 0.2s ease-in-out;
+    animation: board-shake 0.3s ease-in-out;
 }
 
 wc-token, wc-dice {
     touch-action: manipulation;
+}
+
+wc-quick-start {
+    display: block;
+}
+
+/* ====== Premium Board Styling ====== */
+
+/* Path cells background */
+.-x > div, .-y > div {
+    background-color: hsl(var(--board-cell));
+}
+.-x > div[class*="bg-player"], .-y > div[class*="bg-player"] {
+    background-color: unset;
+}
+
+[class*="bg-player-"][class*="row-span-2"] {
+    background-image: radial-gradient(circle at center, rgba(255,255,255,0.08) 0%, transparent 65%);
+    border-radius: 2px;
+}
+
+[id^="p"][id$="s1"], [id^="p"][id$="s2"], [id^="p"][id$="s3"],
+[id^="p"][id$="s4"], [id^="p"][id$="s5"] {
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.12), transparent) !important;
+}
+
+.overflow-clip > [class*="bg-player-"] {
+    opacity: 0.9;
+}
+
+.star {
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.15));
+    opacity: 0.85;
+}
+
+[class*="corner-"] {
+    opacity: 0.7;
+}
+
+/* Dark mode dice */
+.dark #dice {
+    background: linear-gradient(145deg, #3a3835, #2d2b28) !important;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.5), -1px -1px 3px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.08) !important;
+    border-color: rgba(255,255,255,0.06) !important;
+}
+.dark #dice .dice-dot {
+    background: radial-gradient(circle at 40% 35%, #eee, #bbb) !important;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 0.5px 0 rgba(0,0,0,0.3) !important;
+}
+
+wc-token .animate-bounce {
+    filter: drop-shadow(0 0 4px currentColor);
+}
+
+table td {
+    font-variant-numeric: tabular-nums;
 }

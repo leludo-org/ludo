@@ -114,6 +114,8 @@ export function handleGameStart(quickStartId) {
 
     initPlayers(quickStartId)
 
+    currentPlayerIndex = playerTypes.findIndex(t => t !== undefined)
+
     showGame();
 
     const params = new URLSearchParams(window.location.search)

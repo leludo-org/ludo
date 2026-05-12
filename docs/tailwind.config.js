@@ -14,7 +14,14 @@ export default {
                 "player-0": "hsl(var(--player-0))",
                 "player-1": "hsl(var(--player-1))",
                 "player-2": "hsl(var(--player-2))",
-                "player-3": "hsl(var(--player-3))"
+                "player-3": "hsl(var(--player-3))",
+                "card-hover": "hsl(var(--card-hover))",
+                "player-0-light": "hsl(var(--player-0-light))",
+                "player-1-light": "hsl(var(--player-1-light))",
+                "player-2-light": "hsl(var(--player-2-light))",
+                "player-3-light": "hsl(var(--player-3-light))",
+                "board-cell": "hsl(var(--board-cell))",
+                "board-border": "hsl(var(--board-border))"
             }
         },
     },

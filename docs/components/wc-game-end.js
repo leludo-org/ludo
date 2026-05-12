@@ -3,18 +3,21 @@ import {playerCaptures, playerRanks, playerTimes, playerTypes, playClickSound} f
 
 //language=HTML
 const GAME_END_HTML = /*html*/ `
-    <div class="display flex flex-col gap-6 text-center">
-        <div class="text-xl font-bold">Game Concluded! Final Standings</div>
-        <table class="">
-            <thead class="font-bold text-underline">
-            <tr>
-                <td>Rank</td>
-                <td>Player</td>
-                <td>Captures</td>
-                <td>Time</td>
+    <div class="display flex flex-col gap-8 text-center max-w-sm mx-auto">
+        <div>
+            <div class="text-2xl font-bold tracking-tight">Game Over</div>
+            <div class="text-sm opacity-50 mt-1">Final Standings</div>
+        </div>
+        <table class="w-full text-sm">
+            <thead>
+            <tr class="border-b-2 border-border/30 text-xs uppercase tracking-widest opacity-60">
+                <td class="pb-2">#</td>
+                <td class="pb-2">Player</td>
+                <td class="pb-2">Captures</td>
+                <td class="pb-2">Time</td>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="[&>tr]:border-b [&>tr]:border-border/15 [&>tr>td]:py-3 [&>tr:first-child>td]:pt-4">
             </tbody>
         </table>
         <wc-button id="play-again" button-text="Play Again"></wc-button>

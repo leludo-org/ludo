@@ -115,26 +115,31 @@ export function isTripComplete(tokenPosition) {
  * @return {PlayerType[]}
  */
 export function getPlayerTypes(quickStartId) {
-    switch (quickStartId) {
-        case "qs,1,1":
-            return ["BOT", undefined, "PLAYER", undefined]
-        case "qs,1,2":
-            return [undefined, "BOT", "PLAYER", "BOT"]
-        case "qs,1,3":
-            return ["BOT", "BOT", "PLAYER", "BOT"]
-        case "qs,2,0":
-            return ["PLAYER", undefined, "PLAYER", undefined]
-        case "qs,2,1":
-            return ["PLAYER", undefined, "PLAYER", "BOT"]
-        case "qs,2,2":
-            return ["PLAYER", "BOT", "PLAYER", "BOT"]
-        case "qs,3,0":
-            return ["PLAYER", undefined, "PLAYER", "PLAYER"]
-        case "qs,3,1":
-            return ["PLAYER", "BOT", "PLAYER", "PLAYER"]
-        case "qs,4,0":
-            return ["PLAYER", "PLAYER", "PLAYER", "PLAYER"]
+    const parts = quickStartId.split(",")
+    const humanCount = +parts[1]
+    const botCount = +parts[2]
+    const totalPlayers = humanCount + botCount
+
+    if (humanCount === 4) {
+        return ["PLAYER", "PLAYER", "PLAYER", "PLAYER"]
     }
+
+    const chosenColors = parts.slice(3).map(Number)
+    const result = new Array(4).fill(undefined)
+
+    chosenColors.forEach(colorIndex => {
+        result[colorIndex] = "PLAYER"
+    })
+
+    let botsPlaced = 0
+    for (let i = 0; i < 4 && botsPlaced < botCount; i++) {
+        if (result[i] === undefined) {
+            result[i] = "BOT"
+            botsPlaced++
+        }
+    }
+
+    return result
 }
 
 /**

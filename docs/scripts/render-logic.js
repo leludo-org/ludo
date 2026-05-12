@@ -284,13 +284,11 @@ export function inactiveTokens() {
 }
 
 export function activateDice() {
-    const diceElement = document.getElementById("wc-dice");
-    diceElement.classList.add("animate-bounce")
+    document.getElementById("wc-dice").dataset.active = "true"
 }
 
 export function inactiveDice() {
-    const diceElement = document.getElementById("wc-dice")
-    diceElement.classList.remove("animate-bounce")
+    document.getElementById("wc-dice").dataset.active = "false"
 }
 
 export function showGame() {
@@ -330,8 +328,10 @@ export function resumeGame() {
  * @param {number} currentPlayerIndex
  */
 export function moveDice(currentPlayerIndex) {
-    const targetContainerId = `b${currentPlayerIndex}`
-    const diceElement = document.getElementById("wc-dice")
-    const targetContainer = document.getElementById(targetContainerId)
-    targetContainer.appendChild(diceElement)
+    const targetContainer = document.getElementById(`b${currentPlayerIndex}`)
+    const holder = document.getElementById("dice-holder")
+    targetContainer.appendChild(holder)
+    const colorClasses = ["text-player-0", "text-player-1", "text-player-2", "text-player-3"]
+    colorClasses.forEach(c => holder.classList.remove(c))
+    holder.classList.add(colorClasses[currentPlayerIndex])
 }

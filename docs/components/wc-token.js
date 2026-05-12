@@ -8,11 +8,28 @@ import {
 
 //language=HTML
 const TOKEN_HTML = (playerIndex) => /*html*/ `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-         stroke-linecap="round" stroke-linejoin="round"
-         class="fill-player-${playerIndex} award relative size-full min-w-full transition-transform duration-150 ease-out">
-        <path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/>
-        <circle cx="12" cy="8" r="6"/>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+         class="text-player-${playerIndex} relative size-full min-w-full transition-transform duration-150 ease-out"
+         style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="pb${playerIndex}" x1="0.2" y1="0" x2="0.8" y2="1">
+                <stop offset="0%" stop-color="white" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="black" stop-opacity="0.12"/>
+            </linearGradient>
+            <radialGradient id="ph${playerIndex}" cx="0.4" cy="0.35" r="0.5">
+                <stop offset="0%" stop-color="white" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="white" stop-opacity="0"/>
+            </radialGradient>
+        </defs>
+        <ellipse cx="50" cy="88" rx="30" ry="8" fill="currentColor"/>
+        <ellipse cx="50" cy="88" rx="30" ry="8" fill="black" opacity="0.1"/>
+        <path d="M32 85 Q30 70 36 55 Q40 45 42 38 L58 38 Q60 45 64 55 Q70 70 68 85 Z" fill="currentColor" stroke="white" stroke-width="1.5" stroke-opacity="0.5"/>
+        <path d="M32 85 Q30 70 36 55 Q40 45 42 38 L58 38 Q60 45 64 55 Q70 70 68 85 Z" fill="url(#pb${playerIndex})"/>
+        <ellipse cx="50" cy="38" rx="13" ry="4" fill="currentColor"/>
+        <ellipse cx="50" cy="38" rx="13" ry="4" fill="white" opacity="0.15"/>
+        <circle cx="50" cy="24" r="16" fill="currentColor" stroke="white" stroke-width="1.5" stroke-opacity="0.5"/>
+        <circle cx="50" cy="24" r="16" fill="url(#ph${playerIndex})"/>
+        <ellipse cx="44" cy="18" rx="5" ry="3.5" fill="white" opacity="0.4" transform="rotate(-20 44 18)"/>
     </svg>
 `
 

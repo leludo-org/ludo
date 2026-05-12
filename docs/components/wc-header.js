@@ -4,8 +4,8 @@ import {
 
 //language=HTML
 const HEADER_HTML = /*html*/ `
-<nav id="header" class="p-2 gap-2 h-12 flex justify-between bg-card">
-    <a href="/" class="font-bold text-xl">leludo.org</a>
+<nav id="header" class="px-4 py-2 gap-2 h-14 flex justify-between items-center bg-card border-b border-border/20 shadow-sm">
+    <a href="/" class="font-bold text-xl tracking-tight">leludo.org</a>
     <div class="flex gap-3 items-center">
         <wc-settings></wc-settings>
         <a href="https://github.com/leludo-org/ludo">
