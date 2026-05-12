@@ -36,7 +36,7 @@ const BOARD_HTML = /*html*/ `
                 </div>
             </div>
 
-            <div class="-y row-span-2 grid grid-cols-3 grid-rows-6 gap-px [&>div]:border [&>div]:border-board-border/40">
+            <div class="-y row-span-2 grid grid-cols-3 grid-rows-6 [&>div]:outline [&>div]:outline-1 [&>div]:outline-board-border/40">
                 <div id="m10" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m11" class="[&>wc-token:not(:first-child)]:mt-[-100%]">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -48,8 +48,8 @@ const BOARD_HTML = /*html*/ `
                 </div>
                 <div id="m12" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m9" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p1s1" class="bg-player-1 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="m13" class="bg-player-1 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p1s1" class="bg-player-1-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="m13" class="bg-player-1-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m8" class="[&>wc-token:not(:first-child)]:mt-[-100%]">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
@@ -58,16 +58,16 @@ const BOARD_HTML = /*html*/ `
                                 points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                     </svg>
                 </div>
-                <div id="p1s2" class="bg-player-1 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p1s2" class="bg-player-1-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m14" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m7" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p1s3" class="bg-player-1 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p1s3" class="bg-player-1-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m15" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m6" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p1s4" class="bg-player-1 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p1s4" class="bg-player-1-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m16" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m5" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p1s5" class="bg-player-1 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p1s5" class="bg-player-1-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m17" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
             </div>
 
@@ -88,9 +88,9 @@ const BOARD_HTML = /*html*/ `
                 </div>
             </div>
 
-            <div class="-x col-span-2 grid grid-cols-6 grid-rows-3 gap-px [&>div]:border [&>div]:border-board-border/40">
+            <div class="-x col-span-2 grid grid-cols-6 grid-rows-3 [&>div]:outline [&>div]:outline-1 [&>div]:outline-board-border/40">
                 <div id="m51" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="m0" class="bg-player-0 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="m0" class="bg-player-0-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m1" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m2" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m3" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
@@ -103,11 +103,11 @@ const BOARD_HTML = /*html*/ `
                         <path d="M4 20v-7a4 4 0 0 1 4-4h12"/>
                     </svg>
                 </div>
-                <div id="p0s1" class="bg-player-0 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p0s2" class="bg-player-0 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p0s3" class="bg-player-0 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p0s4" class="bg-player-0 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p0s5" class="bg-player-0 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p0s1" class="bg-player-0-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p0s2" class="bg-player-0-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p0s3" class="bg-player-0-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p0s4" class="bg-player-0-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p0s5" class="bg-player-0-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m49" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m48" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m47" class="[&>wc-token:not(:first-child)]:mt-[-100%]">
@@ -126,16 +126,16 @@ const BOARD_HTML = /*html*/ `
             <!-- todo: needs to be precise -->
             <div class="relative overflow-clip bg-board-cell">
                 <div id="p0s6"
-                     class="absolute size-full  bg-player-0 rotate-45 -translate-x-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token]:col-start-3 [&>wc-token:nth-of-type(2)]:mt-[-200%] [&>wc-token:nth-of-type(3)]:mt-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-500%]"></div>
+                     class="absolute size-full  bg-player-0-light rotate-45 -translate-x-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token]:col-start-3 [&>wc-token:nth-of-type(2)]:mt-[-200%] [&>wc-token:nth-of-type(3)]:mt-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-500%]"></div>
                 <div id="p1s6"
-                     class="absolute size-full  bg-player-1 rotate-45 -translate-y-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token]:col-start-3 [&>wc-token]:row-start-3"></div>
+                     class="absolute size-full  bg-player-1-light rotate-45 -translate-y-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token]:col-start-3 [&>wc-token]:row-start-3"></div>
                 <div id="p3s6"
-                     class="absolute size-full  bg-player-3 rotate-45 translate-y-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token:nth-of-type(2)]:ml-[-200%] [&>wc-token:nth-of-type(3)]:ml-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-200%]"></div>
+                     class="absolute size-full  bg-player-3-light rotate-45 translate-y-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token:nth-of-type(2)]:ml-[-200%] [&>wc-token:nth-of-type(3)]:ml-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-200%]"></div>
                 <div id="p2s6"
-                     class="absolute size-full  bg-player-2 -rotate-45 translate-x-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:rotate-45 [&>wc-token:nth-of-type(2)]:ml-[-200%] [&>wc-token:nth-of-type(3)]:ml-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-200%]"></div>
+                     class="absolute size-full  bg-player-2-light -rotate-45 translate-x-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:rotate-45 [&>wc-token:nth-of-type(2)]:ml-[-200%] [&>wc-token:nth-of-type(3)]:ml-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-200%]"></div>
             </div>
 
-            <div class="-x col-span-2 grid grid-cols-6 grid-rows-3 gap-px [&>div]:border [&>div]:border-board-border/40">
+            <div class="-x col-span-2 grid grid-cols-6 grid-rows-3 [&>div]:outline [&>div]:outline-1 [&>div]:outline-board-border/40">
                 <div id="m18" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m19" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m20" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
@@ -149,11 +149,11 @@ const BOARD_HTML = /*html*/ `
                 </div>
                 <div id="m22" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m23" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p2s5" class="bg-player-2 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p2s4" class="bg-player-2 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p2s3" class="bg-player-2 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p2s2" class="bg-player-2 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p2s1" class="bg-player-2 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p2s5" class="bg-player-2-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p2s4" class="bg-player-2-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p2s3" class="bg-player-2-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p2s2" class="bg-player-2-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p2s1" class="bg-player-2-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m24" class="[&>wc-token:not(:first-child)]:mt-[-100%]">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -166,7 +166,7 @@ const BOARD_HTML = /*html*/ `
                 <div id="m29" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m28" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m27" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="m26" class="bg-player-2 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="m26" class="bg-player-2-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m25" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
             </div>
 
@@ -187,18 +187,18 @@ const BOARD_HTML = /*html*/ `
                 </div>
             </div>
 
-            <div class="-y row-span-2 grid grid-cols-3 grid-rows-6 gap-px [&>div]:border [&>div]:border-board-border/40">
+            <div class="-y row-span-2 grid grid-cols-3 grid-rows-6 [&>div]:outline [&>div]:outline-1 [&>div]:outline-board-border/40">
                 <div id="m43" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p3s5" class="bg-player-3 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p3s5" class="bg-player-3-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m31" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m42" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p3s4" class="bg-player-3 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p3s4" class="bg-player-3-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m32" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m41" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p3s3" class="bg-player-3 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p3s3" class="bg-player-3-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m33" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m40" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p3s2" class="bg-player-3 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p3s2" class="bg-player-3-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m34" class="[&>wc-token:not(:first-child)]:mt-[-100%]">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
@@ -207,8 +207,8 @@ const BOARD_HTML = /*html*/ `
                                 points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                     </svg>
                 </div>
-                <div id="m39" class="bg-player-3 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
-                <div id="p3s1" class="bg-player-3 [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="m39" class="bg-player-3-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
+                <div id="p3s1" class="bg-player-3-light [&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m35" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m38" class="[&>wc-token:not(:first-child)]:mt-[-100%]"></div>
                 <div id="m37" class="[&>wc-token:not(:first-child)]:mt-[-100%]">

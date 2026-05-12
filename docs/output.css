@@ -636,14 +636,6 @@ html {
   bottom: 0px;
 }
 
-.bottom-\[-5\%\] {
-  bottom: -5%;
-}
-
-.left-\[-5\%\] {
-  left: -5%;
-}
-
 .right-0 {
   right: 0px;
 }
@@ -652,16 +644,8 @@ html {
   right: 2rem;
 }
 
-.right-\[-5\%\] {
-  right: -5%;
-}
-
 .top-12 {
   top: 3rem;
-}
-
-.top-\[-5\%\] {
-  top: -5%;
 }
 
 .z-10 {
@@ -899,6 +883,10 @@ html {
   grid-template-rows: repeat(3, minmax(0, 1fr));
 }
 
+.grid-rows-5 {
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+}
+
 .grid-rows-6 {
   grid-template-rows: repeat(6, minmax(0, 1fr));
 }
@@ -960,10 +948,6 @@ html {
 }
 
 .gap-\[1px\] {
-  gap: 1px;
-}
-
-.gap-px {
   gap: 1px;
 }
 
@@ -1414,12 +1398,8 @@ wc-quick-start {
 
 /* Path cells background */
 
-.-x > div, .-y > div {
+.-x > div:not([class*="bg-player"]), .-y > div:not([class*="bg-player"]) {
   background-color: hsl(var(--board-cell));
-}
-
-.-x > div[class*="bg-player"], .-y > div[class*="bg-player"] {
-  background-color: unset;
 }
 
 [class*="bg-player-"][class*="row-span-2"] {
@@ -1524,12 +1504,16 @@ table td {
   justify-content: flex-end;
 }
 
-.\[\&\>div\]\:border>div {
-  border-width: 1px;
+.\[\&\>div\]\:outline>div {
+  outline-style: solid;
 }
 
-.\[\&\>div\]\:border-board-border\/40>div {
-  border-color: hsl(var(--board-border) / 0.4);
+.\[\&\>div\]\:outline-1>div {
+  outline-width: 1px;
+}
+
+.\[\&\>div\]\:outline-board-border\/40>div {
+  outline-color: hsl(var(--board-border) / 0.4);
 }
 
 .\[\&\>input\:checked\+label\]\:bg-background>input:checked+label {
