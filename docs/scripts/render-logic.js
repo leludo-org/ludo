@@ -64,11 +64,51 @@ export function playCaptureSound() {
     noise.stop(t + 0.15);
 }
 
-let cachedDiceSound = null;
 export function playDiceSound() {
-    if (!cachedDiceSound) cachedDiceSound = document.getElementById("audio-dice");
-    cachedDiceSound.currentTime = 0;
-    cachedDiceSound.play().catch(() => {})
+    const ctx = getAudioCtx();
+    const t = ctx.currentTime;
+
+    const bufferLen = Math.ceil(ctx.sampleRate * 0.06);
+    const noiseBuffer = ctx.createBuffer(1, bufferLen, ctx.sampleRate);
+    const data = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferLen; i++) data[i] = Math.random() * 2 - 1;
+
+    const burstCount = 7 + Math.floor(Math.random() * 5);
+    let offset = 0;
+    let amp = 0.12;
+
+    for (let i = 0; i < burstCount; i++) {
+        const duration = 0.003 + Math.random() * 0.005;
+        const startTime = t + offset;
+
+        const noise = ctx.createBufferSource();
+        noise.buffer = noiseBuffer;
+
+        const lp = ctx.createBiquadFilter();
+        lp.type = "lowpass";
+        lp.frequency.setValueAtTime(3000 + Math.random() * 2000, startTime);
+        lp.Q.setValueAtTime(0.1, startTime);
+
+        const hp = ctx.createBiquadFilter();
+        hp.type = "highpass";
+        hp.frequency.setValueAtTime(300 + Math.random() * 200, startTime);
+        hp.Q.setValueAtTime(0.1, startTime);
+
+        const gain = ctx.createGain();
+        gain.gain.setValueAtTime(amp, startTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+        noise.connect(hp);
+        hp.connect(lp);
+        lp.connect(gain);
+        gain.connect(ctx.destination);
+
+        noise.start(startTime);
+        noise.stop(startTime + duration);
+
+        offset += 0.01 + Math.random() * 0.025;
+        amp *= 0.7 + Math.random() * 0.15;
+    }
 }
 
 /**

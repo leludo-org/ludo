@@ -243,9 +243,6 @@ const BOARD_HTML = /*html*/ `
         </div>
         <div class="flex justify-end">
             <wc-button id="g-pause" class="flex-1" button-text="Pause"></wc-button>
-            <audio id="audio-dice">
-                <source src="assets/sounds/dice.wav" type="audio/wav">
-            </audio>
         </div>
     </div>
 `
