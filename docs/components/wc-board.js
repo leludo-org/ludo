@@ -1,7 +1,7 @@
 import {
     htmlToElement
 } from "./index.js"
-import {handleGamePause} from "../scripts/index.js";
+import {handleGamePause, playClickSound} from "../scripts/index.js";
 
 //language=HTML
 const BOARD_HTML = /*html*/ `
@@ -243,8 +243,8 @@ const BOARD_HTML = /*html*/ `
         </div>
         <div class="flex justify-end">
             <wc-button id="g-pause" class="flex-1" button-text="Pause"></wc-button>
-            <audio id="audio-pop">
-                <source src="assets/sounds/pop.ogg" type="audio/ogg">
+            <audio id="audio-dice">
+                <source src="assets/sounds/dice.wav" type="audio/wav">
             </audio>
         </div>
     </div>
@@ -259,6 +259,7 @@ class Board extends HTMLElement {
         const boardElement = htmlToElement(BOARD_HTML)
 
         boardElement.querySelector("#g-pause").addEventListener("click", () => {
+            playClickSound()
             handleGamePause()
         })
 

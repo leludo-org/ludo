@@ -12,7 +12,8 @@ import {
     isTokenMovable,
     isTripComplete,
     moveDice,
-    playPopSound,
+    playCaptureSound,
+    playClickSound,
     resumeGame,
     showGame,
     showPauseMenu,
@@ -145,10 +146,14 @@ export function handleGameStart(quickStartId) {
 export function handleGamePause() {
     showPauseMenu();
 
-    document.getElementById("pm-resume").addEventListener("click", resumeGame)
+    document.getElementById("pm-resume").addEventListener("click", () => {
+        playClickSound()
+        resumeGame()
+    }, { once: true })
 
     document.querySelectorAll(".restart-game").forEach(el => {
         el.addEventListener("click", () => {
+            playClickSound()
             window.location.href = window.location.origin
         })
     })
@@ -236,6 +241,7 @@ export async function handleOnTokenMove(playerIndex, tokenIndex) {
 
     for (const [pi, pt] of otherPlayerTokensOnThatMarkIndex.entries()) {
         for (const ti of pt) {
+            playCaptureSound()
             const capturedToken = document.getElementById(`p-${pi}-${ti}`);
             const capturedSvg = capturedToken?.children[0];
             if (capturedSvg) {
@@ -250,7 +256,6 @@ export async function handleOnTokenMove(playerIndex, tokenIndex) {
     }
 
     if (captureCount > 0) {
-        playPopSound()
         playerCaptures[currentPlayerIndex] += captureCount
         const board = document.getElementById("game");
         board.classList.add("board-shake");

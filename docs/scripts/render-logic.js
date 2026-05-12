@@ -1,10 +1,74 @@
 import {getMarkIndex} from "./index.js";
 
-let cachedPopSound = null;
-export function playPopSound() {
-    if (!cachedPopSound) cachedPopSound = document.getElementById("audio-pop");
-    cachedPopSound.currentTime = 0;
-    cachedPopSound.play().catch(() => {})
+export function playClickSound() {
+    const ctx = getAudioCtx();
+    const t = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.frequency.setValueAtTime(1200, t);
+    osc.frequency.exponentialRampToValueAtTime(800, t + 0.04);
+    gain.gain.setValueAtTime(0.06, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+    osc.start(t);
+    osc.stop(t + 0.05);
+}
+
+let audioCtx = null;
+function getAudioCtx() {
+    if (!audioCtx) audioCtx = new AudioContext();
+    return audioCtx;
+}
+
+export function playStepSound() {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.frequency.value = 600;
+    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.06);
+}
+
+export function playCaptureSound() {
+    const ctx = getAudioCtx();
+    const t = ctx.currentTime;
+
+    const sweep = ctx.createOscillator();
+    const sweepGain = ctx.createGain();
+    sweep.connect(sweepGain);
+    sweepGain.connect(ctx.destination);
+    sweep.frequency.setValueAtTime(800, t);
+    sweep.frequency.exponentialRampToValueAtTime(200, t + 0.25);
+    sweepGain.gain.setValueAtTime(0.15, t);
+    sweepGain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+    sweep.start(t);
+    sweep.stop(t + 0.3);
+
+    const bufferSize = ctx.sampleRate * 0.15;
+    const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+    const noise = ctx.createBufferSource();
+    noise.buffer = noiseBuffer;
+    const noiseGain = ctx.createGain();
+    noise.connect(noiseGain);
+    noiseGain.connect(ctx.destination);
+    noiseGain.gain.setValueAtTime(0.12, t);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+    noise.start(t);
+    noise.stop(t + 0.15);
+}
+
+let cachedDiceSound = null;
+export function playDiceSound() {
+    if (!cachedDiceSound) cachedDiceSound = document.getElementById("audio-dice");
+    cachedDiceSound.currentTime = 0;
+    cachedDiceSound.play().catch(() => {})
 }
 
 /**
@@ -53,7 +117,7 @@ export function updateDiceFace(lastDiceRoll, diceRoll) {
  * @returns {Promise<void>}
  */
 export function animateDiceRoll(currentDiceRoll) {
-    playPopSound();
+    playDiceSound();
 
     const diceContainer = document.getElementById("dice");
     diceContainer.classList.add("dice-rolling");
@@ -133,6 +197,7 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
                 element.style.willChange = 'transform';
             }
 
+            playStepSound();
             const targetContainer = document.getElementById(path[stepIndex]);
             const initialPosition = element.getBoundingClientRect();
             const finalPosition = targetContainer.getBoundingClientRect();
@@ -218,8 +283,6 @@ export function showPauseMenu() {
 export function resumeGame() {
     document.getElementById("pause-menu").classList.add("hidden")
     document.getElementById("game").classList.remove("hidden")
-
-    document.getElementById("pm-resume").removeEventListener("click", resumeGame)
 }
 
 /**

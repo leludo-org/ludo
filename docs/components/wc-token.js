@@ -3,6 +3,7 @@ import {
 } from "./index.js"
 import {
     handleOnTokenMove,
+    playClickSound,
 } from "../scripts/index.js";
 
 //language=HTML
@@ -42,6 +43,7 @@ class Token extends HTMLElement {
             this.appendChild(tokenElement) // fixme: if triggered multiple time would cause issues
 
             this.addEventListener("click", () => {
+                playClickSound()
                 this.handleTokenClick(playerIndex, tokenIndex);
             })
 

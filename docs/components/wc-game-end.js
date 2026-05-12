@@ -1,5 +1,5 @@
 import {htmlToElement} from "./index.js"
-import {playerCaptures, playerRanks, playerTimes, playerTypes} from "../scripts/index.js";
+import {playerCaptures, playerRanks, playerTimes, playerTypes, playClickSound} from "../scripts/index.js";
 
 //language=HTML
 const GAME_END_HTML = /*html*/ `
@@ -43,6 +43,7 @@ class GameEnd extends HTMLElement {
         const boardElement = htmlToElement(GAME_END_HTML);
         const tableBody = boardElement.querySelector("tbody");
         boardElement.querySelector("#play-again").addEventListener("click", () => {
+            playClickSound()
             window.location.href = window.location.origin;
         });
 
