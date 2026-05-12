@@ -1,10 +1,10 @@
 import {getMarkIndex} from "./index.js";
 
+let cachedPopSound = null;
 export function playPopSound() {
-    const popSound = document.getElementById("audio-pop");
-    popSound.pause();
-    popSound.currentTime = 0;
-    popSound.play()
+    if (!cachedPopSound) cachedPopSound = document.getElementById("audio-pop");
+    cachedPopSound.currentTime = 0;
+    cachedPopSound.play().catch(() => {})
 }
 
 /**
@@ -55,25 +55,54 @@ export function updateDiceFace(lastDiceRoll, diceRoll) {
 export function animateDiceRoll(currentDiceRoll) {
     playPopSound();
 
+    const diceContainer = document.getElementById("dice");
+    diceContainer.classList.add("dice-rolling");
+    diceContainer.addEventListener("animationend", () => {
+        diceContainer.classList.remove("dice-rolling");
+    }, { once: true });
+
     return new Promise(resolve => {
         let diceRoll = currentDiceRoll
-
         let counter = 0;
-        const interval = setInterval(() => {
-            const lastDiceRoll = diceRoll
+        const delays = [20, 20, 20, 20, 20, 40, 60, 80];
+        let lastTime = 0;
+
+        function tick(timestamp) {
+            if (!lastTime) lastTime = timestamp;
+
+            if (timestamp - lastTime < delays[counter]) {
+                requestAnimationFrame(tick);
+                return;
+            }
+            lastTime = timestamp;
+
+            const lastDiceRoll = diceRoll;
 
             if (counter === 8) {
-                clearInterval(interval)
                 updateDiceFace(lastDiceRoll, currentDiceRoll);
-                resolve()
-            } else {
-                diceRoll = (diceRoll % 6) + 1
-                updateDiceFace(lastDiceRoll, diceRoll);
+                resolve();
+                return;
             }
 
-            counter++
-        }, 20)
+            diceRoll = (diceRoll % 6) + 1;
+            updateDiceFace(lastDiceRoll, diceRoll);
+            counter++;
+            requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(tick);
     });
+}
+
+function getContainerPath(playerIndex, tokenIndex, currentPosition, newPosition) {
+    if ([-1, 0].includes(newPosition)) {
+        return [getTokenContainerId(playerIndex, tokenIndex, newPosition)];
+    }
+    const path = [];
+    for (let pos = currentPosition + 1; pos <= newPosition; pos++) {
+        path.push(getTokenContainerId(playerIndex, tokenIndex, pos));
+    }
+    return path;
 }
 
 /**
@@ -87,31 +116,49 @@ export function animateDiceRoll(currentDiceRoll) {
 export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPosition, newTokenPosition) {
     console.debug("updateTokenContainer", playerIndex, tokenIndex, currentTokenPosition, newTokenPosition)
 
-    let nextTokenPosition = [-1, 0].includes(newTokenPosition) ? newTokenPosition : currentTokenPosition + 1;
+    const path = getContainerPath(playerIndex, tokenIndex, currentTokenPosition, newTokenPosition);
+    const element = document.getElementById(getTokenElementId(playerIndex, tokenIndex));
+
+    let stepIndex = 0;
+
     return new Promise((resolve) => {
-        const newContainerId = getTokenContainerId(playerIndex, tokenIndex, nextTokenPosition)
-
-        const tokenElementId = getTokenElementId(playerIndex, tokenIndex)
-        const element = document.getElementById(tokenElementId)
-        const targetContainer = document.getElementById(newContainerId)
-
-        const initialPosition = element.getBoundingClientRect()
-        const finalPosition = targetContainer.getBoundingClientRect()
-
-        const offsetX = finalPosition.left - initialPosition.left
-        const offsetY = finalPosition.top - initialPosition.top
-
-        element.style.transform = `translate(${offsetX}px, ${offsetY}px)`
-        setTimeout(() => {
-            element.style.removeProperty("transform");
-            targetContainer.appendChild(element)
-            if (nextTokenPosition === newTokenPosition) {
-                resolve()
-            } else {
-                return updateTokenContainer(playerIndex, tokenIndex, nextTokenPosition, newTokenPosition).then(() => resolve())
+        function step() {
+            if (stepIndex >= path.length) {
+                element.style.willChange = '';
+                resolve();
+                return;
             }
-        }, 120)
-    })
+
+            if (stepIndex === 0) {
+                element.style.willChange = 'transform';
+            }
+
+            const targetContainer = document.getElementById(path[stepIndex]);
+            const initialPosition = element.getBoundingClientRect();
+            const finalPosition = targetContainer.getBoundingClientRect();
+
+            const offsetX = finalPosition.left - initialPosition.left;
+            const offsetY = finalPosition.top - initialPosition.top;
+
+            element.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+
+            let settled = false;
+            const settle = () => {
+                if (settled) return;
+                settled = true;
+                clearTimeout(fallbackTimer);
+                element.style.removeProperty("transform");
+                targetContainer.appendChild(element);
+                stepIndex++;
+                requestAnimationFrame(step);
+            };
+
+            element.addEventListener('transitionend', settle, { once: true });
+            const fallbackTimer = setTimeout(settle, 200);
+        }
+
+        requestAnimationFrame(step);
+    });
 }
 
 /**
@@ -142,8 +189,25 @@ export function inactiveDice() {
 }
 
 export function showGame() {
-    document.getElementById("main-menu").classList.add("hidden")
-    document.getElementById("game").classList.remove("hidden")
+    const mainMenu = document.getElementById("main-menu")
+    const game = document.getElementById("game")
+    mainMenu.style.transition = "opacity 0.3s ease"
+    mainMenu.style.opacity = "0"
+    setTimeout(() => {
+        mainMenu.classList.add("hidden")
+        mainMenu.style.removeProperty("opacity")
+        mainMenu.style.removeProperty("transition")
+        game.classList.remove("hidden")
+        game.style.opacity = "0"
+        game.style.transition = "opacity 0.3s ease"
+        requestAnimationFrame(() => {
+            game.style.opacity = "1"
+            setTimeout(() => {
+                game.style.removeProperty("opacity")
+                game.style.removeProperty("transition")
+            }, 300)
+        })
+    }, 300)
 }
 
 export function showPauseMenu() {

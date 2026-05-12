@@ -5,92 +5,60 @@ import {handleGameStart} from "../scripts/index.js";
 
 //language=HTML
 const QUICK_START_HTML = /*html*/ `
-    <div class="flex flex-col gap-6 text-xl">
-        <div class="flex gap-6">
-            <label class="flex items-center gap-1 p-2">
-                1
-                <wc-user-icon></wc-user-icon>
-            </label>
+    <div class="flex flex-col gap-4 max-w-sm mx-auto">
+        <p class="text-center text-lg opacity-70">How many players?</p>
 
-            <div class="flex-1 grid grid-cols-3 gap-2">
-                <button id="qs,1,1"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/80">
-                    1
-                    <wc-bot-icon></wc-bot-icon>
-                </button>
-                <button id="qs,1,2"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/80">
-                    2
-                    <wc-bot-icon></wc-bot-icon>
-                </button>
-                <button id="qs,1,3"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/80">
-                    3
-                    <wc-bot-icon></wc-bot-icon>
-                </button>
-            </div>
+        <div class="grid grid-cols-2 gap-3">
+            <button id="qs,1,3"
+                    class="quick-start flex flex-col items-center gap-2 rounded-lg p-4 bg-card shadow-lg hover:shadow-2xl hover:scale-105 transition-transform cursor-pointer border-2 border-transparent hover:border-foreground/20">
+                <span class="text-3xl">1</span>
+                <span class="text-sm opacity-60">vs 3 Bots</span>
+            </button>
+
+            <button id="qs,2,2"
+                    class="quick-start flex flex-col items-center gap-2 rounded-lg p-4 bg-card shadow-lg hover:shadow-2xl hover:scale-105 transition-transform cursor-pointer border-2 border-transparent hover:border-foreground/20">
+                <span class="text-3xl">2</span>
+                <span class="text-sm opacity-60">+ 2 Bots</span>
+            </button>
+
+            <button id="qs,3,1"
+                    class="quick-start flex flex-col items-center gap-2 rounded-lg p-4 bg-card shadow-lg hover:shadow-2xl hover:scale-105 transition-transform cursor-pointer border-2 border-transparent hover:border-foreground/20">
+                <span class="text-3xl">3</span>
+                <span class="text-sm opacity-60">+ 1 Bot</span>
+            </button>
+
+            <button id="qs,4,0"
+                    class="quick-start flex flex-col items-center gap-2 rounded-lg p-4 bg-card shadow-lg hover:shadow-2xl hover:scale-105 transition-transform cursor-pointer border-2 border-transparent hover:border-foreground/20">
+                <span class="text-3xl">4</span>
+                <span class="text-sm opacity-60">No Bots</span>
+            </button>
         </div>
 
-        <div class="flex gap-6">
-            <label class="flex items-center gap-1 p-2">
-                2
-                <wc-user-icon></wc-user-icon>
-            </label>
-
-            <div class="flex-1 grid grid-cols-3 gap-2">
-                <button id="qs,2,0"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/80">
-                    0
-                    <wc-bot-icon></wc-bot-icon>
+        <details class="mt-2">
+            <summary class="text-center text-sm opacity-50 cursor-pointer hover:opacity-80">More options</summary>
+            <div class="grid grid-cols-3 gap-2 mt-3 text-sm">
+                <button id="qs,1,1" class="quick-start rounded p-2 bg-card shadow hover:shadow-lg hover:scale-105 transition-transform cursor-pointer">
+                    <div>1 vs 1</div>
+                    <div class="opacity-50 text-xs">Bot</div>
                 </button>
-                <button id="qs,2,1"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/80">
-                    1
-                    <wc-bot-icon></wc-bot-icon>
+                <button id="qs,1,2" class="quick-start rounded p-2 bg-card shadow hover:shadow-lg hover:scale-105 transition-transform cursor-pointer">
+                    <div>1 vs 2</div>
+                    <div class="opacity-50 text-xs">Bots</div>
                 </button>
-                <button id="qs,2,2"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/80">
-                    2
-                    <wc-bot-icon></wc-bot-icon>
+                <button id="qs,2,0" class="quick-start rounded p-2 bg-card shadow hover:shadow-lg hover:scale-105 transition-transform cursor-pointer">
+                    <div>2 Players</div>
+                    <div class="opacity-50 text-xs">Only</div>
                 </button>
-            </div>
-        </div>
-
-        <div class="flex gap-6">
-            <label class="flex items-center gap-1 p-2">
-                3
-                <wc-user-icon></wc-user-icon>
-            </label>
-
-            <div class="flex-1 grid grid-cols-2 gap-2">
-                <button id="qs,3,0"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/80">
-                    0
-                    <wc-bot-icon></wc-bot-icon>
+                <button id="qs,2,1" class="quick-start rounded p-2 bg-card shadow hover:shadow-lg hover:scale-105 transition-transform cursor-pointer">
+                    <div>2 + 1</div>
+                    <div class="opacity-50 text-xs">Bot</div>
                 </button>
-                <button id="qs,3,1"
-                        class="flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/80">
-                    1
-                    <wc-bot-icon></wc-bot-icon>
+                <button id="qs,3,0" class="quick-start rounded p-2 bg-card shadow hover:shadow-lg hover:scale-105 transition-transform cursor-pointer">
+                    <div>3 Players</div>
+                    <div class="opacity-50 text-xs">Only</div>
                 </button>
             </div>
-        </div>
-
-        <div class="flex gap-6">
-            <label class="flex items-center gap-1 p-2">
-                4
-                <wc-user-icon></wc-user-icon>
-            </label>
-
-            <div class="flex-1 grid grid-cols-1 gap-2">
-                <button id="qs,4,0"
-                        class="flex-1 flex items-center gap-1 justify-center quick-start rounded p-2 bg-card shadow hover:shadow-2xl hover:bg-card/80">
-                    0
-                    <wc-bot-icon></wc-bot-icon>
-                </button>
-            </div>
-        </div>
-
+        </details>
     </div>
 `
 

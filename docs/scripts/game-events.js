@@ -220,7 +220,7 @@ function handleAfterDiceRoll() {
  * @param {number} playerIndex
  * @param {number} tokenIndex
  */
-export function handleOnTokenMove(playerIndex, tokenIndex) {
+export async function handleOnTokenMove(playerIndex, tokenIndex) {
     inactiveTokens();
 
     const tokenOldPosition = playerTokenPositions[currentPlayerIndex][tokenIndex]
@@ -229,24 +229,35 @@ export function handleOnTokenMove(playerIndex, tokenIndex) {
 
     const tripComplete = isTripComplete(tokenNewPosition)
 
-    updateTokenContainer(playerIndex, tokenIndex, tokenOldPosition, tokenNewPosition).then(() => {
-        const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, playerTokenPositions[playerIndex][tokenIndex], playerTokenPositions);
-        let captureCount = 0
-        otherPlayerTokensOnThatMarkIndex.forEach((pt, pi) => {
-            pt.forEach((ti) => {
-                updateTokenContainer(pi, ti, playerTokenPositions[pi][ti], -1).then()
-                playerTokenPositions[pi][ti] = -1
-                captureCount++
-            })
-        })
+    await updateTokenContainer(playerIndex, tokenIndex, tokenOldPosition, tokenNewPosition)
 
-        if (captureCount > 0) {
-            playPopSound()
-            playerCaptures[currentPlayerIndex] += captureCount
+    const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, playerTokenPositions[playerIndex][tokenIndex], playerTokenPositions);
+    let captureCount = 0
+
+    for (const [pi, pt] of otherPlayerTokensOnThatMarkIndex.entries()) {
+        for (const ti of pt) {
+            const capturedToken = document.getElementById(`p-${pi}-${ti}`);
+            const capturedSvg = capturedToken?.children[0];
+            if (capturedSvg) {
+                capturedSvg.classList.add("token-captured");
+                await new Promise(r => setTimeout(r, 250));
+                capturedSvg.classList.remove("token-captured");
+            }
+            await updateTokenContainer(pi, ti, playerTokenPositions[pi][ti], -1)
+            playerTokenPositions[pi][ti] = -1
+            captureCount++
         }
+    }
 
-        handleAfterTokenMove(tripComplete, captureCount)
-    })
+    if (captureCount > 0) {
+        playPopSound()
+        playerCaptures[currentPlayerIndex] += captureCount
+        const board = document.getElementById("game");
+        board.classList.add("board-shake");
+        board.addEventListener("animationend", () => board.classList.remove("board-shake"), { once: true });
+    }
+
+    handleAfterTokenMove(tripComplete, captureCount)
 }
 
 
