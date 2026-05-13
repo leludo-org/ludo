@@ -18,6 +18,7 @@ import {
     resumeGame,
     showGame,
     showPauseMenu,
+    slideBackToMenu,
     updateDiceFace,
     updateTokenContainer,
     updateActionZone,
@@ -201,8 +202,9 @@ export function handleGamePause() {
     }, { once: true })
 
     document.querySelectorAll(".restart-game").forEach(el => {
-        el.addEventListener("click", () => {
+        el.addEventListener("click", async () => {
             playClickSound()
+            await slideBackToMenu()
             window.location.href = window.location.origin
         })
     })

@@ -8096,7 +8096,7 @@ wc-token, wc-dice {
   touch-action: manipulation;
 }
 
-wc-quick-start {
+wc-quick-start, wc-board {
   display: block;
 }
 

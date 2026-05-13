@@ -355,25 +355,12 @@ export function inactiveDice() {
 }
 
 export function showGame() {
-    const mainMenu = document.getElementById("main-menu")
-    const game = document.getElementById("game")
-    mainMenu.style.transition = "opacity 0.3s ease"
-    mainMenu.style.opacity = "0"
-    setTimeout(() => {
-        mainMenu.classList.add("hidden")
-        mainMenu.style.removeProperty("opacity")
-        mainMenu.style.removeProperty("transition")
-        game.classList.remove("hidden")
-        game.style.opacity = "0"
-        game.style.transition = "opacity 0.3s ease"
-        requestAnimationFrame(() => {
-            game.style.opacity = "1"
-            setTimeout(() => {
-                game.style.removeProperty("opacity")
-                game.style.removeProperty("transition")
-            }, 300)
-        })
-    }, 300)
+    document.getElementById("main-menu").classList.add("hidden")
+    document.getElementById("game").classList.remove("hidden")
+}
+
+export function slideBackToMenu() {
+    return Promise.resolve()
 }
 
 export function showPauseMenu() {
