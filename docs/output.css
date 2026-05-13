@@ -1213,16 +1213,1056 @@ html{
   border-color: hsl(var(--player-0));
 }
 
+.border-player-0-light{
+  border-color: hsl(var(--player-0-light));
+}
+
+.border-player-0-light\/0{
+  border-color: hsl(var(--player-0-light) / 0);
+}
+
+.border-player-0-light\/10{
+  border-color: hsl(var(--player-0-light) / 0.1);
+}
+
+.border-player-0-light\/100{
+  border-color: hsl(var(--player-0-light) / 1);
+}
+
+.border-player-0-light\/15{
+  border-color: hsl(var(--player-0-light) / 0.15);
+}
+
+.border-player-0-light\/20{
+  border-color: hsl(var(--player-0-light) / 0.2);
+}
+
+.border-player-0-light\/25{
+  border-color: hsl(var(--player-0-light) / 0.25);
+}
+
+.border-player-0-light\/30{
+  border-color: hsl(var(--player-0-light) / 0.3);
+}
+
+.border-player-0-light\/35{
+  border-color: hsl(var(--player-0-light) / 0.35);
+}
+
+.border-player-0-light\/40{
+  border-color: hsl(var(--player-0-light) / 0.4);
+}
+
+.border-player-0-light\/45{
+  border-color: hsl(var(--player-0-light) / 0.45);
+}
+
+.border-player-0-light\/5{
+  border-color: hsl(var(--player-0-light) / 0.05);
+}
+
+.border-player-0-light\/50{
+  border-color: hsl(var(--player-0-light) / 0.5);
+}
+
+.border-player-0-light\/55{
+  border-color: hsl(var(--player-0-light) / 0.55);
+}
+
+.border-player-0-light\/60{
+  border-color: hsl(var(--player-0-light) / 0.6);
+}
+
+.border-player-0-light\/65{
+  border-color: hsl(var(--player-0-light) / 0.65);
+}
+
+.border-player-0-light\/70{
+  border-color: hsl(var(--player-0-light) / 0.7);
+}
+
+.border-player-0-light\/75{
+  border-color: hsl(var(--player-0-light) / 0.75);
+}
+
+.border-player-0-light\/80{
+  border-color: hsl(var(--player-0-light) / 0.8);
+}
+
+.border-player-0-light\/85{
+  border-color: hsl(var(--player-0-light) / 0.85);
+}
+
+.border-player-0-light\/90{
+  border-color: hsl(var(--player-0-light) / 0.9);
+}
+
+.border-player-0-light\/95{
+  border-color: hsl(var(--player-0-light) / 0.95);
+}
+
+.border-player-0-path{
+  border-color: hsl(var(--player-0-path));
+}
+
+.border-player-0-path\/0{
+  border-color: hsl(var(--player-0-path) / 0);
+}
+
+.border-player-0-path\/10{
+  border-color: hsl(var(--player-0-path) / 0.1);
+}
+
+.border-player-0-path\/100{
+  border-color: hsl(var(--player-0-path) / 1);
+}
+
+.border-player-0-path\/15{
+  border-color: hsl(var(--player-0-path) / 0.15);
+}
+
+.border-player-0-path\/20{
+  border-color: hsl(var(--player-0-path) / 0.2);
+}
+
+.border-player-0-path\/25{
+  border-color: hsl(var(--player-0-path) / 0.25);
+}
+
+.border-player-0-path\/30{
+  border-color: hsl(var(--player-0-path) / 0.3);
+}
+
+.border-player-0-path\/35{
+  border-color: hsl(var(--player-0-path) / 0.35);
+}
+
+.border-player-0-path\/40{
+  border-color: hsl(var(--player-0-path) / 0.4);
+}
+
+.border-player-0-path\/45{
+  border-color: hsl(var(--player-0-path) / 0.45);
+}
+
+.border-player-0-path\/5{
+  border-color: hsl(var(--player-0-path) / 0.05);
+}
+
+.border-player-0-path\/50{
+  border-color: hsl(var(--player-0-path) / 0.5);
+}
+
+.border-player-0-path\/55{
+  border-color: hsl(var(--player-0-path) / 0.55);
+}
+
+.border-player-0-path\/60{
+  border-color: hsl(var(--player-0-path) / 0.6);
+}
+
+.border-player-0-path\/65{
+  border-color: hsl(var(--player-0-path) / 0.65);
+}
+
+.border-player-0-path\/70{
+  border-color: hsl(var(--player-0-path) / 0.7);
+}
+
+.border-player-0-path\/75{
+  border-color: hsl(var(--player-0-path) / 0.75);
+}
+
+.border-player-0-path\/80{
+  border-color: hsl(var(--player-0-path) / 0.8);
+}
+
+.border-player-0-path\/85{
+  border-color: hsl(var(--player-0-path) / 0.85);
+}
+
+.border-player-0-path\/90{
+  border-color: hsl(var(--player-0-path) / 0.9);
+}
+
+.border-player-0-path\/95{
+  border-color: hsl(var(--player-0-path) / 0.95);
+}
+
+.border-player-0\/0{
+  border-color: hsl(var(--player-0) / 0);
+}
+
+.border-player-0\/10{
+  border-color: hsl(var(--player-0) / 0.1);
+}
+
+.border-player-0\/100{
+  border-color: hsl(var(--player-0) / 1);
+}
+
+.border-player-0\/15{
+  border-color: hsl(var(--player-0) / 0.15);
+}
+
+.border-player-0\/20{
+  border-color: hsl(var(--player-0) / 0.2);
+}
+
+.border-player-0\/25{
+  border-color: hsl(var(--player-0) / 0.25);
+}
+
+.border-player-0\/30{
+  border-color: hsl(var(--player-0) / 0.3);
+}
+
+.border-player-0\/35{
+  border-color: hsl(var(--player-0) / 0.35);
+}
+
+.border-player-0\/40{
+  border-color: hsl(var(--player-0) / 0.4);
+}
+
+.border-player-0\/45{
+  border-color: hsl(var(--player-0) / 0.45);
+}
+
+.border-player-0\/5{
+  border-color: hsl(var(--player-0) / 0.05);
+}
+
+.border-player-0\/50{
+  border-color: hsl(var(--player-0) / 0.5);
+}
+
+.border-player-0\/55{
+  border-color: hsl(var(--player-0) / 0.55);
+}
+
+.border-player-0\/60{
+  border-color: hsl(var(--player-0) / 0.6);
+}
+
+.border-player-0\/65{
+  border-color: hsl(var(--player-0) / 0.65);
+}
+
+.border-player-0\/70{
+  border-color: hsl(var(--player-0) / 0.7);
+}
+
+.border-player-0\/75{
+  border-color: hsl(var(--player-0) / 0.75);
+}
+
+.border-player-0\/80{
+  border-color: hsl(var(--player-0) / 0.8);
+}
+
+.border-player-0\/85{
+  border-color: hsl(var(--player-0) / 0.85);
+}
+
+.border-player-0\/90{
+  border-color: hsl(var(--player-0) / 0.9);
+}
+
+.border-player-0\/95{
+  border-color: hsl(var(--player-0) / 0.95);
+}
+
 .border-player-1{
   border-color: hsl(var(--player-1));
+}
+
+.border-player-1-light{
+  border-color: hsl(var(--player-1-light));
+}
+
+.border-player-1-light\/0{
+  border-color: hsl(var(--player-1-light) / 0);
+}
+
+.border-player-1-light\/10{
+  border-color: hsl(var(--player-1-light) / 0.1);
+}
+
+.border-player-1-light\/100{
+  border-color: hsl(var(--player-1-light) / 1);
+}
+
+.border-player-1-light\/15{
+  border-color: hsl(var(--player-1-light) / 0.15);
+}
+
+.border-player-1-light\/20{
+  border-color: hsl(var(--player-1-light) / 0.2);
+}
+
+.border-player-1-light\/25{
+  border-color: hsl(var(--player-1-light) / 0.25);
+}
+
+.border-player-1-light\/30{
+  border-color: hsl(var(--player-1-light) / 0.3);
+}
+
+.border-player-1-light\/35{
+  border-color: hsl(var(--player-1-light) / 0.35);
+}
+
+.border-player-1-light\/40{
+  border-color: hsl(var(--player-1-light) / 0.4);
+}
+
+.border-player-1-light\/45{
+  border-color: hsl(var(--player-1-light) / 0.45);
+}
+
+.border-player-1-light\/5{
+  border-color: hsl(var(--player-1-light) / 0.05);
+}
+
+.border-player-1-light\/50{
+  border-color: hsl(var(--player-1-light) / 0.5);
+}
+
+.border-player-1-light\/55{
+  border-color: hsl(var(--player-1-light) / 0.55);
+}
+
+.border-player-1-light\/60{
+  border-color: hsl(var(--player-1-light) / 0.6);
+}
+
+.border-player-1-light\/65{
+  border-color: hsl(var(--player-1-light) / 0.65);
+}
+
+.border-player-1-light\/70{
+  border-color: hsl(var(--player-1-light) / 0.7);
+}
+
+.border-player-1-light\/75{
+  border-color: hsl(var(--player-1-light) / 0.75);
+}
+
+.border-player-1-light\/80{
+  border-color: hsl(var(--player-1-light) / 0.8);
+}
+
+.border-player-1-light\/85{
+  border-color: hsl(var(--player-1-light) / 0.85);
+}
+
+.border-player-1-light\/90{
+  border-color: hsl(var(--player-1-light) / 0.9);
+}
+
+.border-player-1-light\/95{
+  border-color: hsl(var(--player-1-light) / 0.95);
+}
+
+.border-player-1-path{
+  border-color: hsl(var(--player-1-path));
+}
+
+.border-player-1-path\/0{
+  border-color: hsl(var(--player-1-path) / 0);
+}
+
+.border-player-1-path\/10{
+  border-color: hsl(var(--player-1-path) / 0.1);
+}
+
+.border-player-1-path\/100{
+  border-color: hsl(var(--player-1-path) / 1);
+}
+
+.border-player-1-path\/15{
+  border-color: hsl(var(--player-1-path) / 0.15);
+}
+
+.border-player-1-path\/20{
+  border-color: hsl(var(--player-1-path) / 0.2);
+}
+
+.border-player-1-path\/25{
+  border-color: hsl(var(--player-1-path) / 0.25);
+}
+
+.border-player-1-path\/30{
+  border-color: hsl(var(--player-1-path) / 0.3);
+}
+
+.border-player-1-path\/35{
+  border-color: hsl(var(--player-1-path) / 0.35);
+}
+
+.border-player-1-path\/40{
+  border-color: hsl(var(--player-1-path) / 0.4);
+}
+
+.border-player-1-path\/45{
+  border-color: hsl(var(--player-1-path) / 0.45);
+}
+
+.border-player-1-path\/5{
+  border-color: hsl(var(--player-1-path) / 0.05);
+}
+
+.border-player-1-path\/50{
+  border-color: hsl(var(--player-1-path) / 0.5);
+}
+
+.border-player-1-path\/55{
+  border-color: hsl(var(--player-1-path) / 0.55);
+}
+
+.border-player-1-path\/60{
+  border-color: hsl(var(--player-1-path) / 0.6);
+}
+
+.border-player-1-path\/65{
+  border-color: hsl(var(--player-1-path) / 0.65);
+}
+
+.border-player-1-path\/70{
+  border-color: hsl(var(--player-1-path) / 0.7);
+}
+
+.border-player-1-path\/75{
+  border-color: hsl(var(--player-1-path) / 0.75);
+}
+
+.border-player-1-path\/80{
+  border-color: hsl(var(--player-1-path) / 0.8);
+}
+
+.border-player-1-path\/85{
+  border-color: hsl(var(--player-1-path) / 0.85);
+}
+
+.border-player-1-path\/90{
+  border-color: hsl(var(--player-1-path) / 0.9);
+}
+
+.border-player-1-path\/95{
+  border-color: hsl(var(--player-1-path) / 0.95);
+}
+
+.border-player-1\/0{
+  border-color: hsl(var(--player-1) / 0);
+}
+
+.border-player-1\/10{
+  border-color: hsl(var(--player-1) / 0.1);
+}
+
+.border-player-1\/100{
+  border-color: hsl(var(--player-1) / 1);
+}
+
+.border-player-1\/15{
+  border-color: hsl(var(--player-1) / 0.15);
+}
+
+.border-player-1\/20{
+  border-color: hsl(var(--player-1) / 0.2);
+}
+
+.border-player-1\/25{
+  border-color: hsl(var(--player-1) / 0.25);
+}
+
+.border-player-1\/30{
+  border-color: hsl(var(--player-1) / 0.3);
+}
+
+.border-player-1\/35{
+  border-color: hsl(var(--player-1) / 0.35);
+}
+
+.border-player-1\/40{
+  border-color: hsl(var(--player-1) / 0.4);
+}
+
+.border-player-1\/45{
+  border-color: hsl(var(--player-1) / 0.45);
+}
+
+.border-player-1\/5{
+  border-color: hsl(var(--player-1) / 0.05);
+}
+
+.border-player-1\/50{
+  border-color: hsl(var(--player-1) / 0.5);
+}
+
+.border-player-1\/55{
+  border-color: hsl(var(--player-1) / 0.55);
+}
+
+.border-player-1\/60{
+  border-color: hsl(var(--player-1) / 0.6);
+}
+
+.border-player-1\/65{
+  border-color: hsl(var(--player-1) / 0.65);
+}
+
+.border-player-1\/70{
+  border-color: hsl(var(--player-1) / 0.7);
+}
+
+.border-player-1\/75{
+  border-color: hsl(var(--player-1) / 0.75);
+}
+
+.border-player-1\/80{
+  border-color: hsl(var(--player-1) / 0.8);
+}
+
+.border-player-1\/85{
+  border-color: hsl(var(--player-1) / 0.85);
+}
+
+.border-player-1\/90{
+  border-color: hsl(var(--player-1) / 0.9);
+}
+
+.border-player-1\/95{
+  border-color: hsl(var(--player-1) / 0.95);
 }
 
 .border-player-2{
   border-color: hsl(var(--player-2));
 }
 
+.border-player-2-light{
+  border-color: hsl(var(--player-2-light));
+}
+
+.border-player-2-light\/0{
+  border-color: hsl(var(--player-2-light) / 0);
+}
+
+.border-player-2-light\/10{
+  border-color: hsl(var(--player-2-light) / 0.1);
+}
+
+.border-player-2-light\/100{
+  border-color: hsl(var(--player-2-light) / 1);
+}
+
+.border-player-2-light\/15{
+  border-color: hsl(var(--player-2-light) / 0.15);
+}
+
+.border-player-2-light\/20{
+  border-color: hsl(var(--player-2-light) / 0.2);
+}
+
+.border-player-2-light\/25{
+  border-color: hsl(var(--player-2-light) / 0.25);
+}
+
+.border-player-2-light\/30{
+  border-color: hsl(var(--player-2-light) / 0.3);
+}
+
+.border-player-2-light\/35{
+  border-color: hsl(var(--player-2-light) / 0.35);
+}
+
+.border-player-2-light\/40{
+  border-color: hsl(var(--player-2-light) / 0.4);
+}
+
+.border-player-2-light\/45{
+  border-color: hsl(var(--player-2-light) / 0.45);
+}
+
+.border-player-2-light\/5{
+  border-color: hsl(var(--player-2-light) / 0.05);
+}
+
+.border-player-2-light\/50{
+  border-color: hsl(var(--player-2-light) / 0.5);
+}
+
+.border-player-2-light\/55{
+  border-color: hsl(var(--player-2-light) / 0.55);
+}
+
+.border-player-2-light\/60{
+  border-color: hsl(var(--player-2-light) / 0.6);
+}
+
+.border-player-2-light\/65{
+  border-color: hsl(var(--player-2-light) / 0.65);
+}
+
+.border-player-2-light\/70{
+  border-color: hsl(var(--player-2-light) / 0.7);
+}
+
+.border-player-2-light\/75{
+  border-color: hsl(var(--player-2-light) / 0.75);
+}
+
+.border-player-2-light\/80{
+  border-color: hsl(var(--player-2-light) / 0.8);
+}
+
+.border-player-2-light\/85{
+  border-color: hsl(var(--player-2-light) / 0.85);
+}
+
+.border-player-2-light\/90{
+  border-color: hsl(var(--player-2-light) / 0.9);
+}
+
+.border-player-2-light\/95{
+  border-color: hsl(var(--player-2-light) / 0.95);
+}
+
+.border-player-2-path{
+  border-color: hsl(var(--player-2-path));
+}
+
+.border-player-2-path\/0{
+  border-color: hsl(var(--player-2-path) / 0);
+}
+
+.border-player-2-path\/10{
+  border-color: hsl(var(--player-2-path) / 0.1);
+}
+
+.border-player-2-path\/100{
+  border-color: hsl(var(--player-2-path) / 1);
+}
+
+.border-player-2-path\/15{
+  border-color: hsl(var(--player-2-path) / 0.15);
+}
+
+.border-player-2-path\/20{
+  border-color: hsl(var(--player-2-path) / 0.2);
+}
+
+.border-player-2-path\/25{
+  border-color: hsl(var(--player-2-path) / 0.25);
+}
+
+.border-player-2-path\/30{
+  border-color: hsl(var(--player-2-path) / 0.3);
+}
+
+.border-player-2-path\/35{
+  border-color: hsl(var(--player-2-path) / 0.35);
+}
+
+.border-player-2-path\/40{
+  border-color: hsl(var(--player-2-path) / 0.4);
+}
+
+.border-player-2-path\/45{
+  border-color: hsl(var(--player-2-path) / 0.45);
+}
+
+.border-player-2-path\/5{
+  border-color: hsl(var(--player-2-path) / 0.05);
+}
+
+.border-player-2-path\/50{
+  border-color: hsl(var(--player-2-path) / 0.5);
+}
+
+.border-player-2-path\/55{
+  border-color: hsl(var(--player-2-path) / 0.55);
+}
+
+.border-player-2-path\/60{
+  border-color: hsl(var(--player-2-path) / 0.6);
+}
+
+.border-player-2-path\/65{
+  border-color: hsl(var(--player-2-path) / 0.65);
+}
+
+.border-player-2-path\/70{
+  border-color: hsl(var(--player-2-path) / 0.7);
+}
+
+.border-player-2-path\/75{
+  border-color: hsl(var(--player-2-path) / 0.75);
+}
+
+.border-player-2-path\/80{
+  border-color: hsl(var(--player-2-path) / 0.8);
+}
+
+.border-player-2-path\/85{
+  border-color: hsl(var(--player-2-path) / 0.85);
+}
+
+.border-player-2-path\/90{
+  border-color: hsl(var(--player-2-path) / 0.9);
+}
+
+.border-player-2-path\/95{
+  border-color: hsl(var(--player-2-path) / 0.95);
+}
+
+.border-player-2\/0{
+  border-color: hsl(var(--player-2) / 0);
+}
+
+.border-player-2\/10{
+  border-color: hsl(var(--player-2) / 0.1);
+}
+
+.border-player-2\/100{
+  border-color: hsl(var(--player-2) / 1);
+}
+
+.border-player-2\/15{
+  border-color: hsl(var(--player-2) / 0.15);
+}
+
+.border-player-2\/20{
+  border-color: hsl(var(--player-2) / 0.2);
+}
+
+.border-player-2\/25{
+  border-color: hsl(var(--player-2) / 0.25);
+}
+
+.border-player-2\/30{
+  border-color: hsl(var(--player-2) / 0.3);
+}
+
+.border-player-2\/35{
+  border-color: hsl(var(--player-2) / 0.35);
+}
+
+.border-player-2\/40{
+  border-color: hsl(var(--player-2) / 0.4);
+}
+
+.border-player-2\/45{
+  border-color: hsl(var(--player-2) / 0.45);
+}
+
+.border-player-2\/5{
+  border-color: hsl(var(--player-2) / 0.05);
+}
+
+.border-player-2\/50{
+  border-color: hsl(var(--player-2) / 0.5);
+}
+
+.border-player-2\/55{
+  border-color: hsl(var(--player-2) / 0.55);
+}
+
+.border-player-2\/60{
+  border-color: hsl(var(--player-2) / 0.6);
+}
+
+.border-player-2\/65{
+  border-color: hsl(var(--player-2) / 0.65);
+}
+
+.border-player-2\/70{
+  border-color: hsl(var(--player-2) / 0.7);
+}
+
+.border-player-2\/75{
+  border-color: hsl(var(--player-2) / 0.75);
+}
+
+.border-player-2\/80{
+  border-color: hsl(var(--player-2) / 0.8);
+}
+
+.border-player-2\/85{
+  border-color: hsl(var(--player-2) / 0.85);
+}
+
+.border-player-2\/90{
+  border-color: hsl(var(--player-2) / 0.9);
+}
+
+.border-player-2\/95{
+  border-color: hsl(var(--player-2) / 0.95);
+}
+
 .border-player-3{
   border-color: hsl(var(--player-3));
+}
+
+.border-player-3-light{
+  border-color: hsl(var(--player-3-light));
+}
+
+.border-player-3-light\/0{
+  border-color: hsl(var(--player-3-light) / 0);
+}
+
+.border-player-3-light\/10{
+  border-color: hsl(var(--player-3-light) / 0.1);
+}
+
+.border-player-3-light\/100{
+  border-color: hsl(var(--player-3-light) / 1);
+}
+
+.border-player-3-light\/15{
+  border-color: hsl(var(--player-3-light) / 0.15);
+}
+
+.border-player-3-light\/20{
+  border-color: hsl(var(--player-3-light) / 0.2);
+}
+
+.border-player-3-light\/25{
+  border-color: hsl(var(--player-3-light) / 0.25);
+}
+
+.border-player-3-light\/30{
+  border-color: hsl(var(--player-3-light) / 0.3);
+}
+
+.border-player-3-light\/35{
+  border-color: hsl(var(--player-3-light) / 0.35);
+}
+
+.border-player-3-light\/40{
+  border-color: hsl(var(--player-3-light) / 0.4);
+}
+
+.border-player-3-light\/45{
+  border-color: hsl(var(--player-3-light) / 0.45);
+}
+
+.border-player-3-light\/5{
+  border-color: hsl(var(--player-3-light) / 0.05);
+}
+
+.border-player-3-light\/50{
+  border-color: hsl(var(--player-3-light) / 0.5);
+}
+
+.border-player-3-light\/55{
+  border-color: hsl(var(--player-3-light) / 0.55);
+}
+
+.border-player-3-light\/60{
+  border-color: hsl(var(--player-3-light) / 0.6);
+}
+
+.border-player-3-light\/65{
+  border-color: hsl(var(--player-3-light) / 0.65);
+}
+
+.border-player-3-light\/70{
+  border-color: hsl(var(--player-3-light) / 0.7);
+}
+
+.border-player-3-light\/75{
+  border-color: hsl(var(--player-3-light) / 0.75);
+}
+
+.border-player-3-light\/80{
+  border-color: hsl(var(--player-3-light) / 0.8);
+}
+
+.border-player-3-light\/85{
+  border-color: hsl(var(--player-3-light) / 0.85);
+}
+
+.border-player-3-light\/90{
+  border-color: hsl(var(--player-3-light) / 0.9);
+}
+
+.border-player-3-light\/95{
+  border-color: hsl(var(--player-3-light) / 0.95);
+}
+
+.border-player-3-path{
+  border-color: hsl(var(--player-3-path));
+}
+
+.border-player-3-path\/0{
+  border-color: hsl(var(--player-3-path) / 0);
+}
+
+.border-player-3-path\/10{
+  border-color: hsl(var(--player-3-path) / 0.1);
+}
+
+.border-player-3-path\/100{
+  border-color: hsl(var(--player-3-path) / 1);
+}
+
+.border-player-3-path\/15{
+  border-color: hsl(var(--player-3-path) / 0.15);
+}
+
+.border-player-3-path\/20{
+  border-color: hsl(var(--player-3-path) / 0.2);
+}
+
+.border-player-3-path\/25{
+  border-color: hsl(var(--player-3-path) / 0.25);
+}
+
+.border-player-3-path\/30{
+  border-color: hsl(var(--player-3-path) / 0.3);
+}
+
+.border-player-3-path\/35{
+  border-color: hsl(var(--player-3-path) / 0.35);
+}
+
+.border-player-3-path\/40{
+  border-color: hsl(var(--player-3-path) / 0.4);
+}
+
+.border-player-3-path\/45{
+  border-color: hsl(var(--player-3-path) / 0.45);
+}
+
+.border-player-3-path\/5{
+  border-color: hsl(var(--player-3-path) / 0.05);
+}
+
+.border-player-3-path\/50{
+  border-color: hsl(var(--player-3-path) / 0.5);
+}
+
+.border-player-3-path\/55{
+  border-color: hsl(var(--player-3-path) / 0.55);
+}
+
+.border-player-3-path\/60{
+  border-color: hsl(var(--player-3-path) / 0.6);
+}
+
+.border-player-3-path\/65{
+  border-color: hsl(var(--player-3-path) / 0.65);
+}
+
+.border-player-3-path\/70{
+  border-color: hsl(var(--player-3-path) / 0.7);
+}
+
+.border-player-3-path\/75{
+  border-color: hsl(var(--player-3-path) / 0.75);
+}
+
+.border-player-3-path\/80{
+  border-color: hsl(var(--player-3-path) / 0.8);
+}
+
+.border-player-3-path\/85{
+  border-color: hsl(var(--player-3-path) / 0.85);
+}
+
+.border-player-3-path\/90{
+  border-color: hsl(var(--player-3-path) / 0.9);
+}
+
+.border-player-3-path\/95{
+  border-color: hsl(var(--player-3-path) / 0.95);
+}
+
+.border-player-3\/0{
+  border-color: hsl(var(--player-3) / 0);
+}
+
+.border-player-3\/10{
+  border-color: hsl(var(--player-3) / 0.1);
+}
+
+.border-player-3\/100{
+  border-color: hsl(var(--player-3) / 1);
+}
+
+.border-player-3\/15{
+  border-color: hsl(var(--player-3) / 0.15);
+}
+
+.border-player-3\/20{
+  border-color: hsl(var(--player-3) / 0.2);
+}
+
+.border-player-3\/25{
+  border-color: hsl(var(--player-3) / 0.25);
+}
+
+.border-player-3\/30{
+  border-color: hsl(var(--player-3) / 0.3);
+}
+
+.border-player-3\/35{
+  border-color: hsl(var(--player-3) / 0.35);
+}
+
+.border-player-3\/40{
+  border-color: hsl(var(--player-3) / 0.4);
+}
+
+.border-player-3\/45{
+  border-color: hsl(var(--player-3) / 0.45);
+}
+
+.border-player-3\/5{
+  border-color: hsl(var(--player-3) / 0.05);
+}
+
+.border-player-3\/50{
+  border-color: hsl(var(--player-3) / 0.5);
+}
+
+.border-player-3\/55{
+  border-color: hsl(var(--player-3) / 0.55);
+}
+
+.border-player-3\/60{
+  border-color: hsl(var(--player-3) / 0.6);
+}
+
+.border-player-3\/65{
+  border-color: hsl(var(--player-3) / 0.65);
+}
+
+.border-player-3\/70{
+  border-color: hsl(var(--player-3) / 0.7);
+}
+
+.border-player-3\/75{
+  border-color: hsl(var(--player-3) / 0.75);
+}
+
+.border-player-3\/80{
+  border-color: hsl(var(--player-3) / 0.8);
+}
+
+.border-player-3\/85{
+  border-color: hsl(var(--player-3) / 0.85);
+}
+
+.border-player-3\/90{
+  border-color: hsl(var(--player-3) / 0.9);
+}
+
+.border-player-3\/95{
+  border-color: hsl(var(--player-3) / 0.95);
 }
 
 .border-transparent{
@@ -1265,8 +2305,260 @@ html{
   background-color: hsl(var(--player-0-light));
 }
 
+.bg-player-0-light\/0{
+  background-color: hsl(var(--player-0-light) / 0);
+}
+
+.bg-player-0-light\/10{
+  background-color: hsl(var(--player-0-light) / 0.1);
+}
+
+.bg-player-0-light\/100{
+  background-color: hsl(var(--player-0-light) / 1);
+}
+
+.bg-player-0-light\/15{
+  background-color: hsl(var(--player-0-light) / 0.15);
+}
+
+.bg-player-0-light\/20{
+  background-color: hsl(var(--player-0-light) / 0.2);
+}
+
+.bg-player-0-light\/25{
+  background-color: hsl(var(--player-0-light) / 0.25);
+}
+
+.bg-player-0-light\/30{
+  background-color: hsl(var(--player-0-light) / 0.3);
+}
+
+.bg-player-0-light\/35{
+  background-color: hsl(var(--player-0-light) / 0.35);
+}
+
+.bg-player-0-light\/40{
+  background-color: hsl(var(--player-0-light) / 0.4);
+}
+
+.bg-player-0-light\/45{
+  background-color: hsl(var(--player-0-light) / 0.45);
+}
+
+.bg-player-0-light\/5{
+  background-color: hsl(var(--player-0-light) / 0.05);
+}
+
+.bg-player-0-light\/50{
+  background-color: hsl(var(--player-0-light) / 0.5);
+}
+
+.bg-player-0-light\/55{
+  background-color: hsl(var(--player-0-light) / 0.55);
+}
+
+.bg-player-0-light\/60{
+  background-color: hsl(var(--player-0-light) / 0.6);
+}
+
+.bg-player-0-light\/65{
+  background-color: hsl(var(--player-0-light) / 0.65);
+}
+
+.bg-player-0-light\/70{
+  background-color: hsl(var(--player-0-light) / 0.7);
+}
+
+.bg-player-0-light\/75{
+  background-color: hsl(var(--player-0-light) / 0.75);
+}
+
+.bg-player-0-light\/80{
+  background-color: hsl(var(--player-0-light) / 0.8);
+}
+
+.bg-player-0-light\/85{
+  background-color: hsl(var(--player-0-light) / 0.85);
+}
+
+.bg-player-0-light\/90{
+  background-color: hsl(var(--player-0-light) / 0.9);
+}
+
+.bg-player-0-light\/95{
+  background-color: hsl(var(--player-0-light) / 0.95);
+}
+
 .bg-player-0-path{
   background-color: hsl(var(--player-0-path));
+}
+
+.bg-player-0-path\/0{
+  background-color: hsl(var(--player-0-path) / 0);
+}
+
+.bg-player-0-path\/10{
+  background-color: hsl(var(--player-0-path) / 0.1);
+}
+
+.bg-player-0-path\/100{
+  background-color: hsl(var(--player-0-path) / 1);
+}
+
+.bg-player-0-path\/15{
+  background-color: hsl(var(--player-0-path) / 0.15);
+}
+
+.bg-player-0-path\/20{
+  background-color: hsl(var(--player-0-path) / 0.2);
+}
+
+.bg-player-0-path\/25{
+  background-color: hsl(var(--player-0-path) / 0.25);
+}
+
+.bg-player-0-path\/30{
+  background-color: hsl(var(--player-0-path) / 0.3);
+}
+
+.bg-player-0-path\/35{
+  background-color: hsl(var(--player-0-path) / 0.35);
+}
+
+.bg-player-0-path\/40{
+  background-color: hsl(var(--player-0-path) / 0.4);
+}
+
+.bg-player-0-path\/45{
+  background-color: hsl(var(--player-0-path) / 0.45);
+}
+
+.bg-player-0-path\/5{
+  background-color: hsl(var(--player-0-path) / 0.05);
+}
+
+.bg-player-0-path\/50{
+  background-color: hsl(var(--player-0-path) / 0.5);
+}
+
+.bg-player-0-path\/55{
+  background-color: hsl(var(--player-0-path) / 0.55);
+}
+
+.bg-player-0-path\/60{
+  background-color: hsl(var(--player-0-path) / 0.6);
+}
+
+.bg-player-0-path\/65{
+  background-color: hsl(var(--player-0-path) / 0.65);
+}
+
+.bg-player-0-path\/70{
+  background-color: hsl(var(--player-0-path) / 0.7);
+}
+
+.bg-player-0-path\/75{
+  background-color: hsl(var(--player-0-path) / 0.75);
+}
+
+.bg-player-0-path\/80{
+  background-color: hsl(var(--player-0-path) / 0.8);
+}
+
+.bg-player-0-path\/85{
+  background-color: hsl(var(--player-0-path) / 0.85);
+}
+
+.bg-player-0-path\/90{
+  background-color: hsl(var(--player-0-path) / 0.9);
+}
+
+.bg-player-0-path\/95{
+  background-color: hsl(var(--player-0-path) / 0.95);
+}
+
+.bg-player-0\/0{
+  background-color: hsl(var(--player-0) / 0);
+}
+
+.bg-player-0\/10{
+  background-color: hsl(var(--player-0) / 0.1);
+}
+
+.bg-player-0\/100{
+  background-color: hsl(var(--player-0) / 1);
+}
+
+.bg-player-0\/15{
+  background-color: hsl(var(--player-0) / 0.15);
+}
+
+.bg-player-0\/20{
+  background-color: hsl(var(--player-0) / 0.2);
+}
+
+.bg-player-0\/25{
+  background-color: hsl(var(--player-0) / 0.25);
+}
+
+.bg-player-0\/30{
+  background-color: hsl(var(--player-0) / 0.3);
+}
+
+.bg-player-0\/35{
+  background-color: hsl(var(--player-0) / 0.35);
+}
+
+.bg-player-0\/40{
+  background-color: hsl(var(--player-0) / 0.4);
+}
+
+.bg-player-0\/45{
+  background-color: hsl(var(--player-0) / 0.45);
+}
+
+.bg-player-0\/5{
+  background-color: hsl(var(--player-0) / 0.05);
+}
+
+.bg-player-0\/50{
+  background-color: hsl(var(--player-0) / 0.5);
+}
+
+.bg-player-0\/55{
+  background-color: hsl(var(--player-0) / 0.55);
+}
+
+.bg-player-0\/60{
+  background-color: hsl(var(--player-0) / 0.6);
+}
+
+.bg-player-0\/65{
+  background-color: hsl(var(--player-0) / 0.65);
+}
+
+.bg-player-0\/70{
+  background-color: hsl(var(--player-0) / 0.7);
+}
+
+.bg-player-0\/75{
+  background-color: hsl(var(--player-0) / 0.75);
+}
+
+.bg-player-0\/80{
+  background-color: hsl(var(--player-0) / 0.8);
+}
+
+.bg-player-0\/85{
+  background-color: hsl(var(--player-0) / 0.85);
+}
+
+.bg-player-0\/90{
+  background-color: hsl(var(--player-0) / 0.9);
+}
+
+.bg-player-0\/95{
+  background-color: hsl(var(--player-0) / 0.95);
 }
 
 .bg-player-1{
@@ -1277,8 +2569,260 @@ html{
   background-color: hsl(var(--player-1-light));
 }
 
+.bg-player-1-light\/0{
+  background-color: hsl(var(--player-1-light) / 0);
+}
+
+.bg-player-1-light\/10{
+  background-color: hsl(var(--player-1-light) / 0.1);
+}
+
+.bg-player-1-light\/100{
+  background-color: hsl(var(--player-1-light) / 1);
+}
+
+.bg-player-1-light\/15{
+  background-color: hsl(var(--player-1-light) / 0.15);
+}
+
+.bg-player-1-light\/20{
+  background-color: hsl(var(--player-1-light) / 0.2);
+}
+
+.bg-player-1-light\/25{
+  background-color: hsl(var(--player-1-light) / 0.25);
+}
+
+.bg-player-1-light\/30{
+  background-color: hsl(var(--player-1-light) / 0.3);
+}
+
+.bg-player-1-light\/35{
+  background-color: hsl(var(--player-1-light) / 0.35);
+}
+
+.bg-player-1-light\/40{
+  background-color: hsl(var(--player-1-light) / 0.4);
+}
+
+.bg-player-1-light\/45{
+  background-color: hsl(var(--player-1-light) / 0.45);
+}
+
+.bg-player-1-light\/5{
+  background-color: hsl(var(--player-1-light) / 0.05);
+}
+
+.bg-player-1-light\/50{
+  background-color: hsl(var(--player-1-light) / 0.5);
+}
+
+.bg-player-1-light\/55{
+  background-color: hsl(var(--player-1-light) / 0.55);
+}
+
+.bg-player-1-light\/60{
+  background-color: hsl(var(--player-1-light) / 0.6);
+}
+
+.bg-player-1-light\/65{
+  background-color: hsl(var(--player-1-light) / 0.65);
+}
+
+.bg-player-1-light\/70{
+  background-color: hsl(var(--player-1-light) / 0.7);
+}
+
+.bg-player-1-light\/75{
+  background-color: hsl(var(--player-1-light) / 0.75);
+}
+
+.bg-player-1-light\/80{
+  background-color: hsl(var(--player-1-light) / 0.8);
+}
+
+.bg-player-1-light\/85{
+  background-color: hsl(var(--player-1-light) / 0.85);
+}
+
+.bg-player-1-light\/90{
+  background-color: hsl(var(--player-1-light) / 0.9);
+}
+
+.bg-player-1-light\/95{
+  background-color: hsl(var(--player-1-light) / 0.95);
+}
+
 .bg-player-1-path{
   background-color: hsl(var(--player-1-path));
+}
+
+.bg-player-1-path\/0{
+  background-color: hsl(var(--player-1-path) / 0);
+}
+
+.bg-player-1-path\/10{
+  background-color: hsl(var(--player-1-path) / 0.1);
+}
+
+.bg-player-1-path\/100{
+  background-color: hsl(var(--player-1-path) / 1);
+}
+
+.bg-player-1-path\/15{
+  background-color: hsl(var(--player-1-path) / 0.15);
+}
+
+.bg-player-1-path\/20{
+  background-color: hsl(var(--player-1-path) / 0.2);
+}
+
+.bg-player-1-path\/25{
+  background-color: hsl(var(--player-1-path) / 0.25);
+}
+
+.bg-player-1-path\/30{
+  background-color: hsl(var(--player-1-path) / 0.3);
+}
+
+.bg-player-1-path\/35{
+  background-color: hsl(var(--player-1-path) / 0.35);
+}
+
+.bg-player-1-path\/40{
+  background-color: hsl(var(--player-1-path) / 0.4);
+}
+
+.bg-player-1-path\/45{
+  background-color: hsl(var(--player-1-path) / 0.45);
+}
+
+.bg-player-1-path\/5{
+  background-color: hsl(var(--player-1-path) / 0.05);
+}
+
+.bg-player-1-path\/50{
+  background-color: hsl(var(--player-1-path) / 0.5);
+}
+
+.bg-player-1-path\/55{
+  background-color: hsl(var(--player-1-path) / 0.55);
+}
+
+.bg-player-1-path\/60{
+  background-color: hsl(var(--player-1-path) / 0.6);
+}
+
+.bg-player-1-path\/65{
+  background-color: hsl(var(--player-1-path) / 0.65);
+}
+
+.bg-player-1-path\/70{
+  background-color: hsl(var(--player-1-path) / 0.7);
+}
+
+.bg-player-1-path\/75{
+  background-color: hsl(var(--player-1-path) / 0.75);
+}
+
+.bg-player-1-path\/80{
+  background-color: hsl(var(--player-1-path) / 0.8);
+}
+
+.bg-player-1-path\/85{
+  background-color: hsl(var(--player-1-path) / 0.85);
+}
+
+.bg-player-1-path\/90{
+  background-color: hsl(var(--player-1-path) / 0.9);
+}
+
+.bg-player-1-path\/95{
+  background-color: hsl(var(--player-1-path) / 0.95);
+}
+
+.bg-player-1\/0{
+  background-color: hsl(var(--player-1) / 0);
+}
+
+.bg-player-1\/10{
+  background-color: hsl(var(--player-1) / 0.1);
+}
+
+.bg-player-1\/100{
+  background-color: hsl(var(--player-1) / 1);
+}
+
+.bg-player-1\/15{
+  background-color: hsl(var(--player-1) / 0.15);
+}
+
+.bg-player-1\/20{
+  background-color: hsl(var(--player-1) / 0.2);
+}
+
+.bg-player-1\/25{
+  background-color: hsl(var(--player-1) / 0.25);
+}
+
+.bg-player-1\/30{
+  background-color: hsl(var(--player-1) / 0.3);
+}
+
+.bg-player-1\/35{
+  background-color: hsl(var(--player-1) / 0.35);
+}
+
+.bg-player-1\/40{
+  background-color: hsl(var(--player-1) / 0.4);
+}
+
+.bg-player-1\/45{
+  background-color: hsl(var(--player-1) / 0.45);
+}
+
+.bg-player-1\/5{
+  background-color: hsl(var(--player-1) / 0.05);
+}
+
+.bg-player-1\/50{
+  background-color: hsl(var(--player-1) / 0.5);
+}
+
+.bg-player-1\/55{
+  background-color: hsl(var(--player-1) / 0.55);
+}
+
+.bg-player-1\/60{
+  background-color: hsl(var(--player-1) / 0.6);
+}
+
+.bg-player-1\/65{
+  background-color: hsl(var(--player-1) / 0.65);
+}
+
+.bg-player-1\/70{
+  background-color: hsl(var(--player-1) / 0.7);
+}
+
+.bg-player-1\/75{
+  background-color: hsl(var(--player-1) / 0.75);
+}
+
+.bg-player-1\/80{
+  background-color: hsl(var(--player-1) / 0.8);
+}
+
+.bg-player-1\/85{
+  background-color: hsl(var(--player-1) / 0.85);
+}
+
+.bg-player-1\/90{
+  background-color: hsl(var(--player-1) / 0.9);
+}
+
+.bg-player-1\/95{
+  background-color: hsl(var(--player-1) / 0.95);
 }
 
 .bg-player-2{
@@ -1289,8 +2833,260 @@ html{
   background-color: hsl(var(--player-2-light));
 }
 
+.bg-player-2-light\/0{
+  background-color: hsl(var(--player-2-light) / 0);
+}
+
+.bg-player-2-light\/10{
+  background-color: hsl(var(--player-2-light) / 0.1);
+}
+
+.bg-player-2-light\/100{
+  background-color: hsl(var(--player-2-light) / 1);
+}
+
+.bg-player-2-light\/15{
+  background-color: hsl(var(--player-2-light) / 0.15);
+}
+
+.bg-player-2-light\/20{
+  background-color: hsl(var(--player-2-light) / 0.2);
+}
+
+.bg-player-2-light\/25{
+  background-color: hsl(var(--player-2-light) / 0.25);
+}
+
+.bg-player-2-light\/30{
+  background-color: hsl(var(--player-2-light) / 0.3);
+}
+
+.bg-player-2-light\/35{
+  background-color: hsl(var(--player-2-light) / 0.35);
+}
+
+.bg-player-2-light\/40{
+  background-color: hsl(var(--player-2-light) / 0.4);
+}
+
+.bg-player-2-light\/45{
+  background-color: hsl(var(--player-2-light) / 0.45);
+}
+
+.bg-player-2-light\/5{
+  background-color: hsl(var(--player-2-light) / 0.05);
+}
+
+.bg-player-2-light\/50{
+  background-color: hsl(var(--player-2-light) / 0.5);
+}
+
+.bg-player-2-light\/55{
+  background-color: hsl(var(--player-2-light) / 0.55);
+}
+
+.bg-player-2-light\/60{
+  background-color: hsl(var(--player-2-light) / 0.6);
+}
+
+.bg-player-2-light\/65{
+  background-color: hsl(var(--player-2-light) / 0.65);
+}
+
+.bg-player-2-light\/70{
+  background-color: hsl(var(--player-2-light) / 0.7);
+}
+
+.bg-player-2-light\/75{
+  background-color: hsl(var(--player-2-light) / 0.75);
+}
+
+.bg-player-2-light\/80{
+  background-color: hsl(var(--player-2-light) / 0.8);
+}
+
+.bg-player-2-light\/85{
+  background-color: hsl(var(--player-2-light) / 0.85);
+}
+
+.bg-player-2-light\/90{
+  background-color: hsl(var(--player-2-light) / 0.9);
+}
+
+.bg-player-2-light\/95{
+  background-color: hsl(var(--player-2-light) / 0.95);
+}
+
 .bg-player-2-path{
   background-color: hsl(var(--player-2-path));
+}
+
+.bg-player-2-path\/0{
+  background-color: hsl(var(--player-2-path) / 0);
+}
+
+.bg-player-2-path\/10{
+  background-color: hsl(var(--player-2-path) / 0.1);
+}
+
+.bg-player-2-path\/100{
+  background-color: hsl(var(--player-2-path) / 1);
+}
+
+.bg-player-2-path\/15{
+  background-color: hsl(var(--player-2-path) / 0.15);
+}
+
+.bg-player-2-path\/20{
+  background-color: hsl(var(--player-2-path) / 0.2);
+}
+
+.bg-player-2-path\/25{
+  background-color: hsl(var(--player-2-path) / 0.25);
+}
+
+.bg-player-2-path\/30{
+  background-color: hsl(var(--player-2-path) / 0.3);
+}
+
+.bg-player-2-path\/35{
+  background-color: hsl(var(--player-2-path) / 0.35);
+}
+
+.bg-player-2-path\/40{
+  background-color: hsl(var(--player-2-path) / 0.4);
+}
+
+.bg-player-2-path\/45{
+  background-color: hsl(var(--player-2-path) / 0.45);
+}
+
+.bg-player-2-path\/5{
+  background-color: hsl(var(--player-2-path) / 0.05);
+}
+
+.bg-player-2-path\/50{
+  background-color: hsl(var(--player-2-path) / 0.5);
+}
+
+.bg-player-2-path\/55{
+  background-color: hsl(var(--player-2-path) / 0.55);
+}
+
+.bg-player-2-path\/60{
+  background-color: hsl(var(--player-2-path) / 0.6);
+}
+
+.bg-player-2-path\/65{
+  background-color: hsl(var(--player-2-path) / 0.65);
+}
+
+.bg-player-2-path\/70{
+  background-color: hsl(var(--player-2-path) / 0.7);
+}
+
+.bg-player-2-path\/75{
+  background-color: hsl(var(--player-2-path) / 0.75);
+}
+
+.bg-player-2-path\/80{
+  background-color: hsl(var(--player-2-path) / 0.8);
+}
+
+.bg-player-2-path\/85{
+  background-color: hsl(var(--player-2-path) / 0.85);
+}
+
+.bg-player-2-path\/90{
+  background-color: hsl(var(--player-2-path) / 0.9);
+}
+
+.bg-player-2-path\/95{
+  background-color: hsl(var(--player-2-path) / 0.95);
+}
+
+.bg-player-2\/0{
+  background-color: hsl(var(--player-2) / 0);
+}
+
+.bg-player-2\/10{
+  background-color: hsl(var(--player-2) / 0.1);
+}
+
+.bg-player-2\/100{
+  background-color: hsl(var(--player-2) / 1);
+}
+
+.bg-player-2\/15{
+  background-color: hsl(var(--player-2) / 0.15);
+}
+
+.bg-player-2\/20{
+  background-color: hsl(var(--player-2) / 0.2);
+}
+
+.bg-player-2\/25{
+  background-color: hsl(var(--player-2) / 0.25);
+}
+
+.bg-player-2\/30{
+  background-color: hsl(var(--player-2) / 0.3);
+}
+
+.bg-player-2\/35{
+  background-color: hsl(var(--player-2) / 0.35);
+}
+
+.bg-player-2\/40{
+  background-color: hsl(var(--player-2) / 0.4);
+}
+
+.bg-player-2\/45{
+  background-color: hsl(var(--player-2) / 0.45);
+}
+
+.bg-player-2\/5{
+  background-color: hsl(var(--player-2) / 0.05);
+}
+
+.bg-player-2\/50{
+  background-color: hsl(var(--player-2) / 0.5);
+}
+
+.bg-player-2\/55{
+  background-color: hsl(var(--player-2) / 0.55);
+}
+
+.bg-player-2\/60{
+  background-color: hsl(var(--player-2) / 0.6);
+}
+
+.bg-player-2\/65{
+  background-color: hsl(var(--player-2) / 0.65);
+}
+
+.bg-player-2\/70{
+  background-color: hsl(var(--player-2) / 0.7);
+}
+
+.bg-player-2\/75{
+  background-color: hsl(var(--player-2) / 0.75);
+}
+
+.bg-player-2\/80{
+  background-color: hsl(var(--player-2) / 0.8);
+}
+
+.bg-player-2\/85{
+  background-color: hsl(var(--player-2) / 0.85);
+}
+
+.bg-player-2\/90{
+  background-color: hsl(var(--player-2) / 0.9);
+}
+
+.bg-player-2\/95{
+  background-color: hsl(var(--player-2) / 0.95);
 }
 
 .bg-player-3{
@@ -1301,8 +3097,260 @@ html{
   background-color: hsl(var(--player-3-light));
 }
 
+.bg-player-3-light\/0{
+  background-color: hsl(var(--player-3-light) / 0);
+}
+
+.bg-player-3-light\/10{
+  background-color: hsl(var(--player-3-light) / 0.1);
+}
+
+.bg-player-3-light\/100{
+  background-color: hsl(var(--player-3-light) / 1);
+}
+
+.bg-player-3-light\/15{
+  background-color: hsl(var(--player-3-light) / 0.15);
+}
+
+.bg-player-3-light\/20{
+  background-color: hsl(var(--player-3-light) / 0.2);
+}
+
+.bg-player-3-light\/25{
+  background-color: hsl(var(--player-3-light) / 0.25);
+}
+
+.bg-player-3-light\/30{
+  background-color: hsl(var(--player-3-light) / 0.3);
+}
+
+.bg-player-3-light\/35{
+  background-color: hsl(var(--player-3-light) / 0.35);
+}
+
+.bg-player-3-light\/40{
+  background-color: hsl(var(--player-3-light) / 0.4);
+}
+
+.bg-player-3-light\/45{
+  background-color: hsl(var(--player-3-light) / 0.45);
+}
+
+.bg-player-3-light\/5{
+  background-color: hsl(var(--player-3-light) / 0.05);
+}
+
+.bg-player-3-light\/50{
+  background-color: hsl(var(--player-3-light) / 0.5);
+}
+
+.bg-player-3-light\/55{
+  background-color: hsl(var(--player-3-light) / 0.55);
+}
+
+.bg-player-3-light\/60{
+  background-color: hsl(var(--player-3-light) / 0.6);
+}
+
+.bg-player-3-light\/65{
+  background-color: hsl(var(--player-3-light) / 0.65);
+}
+
+.bg-player-3-light\/70{
+  background-color: hsl(var(--player-3-light) / 0.7);
+}
+
+.bg-player-3-light\/75{
+  background-color: hsl(var(--player-3-light) / 0.75);
+}
+
+.bg-player-3-light\/80{
+  background-color: hsl(var(--player-3-light) / 0.8);
+}
+
+.bg-player-3-light\/85{
+  background-color: hsl(var(--player-3-light) / 0.85);
+}
+
+.bg-player-3-light\/90{
+  background-color: hsl(var(--player-3-light) / 0.9);
+}
+
+.bg-player-3-light\/95{
+  background-color: hsl(var(--player-3-light) / 0.95);
+}
+
 .bg-player-3-path{
   background-color: hsl(var(--player-3-path));
+}
+
+.bg-player-3-path\/0{
+  background-color: hsl(var(--player-3-path) / 0);
+}
+
+.bg-player-3-path\/10{
+  background-color: hsl(var(--player-3-path) / 0.1);
+}
+
+.bg-player-3-path\/100{
+  background-color: hsl(var(--player-3-path) / 1);
+}
+
+.bg-player-3-path\/15{
+  background-color: hsl(var(--player-3-path) / 0.15);
+}
+
+.bg-player-3-path\/20{
+  background-color: hsl(var(--player-3-path) / 0.2);
+}
+
+.bg-player-3-path\/25{
+  background-color: hsl(var(--player-3-path) / 0.25);
+}
+
+.bg-player-3-path\/30{
+  background-color: hsl(var(--player-3-path) / 0.3);
+}
+
+.bg-player-3-path\/35{
+  background-color: hsl(var(--player-3-path) / 0.35);
+}
+
+.bg-player-3-path\/40{
+  background-color: hsl(var(--player-3-path) / 0.4);
+}
+
+.bg-player-3-path\/45{
+  background-color: hsl(var(--player-3-path) / 0.45);
+}
+
+.bg-player-3-path\/5{
+  background-color: hsl(var(--player-3-path) / 0.05);
+}
+
+.bg-player-3-path\/50{
+  background-color: hsl(var(--player-3-path) / 0.5);
+}
+
+.bg-player-3-path\/55{
+  background-color: hsl(var(--player-3-path) / 0.55);
+}
+
+.bg-player-3-path\/60{
+  background-color: hsl(var(--player-3-path) / 0.6);
+}
+
+.bg-player-3-path\/65{
+  background-color: hsl(var(--player-3-path) / 0.65);
+}
+
+.bg-player-3-path\/70{
+  background-color: hsl(var(--player-3-path) / 0.7);
+}
+
+.bg-player-3-path\/75{
+  background-color: hsl(var(--player-3-path) / 0.75);
+}
+
+.bg-player-3-path\/80{
+  background-color: hsl(var(--player-3-path) / 0.8);
+}
+
+.bg-player-3-path\/85{
+  background-color: hsl(var(--player-3-path) / 0.85);
+}
+
+.bg-player-3-path\/90{
+  background-color: hsl(var(--player-3-path) / 0.9);
+}
+
+.bg-player-3-path\/95{
+  background-color: hsl(var(--player-3-path) / 0.95);
+}
+
+.bg-player-3\/0{
+  background-color: hsl(var(--player-3) / 0);
+}
+
+.bg-player-3\/10{
+  background-color: hsl(var(--player-3) / 0.1);
+}
+
+.bg-player-3\/100{
+  background-color: hsl(var(--player-3) / 1);
+}
+
+.bg-player-3\/15{
+  background-color: hsl(var(--player-3) / 0.15);
+}
+
+.bg-player-3\/20{
+  background-color: hsl(var(--player-3) / 0.2);
+}
+
+.bg-player-3\/25{
+  background-color: hsl(var(--player-3) / 0.25);
+}
+
+.bg-player-3\/30{
+  background-color: hsl(var(--player-3) / 0.3);
+}
+
+.bg-player-3\/35{
+  background-color: hsl(var(--player-3) / 0.35);
+}
+
+.bg-player-3\/40{
+  background-color: hsl(var(--player-3) / 0.4);
+}
+
+.bg-player-3\/45{
+  background-color: hsl(var(--player-3) / 0.45);
+}
+
+.bg-player-3\/5{
+  background-color: hsl(var(--player-3) / 0.05);
+}
+
+.bg-player-3\/50{
+  background-color: hsl(var(--player-3) / 0.5);
+}
+
+.bg-player-3\/55{
+  background-color: hsl(var(--player-3) / 0.55);
+}
+
+.bg-player-3\/60{
+  background-color: hsl(var(--player-3) / 0.6);
+}
+
+.bg-player-3\/65{
+  background-color: hsl(var(--player-3) / 0.65);
+}
+
+.bg-player-3\/70{
+  background-color: hsl(var(--player-3) / 0.7);
+}
+
+.bg-player-3\/75{
+  background-color: hsl(var(--player-3) / 0.75);
+}
+
+.bg-player-3\/80{
+  background-color: hsl(var(--player-3) / 0.8);
+}
+
+.bg-player-3\/85{
+  background-color: hsl(var(--player-3) / 0.85);
+}
+
+.bg-player-3\/90{
+  background-color: hsl(var(--player-3) / 0.9);
+}
+
+.bg-player-3\/95{
+  background-color: hsl(var(--player-3) / 0.95);
 }
 
 .bg-safe-tint{
@@ -1326,16 +3374,2112 @@ html{
   fill: hsl(var(--player-0));
 }
 
+.fill-player-0-light{
+  fill: hsl(var(--player-0-light));
+}
+
+.fill-player-0-light\/0{
+  fill: hsl(var(--player-0-light) / 0);
+}
+
+.fill-player-0-light\/10{
+  fill: hsl(var(--player-0-light) / 0.1);
+}
+
+.fill-player-0-light\/100{
+  fill: hsl(var(--player-0-light) / 1);
+}
+
+.fill-player-0-light\/15{
+  fill: hsl(var(--player-0-light) / 0.15);
+}
+
+.fill-player-0-light\/20{
+  fill: hsl(var(--player-0-light) / 0.2);
+}
+
+.fill-player-0-light\/25{
+  fill: hsl(var(--player-0-light) / 0.25);
+}
+
+.fill-player-0-light\/30{
+  fill: hsl(var(--player-0-light) / 0.3);
+}
+
+.fill-player-0-light\/35{
+  fill: hsl(var(--player-0-light) / 0.35);
+}
+
+.fill-player-0-light\/40{
+  fill: hsl(var(--player-0-light) / 0.4);
+}
+
+.fill-player-0-light\/45{
+  fill: hsl(var(--player-0-light) / 0.45);
+}
+
+.fill-player-0-light\/5{
+  fill: hsl(var(--player-0-light) / 0.05);
+}
+
+.fill-player-0-light\/50{
+  fill: hsl(var(--player-0-light) / 0.5);
+}
+
+.fill-player-0-light\/55{
+  fill: hsl(var(--player-0-light) / 0.55);
+}
+
+.fill-player-0-light\/60{
+  fill: hsl(var(--player-0-light) / 0.6);
+}
+
+.fill-player-0-light\/65{
+  fill: hsl(var(--player-0-light) / 0.65);
+}
+
+.fill-player-0-light\/70{
+  fill: hsl(var(--player-0-light) / 0.7);
+}
+
+.fill-player-0-light\/75{
+  fill: hsl(var(--player-0-light) / 0.75);
+}
+
+.fill-player-0-light\/80{
+  fill: hsl(var(--player-0-light) / 0.8);
+}
+
+.fill-player-0-light\/85{
+  fill: hsl(var(--player-0-light) / 0.85);
+}
+
+.fill-player-0-light\/90{
+  fill: hsl(var(--player-0-light) / 0.9);
+}
+
+.fill-player-0-light\/95{
+  fill: hsl(var(--player-0-light) / 0.95);
+}
+
+.fill-player-0-path{
+  fill: hsl(var(--player-0-path));
+}
+
+.fill-player-0-path\/0{
+  fill: hsl(var(--player-0-path) / 0);
+}
+
+.fill-player-0-path\/10{
+  fill: hsl(var(--player-0-path) / 0.1);
+}
+
+.fill-player-0-path\/100{
+  fill: hsl(var(--player-0-path) / 1);
+}
+
+.fill-player-0-path\/15{
+  fill: hsl(var(--player-0-path) / 0.15);
+}
+
+.fill-player-0-path\/20{
+  fill: hsl(var(--player-0-path) / 0.2);
+}
+
+.fill-player-0-path\/25{
+  fill: hsl(var(--player-0-path) / 0.25);
+}
+
+.fill-player-0-path\/30{
+  fill: hsl(var(--player-0-path) / 0.3);
+}
+
+.fill-player-0-path\/35{
+  fill: hsl(var(--player-0-path) / 0.35);
+}
+
+.fill-player-0-path\/40{
+  fill: hsl(var(--player-0-path) / 0.4);
+}
+
+.fill-player-0-path\/45{
+  fill: hsl(var(--player-0-path) / 0.45);
+}
+
+.fill-player-0-path\/5{
+  fill: hsl(var(--player-0-path) / 0.05);
+}
+
+.fill-player-0-path\/50{
+  fill: hsl(var(--player-0-path) / 0.5);
+}
+
+.fill-player-0-path\/55{
+  fill: hsl(var(--player-0-path) / 0.55);
+}
+
+.fill-player-0-path\/60{
+  fill: hsl(var(--player-0-path) / 0.6);
+}
+
+.fill-player-0-path\/65{
+  fill: hsl(var(--player-0-path) / 0.65);
+}
+
+.fill-player-0-path\/70{
+  fill: hsl(var(--player-0-path) / 0.7);
+}
+
+.fill-player-0-path\/75{
+  fill: hsl(var(--player-0-path) / 0.75);
+}
+
+.fill-player-0-path\/80{
+  fill: hsl(var(--player-0-path) / 0.8);
+}
+
+.fill-player-0-path\/85{
+  fill: hsl(var(--player-0-path) / 0.85);
+}
+
+.fill-player-0-path\/90{
+  fill: hsl(var(--player-0-path) / 0.9);
+}
+
+.fill-player-0-path\/95{
+  fill: hsl(var(--player-0-path) / 0.95);
+}
+
+.fill-player-0\/0{
+  fill: hsl(var(--player-0) / 0);
+}
+
+.fill-player-0\/10{
+  fill: hsl(var(--player-0) / 0.1);
+}
+
+.fill-player-0\/100{
+  fill: hsl(var(--player-0) / 1);
+}
+
+.fill-player-0\/15{
+  fill: hsl(var(--player-0) / 0.15);
+}
+
+.fill-player-0\/20{
+  fill: hsl(var(--player-0) / 0.2);
+}
+
+.fill-player-0\/25{
+  fill: hsl(var(--player-0) / 0.25);
+}
+
+.fill-player-0\/30{
+  fill: hsl(var(--player-0) / 0.3);
+}
+
+.fill-player-0\/35{
+  fill: hsl(var(--player-0) / 0.35);
+}
+
+.fill-player-0\/40{
+  fill: hsl(var(--player-0) / 0.4);
+}
+
+.fill-player-0\/45{
+  fill: hsl(var(--player-0) / 0.45);
+}
+
+.fill-player-0\/5{
+  fill: hsl(var(--player-0) / 0.05);
+}
+
+.fill-player-0\/50{
+  fill: hsl(var(--player-0) / 0.5);
+}
+
+.fill-player-0\/55{
+  fill: hsl(var(--player-0) / 0.55);
+}
+
+.fill-player-0\/60{
+  fill: hsl(var(--player-0) / 0.6);
+}
+
+.fill-player-0\/65{
+  fill: hsl(var(--player-0) / 0.65);
+}
+
+.fill-player-0\/70{
+  fill: hsl(var(--player-0) / 0.7);
+}
+
+.fill-player-0\/75{
+  fill: hsl(var(--player-0) / 0.75);
+}
+
+.fill-player-0\/80{
+  fill: hsl(var(--player-0) / 0.8);
+}
+
+.fill-player-0\/85{
+  fill: hsl(var(--player-0) / 0.85);
+}
+
+.fill-player-0\/90{
+  fill: hsl(var(--player-0) / 0.9);
+}
+
+.fill-player-0\/95{
+  fill: hsl(var(--player-0) / 0.95);
+}
+
 .fill-player-1{
   fill: hsl(var(--player-1));
+}
+
+.fill-player-1-light{
+  fill: hsl(var(--player-1-light));
+}
+
+.fill-player-1-light\/0{
+  fill: hsl(var(--player-1-light) / 0);
+}
+
+.fill-player-1-light\/10{
+  fill: hsl(var(--player-1-light) / 0.1);
+}
+
+.fill-player-1-light\/100{
+  fill: hsl(var(--player-1-light) / 1);
+}
+
+.fill-player-1-light\/15{
+  fill: hsl(var(--player-1-light) / 0.15);
+}
+
+.fill-player-1-light\/20{
+  fill: hsl(var(--player-1-light) / 0.2);
+}
+
+.fill-player-1-light\/25{
+  fill: hsl(var(--player-1-light) / 0.25);
+}
+
+.fill-player-1-light\/30{
+  fill: hsl(var(--player-1-light) / 0.3);
+}
+
+.fill-player-1-light\/35{
+  fill: hsl(var(--player-1-light) / 0.35);
+}
+
+.fill-player-1-light\/40{
+  fill: hsl(var(--player-1-light) / 0.4);
+}
+
+.fill-player-1-light\/45{
+  fill: hsl(var(--player-1-light) / 0.45);
+}
+
+.fill-player-1-light\/5{
+  fill: hsl(var(--player-1-light) / 0.05);
+}
+
+.fill-player-1-light\/50{
+  fill: hsl(var(--player-1-light) / 0.5);
+}
+
+.fill-player-1-light\/55{
+  fill: hsl(var(--player-1-light) / 0.55);
+}
+
+.fill-player-1-light\/60{
+  fill: hsl(var(--player-1-light) / 0.6);
+}
+
+.fill-player-1-light\/65{
+  fill: hsl(var(--player-1-light) / 0.65);
+}
+
+.fill-player-1-light\/70{
+  fill: hsl(var(--player-1-light) / 0.7);
+}
+
+.fill-player-1-light\/75{
+  fill: hsl(var(--player-1-light) / 0.75);
+}
+
+.fill-player-1-light\/80{
+  fill: hsl(var(--player-1-light) / 0.8);
+}
+
+.fill-player-1-light\/85{
+  fill: hsl(var(--player-1-light) / 0.85);
+}
+
+.fill-player-1-light\/90{
+  fill: hsl(var(--player-1-light) / 0.9);
+}
+
+.fill-player-1-light\/95{
+  fill: hsl(var(--player-1-light) / 0.95);
+}
+
+.fill-player-1-path{
+  fill: hsl(var(--player-1-path));
+}
+
+.fill-player-1-path\/0{
+  fill: hsl(var(--player-1-path) / 0);
+}
+
+.fill-player-1-path\/10{
+  fill: hsl(var(--player-1-path) / 0.1);
+}
+
+.fill-player-1-path\/100{
+  fill: hsl(var(--player-1-path) / 1);
+}
+
+.fill-player-1-path\/15{
+  fill: hsl(var(--player-1-path) / 0.15);
+}
+
+.fill-player-1-path\/20{
+  fill: hsl(var(--player-1-path) / 0.2);
+}
+
+.fill-player-1-path\/25{
+  fill: hsl(var(--player-1-path) / 0.25);
+}
+
+.fill-player-1-path\/30{
+  fill: hsl(var(--player-1-path) / 0.3);
+}
+
+.fill-player-1-path\/35{
+  fill: hsl(var(--player-1-path) / 0.35);
+}
+
+.fill-player-1-path\/40{
+  fill: hsl(var(--player-1-path) / 0.4);
+}
+
+.fill-player-1-path\/45{
+  fill: hsl(var(--player-1-path) / 0.45);
+}
+
+.fill-player-1-path\/5{
+  fill: hsl(var(--player-1-path) / 0.05);
+}
+
+.fill-player-1-path\/50{
+  fill: hsl(var(--player-1-path) / 0.5);
+}
+
+.fill-player-1-path\/55{
+  fill: hsl(var(--player-1-path) / 0.55);
+}
+
+.fill-player-1-path\/60{
+  fill: hsl(var(--player-1-path) / 0.6);
+}
+
+.fill-player-1-path\/65{
+  fill: hsl(var(--player-1-path) / 0.65);
+}
+
+.fill-player-1-path\/70{
+  fill: hsl(var(--player-1-path) / 0.7);
+}
+
+.fill-player-1-path\/75{
+  fill: hsl(var(--player-1-path) / 0.75);
+}
+
+.fill-player-1-path\/80{
+  fill: hsl(var(--player-1-path) / 0.8);
+}
+
+.fill-player-1-path\/85{
+  fill: hsl(var(--player-1-path) / 0.85);
+}
+
+.fill-player-1-path\/90{
+  fill: hsl(var(--player-1-path) / 0.9);
+}
+
+.fill-player-1-path\/95{
+  fill: hsl(var(--player-1-path) / 0.95);
+}
+
+.fill-player-1\/0{
+  fill: hsl(var(--player-1) / 0);
+}
+
+.fill-player-1\/10{
+  fill: hsl(var(--player-1) / 0.1);
+}
+
+.fill-player-1\/100{
+  fill: hsl(var(--player-1) / 1);
+}
+
+.fill-player-1\/15{
+  fill: hsl(var(--player-1) / 0.15);
+}
+
+.fill-player-1\/20{
+  fill: hsl(var(--player-1) / 0.2);
+}
+
+.fill-player-1\/25{
+  fill: hsl(var(--player-1) / 0.25);
+}
+
+.fill-player-1\/30{
+  fill: hsl(var(--player-1) / 0.3);
+}
+
+.fill-player-1\/35{
+  fill: hsl(var(--player-1) / 0.35);
+}
+
+.fill-player-1\/40{
+  fill: hsl(var(--player-1) / 0.4);
+}
+
+.fill-player-1\/45{
+  fill: hsl(var(--player-1) / 0.45);
+}
+
+.fill-player-1\/5{
+  fill: hsl(var(--player-1) / 0.05);
+}
+
+.fill-player-1\/50{
+  fill: hsl(var(--player-1) / 0.5);
+}
+
+.fill-player-1\/55{
+  fill: hsl(var(--player-1) / 0.55);
+}
+
+.fill-player-1\/60{
+  fill: hsl(var(--player-1) / 0.6);
+}
+
+.fill-player-1\/65{
+  fill: hsl(var(--player-1) / 0.65);
+}
+
+.fill-player-1\/70{
+  fill: hsl(var(--player-1) / 0.7);
+}
+
+.fill-player-1\/75{
+  fill: hsl(var(--player-1) / 0.75);
+}
+
+.fill-player-1\/80{
+  fill: hsl(var(--player-1) / 0.8);
+}
+
+.fill-player-1\/85{
+  fill: hsl(var(--player-1) / 0.85);
+}
+
+.fill-player-1\/90{
+  fill: hsl(var(--player-1) / 0.9);
+}
+
+.fill-player-1\/95{
+  fill: hsl(var(--player-1) / 0.95);
 }
 
 .fill-player-2{
   fill: hsl(var(--player-2));
 }
 
+.fill-player-2-light{
+  fill: hsl(var(--player-2-light));
+}
+
+.fill-player-2-light\/0{
+  fill: hsl(var(--player-2-light) / 0);
+}
+
+.fill-player-2-light\/10{
+  fill: hsl(var(--player-2-light) / 0.1);
+}
+
+.fill-player-2-light\/100{
+  fill: hsl(var(--player-2-light) / 1);
+}
+
+.fill-player-2-light\/15{
+  fill: hsl(var(--player-2-light) / 0.15);
+}
+
+.fill-player-2-light\/20{
+  fill: hsl(var(--player-2-light) / 0.2);
+}
+
+.fill-player-2-light\/25{
+  fill: hsl(var(--player-2-light) / 0.25);
+}
+
+.fill-player-2-light\/30{
+  fill: hsl(var(--player-2-light) / 0.3);
+}
+
+.fill-player-2-light\/35{
+  fill: hsl(var(--player-2-light) / 0.35);
+}
+
+.fill-player-2-light\/40{
+  fill: hsl(var(--player-2-light) / 0.4);
+}
+
+.fill-player-2-light\/45{
+  fill: hsl(var(--player-2-light) / 0.45);
+}
+
+.fill-player-2-light\/5{
+  fill: hsl(var(--player-2-light) / 0.05);
+}
+
+.fill-player-2-light\/50{
+  fill: hsl(var(--player-2-light) / 0.5);
+}
+
+.fill-player-2-light\/55{
+  fill: hsl(var(--player-2-light) / 0.55);
+}
+
+.fill-player-2-light\/60{
+  fill: hsl(var(--player-2-light) / 0.6);
+}
+
+.fill-player-2-light\/65{
+  fill: hsl(var(--player-2-light) / 0.65);
+}
+
+.fill-player-2-light\/70{
+  fill: hsl(var(--player-2-light) / 0.7);
+}
+
+.fill-player-2-light\/75{
+  fill: hsl(var(--player-2-light) / 0.75);
+}
+
+.fill-player-2-light\/80{
+  fill: hsl(var(--player-2-light) / 0.8);
+}
+
+.fill-player-2-light\/85{
+  fill: hsl(var(--player-2-light) / 0.85);
+}
+
+.fill-player-2-light\/90{
+  fill: hsl(var(--player-2-light) / 0.9);
+}
+
+.fill-player-2-light\/95{
+  fill: hsl(var(--player-2-light) / 0.95);
+}
+
+.fill-player-2-path{
+  fill: hsl(var(--player-2-path));
+}
+
+.fill-player-2-path\/0{
+  fill: hsl(var(--player-2-path) / 0);
+}
+
+.fill-player-2-path\/10{
+  fill: hsl(var(--player-2-path) / 0.1);
+}
+
+.fill-player-2-path\/100{
+  fill: hsl(var(--player-2-path) / 1);
+}
+
+.fill-player-2-path\/15{
+  fill: hsl(var(--player-2-path) / 0.15);
+}
+
+.fill-player-2-path\/20{
+  fill: hsl(var(--player-2-path) / 0.2);
+}
+
+.fill-player-2-path\/25{
+  fill: hsl(var(--player-2-path) / 0.25);
+}
+
+.fill-player-2-path\/30{
+  fill: hsl(var(--player-2-path) / 0.3);
+}
+
+.fill-player-2-path\/35{
+  fill: hsl(var(--player-2-path) / 0.35);
+}
+
+.fill-player-2-path\/40{
+  fill: hsl(var(--player-2-path) / 0.4);
+}
+
+.fill-player-2-path\/45{
+  fill: hsl(var(--player-2-path) / 0.45);
+}
+
+.fill-player-2-path\/5{
+  fill: hsl(var(--player-2-path) / 0.05);
+}
+
+.fill-player-2-path\/50{
+  fill: hsl(var(--player-2-path) / 0.5);
+}
+
+.fill-player-2-path\/55{
+  fill: hsl(var(--player-2-path) / 0.55);
+}
+
+.fill-player-2-path\/60{
+  fill: hsl(var(--player-2-path) / 0.6);
+}
+
+.fill-player-2-path\/65{
+  fill: hsl(var(--player-2-path) / 0.65);
+}
+
+.fill-player-2-path\/70{
+  fill: hsl(var(--player-2-path) / 0.7);
+}
+
+.fill-player-2-path\/75{
+  fill: hsl(var(--player-2-path) / 0.75);
+}
+
+.fill-player-2-path\/80{
+  fill: hsl(var(--player-2-path) / 0.8);
+}
+
+.fill-player-2-path\/85{
+  fill: hsl(var(--player-2-path) / 0.85);
+}
+
+.fill-player-2-path\/90{
+  fill: hsl(var(--player-2-path) / 0.9);
+}
+
+.fill-player-2-path\/95{
+  fill: hsl(var(--player-2-path) / 0.95);
+}
+
+.fill-player-2\/0{
+  fill: hsl(var(--player-2) / 0);
+}
+
+.fill-player-2\/10{
+  fill: hsl(var(--player-2) / 0.1);
+}
+
+.fill-player-2\/100{
+  fill: hsl(var(--player-2) / 1);
+}
+
+.fill-player-2\/15{
+  fill: hsl(var(--player-2) / 0.15);
+}
+
+.fill-player-2\/20{
+  fill: hsl(var(--player-2) / 0.2);
+}
+
+.fill-player-2\/25{
+  fill: hsl(var(--player-2) / 0.25);
+}
+
+.fill-player-2\/30{
+  fill: hsl(var(--player-2) / 0.3);
+}
+
+.fill-player-2\/35{
+  fill: hsl(var(--player-2) / 0.35);
+}
+
+.fill-player-2\/40{
+  fill: hsl(var(--player-2) / 0.4);
+}
+
+.fill-player-2\/45{
+  fill: hsl(var(--player-2) / 0.45);
+}
+
+.fill-player-2\/5{
+  fill: hsl(var(--player-2) / 0.05);
+}
+
+.fill-player-2\/50{
+  fill: hsl(var(--player-2) / 0.5);
+}
+
+.fill-player-2\/55{
+  fill: hsl(var(--player-2) / 0.55);
+}
+
+.fill-player-2\/60{
+  fill: hsl(var(--player-2) / 0.6);
+}
+
+.fill-player-2\/65{
+  fill: hsl(var(--player-2) / 0.65);
+}
+
+.fill-player-2\/70{
+  fill: hsl(var(--player-2) / 0.7);
+}
+
+.fill-player-2\/75{
+  fill: hsl(var(--player-2) / 0.75);
+}
+
+.fill-player-2\/80{
+  fill: hsl(var(--player-2) / 0.8);
+}
+
+.fill-player-2\/85{
+  fill: hsl(var(--player-2) / 0.85);
+}
+
+.fill-player-2\/90{
+  fill: hsl(var(--player-2) / 0.9);
+}
+
+.fill-player-2\/95{
+  fill: hsl(var(--player-2) / 0.95);
+}
+
 .fill-player-3{
   fill: hsl(var(--player-3));
+}
+
+.fill-player-3-light{
+  fill: hsl(var(--player-3-light));
+}
+
+.fill-player-3-light\/0{
+  fill: hsl(var(--player-3-light) / 0);
+}
+
+.fill-player-3-light\/10{
+  fill: hsl(var(--player-3-light) / 0.1);
+}
+
+.fill-player-3-light\/100{
+  fill: hsl(var(--player-3-light) / 1);
+}
+
+.fill-player-3-light\/15{
+  fill: hsl(var(--player-3-light) / 0.15);
+}
+
+.fill-player-3-light\/20{
+  fill: hsl(var(--player-3-light) / 0.2);
+}
+
+.fill-player-3-light\/25{
+  fill: hsl(var(--player-3-light) / 0.25);
+}
+
+.fill-player-3-light\/30{
+  fill: hsl(var(--player-3-light) / 0.3);
+}
+
+.fill-player-3-light\/35{
+  fill: hsl(var(--player-3-light) / 0.35);
+}
+
+.fill-player-3-light\/40{
+  fill: hsl(var(--player-3-light) / 0.4);
+}
+
+.fill-player-3-light\/45{
+  fill: hsl(var(--player-3-light) / 0.45);
+}
+
+.fill-player-3-light\/5{
+  fill: hsl(var(--player-3-light) / 0.05);
+}
+
+.fill-player-3-light\/50{
+  fill: hsl(var(--player-3-light) / 0.5);
+}
+
+.fill-player-3-light\/55{
+  fill: hsl(var(--player-3-light) / 0.55);
+}
+
+.fill-player-3-light\/60{
+  fill: hsl(var(--player-3-light) / 0.6);
+}
+
+.fill-player-3-light\/65{
+  fill: hsl(var(--player-3-light) / 0.65);
+}
+
+.fill-player-3-light\/70{
+  fill: hsl(var(--player-3-light) / 0.7);
+}
+
+.fill-player-3-light\/75{
+  fill: hsl(var(--player-3-light) / 0.75);
+}
+
+.fill-player-3-light\/80{
+  fill: hsl(var(--player-3-light) / 0.8);
+}
+
+.fill-player-3-light\/85{
+  fill: hsl(var(--player-3-light) / 0.85);
+}
+
+.fill-player-3-light\/90{
+  fill: hsl(var(--player-3-light) / 0.9);
+}
+
+.fill-player-3-light\/95{
+  fill: hsl(var(--player-3-light) / 0.95);
+}
+
+.fill-player-3-path{
+  fill: hsl(var(--player-3-path));
+}
+
+.fill-player-3-path\/0{
+  fill: hsl(var(--player-3-path) / 0);
+}
+
+.fill-player-3-path\/10{
+  fill: hsl(var(--player-3-path) / 0.1);
+}
+
+.fill-player-3-path\/100{
+  fill: hsl(var(--player-3-path) / 1);
+}
+
+.fill-player-3-path\/15{
+  fill: hsl(var(--player-3-path) / 0.15);
+}
+
+.fill-player-3-path\/20{
+  fill: hsl(var(--player-3-path) / 0.2);
+}
+
+.fill-player-3-path\/25{
+  fill: hsl(var(--player-3-path) / 0.25);
+}
+
+.fill-player-3-path\/30{
+  fill: hsl(var(--player-3-path) / 0.3);
+}
+
+.fill-player-3-path\/35{
+  fill: hsl(var(--player-3-path) / 0.35);
+}
+
+.fill-player-3-path\/40{
+  fill: hsl(var(--player-3-path) / 0.4);
+}
+
+.fill-player-3-path\/45{
+  fill: hsl(var(--player-3-path) / 0.45);
+}
+
+.fill-player-3-path\/5{
+  fill: hsl(var(--player-3-path) / 0.05);
+}
+
+.fill-player-3-path\/50{
+  fill: hsl(var(--player-3-path) / 0.5);
+}
+
+.fill-player-3-path\/55{
+  fill: hsl(var(--player-3-path) / 0.55);
+}
+
+.fill-player-3-path\/60{
+  fill: hsl(var(--player-3-path) / 0.6);
+}
+
+.fill-player-3-path\/65{
+  fill: hsl(var(--player-3-path) / 0.65);
+}
+
+.fill-player-3-path\/70{
+  fill: hsl(var(--player-3-path) / 0.7);
+}
+
+.fill-player-3-path\/75{
+  fill: hsl(var(--player-3-path) / 0.75);
+}
+
+.fill-player-3-path\/80{
+  fill: hsl(var(--player-3-path) / 0.8);
+}
+
+.fill-player-3-path\/85{
+  fill: hsl(var(--player-3-path) / 0.85);
+}
+
+.fill-player-3-path\/90{
+  fill: hsl(var(--player-3-path) / 0.9);
+}
+
+.fill-player-3-path\/95{
+  fill: hsl(var(--player-3-path) / 0.95);
+}
+
+.fill-player-3\/0{
+  fill: hsl(var(--player-3) / 0);
+}
+
+.fill-player-3\/10{
+  fill: hsl(var(--player-3) / 0.1);
+}
+
+.fill-player-3\/100{
+  fill: hsl(var(--player-3) / 1);
+}
+
+.fill-player-3\/15{
+  fill: hsl(var(--player-3) / 0.15);
+}
+
+.fill-player-3\/20{
+  fill: hsl(var(--player-3) / 0.2);
+}
+
+.fill-player-3\/25{
+  fill: hsl(var(--player-3) / 0.25);
+}
+
+.fill-player-3\/30{
+  fill: hsl(var(--player-3) / 0.3);
+}
+
+.fill-player-3\/35{
+  fill: hsl(var(--player-3) / 0.35);
+}
+
+.fill-player-3\/40{
+  fill: hsl(var(--player-3) / 0.4);
+}
+
+.fill-player-3\/45{
+  fill: hsl(var(--player-3) / 0.45);
+}
+
+.fill-player-3\/5{
+  fill: hsl(var(--player-3) / 0.05);
+}
+
+.fill-player-3\/50{
+  fill: hsl(var(--player-3) / 0.5);
+}
+
+.fill-player-3\/55{
+  fill: hsl(var(--player-3) / 0.55);
+}
+
+.fill-player-3\/60{
+  fill: hsl(var(--player-3) / 0.6);
+}
+
+.fill-player-3\/65{
+  fill: hsl(var(--player-3) / 0.65);
+}
+
+.fill-player-3\/70{
+  fill: hsl(var(--player-3) / 0.7);
+}
+
+.fill-player-3\/75{
+  fill: hsl(var(--player-3) / 0.75);
+}
+
+.fill-player-3\/80{
+  fill: hsl(var(--player-3) / 0.8);
+}
+
+.fill-player-3\/85{
+  fill: hsl(var(--player-3) / 0.85);
+}
+
+.fill-player-3\/90{
+  fill: hsl(var(--player-3) / 0.9);
+}
+
+.fill-player-3\/95{
+  fill: hsl(var(--player-3) / 0.95);
+}
+
+.stroke-player-0{
+  stroke: hsl(var(--player-0));
+}
+
+.stroke-player-0-light{
+  stroke: hsl(var(--player-0-light));
+}
+
+.stroke-player-0-light\/0{
+  stroke: hsl(var(--player-0-light) / 0);
+}
+
+.stroke-player-0-light\/10{
+  stroke: hsl(var(--player-0-light) / 0.1);
+}
+
+.stroke-player-0-light\/100{
+  stroke: hsl(var(--player-0-light) / 1);
+}
+
+.stroke-player-0-light\/15{
+  stroke: hsl(var(--player-0-light) / 0.15);
+}
+
+.stroke-player-0-light\/20{
+  stroke: hsl(var(--player-0-light) / 0.2);
+}
+
+.stroke-player-0-light\/25{
+  stroke: hsl(var(--player-0-light) / 0.25);
+}
+
+.stroke-player-0-light\/30{
+  stroke: hsl(var(--player-0-light) / 0.3);
+}
+
+.stroke-player-0-light\/35{
+  stroke: hsl(var(--player-0-light) / 0.35);
+}
+
+.stroke-player-0-light\/40{
+  stroke: hsl(var(--player-0-light) / 0.4);
+}
+
+.stroke-player-0-light\/45{
+  stroke: hsl(var(--player-0-light) / 0.45);
+}
+
+.stroke-player-0-light\/5{
+  stroke: hsl(var(--player-0-light) / 0.05);
+}
+
+.stroke-player-0-light\/50{
+  stroke: hsl(var(--player-0-light) / 0.5);
+}
+
+.stroke-player-0-light\/55{
+  stroke: hsl(var(--player-0-light) / 0.55);
+}
+
+.stroke-player-0-light\/60{
+  stroke: hsl(var(--player-0-light) / 0.6);
+}
+
+.stroke-player-0-light\/65{
+  stroke: hsl(var(--player-0-light) / 0.65);
+}
+
+.stroke-player-0-light\/70{
+  stroke: hsl(var(--player-0-light) / 0.7);
+}
+
+.stroke-player-0-light\/75{
+  stroke: hsl(var(--player-0-light) / 0.75);
+}
+
+.stroke-player-0-light\/80{
+  stroke: hsl(var(--player-0-light) / 0.8);
+}
+
+.stroke-player-0-light\/85{
+  stroke: hsl(var(--player-0-light) / 0.85);
+}
+
+.stroke-player-0-light\/90{
+  stroke: hsl(var(--player-0-light) / 0.9);
+}
+
+.stroke-player-0-light\/95{
+  stroke: hsl(var(--player-0-light) / 0.95);
+}
+
+.stroke-player-0-path{
+  stroke: hsl(var(--player-0-path));
+}
+
+.stroke-player-0-path\/0{
+  stroke: hsl(var(--player-0-path) / 0);
+}
+
+.stroke-player-0-path\/10{
+  stroke: hsl(var(--player-0-path) / 0.1);
+}
+
+.stroke-player-0-path\/100{
+  stroke: hsl(var(--player-0-path) / 1);
+}
+
+.stroke-player-0-path\/15{
+  stroke: hsl(var(--player-0-path) / 0.15);
+}
+
+.stroke-player-0-path\/20{
+  stroke: hsl(var(--player-0-path) / 0.2);
+}
+
+.stroke-player-0-path\/25{
+  stroke: hsl(var(--player-0-path) / 0.25);
+}
+
+.stroke-player-0-path\/30{
+  stroke: hsl(var(--player-0-path) / 0.3);
+}
+
+.stroke-player-0-path\/35{
+  stroke: hsl(var(--player-0-path) / 0.35);
+}
+
+.stroke-player-0-path\/40{
+  stroke: hsl(var(--player-0-path) / 0.4);
+}
+
+.stroke-player-0-path\/45{
+  stroke: hsl(var(--player-0-path) / 0.45);
+}
+
+.stroke-player-0-path\/5{
+  stroke: hsl(var(--player-0-path) / 0.05);
+}
+
+.stroke-player-0-path\/50{
+  stroke: hsl(var(--player-0-path) / 0.5);
+}
+
+.stroke-player-0-path\/55{
+  stroke: hsl(var(--player-0-path) / 0.55);
+}
+
+.stroke-player-0-path\/60{
+  stroke: hsl(var(--player-0-path) / 0.6);
+}
+
+.stroke-player-0-path\/65{
+  stroke: hsl(var(--player-0-path) / 0.65);
+}
+
+.stroke-player-0-path\/70{
+  stroke: hsl(var(--player-0-path) / 0.7);
+}
+
+.stroke-player-0-path\/75{
+  stroke: hsl(var(--player-0-path) / 0.75);
+}
+
+.stroke-player-0-path\/80{
+  stroke: hsl(var(--player-0-path) / 0.8);
+}
+
+.stroke-player-0-path\/85{
+  stroke: hsl(var(--player-0-path) / 0.85);
+}
+
+.stroke-player-0-path\/90{
+  stroke: hsl(var(--player-0-path) / 0.9);
+}
+
+.stroke-player-0-path\/95{
+  stroke: hsl(var(--player-0-path) / 0.95);
+}
+
+.stroke-player-0\/0{
+  stroke: hsl(var(--player-0) / 0);
+}
+
+.stroke-player-0\/10{
+  stroke: hsl(var(--player-0) / 0.1);
+}
+
+.stroke-player-0\/100{
+  stroke: hsl(var(--player-0) / 1);
+}
+
+.stroke-player-0\/15{
+  stroke: hsl(var(--player-0) / 0.15);
+}
+
+.stroke-player-0\/20{
+  stroke: hsl(var(--player-0) / 0.2);
+}
+
+.stroke-player-0\/25{
+  stroke: hsl(var(--player-0) / 0.25);
+}
+
+.stroke-player-0\/30{
+  stroke: hsl(var(--player-0) / 0.3);
+}
+
+.stroke-player-0\/35{
+  stroke: hsl(var(--player-0) / 0.35);
+}
+
+.stroke-player-0\/40{
+  stroke: hsl(var(--player-0) / 0.4);
+}
+
+.stroke-player-0\/45{
+  stroke: hsl(var(--player-0) / 0.45);
+}
+
+.stroke-player-0\/5{
+  stroke: hsl(var(--player-0) / 0.05);
+}
+
+.stroke-player-0\/50{
+  stroke: hsl(var(--player-0) / 0.5);
+}
+
+.stroke-player-0\/55{
+  stroke: hsl(var(--player-0) / 0.55);
+}
+
+.stroke-player-0\/60{
+  stroke: hsl(var(--player-0) / 0.6);
+}
+
+.stroke-player-0\/65{
+  stroke: hsl(var(--player-0) / 0.65);
+}
+
+.stroke-player-0\/70{
+  stroke: hsl(var(--player-0) / 0.7);
+}
+
+.stroke-player-0\/75{
+  stroke: hsl(var(--player-0) / 0.75);
+}
+
+.stroke-player-0\/80{
+  stroke: hsl(var(--player-0) / 0.8);
+}
+
+.stroke-player-0\/85{
+  stroke: hsl(var(--player-0) / 0.85);
+}
+
+.stroke-player-0\/90{
+  stroke: hsl(var(--player-0) / 0.9);
+}
+
+.stroke-player-0\/95{
+  stroke: hsl(var(--player-0) / 0.95);
+}
+
+.stroke-player-1{
+  stroke: hsl(var(--player-1));
+}
+
+.stroke-player-1-light{
+  stroke: hsl(var(--player-1-light));
+}
+
+.stroke-player-1-light\/0{
+  stroke: hsl(var(--player-1-light) / 0);
+}
+
+.stroke-player-1-light\/10{
+  stroke: hsl(var(--player-1-light) / 0.1);
+}
+
+.stroke-player-1-light\/100{
+  stroke: hsl(var(--player-1-light) / 1);
+}
+
+.stroke-player-1-light\/15{
+  stroke: hsl(var(--player-1-light) / 0.15);
+}
+
+.stroke-player-1-light\/20{
+  stroke: hsl(var(--player-1-light) / 0.2);
+}
+
+.stroke-player-1-light\/25{
+  stroke: hsl(var(--player-1-light) / 0.25);
+}
+
+.stroke-player-1-light\/30{
+  stroke: hsl(var(--player-1-light) / 0.3);
+}
+
+.stroke-player-1-light\/35{
+  stroke: hsl(var(--player-1-light) / 0.35);
+}
+
+.stroke-player-1-light\/40{
+  stroke: hsl(var(--player-1-light) / 0.4);
+}
+
+.stroke-player-1-light\/45{
+  stroke: hsl(var(--player-1-light) / 0.45);
+}
+
+.stroke-player-1-light\/5{
+  stroke: hsl(var(--player-1-light) / 0.05);
+}
+
+.stroke-player-1-light\/50{
+  stroke: hsl(var(--player-1-light) / 0.5);
+}
+
+.stroke-player-1-light\/55{
+  stroke: hsl(var(--player-1-light) / 0.55);
+}
+
+.stroke-player-1-light\/60{
+  stroke: hsl(var(--player-1-light) / 0.6);
+}
+
+.stroke-player-1-light\/65{
+  stroke: hsl(var(--player-1-light) / 0.65);
+}
+
+.stroke-player-1-light\/70{
+  stroke: hsl(var(--player-1-light) / 0.7);
+}
+
+.stroke-player-1-light\/75{
+  stroke: hsl(var(--player-1-light) / 0.75);
+}
+
+.stroke-player-1-light\/80{
+  stroke: hsl(var(--player-1-light) / 0.8);
+}
+
+.stroke-player-1-light\/85{
+  stroke: hsl(var(--player-1-light) / 0.85);
+}
+
+.stroke-player-1-light\/90{
+  stroke: hsl(var(--player-1-light) / 0.9);
+}
+
+.stroke-player-1-light\/95{
+  stroke: hsl(var(--player-1-light) / 0.95);
+}
+
+.stroke-player-1-path{
+  stroke: hsl(var(--player-1-path));
+}
+
+.stroke-player-1-path\/0{
+  stroke: hsl(var(--player-1-path) / 0);
+}
+
+.stroke-player-1-path\/10{
+  stroke: hsl(var(--player-1-path) / 0.1);
+}
+
+.stroke-player-1-path\/100{
+  stroke: hsl(var(--player-1-path) / 1);
+}
+
+.stroke-player-1-path\/15{
+  stroke: hsl(var(--player-1-path) / 0.15);
+}
+
+.stroke-player-1-path\/20{
+  stroke: hsl(var(--player-1-path) / 0.2);
+}
+
+.stroke-player-1-path\/25{
+  stroke: hsl(var(--player-1-path) / 0.25);
+}
+
+.stroke-player-1-path\/30{
+  stroke: hsl(var(--player-1-path) / 0.3);
+}
+
+.stroke-player-1-path\/35{
+  stroke: hsl(var(--player-1-path) / 0.35);
+}
+
+.stroke-player-1-path\/40{
+  stroke: hsl(var(--player-1-path) / 0.4);
+}
+
+.stroke-player-1-path\/45{
+  stroke: hsl(var(--player-1-path) / 0.45);
+}
+
+.stroke-player-1-path\/5{
+  stroke: hsl(var(--player-1-path) / 0.05);
+}
+
+.stroke-player-1-path\/50{
+  stroke: hsl(var(--player-1-path) / 0.5);
+}
+
+.stroke-player-1-path\/55{
+  stroke: hsl(var(--player-1-path) / 0.55);
+}
+
+.stroke-player-1-path\/60{
+  stroke: hsl(var(--player-1-path) / 0.6);
+}
+
+.stroke-player-1-path\/65{
+  stroke: hsl(var(--player-1-path) / 0.65);
+}
+
+.stroke-player-1-path\/70{
+  stroke: hsl(var(--player-1-path) / 0.7);
+}
+
+.stroke-player-1-path\/75{
+  stroke: hsl(var(--player-1-path) / 0.75);
+}
+
+.stroke-player-1-path\/80{
+  stroke: hsl(var(--player-1-path) / 0.8);
+}
+
+.stroke-player-1-path\/85{
+  stroke: hsl(var(--player-1-path) / 0.85);
+}
+
+.stroke-player-1-path\/90{
+  stroke: hsl(var(--player-1-path) / 0.9);
+}
+
+.stroke-player-1-path\/95{
+  stroke: hsl(var(--player-1-path) / 0.95);
+}
+
+.stroke-player-1\/0{
+  stroke: hsl(var(--player-1) / 0);
+}
+
+.stroke-player-1\/10{
+  stroke: hsl(var(--player-1) / 0.1);
+}
+
+.stroke-player-1\/100{
+  stroke: hsl(var(--player-1) / 1);
+}
+
+.stroke-player-1\/15{
+  stroke: hsl(var(--player-1) / 0.15);
+}
+
+.stroke-player-1\/20{
+  stroke: hsl(var(--player-1) / 0.2);
+}
+
+.stroke-player-1\/25{
+  stroke: hsl(var(--player-1) / 0.25);
+}
+
+.stroke-player-1\/30{
+  stroke: hsl(var(--player-1) / 0.3);
+}
+
+.stroke-player-1\/35{
+  stroke: hsl(var(--player-1) / 0.35);
+}
+
+.stroke-player-1\/40{
+  stroke: hsl(var(--player-1) / 0.4);
+}
+
+.stroke-player-1\/45{
+  stroke: hsl(var(--player-1) / 0.45);
+}
+
+.stroke-player-1\/5{
+  stroke: hsl(var(--player-1) / 0.05);
+}
+
+.stroke-player-1\/50{
+  stroke: hsl(var(--player-1) / 0.5);
+}
+
+.stroke-player-1\/55{
+  stroke: hsl(var(--player-1) / 0.55);
+}
+
+.stroke-player-1\/60{
+  stroke: hsl(var(--player-1) / 0.6);
+}
+
+.stroke-player-1\/65{
+  stroke: hsl(var(--player-1) / 0.65);
+}
+
+.stroke-player-1\/70{
+  stroke: hsl(var(--player-1) / 0.7);
+}
+
+.stroke-player-1\/75{
+  stroke: hsl(var(--player-1) / 0.75);
+}
+
+.stroke-player-1\/80{
+  stroke: hsl(var(--player-1) / 0.8);
+}
+
+.stroke-player-1\/85{
+  stroke: hsl(var(--player-1) / 0.85);
+}
+
+.stroke-player-1\/90{
+  stroke: hsl(var(--player-1) / 0.9);
+}
+
+.stroke-player-1\/95{
+  stroke: hsl(var(--player-1) / 0.95);
+}
+
+.stroke-player-2{
+  stroke: hsl(var(--player-2));
+}
+
+.stroke-player-2-light{
+  stroke: hsl(var(--player-2-light));
+}
+
+.stroke-player-2-light\/0{
+  stroke: hsl(var(--player-2-light) / 0);
+}
+
+.stroke-player-2-light\/10{
+  stroke: hsl(var(--player-2-light) / 0.1);
+}
+
+.stroke-player-2-light\/100{
+  stroke: hsl(var(--player-2-light) / 1);
+}
+
+.stroke-player-2-light\/15{
+  stroke: hsl(var(--player-2-light) / 0.15);
+}
+
+.stroke-player-2-light\/20{
+  stroke: hsl(var(--player-2-light) / 0.2);
+}
+
+.stroke-player-2-light\/25{
+  stroke: hsl(var(--player-2-light) / 0.25);
+}
+
+.stroke-player-2-light\/30{
+  stroke: hsl(var(--player-2-light) / 0.3);
+}
+
+.stroke-player-2-light\/35{
+  stroke: hsl(var(--player-2-light) / 0.35);
+}
+
+.stroke-player-2-light\/40{
+  stroke: hsl(var(--player-2-light) / 0.4);
+}
+
+.stroke-player-2-light\/45{
+  stroke: hsl(var(--player-2-light) / 0.45);
+}
+
+.stroke-player-2-light\/5{
+  stroke: hsl(var(--player-2-light) / 0.05);
+}
+
+.stroke-player-2-light\/50{
+  stroke: hsl(var(--player-2-light) / 0.5);
+}
+
+.stroke-player-2-light\/55{
+  stroke: hsl(var(--player-2-light) / 0.55);
+}
+
+.stroke-player-2-light\/60{
+  stroke: hsl(var(--player-2-light) / 0.6);
+}
+
+.stroke-player-2-light\/65{
+  stroke: hsl(var(--player-2-light) / 0.65);
+}
+
+.stroke-player-2-light\/70{
+  stroke: hsl(var(--player-2-light) / 0.7);
+}
+
+.stroke-player-2-light\/75{
+  stroke: hsl(var(--player-2-light) / 0.75);
+}
+
+.stroke-player-2-light\/80{
+  stroke: hsl(var(--player-2-light) / 0.8);
+}
+
+.stroke-player-2-light\/85{
+  stroke: hsl(var(--player-2-light) / 0.85);
+}
+
+.stroke-player-2-light\/90{
+  stroke: hsl(var(--player-2-light) / 0.9);
+}
+
+.stroke-player-2-light\/95{
+  stroke: hsl(var(--player-2-light) / 0.95);
+}
+
+.stroke-player-2-path{
+  stroke: hsl(var(--player-2-path));
+}
+
+.stroke-player-2-path\/0{
+  stroke: hsl(var(--player-2-path) / 0);
+}
+
+.stroke-player-2-path\/10{
+  stroke: hsl(var(--player-2-path) / 0.1);
+}
+
+.stroke-player-2-path\/100{
+  stroke: hsl(var(--player-2-path) / 1);
+}
+
+.stroke-player-2-path\/15{
+  stroke: hsl(var(--player-2-path) / 0.15);
+}
+
+.stroke-player-2-path\/20{
+  stroke: hsl(var(--player-2-path) / 0.2);
+}
+
+.stroke-player-2-path\/25{
+  stroke: hsl(var(--player-2-path) / 0.25);
+}
+
+.stroke-player-2-path\/30{
+  stroke: hsl(var(--player-2-path) / 0.3);
+}
+
+.stroke-player-2-path\/35{
+  stroke: hsl(var(--player-2-path) / 0.35);
+}
+
+.stroke-player-2-path\/40{
+  stroke: hsl(var(--player-2-path) / 0.4);
+}
+
+.stroke-player-2-path\/45{
+  stroke: hsl(var(--player-2-path) / 0.45);
+}
+
+.stroke-player-2-path\/5{
+  stroke: hsl(var(--player-2-path) / 0.05);
+}
+
+.stroke-player-2-path\/50{
+  stroke: hsl(var(--player-2-path) / 0.5);
+}
+
+.stroke-player-2-path\/55{
+  stroke: hsl(var(--player-2-path) / 0.55);
+}
+
+.stroke-player-2-path\/60{
+  stroke: hsl(var(--player-2-path) / 0.6);
+}
+
+.stroke-player-2-path\/65{
+  stroke: hsl(var(--player-2-path) / 0.65);
+}
+
+.stroke-player-2-path\/70{
+  stroke: hsl(var(--player-2-path) / 0.7);
+}
+
+.stroke-player-2-path\/75{
+  stroke: hsl(var(--player-2-path) / 0.75);
+}
+
+.stroke-player-2-path\/80{
+  stroke: hsl(var(--player-2-path) / 0.8);
+}
+
+.stroke-player-2-path\/85{
+  stroke: hsl(var(--player-2-path) / 0.85);
+}
+
+.stroke-player-2-path\/90{
+  stroke: hsl(var(--player-2-path) / 0.9);
+}
+
+.stroke-player-2-path\/95{
+  stroke: hsl(var(--player-2-path) / 0.95);
+}
+
+.stroke-player-2\/0{
+  stroke: hsl(var(--player-2) / 0);
+}
+
+.stroke-player-2\/10{
+  stroke: hsl(var(--player-2) / 0.1);
+}
+
+.stroke-player-2\/100{
+  stroke: hsl(var(--player-2) / 1);
+}
+
+.stroke-player-2\/15{
+  stroke: hsl(var(--player-2) / 0.15);
+}
+
+.stroke-player-2\/20{
+  stroke: hsl(var(--player-2) / 0.2);
+}
+
+.stroke-player-2\/25{
+  stroke: hsl(var(--player-2) / 0.25);
+}
+
+.stroke-player-2\/30{
+  stroke: hsl(var(--player-2) / 0.3);
+}
+
+.stroke-player-2\/35{
+  stroke: hsl(var(--player-2) / 0.35);
+}
+
+.stroke-player-2\/40{
+  stroke: hsl(var(--player-2) / 0.4);
+}
+
+.stroke-player-2\/45{
+  stroke: hsl(var(--player-2) / 0.45);
+}
+
+.stroke-player-2\/5{
+  stroke: hsl(var(--player-2) / 0.05);
+}
+
+.stroke-player-2\/50{
+  stroke: hsl(var(--player-2) / 0.5);
+}
+
+.stroke-player-2\/55{
+  stroke: hsl(var(--player-2) / 0.55);
+}
+
+.stroke-player-2\/60{
+  stroke: hsl(var(--player-2) / 0.6);
+}
+
+.stroke-player-2\/65{
+  stroke: hsl(var(--player-2) / 0.65);
+}
+
+.stroke-player-2\/70{
+  stroke: hsl(var(--player-2) / 0.7);
+}
+
+.stroke-player-2\/75{
+  stroke: hsl(var(--player-2) / 0.75);
+}
+
+.stroke-player-2\/80{
+  stroke: hsl(var(--player-2) / 0.8);
+}
+
+.stroke-player-2\/85{
+  stroke: hsl(var(--player-2) / 0.85);
+}
+
+.stroke-player-2\/90{
+  stroke: hsl(var(--player-2) / 0.9);
+}
+
+.stroke-player-2\/95{
+  stroke: hsl(var(--player-2) / 0.95);
+}
+
+.stroke-player-3{
+  stroke: hsl(var(--player-3));
+}
+
+.stroke-player-3-light{
+  stroke: hsl(var(--player-3-light));
+}
+
+.stroke-player-3-light\/0{
+  stroke: hsl(var(--player-3-light) / 0);
+}
+
+.stroke-player-3-light\/10{
+  stroke: hsl(var(--player-3-light) / 0.1);
+}
+
+.stroke-player-3-light\/100{
+  stroke: hsl(var(--player-3-light) / 1);
+}
+
+.stroke-player-3-light\/15{
+  stroke: hsl(var(--player-3-light) / 0.15);
+}
+
+.stroke-player-3-light\/20{
+  stroke: hsl(var(--player-3-light) / 0.2);
+}
+
+.stroke-player-3-light\/25{
+  stroke: hsl(var(--player-3-light) / 0.25);
+}
+
+.stroke-player-3-light\/30{
+  stroke: hsl(var(--player-3-light) / 0.3);
+}
+
+.stroke-player-3-light\/35{
+  stroke: hsl(var(--player-3-light) / 0.35);
+}
+
+.stroke-player-3-light\/40{
+  stroke: hsl(var(--player-3-light) / 0.4);
+}
+
+.stroke-player-3-light\/45{
+  stroke: hsl(var(--player-3-light) / 0.45);
+}
+
+.stroke-player-3-light\/5{
+  stroke: hsl(var(--player-3-light) / 0.05);
+}
+
+.stroke-player-3-light\/50{
+  stroke: hsl(var(--player-3-light) / 0.5);
+}
+
+.stroke-player-3-light\/55{
+  stroke: hsl(var(--player-3-light) / 0.55);
+}
+
+.stroke-player-3-light\/60{
+  stroke: hsl(var(--player-3-light) / 0.6);
+}
+
+.stroke-player-3-light\/65{
+  stroke: hsl(var(--player-3-light) / 0.65);
+}
+
+.stroke-player-3-light\/70{
+  stroke: hsl(var(--player-3-light) / 0.7);
+}
+
+.stroke-player-3-light\/75{
+  stroke: hsl(var(--player-3-light) / 0.75);
+}
+
+.stroke-player-3-light\/80{
+  stroke: hsl(var(--player-3-light) / 0.8);
+}
+
+.stroke-player-3-light\/85{
+  stroke: hsl(var(--player-3-light) / 0.85);
+}
+
+.stroke-player-3-light\/90{
+  stroke: hsl(var(--player-3-light) / 0.9);
+}
+
+.stroke-player-3-light\/95{
+  stroke: hsl(var(--player-3-light) / 0.95);
+}
+
+.stroke-player-3-path{
+  stroke: hsl(var(--player-3-path));
+}
+
+.stroke-player-3-path\/0{
+  stroke: hsl(var(--player-3-path) / 0);
+}
+
+.stroke-player-3-path\/10{
+  stroke: hsl(var(--player-3-path) / 0.1);
+}
+
+.stroke-player-3-path\/100{
+  stroke: hsl(var(--player-3-path) / 1);
+}
+
+.stroke-player-3-path\/15{
+  stroke: hsl(var(--player-3-path) / 0.15);
+}
+
+.stroke-player-3-path\/20{
+  stroke: hsl(var(--player-3-path) / 0.2);
+}
+
+.stroke-player-3-path\/25{
+  stroke: hsl(var(--player-3-path) / 0.25);
+}
+
+.stroke-player-3-path\/30{
+  stroke: hsl(var(--player-3-path) / 0.3);
+}
+
+.stroke-player-3-path\/35{
+  stroke: hsl(var(--player-3-path) / 0.35);
+}
+
+.stroke-player-3-path\/40{
+  stroke: hsl(var(--player-3-path) / 0.4);
+}
+
+.stroke-player-3-path\/45{
+  stroke: hsl(var(--player-3-path) / 0.45);
+}
+
+.stroke-player-3-path\/5{
+  stroke: hsl(var(--player-3-path) / 0.05);
+}
+
+.stroke-player-3-path\/50{
+  stroke: hsl(var(--player-3-path) / 0.5);
+}
+
+.stroke-player-3-path\/55{
+  stroke: hsl(var(--player-3-path) / 0.55);
+}
+
+.stroke-player-3-path\/60{
+  stroke: hsl(var(--player-3-path) / 0.6);
+}
+
+.stroke-player-3-path\/65{
+  stroke: hsl(var(--player-3-path) / 0.65);
+}
+
+.stroke-player-3-path\/70{
+  stroke: hsl(var(--player-3-path) / 0.7);
+}
+
+.stroke-player-3-path\/75{
+  stroke: hsl(var(--player-3-path) / 0.75);
+}
+
+.stroke-player-3-path\/80{
+  stroke: hsl(var(--player-3-path) / 0.8);
+}
+
+.stroke-player-3-path\/85{
+  stroke: hsl(var(--player-3-path) / 0.85);
+}
+
+.stroke-player-3-path\/90{
+  stroke: hsl(var(--player-3-path) / 0.9);
+}
+
+.stroke-player-3-path\/95{
+  stroke: hsl(var(--player-3-path) / 0.95);
+}
+
+.stroke-player-3\/0{
+  stroke: hsl(var(--player-3) / 0);
+}
+
+.stroke-player-3\/10{
+  stroke: hsl(var(--player-3) / 0.1);
+}
+
+.stroke-player-3\/100{
+  stroke: hsl(var(--player-3) / 1);
+}
+
+.stroke-player-3\/15{
+  stroke: hsl(var(--player-3) / 0.15);
+}
+
+.stroke-player-3\/20{
+  stroke: hsl(var(--player-3) / 0.2);
+}
+
+.stroke-player-3\/25{
+  stroke: hsl(var(--player-3) / 0.25);
+}
+
+.stroke-player-3\/30{
+  stroke: hsl(var(--player-3) / 0.3);
+}
+
+.stroke-player-3\/35{
+  stroke: hsl(var(--player-3) / 0.35);
+}
+
+.stroke-player-3\/40{
+  stroke: hsl(var(--player-3) / 0.4);
+}
+
+.stroke-player-3\/45{
+  stroke: hsl(var(--player-3) / 0.45);
+}
+
+.stroke-player-3\/5{
+  stroke: hsl(var(--player-3) / 0.05);
+}
+
+.stroke-player-3\/50{
+  stroke: hsl(var(--player-3) / 0.5);
+}
+
+.stroke-player-3\/55{
+  stroke: hsl(var(--player-3) / 0.55);
+}
+
+.stroke-player-3\/60{
+  stroke: hsl(var(--player-3) / 0.6);
+}
+
+.stroke-player-3\/65{
+  stroke: hsl(var(--player-3) / 0.65);
+}
+
+.stroke-player-3\/70{
+  stroke: hsl(var(--player-3) / 0.7);
+}
+
+.stroke-player-3\/75{
+  stroke: hsl(var(--player-3) / 0.75);
+}
+
+.stroke-player-3\/80{
+  stroke: hsl(var(--player-3) / 0.8);
+}
+
+.stroke-player-3\/85{
+  stroke: hsl(var(--player-3) / 0.85);
+}
+
+.stroke-player-3\/90{
+  stroke: hsl(var(--player-3) / 0.9);
+}
+
+.stroke-player-3\/95{
+  stroke: hsl(var(--player-3) / 0.95);
 }
 
 .p-0{
@@ -1577,6 +5721,1062 @@ html{
   color: hsl(var(--foreground) / 0.3);
 }
 
+.text-player-0{
+  color: hsl(var(--player-0));
+}
+
+.text-player-0-light{
+  color: hsl(var(--player-0-light));
+}
+
+.text-player-0-light\/0{
+  color: hsl(var(--player-0-light) / 0);
+}
+
+.text-player-0-light\/10{
+  color: hsl(var(--player-0-light) / 0.1);
+}
+
+.text-player-0-light\/100{
+  color: hsl(var(--player-0-light) / 1);
+}
+
+.text-player-0-light\/15{
+  color: hsl(var(--player-0-light) / 0.15);
+}
+
+.text-player-0-light\/20{
+  color: hsl(var(--player-0-light) / 0.2);
+}
+
+.text-player-0-light\/25{
+  color: hsl(var(--player-0-light) / 0.25);
+}
+
+.text-player-0-light\/30{
+  color: hsl(var(--player-0-light) / 0.3);
+}
+
+.text-player-0-light\/35{
+  color: hsl(var(--player-0-light) / 0.35);
+}
+
+.text-player-0-light\/40{
+  color: hsl(var(--player-0-light) / 0.4);
+}
+
+.text-player-0-light\/45{
+  color: hsl(var(--player-0-light) / 0.45);
+}
+
+.text-player-0-light\/5{
+  color: hsl(var(--player-0-light) / 0.05);
+}
+
+.text-player-0-light\/50{
+  color: hsl(var(--player-0-light) / 0.5);
+}
+
+.text-player-0-light\/55{
+  color: hsl(var(--player-0-light) / 0.55);
+}
+
+.text-player-0-light\/60{
+  color: hsl(var(--player-0-light) / 0.6);
+}
+
+.text-player-0-light\/65{
+  color: hsl(var(--player-0-light) / 0.65);
+}
+
+.text-player-0-light\/70{
+  color: hsl(var(--player-0-light) / 0.7);
+}
+
+.text-player-0-light\/75{
+  color: hsl(var(--player-0-light) / 0.75);
+}
+
+.text-player-0-light\/80{
+  color: hsl(var(--player-0-light) / 0.8);
+}
+
+.text-player-0-light\/85{
+  color: hsl(var(--player-0-light) / 0.85);
+}
+
+.text-player-0-light\/90{
+  color: hsl(var(--player-0-light) / 0.9);
+}
+
+.text-player-0-light\/95{
+  color: hsl(var(--player-0-light) / 0.95);
+}
+
+.text-player-0-path{
+  color: hsl(var(--player-0-path));
+}
+
+.text-player-0-path\/0{
+  color: hsl(var(--player-0-path) / 0);
+}
+
+.text-player-0-path\/10{
+  color: hsl(var(--player-0-path) / 0.1);
+}
+
+.text-player-0-path\/100{
+  color: hsl(var(--player-0-path) / 1);
+}
+
+.text-player-0-path\/15{
+  color: hsl(var(--player-0-path) / 0.15);
+}
+
+.text-player-0-path\/20{
+  color: hsl(var(--player-0-path) / 0.2);
+}
+
+.text-player-0-path\/25{
+  color: hsl(var(--player-0-path) / 0.25);
+}
+
+.text-player-0-path\/30{
+  color: hsl(var(--player-0-path) / 0.3);
+}
+
+.text-player-0-path\/35{
+  color: hsl(var(--player-0-path) / 0.35);
+}
+
+.text-player-0-path\/40{
+  color: hsl(var(--player-0-path) / 0.4);
+}
+
+.text-player-0-path\/45{
+  color: hsl(var(--player-0-path) / 0.45);
+}
+
+.text-player-0-path\/5{
+  color: hsl(var(--player-0-path) / 0.05);
+}
+
+.text-player-0-path\/50{
+  color: hsl(var(--player-0-path) / 0.5);
+}
+
+.text-player-0-path\/55{
+  color: hsl(var(--player-0-path) / 0.55);
+}
+
+.text-player-0-path\/60{
+  color: hsl(var(--player-0-path) / 0.6);
+}
+
+.text-player-0-path\/65{
+  color: hsl(var(--player-0-path) / 0.65);
+}
+
+.text-player-0-path\/70{
+  color: hsl(var(--player-0-path) / 0.7);
+}
+
+.text-player-0-path\/75{
+  color: hsl(var(--player-0-path) / 0.75);
+}
+
+.text-player-0-path\/80{
+  color: hsl(var(--player-0-path) / 0.8);
+}
+
+.text-player-0-path\/85{
+  color: hsl(var(--player-0-path) / 0.85);
+}
+
+.text-player-0-path\/90{
+  color: hsl(var(--player-0-path) / 0.9);
+}
+
+.text-player-0-path\/95{
+  color: hsl(var(--player-0-path) / 0.95);
+}
+
+.text-player-0\/0{
+  color: hsl(var(--player-0) / 0);
+}
+
+.text-player-0\/10{
+  color: hsl(var(--player-0) / 0.1);
+}
+
+.text-player-0\/100{
+  color: hsl(var(--player-0) / 1);
+}
+
+.text-player-0\/15{
+  color: hsl(var(--player-0) / 0.15);
+}
+
+.text-player-0\/20{
+  color: hsl(var(--player-0) / 0.2);
+}
+
+.text-player-0\/25{
+  color: hsl(var(--player-0) / 0.25);
+}
+
+.text-player-0\/30{
+  color: hsl(var(--player-0) / 0.3);
+}
+
+.text-player-0\/35{
+  color: hsl(var(--player-0) / 0.35);
+}
+
+.text-player-0\/40{
+  color: hsl(var(--player-0) / 0.4);
+}
+
+.text-player-0\/45{
+  color: hsl(var(--player-0) / 0.45);
+}
+
+.text-player-0\/5{
+  color: hsl(var(--player-0) / 0.05);
+}
+
+.text-player-0\/50{
+  color: hsl(var(--player-0) / 0.5);
+}
+
+.text-player-0\/55{
+  color: hsl(var(--player-0) / 0.55);
+}
+
+.text-player-0\/60{
+  color: hsl(var(--player-0) / 0.6);
+}
+
+.text-player-0\/65{
+  color: hsl(var(--player-0) / 0.65);
+}
+
+.text-player-0\/70{
+  color: hsl(var(--player-0) / 0.7);
+}
+
+.text-player-0\/75{
+  color: hsl(var(--player-0) / 0.75);
+}
+
+.text-player-0\/80{
+  color: hsl(var(--player-0) / 0.8);
+}
+
+.text-player-0\/85{
+  color: hsl(var(--player-0) / 0.85);
+}
+
+.text-player-0\/90{
+  color: hsl(var(--player-0) / 0.9);
+}
+
+.text-player-0\/95{
+  color: hsl(var(--player-0) / 0.95);
+}
+
+.text-player-1{
+  color: hsl(var(--player-1));
+}
+
+.text-player-1-light{
+  color: hsl(var(--player-1-light));
+}
+
+.text-player-1-light\/0{
+  color: hsl(var(--player-1-light) / 0);
+}
+
+.text-player-1-light\/10{
+  color: hsl(var(--player-1-light) / 0.1);
+}
+
+.text-player-1-light\/100{
+  color: hsl(var(--player-1-light) / 1);
+}
+
+.text-player-1-light\/15{
+  color: hsl(var(--player-1-light) / 0.15);
+}
+
+.text-player-1-light\/20{
+  color: hsl(var(--player-1-light) / 0.2);
+}
+
+.text-player-1-light\/25{
+  color: hsl(var(--player-1-light) / 0.25);
+}
+
+.text-player-1-light\/30{
+  color: hsl(var(--player-1-light) / 0.3);
+}
+
+.text-player-1-light\/35{
+  color: hsl(var(--player-1-light) / 0.35);
+}
+
+.text-player-1-light\/40{
+  color: hsl(var(--player-1-light) / 0.4);
+}
+
+.text-player-1-light\/45{
+  color: hsl(var(--player-1-light) / 0.45);
+}
+
+.text-player-1-light\/5{
+  color: hsl(var(--player-1-light) / 0.05);
+}
+
+.text-player-1-light\/50{
+  color: hsl(var(--player-1-light) / 0.5);
+}
+
+.text-player-1-light\/55{
+  color: hsl(var(--player-1-light) / 0.55);
+}
+
+.text-player-1-light\/60{
+  color: hsl(var(--player-1-light) / 0.6);
+}
+
+.text-player-1-light\/65{
+  color: hsl(var(--player-1-light) / 0.65);
+}
+
+.text-player-1-light\/70{
+  color: hsl(var(--player-1-light) / 0.7);
+}
+
+.text-player-1-light\/75{
+  color: hsl(var(--player-1-light) / 0.75);
+}
+
+.text-player-1-light\/80{
+  color: hsl(var(--player-1-light) / 0.8);
+}
+
+.text-player-1-light\/85{
+  color: hsl(var(--player-1-light) / 0.85);
+}
+
+.text-player-1-light\/90{
+  color: hsl(var(--player-1-light) / 0.9);
+}
+
+.text-player-1-light\/95{
+  color: hsl(var(--player-1-light) / 0.95);
+}
+
+.text-player-1-path{
+  color: hsl(var(--player-1-path));
+}
+
+.text-player-1-path\/0{
+  color: hsl(var(--player-1-path) / 0);
+}
+
+.text-player-1-path\/10{
+  color: hsl(var(--player-1-path) / 0.1);
+}
+
+.text-player-1-path\/100{
+  color: hsl(var(--player-1-path) / 1);
+}
+
+.text-player-1-path\/15{
+  color: hsl(var(--player-1-path) / 0.15);
+}
+
+.text-player-1-path\/20{
+  color: hsl(var(--player-1-path) / 0.2);
+}
+
+.text-player-1-path\/25{
+  color: hsl(var(--player-1-path) / 0.25);
+}
+
+.text-player-1-path\/30{
+  color: hsl(var(--player-1-path) / 0.3);
+}
+
+.text-player-1-path\/35{
+  color: hsl(var(--player-1-path) / 0.35);
+}
+
+.text-player-1-path\/40{
+  color: hsl(var(--player-1-path) / 0.4);
+}
+
+.text-player-1-path\/45{
+  color: hsl(var(--player-1-path) / 0.45);
+}
+
+.text-player-1-path\/5{
+  color: hsl(var(--player-1-path) / 0.05);
+}
+
+.text-player-1-path\/50{
+  color: hsl(var(--player-1-path) / 0.5);
+}
+
+.text-player-1-path\/55{
+  color: hsl(var(--player-1-path) / 0.55);
+}
+
+.text-player-1-path\/60{
+  color: hsl(var(--player-1-path) / 0.6);
+}
+
+.text-player-1-path\/65{
+  color: hsl(var(--player-1-path) / 0.65);
+}
+
+.text-player-1-path\/70{
+  color: hsl(var(--player-1-path) / 0.7);
+}
+
+.text-player-1-path\/75{
+  color: hsl(var(--player-1-path) / 0.75);
+}
+
+.text-player-1-path\/80{
+  color: hsl(var(--player-1-path) / 0.8);
+}
+
+.text-player-1-path\/85{
+  color: hsl(var(--player-1-path) / 0.85);
+}
+
+.text-player-1-path\/90{
+  color: hsl(var(--player-1-path) / 0.9);
+}
+
+.text-player-1-path\/95{
+  color: hsl(var(--player-1-path) / 0.95);
+}
+
+.text-player-1\/0{
+  color: hsl(var(--player-1) / 0);
+}
+
+.text-player-1\/10{
+  color: hsl(var(--player-1) / 0.1);
+}
+
+.text-player-1\/100{
+  color: hsl(var(--player-1) / 1);
+}
+
+.text-player-1\/15{
+  color: hsl(var(--player-1) / 0.15);
+}
+
+.text-player-1\/20{
+  color: hsl(var(--player-1) / 0.2);
+}
+
+.text-player-1\/25{
+  color: hsl(var(--player-1) / 0.25);
+}
+
+.text-player-1\/30{
+  color: hsl(var(--player-1) / 0.3);
+}
+
+.text-player-1\/35{
+  color: hsl(var(--player-1) / 0.35);
+}
+
+.text-player-1\/40{
+  color: hsl(var(--player-1) / 0.4);
+}
+
+.text-player-1\/45{
+  color: hsl(var(--player-1) / 0.45);
+}
+
+.text-player-1\/5{
+  color: hsl(var(--player-1) / 0.05);
+}
+
+.text-player-1\/50{
+  color: hsl(var(--player-1) / 0.5);
+}
+
+.text-player-1\/55{
+  color: hsl(var(--player-1) / 0.55);
+}
+
+.text-player-1\/60{
+  color: hsl(var(--player-1) / 0.6);
+}
+
+.text-player-1\/65{
+  color: hsl(var(--player-1) / 0.65);
+}
+
+.text-player-1\/70{
+  color: hsl(var(--player-1) / 0.7);
+}
+
+.text-player-1\/75{
+  color: hsl(var(--player-1) / 0.75);
+}
+
+.text-player-1\/80{
+  color: hsl(var(--player-1) / 0.8);
+}
+
+.text-player-1\/85{
+  color: hsl(var(--player-1) / 0.85);
+}
+
+.text-player-1\/90{
+  color: hsl(var(--player-1) / 0.9);
+}
+
+.text-player-1\/95{
+  color: hsl(var(--player-1) / 0.95);
+}
+
+.text-player-2{
+  color: hsl(var(--player-2));
+}
+
+.text-player-2-light{
+  color: hsl(var(--player-2-light));
+}
+
+.text-player-2-light\/0{
+  color: hsl(var(--player-2-light) / 0);
+}
+
+.text-player-2-light\/10{
+  color: hsl(var(--player-2-light) / 0.1);
+}
+
+.text-player-2-light\/100{
+  color: hsl(var(--player-2-light) / 1);
+}
+
+.text-player-2-light\/15{
+  color: hsl(var(--player-2-light) / 0.15);
+}
+
+.text-player-2-light\/20{
+  color: hsl(var(--player-2-light) / 0.2);
+}
+
+.text-player-2-light\/25{
+  color: hsl(var(--player-2-light) / 0.25);
+}
+
+.text-player-2-light\/30{
+  color: hsl(var(--player-2-light) / 0.3);
+}
+
+.text-player-2-light\/35{
+  color: hsl(var(--player-2-light) / 0.35);
+}
+
+.text-player-2-light\/40{
+  color: hsl(var(--player-2-light) / 0.4);
+}
+
+.text-player-2-light\/45{
+  color: hsl(var(--player-2-light) / 0.45);
+}
+
+.text-player-2-light\/5{
+  color: hsl(var(--player-2-light) / 0.05);
+}
+
+.text-player-2-light\/50{
+  color: hsl(var(--player-2-light) / 0.5);
+}
+
+.text-player-2-light\/55{
+  color: hsl(var(--player-2-light) / 0.55);
+}
+
+.text-player-2-light\/60{
+  color: hsl(var(--player-2-light) / 0.6);
+}
+
+.text-player-2-light\/65{
+  color: hsl(var(--player-2-light) / 0.65);
+}
+
+.text-player-2-light\/70{
+  color: hsl(var(--player-2-light) / 0.7);
+}
+
+.text-player-2-light\/75{
+  color: hsl(var(--player-2-light) / 0.75);
+}
+
+.text-player-2-light\/80{
+  color: hsl(var(--player-2-light) / 0.8);
+}
+
+.text-player-2-light\/85{
+  color: hsl(var(--player-2-light) / 0.85);
+}
+
+.text-player-2-light\/90{
+  color: hsl(var(--player-2-light) / 0.9);
+}
+
+.text-player-2-light\/95{
+  color: hsl(var(--player-2-light) / 0.95);
+}
+
+.text-player-2-path{
+  color: hsl(var(--player-2-path));
+}
+
+.text-player-2-path\/0{
+  color: hsl(var(--player-2-path) / 0);
+}
+
+.text-player-2-path\/10{
+  color: hsl(var(--player-2-path) / 0.1);
+}
+
+.text-player-2-path\/100{
+  color: hsl(var(--player-2-path) / 1);
+}
+
+.text-player-2-path\/15{
+  color: hsl(var(--player-2-path) / 0.15);
+}
+
+.text-player-2-path\/20{
+  color: hsl(var(--player-2-path) / 0.2);
+}
+
+.text-player-2-path\/25{
+  color: hsl(var(--player-2-path) / 0.25);
+}
+
+.text-player-2-path\/30{
+  color: hsl(var(--player-2-path) / 0.3);
+}
+
+.text-player-2-path\/35{
+  color: hsl(var(--player-2-path) / 0.35);
+}
+
+.text-player-2-path\/40{
+  color: hsl(var(--player-2-path) / 0.4);
+}
+
+.text-player-2-path\/45{
+  color: hsl(var(--player-2-path) / 0.45);
+}
+
+.text-player-2-path\/5{
+  color: hsl(var(--player-2-path) / 0.05);
+}
+
+.text-player-2-path\/50{
+  color: hsl(var(--player-2-path) / 0.5);
+}
+
+.text-player-2-path\/55{
+  color: hsl(var(--player-2-path) / 0.55);
+}
+
+.text-player-2-path\/60{
+  color: hsl(var(--player-2-path) / 0.6);
+}
+
+.text-player-2-path\/65{
+  color: hsl(var(--player-2-path) / 0.65);
+}
+
+.text-player-2-path\/70{
+  color: hsl(var(--player-2-path) / 0.7);
+}
+
+.text-player-2-path\/75{
+  color: hsl(var(--player-2-path) / 0.75);
+}
+
+.text-player-2-path\/80{
+  color: hsl(var(--player-2-path) / 0.8);
+}
+
+.text-player-2-path\/85{
+  color: hsl(var(--player-2-path) / 0.85);
+}
+
+.text-player-2-path\/90{
+  color: hsl(var(--player-2-path) / 0.9);
+}
+
+.text-player-2-path\/95{
+  color: hsl(var(--player-2-path) / 0.95);
+}
+
+.text-player-2\/0{
+  color: hsl(var(--player-2) / 0);
+}
+
+.text-player-2\/10{
+  color: hsl(var(--player-2) / 0.1);
+}
+
+.text-player-2\/100{
+  color: hsl(var(--player-2) / 1);
+}
+
+.text-player-2\/15{
+  color: hsl(var(--player-2) / 0.15);
+}
+
+.text-player-2\/20{
+  color: hsl(var(--player-2) / 0.2);
+}
+
+.text-player-2\/25{
+  color: hsl(var(--player-2) / 0.25);
+}
+
+.text-player-2\/30{
+  color: hsl(var(--player-2) / 0.3);
+}
+
+.text-player-2\/35{
+  color: hsl(var(--player-2) / 0.35);
+}
+
+.text-player-2\/40{
+  color: hsl(var(--player-2) / 0.4);
+}
+
+.text-player-2\/45{
+  color: hsl(var(--player-2) / 0.45);
+}
+
+.text-player-2\/5{
+  color: hsl(var(--player-2) / 0.05);
+}
+
+.text-player-2\/50{
+  color: hsl(var(--player-2) / 0.5);
+}
+
+.text-player-2\/55{
+  color: hsl(var(--player-2) / 0.55);
+}
+
+.text-player-2\/60{
+  color: hsl(var(--player-2) / 0.6);
+}
+
+.text-player-2\/65{
+  color: hsl(var(--player-2) / 0.65);
+}
+
+.text-player-2\/70{
+  color: hsl(var(--player-2) / 0.7);
+}
+
+.text-player-2\/75{
+  color: hsl(var(--player-2) / 0.75);
+}
+
+.text-player-2\/80{
+  color: hsl(var(--player-2) / 0.8);
+}
+
+.text-player-2\/85{
+  color: hsl(var(--player-2) / 0.85);
+}
+
+.text-player-2\/90{
+  color: hsl(var(--player-2) / 0.9);
+}
+
+.text-player-2\/95{
+  color: hsl(var(--player-2) / 0.95);
+}
+
+.text-player-3{
+  color: hsl(var(--player-3));
+}
+
+.text-player-3-light{
+  color: hsl(var(--player-3-light));
+}
+
+.text-player-3-light\/0{
+  color: hsl(var(--player-3-light) / 0);
+}
+
+.text-player-3-light\/10{
+  color: hsl(var(--player-3-light) / 0.1);
+}
+
+.text-player-3-light\/100{
+  color: hsl(var(--player-3-light) / 1);
+}
+
+.text-player-3-light\/15{
+  color: hsl(var(--player-3-light) / 0.15);
+}
+
+.text-player-3-light\/20{
+  color: hsl(var(--player-3-light) / 0.2);
+}
+
+.text-player-3-light\/25{
+  color: hsl(var(--player-3-light) / 0.25);
+}
+
+.text-player-3-light\/30{
+  color: hsl(var(--player-3-light) / 0.3);
+}
+
+.text-player-3-light\/35{
+  color: hsl(var(--player-3-light) / 0.35);
+}
+
+.text-player-3-light\/40{
+  color: hsl(var(--player-3-light) / 0.4);
+}
+
+.text-player-3-light\/45{
+  color: hsl(var(--player-3-light) / 0.45);
+}
+
+.text-player-3-light\/5{
+  color: hsl(var(--player-3-light) / 0.05);
+}
+
+.text-player-3-light\/50{
+  color: hsl(var(--player-3-light) / 0.5);
+}
+
+.text-player-3-light\/55{
+  color: hsl(var(--player-3-light) / 0.55);
+}
+
+.text-player-3-light\/60{
+  color: hsl(var(--player-3-light) / 0.6);
+}
+
+.text-player-3-light\/65{
+  color: hsl(var(--player-3-light) / 0.65);
+}
+
+.text-player-3-light\/70{
+  color: hsl(var(--player-3-light) / 0.7);
+}
+
+.text-player-3-light\/75{
+  color: hsl(var(--player-3-light) / 0.75);
+}
+
+.text-player-3-light\/80{
+  color: hsl(var(--player-3-light) / 0.8);
+}
+
+.text-player-3-light\/85{
+  color: hsl(var(--player-3-light) / 0.85);
+}
+
+.text-player-3-light\/90{
+  color: hsl(var(--player-3-light) / 0.9);
+}
+
+.text-player-3-light\/95{
+  color: hsl(var(--player-3-light) / 0.95);
+}
+
+.text-player-3-path{
+  color: hsl(var(--player-3-path));
+}
+
+.text-player-3-path\/0{
+  color: hsl(var(--player-3-path) / 0);
+}
+
+.text-player-3-path\/10{
+  color: hsl(var(--player-3-path) / 0.1);
+}
+
+.text-player-3-path\/100{
+  color: hsl(var(--player-3-path) / 1);
+}
+
+.text-player-3-path\/15{
+  color: hsl(var(--player-3-path) / 0.15);
+}
+
+.text-player-3-path\/20{
+  color: hsl(var(--player-3-path) / 0.2);
+}
+
+.text-player-3-path\/25{
+  color: hsl(var(--player-3-path) / 0.25);
+}
+
+.text-player-3-path\/30{
+  color: hsl(var(--player-3-path) / 0.3);
+}
+
+.text-player-3-path\/35{
+  color: hsl(var(--player-3-path) / 0.35);
+}
+
+.text-player-3-path\/40{
+  color: hsl(var(--player-3-path) / 0.4);
+}
+
+.text-player-3-path\/45{
+  color: hsl(var(--player-3-path) / 0.45);
+}
+
+.text-player-3-path\/5{
+  color: hsl(var(--player-3-path) / 0.05);
+}
+
+.text-player-3-path\/50{
+  color: hsl(var(--player-3-path) / 0.5);
+}
+
+.text-player-3-path\/55{
+  color: hsl(var(--player-3-path) / 0.55);
+}
+
+.text-player-3-path\/60{
+  color: hsl(var(--player-3-path) / 0.6);
+}
+
+.text-player-3-path\/65{
+  color: hsl(var(--player-3-path) / 0.65);
+}
+
+.text-player-3-path\/70{
+  color: hsl(var(--player-3-path) / 0.7);
+}
+
+.text-player-3-path\/75{
+  color: hsl(var(--player-3-path) / 0.75);
+}
+
+.text-player-3-path\/80{
+  color: hsl(var(--player-3-path) / 0.8);
+}
+
+.text-player-3-path\/85{
+  color: hsl(var(--player-3-path) / 0.85);
+}
+
+.text-player-3-path\/90{
+  color: hsl(var(--player-3-path) / 0.9);
+}
+
+.text-player-3-path\/95{
+  color: hsl(var(--player-3-path) / 0.95);
+}
+
+.text-player-3\/0{
+  color: hsl(var(--player-3) / 0);
+}
+
+.text-player-3\/10{
+  color: hsl(var(--player-3) / 0.1);
+}
+
+.text-player-3\/100{
+  color: hsl(var(--player-3) / 1);
+}
+
+.text-player-3\/15{
+  color: hsl(var(--player-3) / 0.15);
+}
+
+.text-player-3\/20{
+  color: hsl(var(--player-3) / 0.2);
+}
+
+.text-player-3\/25{
+  color: hsl(var(--player-3) / 0.25);
+}
+
+.text-player-3\/30{
+  color: hsl(var(--player-3) / 0.3);
+}
+
+.text-player-3\/35{
+  color: hsl(var(--player-3) / 0.35);
+}
+
+.text-player-3\/40{
+  color: hsl(var(--player-3) / 0.4);
+}
+
+.text-player-3\/45{
+  color: hsl(var(--player-3) / 0.45);
+}
+
+.text-player-3\/5{
+  color: hsl(var(--player-3) / 0.05);
+}
+
+.text-player-3\/50{
+  color: hsl(var(--player-3) / 0.5);
+}
+
+.text-player-3\/55{
+  color: hsl(var(--player-3) / 0.55);
+}
+
+.text-player-3\/60{
+  color: hsl(var(--player-3) / 0.6);
+}
+
+.text-player-3\/65{
+  color: hsl(var(--player-3) / 0.65);
+}
+
+.text-player-3\/70{
+  color: hsl(var(--player-3) / 0.7);
+}
+
+.text-player-3\/75{
+  color: hsl(var(--player-3) / 0.75);
+}
+
+.text-player-3\/80{
+  color: hsl(var(--player-3) / 0.8);
+}
+
+.text-player-3\/85{
+  color: hsl(var(--player-3) / 0.85);
+}
+
+.text-player-3\/90{
+  color: hsl(var(--player-3) / 0.9);
+}
+
+.text-player-3\/95{
+  color: hsl(var(--player-3) / 0.95);
+}
+
 .text-white{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
@@ -1630,6 +6830,1068 @@ html{
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.ring{
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.ring-player-0{
+  --tw-ring-color: hsl(var(--player-0));
+}
+
+.ring-player-0-light{
+  --tw-ring-color: hsl(var(--player-0-light));
+}
+
+.ring-player-0-light\/0{
+  --tw-ring-color: hsl(var(--player-0-light) / 0);
+}
+
+.ring-player-0-light\/10{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.1);
+}
+
+.ring-player-0-light\/100{
+  --tw-ring-color: hsl(var(--player-0-light) / 1);
+}
+
+.ring-player-0-light\/15{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.15);
+}
+
+.ring-player-0-light\/20{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.2);
+}
+
+.ring-player-0-light\/25{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.25);
+}
+
+.ring-player-0-light\/30{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.3);
+}
+
+.ring-player-0-light\/35{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.35);
+}
+
+.ring-player-0-light\/40{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.4);
+}
+
+.ring-player-0-light\/45{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.45);
+}
+
+.ring-player-0-light\/5{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.05);
+}
+
+.ring-player-0-light\/50{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.5);
+}
+
+.ring-player-0-light\/55{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.55);
+}
+
+.ring-player-0-light\/60{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.6);
+}
+
+.ring-player-0-light\/65{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.65);
+}
+
+.ring-player-0-light\/70{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.7);
+}
+
+.ring-player-0-light\/75{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.75);
+}
+
+.ring-player-0-light\/80{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.8);
+}
+
+.ring-player-0-light\/85{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.85);
+}
+
+.ring-player-0-light\/90{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.9);
+}
+
+.ring-player-0-light\/95{
+  --tw-ring-color: hsl(var(--player-0-light) / 0.95);
+}
+
+.ring-player-0-path{
+  --tw-ring-color: hsl(var(--player-0-path));
+}
+
+.ring-player-0-path\/0{
+  --tw-ring-color: hsl(var(--player-0-path) / 0);
+}
+
+.ring-player-0-path\/10{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.1);
+}
+
+.ring-player-0-path\/100{
+  --tw-ring-color: hsl(var(--player-0-path) / 1);
+}
+
+.ring-player-0-path\/15{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.15);
+}
+
+.ring-player-0-path\/20{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.2);
+}
+
+.ring-player-0-path\/25{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.25);
+}
+
+.ring-player-0-path\/30{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.3);
+}
+
+.ring-player-0-path\/35{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.35);
+}
+
+.ring-player-0-path\/40{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.4);
+}
+
+.ring-player-0-path\/45{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.45);
+}
+
+.ring-player-0-path\/5{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.05);
+}
+
+.ring-player-0-path\/50{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.5);
+}
+
+.ring-player-0-path\/55{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.55);
+}
+
+.ring-player-0-path\/60{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.6);
+}
+
+.ring-player-0-path\/65{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.65);
+}
+
+.ring-player-0-path\/70{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.7);
+}
+
+.ring-player-0-path\/75{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.75);
+}
+
+.ring-player-0-path\/80{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.8);
+}
+
+.ring-player-0-path\/85{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.85);
+}
+
+.ring-player-0-path\/90{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.9);
+}
+
+.ring-player-0-path\/95{
+  --tw-ring-color: hsl(var(--player-0-path) / 0.95);
+}
+
+.ring-player-0\/0{
+  --tw-ring-color: hsl(var(--player-0) / 0);
+}
+
+.ring-player-0\/10{
+  --tw-ring-color: hsl(var(--player-0) / 0.1);
+}
+
+.ring-player-0\/100{
+  --tw-ring-color: hsl(var(--player-0) / 1);
+}
+
+.ring-player-0\/15{
+  --tw-ring-color: hsl(var(--player-0) / 0.15);
+}
+
+.ring-player-0\/20{
+  --tw-ring-color: hsl(var(--player-0) / 0.2);
+}
+
+.ring-player-0\/25{
+  --tw-ring-color: hsl(var(--player-0) / 0.25);
+}
+
+.ring-player-0\/30{
+  --tw-ring-color: hsl(var(--player-0) / 0.3);
+}
+
+.ring-player-0\/35{
+  --tw-ring-color: hsl(var(--player-0) / 0.35);
+}
+
+.ring-player-0\/40{
+  --tw-ring-color: hsl(var(--player-0) / 0.4);
+}
+
+.ring-player-0\/45{
+  --tw-ring-color: hsl(var(--player-0) / 0.45);
+}
+
+.ring-player-0\/5{
+  --tw-ring-color: hsl(var(--player-0) / 0.05);
+}
+
+.ring-player-0\/50{
+  --tw-ring-color: hsl(var(--player-0) / 0.5);
+}
+
+.ring-player-0\/55{
+  --tw-ring-color: hsl(var(--player-0) / 0.55);
+}
+
+.ring-player-0\/60{
+  --tw-ring-color: hsl(var(--player-0) / 0.6);
+}
+
+.ring-player-0\/65{
+  --tw-ring-color: hsl(var(--player-0) / 0.65);
+}
+
+.ring-player-0\/70{
+  --tw-ring-color: hsl(var(--player-0) / 0.7);
+}
+
+.ring-player-0\/75{
+  --tw-ring-color: hsl(var(--player-0) / 0.75);
+}
+
+.ring-player-0\/80{
+  --tw-ring-color: hsl(var(--player-0) / 0.8);
+}
+
+.ring-player-0\/85{
+  --tw-ring-color: hsl(var(--player-0) / 0.85);
+}
+
+.ring-player-0\/90{
+  --tw-ring-color: hsl(var(--player-0) / 0.9);
+}
+
+.ring-player-0\/95{
+  --tw-ring-color: hsl(var(--player-0) / 0.95);
+}
+
+.ring-player-1{
+  --tw-ring-color: hsl(var(--player-1));
+}
+
+.ring-player-1-light{
+  --tw-ring-color: hsl(var(--player-1-light));
+}
+
+.ring-player-1-light\/0{
+  --tw-ring-color: hsl(var(--player-1-light) / 0);
+}
+
+.ring-player-1-light\/10{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.1);
+}
+
+.ring-player-1-light\/100{
+  --tw-ring-color: hsl(var(--player-1-light) / 1);
+}
+
+.ring-player-1-light\/15{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.15);
+}
+
+.ring-player-1-light\/20{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.2);
+}
+
+.ring-player-1-light\/25{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.25);
+}
+
+.ring-player-1-light\/30{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.3);
+}
+
+.ring-player-1-light\/35{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.35);
+}
+
+.ring-player-1-light\/40{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.4);
+}
+
+.ring-player-1-light\/45{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.45);
+}
+
+.ring-player-1-light\/5{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.05);
+}
+
+.ring-player-1-light\/50{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.5);
+}
+
+.ring-player-1-light\/55{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.55);
+}
+
+.ring-player-1-light\/60{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.6);
+}
+
+.ring-player-1-light\/65{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.65);
+}
+
+.ring-player-1-light\/70{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.7);
+}
+
+.ring-player-1-light\/75{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.75);
+}
+
+.ring-player-1-light\/80{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.8);
+}
+
+.ring-player-1-light\/85{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.85);
+}
+
+.ring-player-1-light\/90{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.9);
+}
+
+.ring-player-1-light\/95{
+  --tw-ring-color: hsl(var(--player-1-light) / 0.95);
+}
+
+.ring-player-1-path{
+  --tw-ring-color: hsl(var(--player-1-path));
+}
+
+.ring-player-1-path\/0{
+  --tw-ring-color: hsl(var(--player-1-path) / 0);
+}
+
+.ring-player-1-path\/10{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.1);
+}
+
+.ring-player-1-path\/100{
+  --tw-ring-color: hsl(var(--player-1-path) / 1);
+}
+
+.ring-player-1-path\/15{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.15);
+}
+
+.ring-player-1-path\/20{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.2);
+}
+
+.ring-player-1-path\/25{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.25);
+}
+
+.ring-player-1-path\/30{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.3);
+}
+
+.ring-player-1-path\/35{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.35);
+}
+
+.ring-player-1-path\/40{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.4);
+}
+
+.ring-player-1-path\/45{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.45);
+}
+
+.ring-player-1-path\/5{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.05);
+}
+
+.ring-player-1-path\/50{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.5);
+}
+
+.ring-player-1-path\/55{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.55);
+}
+
+.ring-player-1-path\/60{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.6);
+}
+
+.ring-player-1-path\/65{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.65);
+}
+
+.ring-player-1-path\/70{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.7);
+}
+
+.ring-player-1-path\/75{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.75);
+}
+
+.ring-player-1-path\/80{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.8);
+}
+
+.ring-player-1-path\/85{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.85);
+}
+
+.ring-player-1-path\/90{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.9);
+}
+
+.ring-player-1-path\/95{
+  --tw-ring-color: hsl(var(--player-1-path) / 0.95);
+}
+
+.ring-player-1\/0{
+  --tw-ring-color: hsl(var(--player-1) / 0);
+}
+
+.ring-player-1\/10{
+  --tw-ring-color: hsl(var(--player-1) / 0.1);
+}
+
+.ring-player-1\/100{
+  --tw-ring-color: hsl(var(--player-1) / 1);
+}
+
+.ring-player-1\/15{
+  --tw-ring-color: hsl(var(--player-1) / 0.15);
+}
+
+.ring-player-1\/20{
+  --tw-ring-color: hsl(var(--player-1) / 0.2);
+}
+
+.ring-player-1\/25{
+  --tw-ring-color: hsl(var(--player-1) / 0.25);
+}
+
+.ring-player-1\/30{
+  --tw-ring-color: hsl(var(--player-1) / 0.3);
+}
+
+.ring-player-1\/35{
+  --tw-ring-color: hsl(var(--player-1) / 0.35);
+}
+
+.ring-player-1\/40{
+  --tw-ring-color: hsl(var(--player-1) / 0.4);
+}
+
+.ring-player-1\/45{
+  --tw-ring-color: hsl(var(--player-1) / 0.45);
+}
+
+.ring-player-1\/5{
+  --tw-ring-color: hsl(var(--player-1) / 0.05);
+}
+
+.ring-player-1\/50{
+  --tw-ring-color: hsl(var(--player-1) / 0.5);
+}
+
+.ring-player-1\/55{
+  --tw-ring-color: hsl(var(--player-1) / 0.55);
+}
+
+.ring-player-1\/60{
+  --tw-ring-color: hsl(var(--player-1) / 0.6);
+}
+
+.ring-player-1\/65{
+  --tw-ring-color: hsl(var(--player-1) / 0.65);
+}
+
+.ring-player-1\/70{
+  --tw-ring-color: hsl(var(--player-1) / 0.7);
+}
+
+.ring-player-1\/75{
+  --tw-ring-color: hsl(var(--player-1) / 0.75);
+}
+
+.ring-player-1\/80{
+  --tw-ring-color: hsl(var(--player-1) / 0.8);
+}
+
+.ring-player-1\/85{
+  --tw-ring-color: hsl(var(--player-1) / 0.85);
+}
+
+.ring-player-1\/90{
+  --tw-ring-color: hsl(var(--player-1) / 0.9);
+}
+
+.ring-player-1\/95{
+  --tw-ring-color: hsl(var(--player-1) / 0.95);
+}
+
+.ring-player-2{
+  --tw-ring-color: hsl(var(--player-2));
+}
+
+.ring-player-2-light{
+  --tw-ring-color: hsl(var(--player-2-light));
+}
+
+.ring-player-2-light\/0{
+  --tw-ring-color: hsl(var(--player-2-light) / 0);
+}
+
+.ring-player-2-light\/10{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.1);
+}
+
+.ring-player-2-light\/100{
+  --tw-ring-color: hsl(var(--player-2-light) / 1);
+}
+
+.ring-player-2-light\/15{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.15);
+}
+
+.ring-player-2-light\/20{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.2);
+}
+
+.ring-player-2-light\/25{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.25);
+}
+
+.ring-player-2-light\/30{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.3);
+}
+
+.ring-player-2-light\/35{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.35);
+}
+
+.ring-player-2-light\/40{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.4);
+}
+
+.ring-player-2-light\/45{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.45);
+}
+
+.ring-player-2-light\/5{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.05);
+}
+
+.ring-player-2-light\/50{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.5);
+}
+
+.ring-player-2-light\/55{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.55);
+}
+
+.ring-player-2-light\/60{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.6);
+}
+
+.ring-player-2-light\/65{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.65);
+}
+
+.ring-player-2-light\/70{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.7);
+}
+
+.ring-player-2-light\/75{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.75);
+}
+
+.ring-player-2-light\/80{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.8);
+}
+
+.ring-player-2-light\/85{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.85);
+}
+
+.ring-player-2-light\/90{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.9);
+}
+
+.ring-player-2-light\/95{
+  --tw-ring-color: hsl(var(--player-2-light) / 0.95);
+}
+
+.ring-player-2-path{
+  --tw-ring-color: hsl(var(--player-2-path));
+}
+
+.ring-player-2-path\/0{
+  --tw-ring-color: hsl(var(--player-2-path) / 0);
+}
+
+.ring-player-2-path\/10{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.1);
+}
+
+.ring-player-2-path\/100{
+  --tw-ring-color: hsl(var(--player-2-path) / 1);
+}
+
+.ring-player-2-path\/15{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.15);
+}
+
+.ring-player-2-path\/20{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.2);
+}
+
+.ring-player-2-path\/25{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.25);
+}
+
+.ring-player-2-path\/30{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.3);
+}
+
+.ring-player-2-path\/35{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.35);
+}
+
+.ring-player-2-path\/40{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.4);
+}
+
+.ring-player-2-path\/45{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.45);
+}
+
+.ring-player-2-path\/5{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.05);
+}
+
+.ring-player-2-path\/50{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.5);
+}
+
+.ring-player-2-path\/55{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.55);
+}
+
+.ring-player-2-path\/60{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.6);
+}
+
+.ring-player-2-path\/65{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.65);
+}
+
+.ring-player-2-path\/70{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.7);
+}
+
+.ring-player-2-path\/75{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.75);
+}
+
+.ring-player-2-path\/80{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.8);
+}
+
+.ring-player-2-path\/85{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.85);
+}
+
+.ring-player-2-path\/90{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.9);
+}
+
+.ring-player-2-path\/95{
+  --tw-ring-color: hsl(var(--player-2-path) / 0.95);
+}
+
+.ring-player-2\/0{
+  --tw-ring-color: hsl(var(--player-2) / 0);
+}
+
+.ring-player-2\/10{
+  --tw-ring-color: hsl(var(--player-2) / 0.1);
+}
+
+.ring-player-2\/100{
+  --tw-ring-color: hsl(var(--player-2) / 1);
+}
+
+.ring-player-2\/15{
+  --tw-ring-color: hsl(var(--player-2) / 0.15);
+}
+
+.ring-player-2\/20{
+  --tw-ring-color: hsl(var(--player-2) / 0.2);
+}
+
+.ring-player-2\/25{
+  --tw-ring-color: hsl(var(--player-2) / 0.25);
+}
+
+.ring-player-2\/30{
+  --tw-ring-color: hsl(var(--player-2) / 0.3);
+}
+
+.ring-player-2\/35{
+  --tw-ring-color: hsl(var(--player-2) / 0.35);
+}
+
+.ring-player-2\/40{
+  --tw-ring-color: hsl(var(--player-2) / 0.4);
+}
+
+.ring-player-2\/45{
+  --tw-ring-color: hsl(var(--player-2) / 0.45);
+}
+
+.ring-player-2\/5{
+  --tw-ring-color: hsl(var(--player-2) / 0.05);
+}
+
+.ring-player-2\/50{
+  --tw-ring-color: hsl(var(--player-2) / 0.5);
+}
+
+.ring-player-2\/55{
+  --tw-ring-color: hsl(var(--player-2) / 0.55);
+}
+
+.ring-player-2\/60{
+  --tw-ring-color: hsl(var(--player-2) / 0.6);
+}
+
+.ring-player-2\/65{
+  --tw-ring-color: hsl(var(--player-2) / 0.65);
+}
+
+.ring-player-2\/70{
+  --tw-ring-color: hsl(var(--player-2) / 0.7);
+}
+
+.ring-player-2\/75{
+  --tw-ring-color: hsl(var(--player-2) / 0.75);
+}
+
+.ring-player-2\/80{
+  --tw-ring-color: hsl(var(--player-2) / 0.8);
+}
+
+.ring-player-2\/85{
+  --tw-ring-color: hsl(var(--player-2) / 0.85);
+}
+
+.ring-player-2\/90{
+  --tw-ring-color: hsl(var(--player-2) / 0.9);
+}
+
+.ring-player-2\/95{
+  --tw-ring-color: hsl(var(--player-2) / 0.95);
+}
+
+.ring-player-3{
+  --tw-ring-color: hsl(var(--player-3));
+}
+
+.ring-player-3-light{
+  --tw-ring-color: hsl(var(--player-3-light));
+}
+
+.ring-player-3-light\/0{
+  --tw-ring-color: hsl(var(--player-3-light) / 0);
+}
+
+.ring-player-3-light\/10{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.1);
+}
+
+.ring-player-3-light\/100{
+  --tw-ring-color: hsl(var(--player-3-light) / 1);
+}
+
+.ring-player-3-light\/15{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.15);
+}
+
+.ring-player-3-light\/20{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.2);
+}
+
+.ring-player-3-light\/25{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.25);
+}
+
+.ring-player-3-light\/30{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.3);
+}
+
+.ring-player-3-light\/35{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.35);
+}
+
+.ring-player-3-light\/40{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.4);
+}
+
+.ring-player-3-light\/45{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.45);
+}
+
+.ring-player-3-light\/5{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.05);
+}
+
+.ring-player-3-light\/50{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.5);
+}
+
+.ring-player-3-light\/55{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.55);
+}
+
+.ring-player-3-light\/60{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.6);
+}
+
+.ring-player-3-light\/65{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.65);
+}
+
+.ring-player-3-light\/70{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.7);
+}
+
+.ring-player-3-light\/75{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.75);
+}
+
+.ring-player-3-light\/80{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.8);
+}
+
+.ring-player-3-light\/85{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.85);
+}
+
+.ring-player-3-light\/90{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.9);
+}
+
+.ring-player-3-light\/95{
+  --tw-ring-color: hsl(var(--player-3-light) / 0.95);
+}
+
+.ring-player-3-path{
+  --tw-ring-color: hsl(var(--player-3-path));
+}
+
+.ring-player-3-path\/0{
+  --tw-ring-color: hsl(var(--player-3-path) / 0);
+}
+
+.ring-player-3-path\/10{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.1);
+}
+
+.ring-player-3-path\/100{
+  --tw-ring-color: hsl(var(--player-3-path) / 1);
+}
+
+.ring-player-3-path\/15{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.15);
+}
+
+.ring-player-3-path\/20{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.2);
+}
+
+.ring-player-3-path\/25{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.25);
+}
+
+.ring-player-3-path\/30{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.3);
+}
+
+.ring-player-3-path\/35{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.35);
+}
+
+.ring-player-3-path\/40{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.4);
+}
+
+.ring-player-3-path\/45{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.45);
+}
+
+.ring-player-3-path\/5{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.05);
+}
+
+.ring-player-3-path\/50{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.5);
+}
+
+.ring-player-3-path\/55{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.55);
+}
+
+.ring-player-3-path\/60{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.6);
+}
+
+.ring-player-3-path\/65{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.65);
+}
+
+.ring-player-3-path\/70{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.7);
+}
+
+.ring-player-3-path\/75{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.75);
+}
+
+.ring-player-3-path\/80{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.8);
+}
+
+.ring-player-3-path\/85{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.85);
+}
+
+.ring-player-3-path\/90{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.9);
+}
+
+.ring-player-3-path\/95{
+  --tw-ring-color: hsl(var(--player-3-path) / 0.95);
+}
+
+.ring-player-3\/0{
+  --tw-ring-color: hsl(var(--player-3) / 0);
+}
+
+.ring-player-3\/10{
+  --tw-ring-color: hsl(var(--player-3) / 0.1);
+}
+
+.ring-player-3\/100{
+  --tw-ring-color: hsl(var(--player-3) / 1);
+}
+
+.ring-player-3\/15{
+  --tw-ring-color: hsl(var(--player-3) / 0.15);
+}
+
+.ring-player-3\/20{
+  --tw-ring-color: hsl(var(--player-3) / 0.2);
+}
+
+.ring-player-3\/25{
+  --tw-ring-color: hsl(var(--player-3) / 0.25);
+}
+
+.ring-player-3\/30{
+  --tw-ring-color: hsl(var(--player-3) / 0.3);
+}
+
+.ring-player-3\/35{
+  --tw-ring-color: hsl(var(--player-3) / 0.35);
+}
+
+.ring-player-3\/40{
+  --tw-ring-color: hsl(var(--player-3) / 0.4);
+}
+
+.ring-player-3\/45{
+  --tw-ring-color: hsl(var(--player-3) / 0.45);
+}
+
+.ring-player-3\/5{
+  --tw-ring-color: hsl(var(--player-3) / 0.05);
+}
+
+.ring-player-3\/50{
+  --tw-ring-color: hsl(var(--player-3) / 0.5);
+}
+
+.ring-player-3\/55{
+  --tw-ring-color: hsl(var(--player-3) / 0.55);
+}
+
+.ring-player-3\/60{
+  --tw-ring-color: hsl(var(--player-3) / 0.6);
+}
+
+.ring-player-3\/65{
+  --tw-ring-color: hsl(var(--player-3) / 0.65);
+}
+
+.ring-player-3\/70{
+  --tw-ring-color: hsl(var(--player-3) / 0.7);
+}
+
+.ring-player-3\/75{
+  --tw-ring-color: hsl(var(--player-3) / 0.75);
+}
+
+.ring-player-3\/80{
+  --tw-ring-color: hsl(var(--player-3) / 0.8);
+}
+
+.ring-player-3\/85{
+  --tw-ring-color: hsl(var(--player-3) / 0.85);
+}
+
+.ring-player-3\/90{
+  --tw-ring-color: hsl(var(--player-3) / 0.9);
+}
+
+.ring-player-3\/95{
+  --tw-ring-color: hsl(var(--player-3) / 0.95);
 }
 
 .drop-shadow{

@@ -4,6 +4,9 @@ export default {
         "./index.html",
         "./**/*.{html,js}",
     ],
+    safelist: [
+        { pattern: /(bg|text|border|ring|fill|stroke)-player-[0-3](-light|-path)?/ },
+    ],
     theme: {
         extend: {
             colors: {

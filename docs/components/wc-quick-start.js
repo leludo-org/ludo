@@ -53,9 +53,9 @@ class QuickStart extends HTMLElement {
         super();
         this.seats = [
             { active: true, type: 'PLAYER', colorIndex: 0, name: 'Player 1' },
-            { active: true, type: 'PLAYER', colorIndex: 1, name: 'Player 2' },
-            { active: true, type: 'PLAYER', colorIndex: 2, name: 'Player 3' },
-            { active: true, type: 'PLAYER', colorIndex: 3, name: 'Player 4' },
+            { active: true, type: 'BOT', colorIndex: 1, name: 'Player 2' },
+            { active: true, type: 'BOT', colorIndex: 2, name: 'Player 3' },
+            { active: true, type: 'BOT', colorIndex: 3, name: 'Player 4' },
         ];
     }
 
