@@ -8,11 +8,10 @@ const STAR_D = "M12 2.2l2.8 6.3 6.8.5-5.2 4.4 1.6 6.6L12 16.6l-6 3.4 1.6-6.6L2.4
 const ARROW_D = "M6 1.5L2.5 5h2v5.5h3V5h2z";
 
 const startCellSvg = (playerClass, arrowRot) => `
-    <svg viewBox="0 0 24 24" class="size-[78%] pointer-events-none absolute inset-0 m-auto"><path d="${STAR_D}" class="${playerClass}"/></svg>
     <svg viewBox="0 0 12 12" class="size-[28%] pointer-events-none absolute top-[4%] right-[4%]" style="transform:rotate(${arrowRot}deg)"><path d="${ARROW_D}" class="${playerClass}" opacity="0.7"/></svg>`;
 
-const safeCellSvg = `
-    <svg viewBox="0 0 24 24" class="size-[72%] pointer-events-none absolute inset-0 m-auto"><path d="${STAR_D}" fill="hsl(var(--foreground))" opacity="0.55"/></svg>`;
+const safeCellSvg = (playerClass) => `
+    <svg viewBox="0 0 24 24" class="size-[72%] pointer-events-none absolute inset-0 m-auto"><path d="${STAR_D}" class="${playerClass}" opacity="0.85"/></svg>`;
 
 const SC = "relative"; // cell base class for stacking
 
@@ -70,7 +69,7 @@ const BOARD_HTML = /*html*/ `
                 <div id="m9" class="${SC}"></div>
                 <div id="p1s1" class="bg-player-1-path ${SC}"></div>
                 <div id="m13" class="bg-player-1-path relative flex items-center justify-center ${SC}">${startCellSvg('fill-player-1', 180)}</div>
-                <div id="m8" class="bg-safe-tint relative flex items-center justify-center ${SC}">${safeCellSvg}</div>
+                <div id="m8" class="bg-safe-tint relative flex items-center justify-center ${SC}">${safeCellSvg('fill-player-1')}</div>
                 <div id="p1s2" class="bg-player-1-path ${SC}"></div>
                 <div id="m14" class="${SC}"></div>
                 <div id="m7" class="${SC}"></div>
@@ -116,7 +115,7 @@ const BOARD_HTML = /*html*/ `
                 <div id="p0s5" class="bg-player-0-path ${SC}"></div>
                 <div id="m49" class="${SC}"></div>
                 <div id="m48" class="${SC}"></div>
-                <div id="m47" class="bg-safe-tint relative flex items-center justify-center ${SC}">${safeCellSvg}</div>
+                <div id="m47" class="bg-safe-tint relative flex items-center justify-center ${SC}">${safeCellSvg('fill-player-0')}</div>
                 <div id="m46" class="${SC}"></div>
                 <div id="m45" class="${SC}"></div>
                 <div id="m44" class="${SC}"></div>
@@ -137,7 +136,7 @@ const BOARD_HTML = /*html*/ `
                 <div id="m18" class="${SC}"></div>
                 <div id="m19" class="${SC}"></div>
                 <div id="m20" class="${SC}"></div>
-                <div id="m21" class="bg-safe-tint relative flex items-center justify-center ${SC}">${safeCellSvg}</div>
+                <div id="m21" class="bg-safe-tint relative flex items-center justify-center ${SC}">${safeCellSvg('fill-player-2')}</div>
                 <div id="m22" class="${SC}"></div>
                 <div id="m23" class="${SC}"></div>
                 <div id="p2s5" class="bg-player-2-path ${SC}"></div>
@@ -183,7 +182,7 @@ const BOARD_HTML = /*html*/ `
                 <div id="m33" class="${SC}"></div>
                 <div id="m40" class="${SC}"></div>
                 <div id="p3s2" class="bg-player-3-path ${SC}"></div>
-                <div id="m34" class="bg-safe-tint relative flex items-center justify-center ${SC}">${safeCellSvg}</div>
+                <div id="m34" class="bg-safe-tint relative flex items-center justify-center ${SC}">${safeCellSvg('fill-player-3')}</div>
                 <div id="m39" class="bg-player-3-path relative flex items-center justify-center ${SC}">${startCellSvg('fill-player-3', 0)}</div>
                 <div id="p3s1" class="bg-player-3-path ${SC}"></div>
                 <div id="m35" class="${SC}"></div>

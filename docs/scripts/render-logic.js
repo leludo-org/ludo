@@ -395,14 +395,14 @@ export function applyColorMap(colorMap) {
     colorMap.forEach((originalColor, position) => {
         root.style.setProperty(`--player-${position}`, `var(--base-color-${originalColor})`)
         root.style.setProperty(`--player-${position}-light`, `var(--base-color-${originalColor}-light)`)
+        root.style.setProperty(`--player-${position}-path`, `var(--base-color-${originalColor}-light)`)
     })
 }
 
 let turnCount = 0;
 
-const PLAYER_NAMES = ['You', 'Bot 1', 'Bot 2', 'Bot 3'];
-
 let _playerTypes = null;
+let _playerNames = ['', '', '', ''];
 let _getCurrentPlayerIndex = null;
 let _getFinishedCount = null;
 let _getIsLocalMultiplayer = null;
@@ -412,6 +412,10 @@ export function initRailDeps(pt, getCpi, getFC, getIsLMP) {
     _getCurrentPlayerIndex = getCpi;
     _getFinishedCount = getFC;
     _getIsLocalMultiplayer = getIsLMP;
+}
+
+export function setPlayerNames(names) {
+    _playerNames = Array.isArray(names) ? names.slice(0, 4) : ['', '', '', ''];
 }
 
 // idx → { anchor, layout }  TD = pill-then-dice, DT = dice-then-pill
@@ -429,14 +433,12 @@ function pillMarkup(idx, finished, active) {
     const cls = active
         ? `bg-player-${idx} text-white border-player-${idx}`
         : `bg-card text-foreground border-foreground/10`;
-    const countCls = active
-        ? `text-white/70 border-l border-white/25`
-        : `opacity-50 border-l border-foreground/10`;
+    const name = (_playerNames[idx] && String(_playerNames[idx]).trim()) || `P${idx + 1}`;
+    const safe = name.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     return `
         <div class="flex items-center gap-2 rounded-full border ${cls} shadow-sm" style="padding:7px 11px;height:32px;box-sizing:border-box;">
             ${dot}
-            <div class="text-[12px] font-medium leading-none">P${idx + 1}</div>
-            <div class="text-[10px] font-mono leading-none ${countCls}" style="padding-left:6px;margin-left:2px;">${finished}/4</div>
+            <div class="text-[12px] font-medium leading-none max-w-[120px] truncate">${safe}</div>
         </div>`;
 }
 

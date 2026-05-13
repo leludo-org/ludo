@@ -45,6 +45,7 @@ const ICON_CLOSE = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" 
 const ICON_PLUS = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>`;
 const ICON_USER = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zM4 21a8 8 0 0116 0"/></svg>`;
 const ICON_BOT = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3M8 7h8a3 3 0 013 3v7a3 3 0 01-3 3H8a3 3 0 01-3-3v-7a3 3 0 013-3zM9 13h.01M15 13h.01M9 17h6"/></svg>`;
+const ICON_PENCIL = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`;
 
 const CIRCLE_BTN = "w-[38px] h-[38px] rounded-full bg-transparent border border-foreground/15 flex items-center justify-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity";
 
@@ -53,10 +54,25 @@ class QuickStart extends HTMLElement {
         super();
         this.seats = [
             { active: true, type: 'PLAYER', colorIndex: 0, name: 'Player 1' },
-            { active: true, type: 'BOT', colorIndex: 1, name: 'Player 2' },
-            { active: true, type: 'BOT', colorIndex: 2, name: 'Player 3' },
-            { active: true, type: 'BOT', colorIndex: 3, name: 'Player 4' },
+            { active: true, type: 'BOT', colorIndex: 1, name: COLOR_NAMES[1] },
+            { active: true, type: 'BOT', colorIndex: 2, name: COLOR_NAMES[2] },
+            { active: true, type: 'BOT', colorIndex: 3, name: COLOR_NAMES[3] },
         ];
+        this._focusedSeatIndex = null;
+    }
+
+    _defaultName(seat, seatIndex) {
+        return seat.type === 'BOT' ? COLOR_NAMES[seat.colorIndex] : `Player ${seatIndex + 1}`
+    }
+
+    _applyFocusUI() {
+        const focused = this._focusedSeatIndex
+        this.querySelectorAll('.seat-row').forEach(row => {
+            const idx = +row.dataset.seatIdx
+            row.style.opacity = (focused !== null && focused !== idx) ? '0.35' : ''
+        })
+        const helper = this.querySelector('#setup-helper')
+        if (helper) helper.innerHTML = focused !== null ? helper.dataset.edit : helper.dataset.default
     }
 
     connectedCallback() {
@@ -83,6 +99,11 @@ class QuickStart extends HTMLElement {
 
         const html = /*html*/ `
             <div class="flex flex-col h-full min-h-[70vh]">
+                <div class="flex items-center gap-2 pt-1 pb-6">
+                    <a href="https://github.com/leludo-org/ludo" target="_blank" rel="noopener" class="${CIRCLE_BTN} text-foreground no-underline">${ICON_GITHUB}</a>
+                    <div class="flex-1 text-center text-[11px] font-medium tracking-[0.16em] uppercase opacity-50">v0.2.0</div>
+                    <wc-settings></wc-settings>
+                </div>
                 <div class="flex-1 flex flex-col justify-center px-2">
                     <div class="flex items-end gap-3 mb-6">
                         ${DICE_SVG(4, 48)}
@@ -130,6 +151,12 @@ class QuickStart extends HTMLElement {
         this.innerHTML = ""
 
         const html = /*html*/ `
+            <style>
+                .seat-name { outline: none !important; box-shadow: none !important; -webkit-tap-highlight-color: transparent; }
+                .seat-name:focus, .seat-name:focus-visible { outline: none !important; box-shadow: none !important; }
+                .seat-name::selection { background: hsl(var(--foreground) / 0.12); color: inherit; }
+                .seat-name-pencil.hide-on-focus { display: none; }
+            </style>
             <div class="flex flex-col min-h-[70vh]">
                 <div class="flex items-center gap-2 pb-8">
                     <button class="back-btn ${CIRCLE_BTN}">${ICON_BACK}</button>
@@ -140,7 +167,7 @@ class QuickStart extends HTMLElement {
                 <h2 class="font-display text-[40px] leading-none tracking-tight px-1 pt-2">
                     Who&rsquo;s<br>playing?
                 </h2>
-                <p class="text-sm opacity-50 px-1 pt-2 pb-4 max-w-[320px]">Each seat is either a person on this phone or a bot. Tap the pill to switch.</p>
+                <p id="setup-helper" data-default="Each seat is either a person on this phone or a bot. Tap the pill to switch." data-edit="Rename your seat. Tap return when you&rsquo;re done." class="text-sm opacity-50 px-1 pt-2 pb-4 max-w-[320px]">Each seat is either a person on this phone or a bot. Tap the pill to switch.</p>
 
                 <div id="seat-list" class="flex flex-col gap-2.5"></div>
 
@@ -182,20 +209,27 @@ class QuickStart extends HTMLElement {
 
             if (filled) {
                 const isPlayer = seat.type === 'PLAYER'
-                const title = isPlayer ? 'You' : `Bot &middot; ${COLOR_NAMES[seat.colorIndex]}`
-                const sublabel = isPlayer ? 'Plays on this phone' : 'Difficulty: Normal'
+                const NAME_MAX = 14
+                if (!seat.name) seat.name = this._defaultName(seat, i)
+                const colorName = COLOR_NAMES[seat.colorIndex]
                 const colorVar = `hsl(var(--player-${seat.colorIndex}))`
                 const playerActiveStyle = isPlayer ? `style="background:${colorVar};color:#fff;"` : ''
                 const botActiveStyle = !isPlayer ? `style="background:${colorVar};color:#fff;"` : ''
                 const inactiveCls = "bg-transparent opacity-55 hover:opacity-90"
+                const dimmed = this._focusedSeatIndex !== null && this._focusedSeatIndex !== i
+                const rowDimStyle = dimmed ? 'opacity:0.35;' : ''
+                const charLen = (seat.name || '').length
                 const seatHtml = /*html*/ `
-                    <div class="seat-row bg-card rounded-2xl p-3 px-3.5 flex items-center gap-3 border border-foreground/10">
+                    <div class="seat-row bg-card rounded-2xl p-3 px-3.5 flex items-center gap-3 border border-foreground/10 transition-opacity" data-seat-idx="${i}" style="${rowDimStyle}">
                         <button class="color-cycle w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border-none cursor-pointer p-0" style="background:${colorVar};" title="Change color">
                             <div class="w-[78%] h-[78%]">${PAWN_SVG(seat.colorIndex)}</div>
                         </button>
                         <div class="flex-1 min-w-0">
-                            <div class="text-[15px] font-medium truncate">${title}</div>
-                            <div class="text-xs opacity-50 mt-0.5 truncate">${sublabel}</div>
+                            <label class="seat-name-wrap group flex w-full items-center gap-2 cursor-text min-w-0" style="border-bottom:1px solid hsl(var(--foreground)/0.12);transition:border-color 0.15s, border-width 0.15s;padding-bottom:2px;">
+                                <input class="seat-name flex-1 w-full bg-transparent border-none outline-none text-[15px] font-medium truncate p-0 m-0 min-w-0 appearance-none" autocomplete="off" autocapitalize="words" style="caret-color:${colorVar};background:transparent;" value="${(seat.name || '').replace(/"/g, '&quot;')}" maxlength="${NAME_MAX}" spellcheck="false" />
+                                <span class="seat-name-pencil opacity-30 group-hover:opacity-70 transition-opacity shrink-0" style="line-height:0;">${ICON_PENCIL}</span>
+                                <span class="seat-char-count text-[11px] font-mono hidden shrink-0" style="color:${colorVar};">${charLen}/${NAME_MAX}</span>
+                            </label>
                         </div>
                         <div class="seat-pill inline-flex rounded-full bg-foreground/5 p-[3px] text-[12px] font-medium shrink-0" style="border:1px solid hsl(var(--foreground)/0.08);">
                             <button data-half="PLAYER" class="seat-half inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer transition-colors ${isPlayer ? '' : inactiveCls}" ${playerActiveStyle}>${ICON_USER}<span>You</span></button>
@@ -211,16 +245,60 @@ class QuickStart extends HTMLElement {
                         if (target === seat.type) return
                         playClickSound()
                         seat.type = target
-                        seat.name = target === 'BOT' ? `Bot ${i + 1}` : `Player ${i + 1}`
+                        seat.name = target === 'BOT' ? COLOR_NAMES[seat.colorIndex] : `Player ${i + 1}`
                         this._renderSeats()
                     })
                 })
+
+                const nameInput = seatEl.querySelector(".seat-name")
+                const nameWrap = seatEl.querySelector(".seat-name-wrap")
+                const charCount = seatEl.querySelector(".seat-char-count")
+                const pencil = seatEl.querySelector(".seat-name-pencil")
+                if (nameInput) {
+                    const updateCount = () => {
+                        if (charCount) charCount.textContent = `${(nameInput.value || '').length}/${nameInput.maxLength}`
+                    }
+                    nameInput.addEventListener("input", () => {
+                        seat.name = nameInput.value
+                        updateCount()
+                    })
+                    nameInput.addEventListener("focus", () => {
+                        this._focusedSeatIndex = i
+                        if (nameWrap) {
+                            nameWrap.style.borderBottomColor = colorVar
+                            nameWrap.style.borderBottomWidth = '1.5px'
+                        }
+                        if (charCount) charCount.classList.remove("hidden")
+                        if (pencil) pencil.classList.add("hide-on-focus")
+                        this._applyFocusUI()
+                        const len = nameInput.value.length
+                        nameInput.setSelectionRange(len, len)
+                    })
+                    nameInput.addEventListener("keydown", (e) => {
+                        if (e.key === "Enter") { e.preventDefault(); nameInput.blur(); }
+                    })
+                    nameInput.addEventListener("blur", () => {
+                        const trimmed = (nameInput.value || '').trim()
+                        seat.name = trimmed || this._defaultName(seat, i)
+                        nameInput.value = seat.name
+                        if (nameWrap) {
+                            nameWrap.style.borderBottomColor = ''
+                            nameWrap.style.borderBottomWidth = ''
+                        }
+                        if (charCount) charCount.classList.add("hidden")
+                        if (pencil) pencil.classList.remove("hide-on-focus")
+                        this._focusedSeatIndex = null
+                        this._applyFocusUI()
+                    })
+                }
 
                 seatEl.querySelector(".color-cycle").addEventListener("click", () => {
                     playClickSound()
                     let next = (seat.colorIndex + 1) % 4
                     while (usedColors.includes(next)) next = (next + 1) % 4
+                    const wasDefaultBotName = seat.type === 'BOT' && COLOR_NAMES.includes(seat.name)
                     seat.colorIndex = next
+                    if (wasDefaultBotName) seat.name = COLOR_NAMES[next]
                     this._renderSeats()
                 })
 
@@ -256,7 +334,7 @@ class QuickStart extends HTMLElement {
                         seat.active = true
                         seat.type = target
                         seat.colorIndex = freeColor
-                        seat.name = target === 'BOT' ? `Bot ${i + 1}` : `Player ${i + 1}`
+                        seat.name = target === 'BOT' ? COLOR_NAMES[freeColor] : `Player ${i + 1}`
                         this._renderSeats()
                     })
                 })
@@ -278,12 +356,34 @@ class QuickStart extends HTMLElement {
         const activeSeats = this.seats.filter(s => s.active)
         if (activeSeats.length < 2) return
 
-        const humanCount = activeSeats.filter(s => s.type === 'PLAYER').length
-        const botCount = activeSeats.filter(s => s.type === 'BOT').length
-        const humanColors = activeSeats.filter(s => s.type === 'PLAYER').map(s => s.colorIndex)
+        const humans = activeSeats.filter(s => s.type === 'PLAYER')
+        const bots = activeSeats.filter(s => s.type === 'BOT')
+        const humanCount = humans.length
+        const botCount = bots.length
+        const humanColors = humans.map(s => s.colorIndex)
+
+        const namesByPlayerIndex = new Array(4).fill('')
+        if (humanCount === 4) {
+            humans.forEach((s, idx) => { namesByPlayerIndex[idx] = s.name })
+        } else {
+            const preferredPositions = [2, 0, 1, 3]
+            const usedPositions = new Set()
+            humans.forEach((s, idx) => {
+                const pos = preferredPositions[idx]
+                namesByPlayerIndex[pos] = s.name
+                usedPositions.add(pos)
+            })
+            let botIdx = 0
+            for (let pos = 0; pos < 4 && botIdx < botCount; pos++) {
+                if (!usedPositions.has(pos)) {
+                    namesByPlayerIndex[pos] = bots[botIdx].name
+                    botIdx++
+                }
+            }
+        }
 
         const quickStartId = `qs,${humanCount},${botCount},${humanColors.join(",")}`
-        handleGameStart(quickStartId)
+        handleGameStart(quickStartId, namesByPlayerIndex)
     }
 
     // Keep old methods for compatibility

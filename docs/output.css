@@ -710,14 +710,6 @@ html{
   inset: 0px;
 }
 
-.bottom-0{
-  bottom: 0px;
-}
-
-.right-0{
-  right: 0px;
-}
-
 .right-\[4\%\]{
   right: 4%;
 }
@@ -764,11 +756,6 @@ html{
 
 .m-auto{
   margin: auto;
-}
-
-.mx-auto{
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .mb-2{
@@ -973,10 +960,6 @@ html{
 
 .max-w-\[320px\]{
   max-width: 320px;
-}
-
-.max-w-sm{
-  max-width: 24rem;
 }
 
 .flex-1{
@@ -5575,11 +5558,6 @@ html{
   padding-right: 1rem;
 }
 
-.px-5{
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-}
-
 .px-6{
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -5605,10 +5583,6 @@ html{
   padding-bottom: 0.75rem;
 }
 
-.pb-0{
-  padding-bottom: 0px;
-}
-
 .pb-10{
   padding-bottom: 2.5rem;
 }
@@ -5625,8 +5599,16 @@ html{
   padding-bottom: 1rem;
 }
 
+.pb-6{
+  padding-bottom: 1.5rem;
+}
+
 .pb-8{
   padding-bottom: 2rem;
+}
+
+.pt-1{
+  padding-top: 0.25rem;
 }
 
 .pt-2{
@@ -5760,10 +5742,6 @@ html{
 
 .text-foreground{
   color: hsl(var(--foreground));
-}
-
-.text-foreground\/30{
-  color: hsl(var(--foreground) / 0.3);
 }
 
 .text-player-0{

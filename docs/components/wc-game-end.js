@@ -1,5 +1,5 @@
 import {htmlToElement} from "./index.js"
-import {playerCaptures, playerRanks, playerTimes, playerTypes, playClickSound} from "../scripts/index.js";
+import {playerCaptures, playerNames, playerRanks, playerTimes, playerTypes, playClickSound} from "../scripts/index.js";
 
 const CONFETTI_COLORS = ['var(--base-color-0)', 'var(--base-color-1)', 'var(--base-color-2)', 'var(--base-color-3)'];
 
@@ -49,7 +49,7 @@ class GameEnd extends HTMLElement {
         const winText = isHumanWinner ? 'You won.' : 'Game over.';
 
         const standingsHTML = rankArray.filter(pi => pi !== undefined).map((pi, idx) => {
-            const name = playerTypes[pi] === 'PLAYER' ? 'You' : 'Bot';
+            const name = (playerNames[pi] && String(playerNames[pi]).trim()) || (playerTypes[pi] === 'PLAYER' ? 'You' : 'Bot');
             const time = playerTimes[pi] > 0 ? formatGameTime(playerTimes[pi]) : '—';
             return `<div class="flex items-center gap-3 py-2 px-1 ${idx < 3 ? 'border-b border-white/[0.08]' : ''}">
                 <div class="w-[18px] font-mono text-[13px] text-white/50">${idx + 1}.</div>

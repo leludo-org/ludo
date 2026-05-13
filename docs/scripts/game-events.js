@@ -24,6 +24,7 @@ import {
     updateTurnCounter,
     resetTurnCount,
     initRailDeps,
+    setPlayerNames,
 } from "./index.js";
 
 /**
@@ -57,6 +58,11 @@ export const playerTimes = new Array(4).fill(0)
  * @type {number[]}
  */
 export const playerCaptures = new Array(4).fill(0)
+/**
+ *
+ * @type {string[]}
+ */
+export const playerNames = new Array(4).fill('')
 /**
  *
  * @type {number[][]}
@@ -131,13 +137,18 @@ function updateCurrentPlayer() {
  *
  * @param {string} quickStartId
  */
-export function handleGameStart(quickStartId) {
+export function handleGameStart(quickStartId, namesByPlayerIndex) {
     _quickStartId = quickStartId;
     gameStartedAt = new Date().getTime()
     resetTurnCount()
     initRailDeps(playerTypes, getCurrentPlayerIndex, getFinishedCount, getIsLocalMultiplayer)
 
     initPlayers(quickStartId)
+
+    for (let i = 0; i < 4; i++) {
+        playerNames[i] = (namesByPlayerIndex && namesByPlayerIndex[i]) || ''
+    }
+    setPlayerNames(playerNames)
 
     currentPlayerIndex = playerTypes.includes("PLAYER")
         ? 2
@@ -370,6 +381,7 @@ function saveGameState() {
     if (!_quickStartId) return;
     const state = {
         quickStartId: _quickStartId,
+        playerNamesArr: Array.from(playerNames),
         playerTypesArr: Array.from(playerTypes),
         positions: playerTokenPositions.map(p => p ? Array.from(p) : null),
         currentPlayerIndex,
@@ -410,6 +422,8 @@ export function handleGameResume() {
     initPlayers(saved.quickStartId);
 
     saved.playerTypesArr.forEach((t, i) => playerTypes[i] = t);
+    (saved.playerNamesArr || []).forEach((n, i) => playerNames[i] = n || '');
+    setPlayerNames(playerNames);
     saved.capturesArr.forEach((c, i) => playerCaptures[i] = c);
     saved.ranksArr.forEach((r, i) => playerRanks[i] = r);
     saved.timesArr.forEach((t, i) => playerTimes[i] = t);
