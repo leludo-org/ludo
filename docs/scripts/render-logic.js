@@ -406,12 +406,12 @@ export function initRailDeps(pt, getCpi, getFC, getIsLMP) {
     _getIsLocalMultiplayer = getIsLMP;
 }
 
-// idx → { anchor, rot, layout }  TD = pill-then-dice, DT = dice-then-pill
+// idx → { anchor, layout }  TD = pill-then-dice, DT = dice-then-pill
 const CORNER_CFG = [
-    { anchor: 'b0', rot: 180, layout: 'TD' }, // top-left
-    { anchor: 'b1', rot: 180, layout: 'DT' }, // top-right
-    { anchor: 'b2', rot: 0,   layout: 'TD' }, // bottom-right
-    { anchor: 'b3', rot: 0,   layout: 'DT' }, // bottom-left
+    { anchor: 'b0', layout: 'DT' }, // top-left   (dice on left toward home)
+    { anchor: 'b1', layout: 'TD' }, // top-right  (dice on right toward home)
+    { anchor: 'b2', layout: 'TD' }, // bottom-right
+    { anchor: 'b3', layout: 'DT' }, // bottom-left
 ];
 
 function pillMarkup(idx, finished, active) {
@@ -440,7 +440,7 @@ export function updateCornerWidgets() {
     const dice = document.getElementById('wc-dice');
     if (dice && dice.parentElement) dice.parentElement.removeChild(dice);
 
-    CORNER_CFG.forEach(({ anchor, rot, layout }, idx) => {
+    CORNER_CFG.forEach(({ anchor, layout }, idx) => {
         const el = document.getElementById(anchor);
         if (!el) return;
         el.innerHTML = '';
@@ -451,7 +451,6 @@ export function updateCornerWidgets() {
 
         const wrap = document.createElement('div');
         wrap.className = 'flex items-center gap-2';
-        wrap.style.transform = `rotate(${rot}deg)`;
 
         const pill = document.createElement('div');
         pill.innerHTML = pillMarkup(idx, finished, isActive);
