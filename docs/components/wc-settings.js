@@ -1,6 +1,18 @@
 import {
-    handleAssistModeChanged,
+    setAssistFlag,
 } from "../scripts/index.js";
+
+const ASSIST_TOGGLES = [
+    { id: 's-auto-roll', flag: 'autoRollDice', label: 'Auto-roll dice', storageKey: 'assist-auto-roll', default: false },
+    { id: 's-auto-single', flag: 'autoMoveSingleOption', label: 'Auto-move when only one option', storageKey: 'assist-auto-single', default: false },
+    { id: 's-auto-home-out', flag: 'autoMoveOutOfHome', label: 'Auto-move out of home', storageKey: 'assist-auto-home-out', default: true },
+];
+
+function readAssistPref(t) {
+    const v = localStorage.getItem(t.storageKey);
+    if (v === null) return t.default;
+    return v === "true";
+}
 import {
     BOT_NAME_POOLS,
     BOT_POOL_LABELS,
@@ -80,10 +92,7 @@ function buildSettingsOverlay() {
                     </div>
                 `)}
 
-                ${settingsGroup('Play', `
-                    ${toggleHtml('s-assist-mode', 'Assist mode')}
-                    ${toggleHtml('s-show-legal', 'Show legal moves', true)}
-                `)}
+                ${settingsGroup('Assist', ASSIST_TOGGLES.map(t => toggleHtml(t.id, t.label, readAssistPref(t))).join(''))}
 
                 ${settingsGroup('Bot vibe', `
                     <div class="flex flex-col">
@@ -178,16 +187,16 @@ class Header extends HTMLElement {
             })
         })
 
-        const defaultAssistMode = (localStorage.getItem("assist-mode") || "false") === "true";
-        if (defaultAssistMode) {
-            overlay.querySelector("#s-assist-mode").checked = true;
-            handleAssistModeChanged(true)
-        }
-
-        overlay.querySelector("#s-assist-mode").addEventListener("change", ($event) => {
-            const assistMode = $event.target.checked;
-            localStorage.setItem("assist-mode", assistMode);
-            handleAssistModeChanged(assistMode);
+        ASSIST_TOGGLES.forEach(t => {
+            const value = readAssistPref(t);
+            const el = overlay.querySelector(`#${t.id}`);
+            el.checked = value;
+            setAssistFlag(t.flag, value);
+            el.addEventListener("change", ($event) => {
+                const next = $event.target.checked;
+                localStorage.setItem(t.storageKey, next);
+                setAssistFlag(t.flag, next);
+            });
         });
 
         const activePool = getActivePoolKey();

@@ -34,7 +34,11 @@ import {
 let currentPlayerIndex = 2;
 let currentDiceRoll = 1;
 let consecutiveSixesCount = 0
-let isAssistModeEnabled = false
+const assistFlags = {
+    autoRollDice: false,
+    autoMoveSingleOption: false,
+    autoMoveOutOfHome: true,
+}
 let gameStartedAt = new Date().getTime()
 let lastRank = 0
 
@@ -97,7 +101,11 @@ function isCurrentPlayerBot() {
  * @returns {boolean}
  */
 function isAutoplay() {
-    return isAssistModeEnabled || isCurrentPlayerBot()
+    return assistFlags.autoRollDice || isCurrentPlayerBot()
+}
+
+function allTokensInHome(playerIndex) {
+    return playerTokenPositions[playerIndex].every(p => p === -1)
 }
 
 /**
@@ -252,9 +260,12 @@ function handleAfterDiceRoll() {
                         handleOnTokenMove(currentPlayerIndex, bestMoveTokenIndex);
                     }
                 }, 400);
-            } else if (isAssistModeEnabled) {
+            } else {
                 const uniqueTokenIndexPositions = getUniqueTokenPositions(currentPlayerIndex, movableTokenIndexes, playerTokenPositions);
-                if (uniqueTokenIndexPositions.size === 1) {
+                const singleOption = uniqueTokenIndexPositions.size === 1;
+                const onlyHomeOut = allTokensInHome(currentPlayerIndex) && currentDiceRoll === 6;
+                if ((assistFlags.autoMoveSingleOption && singleOption) ||
+                    (assistFlags.autoMoveOutOfHome && onlyHomeOut)) {
                     handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0]);
                 }
             }
@@ -369,10 +380,11 @@ function handleDiceMoved() {
 
 
 /**
- * @param {boolean} assistMode
+ * @param {'autoRollDice'|'autoMoveSingleOption'|'autoMoveOutOfHome'} flag
+ * @param {boolean} value
  */
-export function handleAssistModeChanged(assistMode) {
-    isAssistModeEnabled = assistMode
+export function setAssistFlag(flag, value) {
+    if (flag in assistFlags) assistFlags[flag] = value
 }
 
 let _quickStartId = null;
