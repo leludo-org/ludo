@@ -236,7 +236,7 @@ class QuickStart extends HTMLElement {
                         <span class="opacity-40">${ICON_PLUS}</span>
                     </div>`
                 const emptyEl = htmlToElement(emptyHtml)
-                emptyEl.addEventListener("click", () => {
+                emptyEl.querySelector(".seat-row-empty").addEventListener("click", () => {
                     playClickSound()
                     const usedAll = this.seats.filter(s => s.active).map(s => s.colorIndex)
                     const freeColor = [0,1,2,3].find(c => !usedAll.includes(c))
