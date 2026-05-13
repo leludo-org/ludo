@@ -209,22 +209,26 @@ function getContainerPath(playerIndex, tokenIndex, currentPosition, newPosition)
     return path;
 }
 
+function clearStackStyles(t) {
+    t.style.removeProperty('position');
+    t.style.removeProperty('width');
+    t.style.removeProperty('height');
+    t.style.removeProperty('top');
+    t.style.removeProperty('left');
+    t.style.removeProperty('right');
+    t.style.removeProperty('bottom');
+    t.style.removeProperty('z-index');
+    t.style.removeProperty('display');
+    t.style.removeProperty('margin-left');
+}
+
 export function updateCellStacking(cell) {
     if (!cell) return;
-    const tokens = Array.from(cell.querySelectorAll(':scope > wc-token'));
+    const allTokens = Array.from(cell.querySelectorAll(':scope > wc-token'));
+    allTokens.forEach(clearStackStyles);
+    const tokens = allTokens.filter(t => t.dataset.moving !== 'true');
     const n = tokens.length;
 
-    tokens.forEach(t => {
-        t.style.removeProperty('position');
-        t.style.removeProperty('width');
-        t.style.removeProperty('height');
-        t.style.removeProperty('top');
-        t.style.removeProperty('left');
-        t.style.removeProperty('right');
-        t.style.removeProperty('bottom');
-        t.style.removeProperty('z-index');
-        t.style.removeProperty('display');
-    });
     const badge = cell.querySelector('.stack-badge');
     if (badge) badge.remove();
 
@@ -279,12 +283,16 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
                 element.style.willChange = '';
                 element.style.position = '';
                 element.style.zIndex = '';
+                delete element.dataset.moving;
                 updateCellStacking(element.parentElement);
                 resolve();
                 return;
             }
 
             if (stepIndex === 0) {
+                element.dataset.moving = 'true';
+                clearStackStyles(element);
+                updateCellStacking(element.parentElement);
                 element.style.willChange = 'transform';
                 element.style.position = 'relative';
                 element.style.zIndex = '50';
