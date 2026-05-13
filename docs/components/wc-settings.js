@@ -2,6 +2,12 @@ import {
     handleAssistModeChanged,
 } from "../scripts/index.js";
 import {
+    BOT_NAME_POOLS,
+    BOT_POOL_LABELS,
+    getActivePoolKey,
+    setActivePoolKey,
+} from "../scripts/bot-names.js";
+import {
     htmlToElement
 } from "./index.js"
 
@@ -77,6 +83,22 @@ function buildSettingsOverlay() {
                 ${settingsGroup('Play', `
                     ${toggleHtml('s-assist-mode', 'Assist mode')}
                     ${toggleHtml('s-show-legal', 'Show legal moves', true)}
+                `)}
+
+                ${settingsGroup('Bot vibe', `
+                    <div class="flex flex-col">
+                        ${Object.keys(BOT_NAME_POOLS).map((key, idx, arr) => {
+                            const sample = BOT_NAME_POOLS[key].slice(0, 3).join(' · ')
+                            return `<label class="flex items-center justify-between py-2.5 cursor-pointer ${idx < arr.length - 1 ? 'border-b border-foreground/5' : ''}">
+                                <div class="flex flex-col gap-0.5 min-w-0 pr-3">
+                                    <span class="text-sm">${BOT_POOL_LABELS[key]}</span>
+                                    <span class="text-[11px] opacity-50 truncate">${sample}</span>
+                                </div>
+                                <input type="radio" name="s-bot-pool" value="${key}" class="hidden peer" />
+                                <span class="size-[18px] rounded-full border-[1.5px] border-foreground/30 peer-checked:border-foreground peer-checked:bg-foreground shrink-0"></span>
+                            </label>`
+                        }).join('')}
+                    </div>
                 `)}
 
                 ${settingsGroup('About', `
@@ -166,6 +188,15 @@ class Header extends HTMLElement {
             const assistMode = $event.target.checked;
             localStorage.setItem("assist-mode", assistMode);
             handleAssistModeChanged(assistMode);
+        });
+
+        const activePool = getActivePoolKey();
+        const poolRadio = overlay.querySelector(`input[name="s-bot-pool"][value="${activePool}"]`);
+        if (poolRadio) poolRadio.checked = true;
+        overlay.querySelectorAll("input[name='s-bot-pool']").forEach(el => {
+            el.addEventListener("change", ($event) => {
+                setActivePoolKey($event.target.value);
+            });
         });
 
         this.appendChild(settingsElement)

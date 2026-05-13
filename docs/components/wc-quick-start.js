@@ -2,6 +2,7 @@ import {
     htmlToElement
 } from "./index.js";
 import {handleGameStart, handleGameResume, playClickSound} from "../scripts/index.js";
+import {randomBotName, isDefaultBotName} from "../scripts/bot-names.js";
 
 const COLOR_NAMES = ["Vermillion", "Emerald", "Saffron", "Cobalt"];
 const COLOR_KEYS = ["red", "green", "yellow", "blue"];
@@ -52,17 +53,21 @@ const CIRCLE_BTN = "w-[38px] h-[38px] rounded-full bg-transparent border border-
 class QuickStart extends HTMLElement {
     constructor() {
         super();
+        const botNames = [];
+        const pickBot = () => { const n = randomBotName(botNames); botNames.push(n); return n; };
         this.seats = [
             { active: true, type: 'PLAYER', colorIndex: 0, name: 'Player 1' },
-            { active: true, type: 'BOT', colorIndex: 1, name: COLOR_NAMES[1] },
-            { active: true, type: 'BOT', colorIndex: 2, name: COLOR_NAMES[2] },
-            { active: true, type: 'BOT', colorIndex: 3, name: COLOR_NAMES[3] },
+            { active: true, type: 'BOT', colorIndex: 1, name: pickBot() },
+            { active: true, type: 'BOT', colorIndex: 2, name: pickBot() },
+            { active: true, type: 'BOT', colorIndex: 3, name: pickBot() },
         ];
         this._focusedSeatIndex = null;
     }
 
     _defaultName(seat, seatIndex) {
-        return seat.type === 'BOT' ? COLOR_NAMES[seat.colorIndex] : `Player ${seatIndex + 1}`
+        if (seat.type !== 'BOT') return `Player ${seatIndex + 1}`
+        const used = this.seats.filter(s => s !== seat && s.active && s.type === 'BOT').map(s => s.name)
+        return randomBotName(used)
     }
 
     _applyFocusUI() {
@@ -77,6 +82,18 @@ class QuickStart extends HTMLElement {
 
     connectedCallback() {
         this.showHomeScreen()
+        document.addEventListener("bot-name-pool-changed", () => this._reshuffleBotNames())
+    }
+
+    _reshuffleBotNames() {
+        const used = []
+        this.seats.forEach(seat => {
+            if (!seat.active || seat.type !== 'BOT') return
+            if (!isDefaultBotName(seat.name)) return
+            seat.name = randomBotName(used)
+            used.push(seat.name)
+        })
+        if (this.querySelector('#seat-list')) this._renderSeats()
     }
 
     showHomeScreen() {
@@ -209,7 +226,7 @@ class QuickStart extends HTMLElement {
 
             if (filled) {
                 const isPlayer = seat.type === 'PLAYER'
-                const NAME_MAX = 14
+                const NAME_MAX = 11
                 if (!seat.name) seat.name = this._defaultName(seat, i)
                 const colorName = COLOR_NAMES[seat.colorIndex]
                 const colorVar = `hsl(var(--player-${seat.colorIndex}))`
@@ -245,7 +262,7 @@ class QuickStart extends HTMLElement {
                         if (target === seat.type) return
                         playClickSound()
                         seat.type = target
-                        seat.name = target === 'BOT' ? COLOR_NAMES[seat.colorIndex] : `Player ${i + 1}`
+                        seat.name = this._defaultName({ ...seat, type: target }, i)
                         this._renderSeats()
                     })
                 })
@@ -296,9 +313,7 @@ class QuickStart extends HTMLElement {
                     playClickSound()
                     let next = (seat.colorIndex + 1) % 4
                     while (usedColors.includes(next)) next = (next + 1) % 4
-                    const wasDefaultBotName = seat.type === 'BOT' && COLOR_NAMES.includes(seat.name)
                     seat.colorIndex = next
-                    if (wasDefaultBotName) seat.name = COLOR_NAMES[next]
                     this._renderSeats()
                 })
 
@@ -334,7 +349,7 @@ class QuickStart extends HTMLElement {
                         seat.active = true
                         seat.type = target
                         seat.colorIndex = freeColor
-                        seat.name = target === 'BOT' ? COLOR_NAMES[freeColor] : `Player ${i + 1}`
+                        seat.name = this._defaultName({ ...seat, type: target, colorIndex: freeColor }, i)
                         this._renderSeats()
                     })
                 })
