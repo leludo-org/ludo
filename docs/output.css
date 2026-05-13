@@ -891,6 +891,10 @@ html{
   height: 0.875rem;
 }
 
+.h-7{
+  height: 1.75rem;
+}
+
 .h-\[22px\]{
   height: 22px;
 }
@@ -929,6 +933,10 @@ html{
 
 .w-3\.5{
   width: 0.875rem;
+}
+
+.w-7{
+  width: 1.75rem;
 }
 
 .w-\[18px\]{
@@ -973,6 +981,10 @@ html{
 
 .flex-\[2\]{
   flex: 2;
+}
+
+.shrink-0{
+  flex-shrink: 0;
 }
 
 .-translate-x-\[70\%\]{
@@ -5613,6 +5625,11 @@ html{
   font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
 }
 
+.text-3xl{
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
 .text-\[10px\]{
   font-size: 10px;
 }
@@ -5665,16 +5682,16 @@ html{
   line-height: 1rem;
 }
 
-.font-bold{
-  font-weight: 700;
-}
-
 .font-medium{
   font-weight: 500;
 }
 
 .uppercase{
   text-transform: uppercase;
+}
+
+.italic{
+  font-style: italic;
 }
 
 .leading-\[0\.85\]{
@@ -6792,6 +6809,10 @@ html{
 
 .text-white\/70{
   color: rgb(255 255 255 / 0.7);
+}
+
+.no-underline{
+  text-decoration-line: none;
 }
 
 .opacity-30{

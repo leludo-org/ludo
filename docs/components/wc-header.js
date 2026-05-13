@@ -1,11 +1,35 @@
 import {
     htmlToElement
-} from "./index.js"
+} from "./utils.js"
+
+// Brand mark · Direction F · The Board. Mini board silhouette — 3×3 grid
+// of colored home quadrants + washed cross arms + central rosette. Reads
+// as "Ludo" even at 24px.
+const BRAND_MARK = /*html*/ `
+<svg viewBox="0 0 96 96" class="w-7 h-7 shrink-0" aria-hidden="true">
+    <rect width="96" height="96" rx="6" fill="#FAF6EC"/>
+    <rect x="32" y="0"  width="32" height="32" fill="#F0DDA0"/>
+    <rect x="64" y="32" width="32" height="32" fill="#C9E1D2"/>
+    <rect x="32" y="64" width="32" height="32" fill="#C5D5E8"/>
+    <rect x="0"  y="32" width="32" height="32" fill="#ECCBBA"/>
+    <rect x="0"  y="0"  width="32" height="32" fill="#C8472E"/>
+    <rect x="64" y="0"  width="32" height="32" fill="#D7A21F"/>
+    <rect x="0"  y="64" width="32" height="32" fill="#3253A8"/>
+    <rect x="64" y="64" width="32" height="32" fill="#3D8A5E"/>
+    <path d="M48 48 L48 34.56 L61.44 48 Z" fill="#D7A21F"/>
+    <path d="M48 48 L61.44 48 L48 61.44 Z" fill="#3D8A5E"/>
+    <path d="M48 48 L48 61.44 L34.56 48 Z" fill="#3253A8"/>
+    <path d="M48 48 L34.56 48 L48 34.56 Z" fill="#C8472E"/>
+    <rect x="0.5" y="0.5" width="95" height="95" rx="6" fill="none" stroke="#1F1B14" stroke-opacity="0.18"/>
+</svg>`
 
 //language=HTML
 const HEADER_HTML = /*html*/ `
 <nav id="header" class="px-4 py-2 gap-2 h-14 flex justify-between items-center bg-card border-b border-border/20 shadow-sm">
-    <a href="/" class="font-bold text-xl tracking-tight">leludo.org</a>
+    <a href="/" class="flex items-center gap-2.5 text-foreground no-underline">
+        ${BRAND_MARK}
+        <span class="font-display italic text-3xl leading-none tracking-tight">leludo</span>
+    </a>
     <div class="flex gap-3 items-center">
         <wc-settings></wc-settings>
         <a href="https://github.com/leludo-org/ludo">

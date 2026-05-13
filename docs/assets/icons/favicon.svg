@@ -1,36 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Ludo board - 4 colored quadrants with home triangles -->
-  <rect x="1" y="1" width="30" height="30" rx="3" fill="#1a1f2e"/>
-  <!-- Red quadrant - top left -->
-  <rect x="2" y="2" width="13" height="13" rx="2" fill="#d93347" opacity="0.85"/>
-  <!-- Green quadrant - top right -->
-  <rect x="17" y="2" width="13" height="13" rx="2" fill="#2ca86a" opacity="0.85"/>
-  <!-- Yellow quadrant - bottom left -->
-  <rect x="2" y="17" width="13" height="13" rx="2" fill="#f0a808" opacity="0.85"/>
-  <!-- Blue quadrant - bottom right -->
-  <rect x="17" y="17" width="13" height="13" rx="2" fill="#2960d6" opacity="0.85"/>
-  <!-- Center diamond -->
-  <polygon points="16,10 22,16 16,22 10,16" fill="#1a1f2e"/>
-  <!-- Home triangles pointing to center -->
-  <polygon points="16,10 22,16 16,12.5" fill="#d93347"/>
-  <polygon points="22,16 16,22 19.5,16" fill="#2ca86a"/>
-  <polygon points="16,22 10,16 16,19.5" fill="#2960d6"/>
-  <polygon points="10,16 16,10 12.5,16" fill="#f0a808"/>
-  <!-- Pawn dots in each quadrant -->
-  <circle cx="7" cy="7" r="2" fill="white" opacity="0.9"/>
-  <circle cx="11" cy="7" r="2" fill="white" opacity="0.9"/>
-  <circle cx="7" cy="11" r="2" fill="white" opacity="0.9"/>
-  <circle cx="11" cy="11" r="2" fill="white" opacity="0.9"/>
-  <circle cx="21" cy="7" r="2" fill="white" opacity="0.9"/>
-  <circle cx="25" cy="7" r="2" fill="white" opacity="0.9"/>
-  <circle cx="21" cy="11" r="2" fill="white" opacity="0.9"/>
-  <circle cx="25" cy="11" r="2" fill="white" opacity="0.9"/>
-  <circle cx="7" cy="21" r="2" fill="white" opacity="0.9"/>
-  <circle cx="11" cy="21" r="2" fill="white" opacity="0.9"/>
-  <circle cx="7" cy="25" r="2" fill="white" opacity="0.9"/>
-  <circle cx="11" cy="25" r="2" fill="white" opacity="0.9"/>
-  <circle cx="21" cy="21" r="2" fill="white" opacity="0.9"/>
-  <circle cx="25" cy="21" r="2" fill="white" opacity="0.9"/>
-  <circle cx="21" cy="25" r="2" fill="white" opacity="0.9"/>
-  <circle cx="25" cy="25" r="2" fill="white" opacity="0.9"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <!-- Leludo brand mark · Direction F · The Board.
+       3×3 grid: 4 colored home quadrants at corners, washed-out path arms
+       in the cross, central rosette diamond split into the same 4 colors.
+       Auto-simplified for favicon scale (no pawns, no grid lines). -->
+  <rect width="96" height="96" rx="6" fill="#FAF6EC"/>
+  <!-- Path arms (washed-out player colors) -->
+  <rect x="32" y="0"  width="32" height="32" fill="#F0DDA0"/>
+  <rect x="64" y="32" width="32" height="32" fill="#C9E1D2"/>
+  <rect x="32" y="64" width="32" height="32" fill="#C5D5E8"/>
+  <rect x="0"  y="32" width="32" height="32" fill="#ECCBBA"/>
+  <!-- Home quadrants -->
+  <rect x="0"  y="0"  width="32" height="32" fill="#C8472E"/>
+  <rect x="64" y="0"  width="32" height="32" fill="#D7A21F"/>
+  <rect x="0"  y="64" width="32" height="32" fill="#3253A8"/>
+  <rect x="64" y="64" width="32" height="32" fill="#3D8A5E"/>
+  <!-- Central rosette: 4 triangles meeting at centre -->
+  <path d="M48 48 L48 34.56 L61.44 48 Z" fill="#D7A21F"/>
+  <path d="M48 48 L61.44 48 L48 61.44 Z" fill="#3D8A5E"/>
+  <path d="M48 48 L48 61.44 L34.56 48 Z" fill="#3253A8"/>
+  <path d="M48 48 L34.56 48 L48 34.56 Z" fill="#C8472E"/>
+  <!-- Outer rule -->
+  <rect x="0.5" y="0.5" width="95" height="95" rx="6" fill="none" stroke="#1F1B14" stroke-opacity="0.18"/>
 </svg>
