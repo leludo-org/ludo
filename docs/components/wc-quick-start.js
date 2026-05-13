@@ -140,7 +140,7 @@ class QuickStart extends HTMLElement {
                 <h2 class="font-display text-[40px] leading-none tracking-tight px-1 pt-2">
                     Who&rsquo;s<br>playing?
                 </h2>
-                <p class="text-sm opacity-50 px-1 pt-2 pb-4">Tap a seat to fill it. Tap type to toggle human/bot.</p>
+                <p class="text-sm opacity-50 px-1 pt-2 pb-4 max-w-[320px]">Each seat is either a person on this phone or a bot. Tap the pill to switch.</p>
 
                 <div id="seat-list" class="flex flex-col gap-2.5"></div>
 
@@ -181,32 +181,39 @@ class QuickStart extends HTMLElement {
             const usedColors = this.seats.filter((s, j) => s.active && j !== i).map(s => s.colorIndex)
 
             if (filled) {
-                const color = PLAYER_COLORS_MAP[seat.colorIndex]
+                const isPlayer = seat.type === 'PLAYER'
+                const title = isPlayer ? 'You' : `Bot &middot; ${COLOR_NAMES[seat.colorIndex]}`
+                const sublabel = isPlayer ? 'Plays on this phone' : 'Difficulty: Normal'
+                const colorVar = `hsl(var(--player-${seat.colorIndex}))`
+                const playerActiveStyle = isPlayer ? `style="background:${colorVar};color:#fff;"` : ''
+                const botActiveStyle = !isPlayer ? `style="background:${colorVar};color:#fff;"` : ''
+                const inactiveCls = "bg-transparent opacity-55 hover:opacity-90"
                 const seatHtml = /*html*/ `
-                    <div class="seat-row bg-card rounded-2xl p-3 px-3.5 flex items-center gap-3.5 border border-foreground/10">
-                        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:hsl(var(--player-${seat.colorIndex}));">
+                    <div class="seat-row bg-card rounded-2xl p-3 px-3.5 flex items-center gap-3 border border-foreground/10">
+                        <button class="color-cycle w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border-none cursor-pointer p-0" style="background:${colorVar};" title="Change color">
                             <div class="w-[78%] h-[78%]">${PAWN_SVG(seat.colorIndex)}</div>
-                        </div>
+                        </button>
                         <div class="flex-1 min-w-0">
-                            <div class="text-base font-medium">${seat.name}</div>
-                            <div class="text-xs opacity-50 mt-0.5 flex items-center gap-1.5">
-                                <button class="type-toggle inline-flex items-center gap-1 cursor-pointer bg-transparent border-none p-0 opacity-70 hover:opacity-100 transition-opacity">
-                                    ${seat.type === 'BOT' ? ICON_BOT : ICON_USER}
-                                    <span>${seat.type === 'BOT' ? 'Bot' : 'Human'}</span>
-                                </button>
-                                <span class="opacity-40">&middot;</span>
-                                <button class="color-cycle cursor-pointer bg-transparent border-none p-0 font-medium transition-opacity hover:opacity-100" style="color:hsl(var(--player-${seat.colorIndex}));">${COLOR_NAMES[seat.colorIndex]}</button>
-                            </div>
+                            <div class="text-[15px] font-medium truncate">${title}</div>
+                            <div class="text-xs opacity-50 mt-0.5 truncate">${sublabel}</div>
                         </div>
-                        <button class="remove-seat cursor-pointer bg-transparent border-none p-1 opacity-30 hover:opacity-60 transition-opacity">${ICON_CLOSE}</button>
+                        <div class="seat-pill inline-flex rounded-full bg-foreground/5 p-[3px] text-[12px] font-medium shrink-0" style="border:1px solid hsl(var(--foreground)/0.08);">
+                            <button data-half="PLAYER" class="seat-half inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer transition-colors ${isPlayer ? '' : inactiveCls}" ${playerActiveStyle}>${ICON_USER}<span>You</span></button>
+                            <button data-half="BOT" class="seat-half inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer transition-colors ${!isPlayer ? '' : inactiveCls}" ${botActiveStyle}>${ICON_BOT}<span>Bot</span></button>
+                        </div>
+                        <button class="remove-seat cursor-pointer bg-transparent border-none p-1 opacity-30 hover:opacity-60 transition-opacity shrink-0">${ICON_CLOSE}</button>
                     </div>`
                 const seatEl = htmlToElement(seatHtml)
 
-                seatEl.querySelector(".type-toggle").addEventListener("click", () => {
-                    playClickSound()
-                    seat.type = seat.type === 'BOT' ? 'PLAYER' : 'BOT'
-                    seat.name = seat.type === 'BOT' ? `Bot ${i + 1}` : `Player ${i + 1}`
-                    this._renderSeats()
+                seatEl.querySelectorAll(".seat-half").forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        const target = btn.dataset.half
+                        if (target === seat.type) return
+                        playClickSound()
+                        seat.type = target
+                        seat.name = target === 'BOT' ? `Bot ${i + 1}` : `Player ${i + 1}`
+                        this._renderSeats()
+                    })
                 })
 
                 seatEl.querySelector(".color-cycle").addEventListener("click", () => {
@@ -227,25 +234,31 @@ class QuickStart extends HTMLElement {
                 container.appendChild(seatEl)
             } else {
                 const emptyHtml = /*html*/ `
-                    <div class="seat-row-empty bg-card rounded-2xl p-3 px-3.5 flex items-center gap-3.5 border border-dashed border-foreground/15 opacity-55 cursor-pointer hover:opacity-75 transition-opacity">
-                        <div class="w-11 h-11 rounded-xl border-2 border-dashed border-foreground/20 flex items-center justify-center"></div>
-                        <div class="flex-1">
-                            <div class="text-base font-medium">Empty seat</div>
-                            <div class="text-xs opacity-50 mt-0.5">Tap to add</div>
+                    <div class="seat-row-empty bg-card/40 rounded-2xl p-3 px-3.5 flex items-center gap-3 border border-dashed border-foreground/15">
+                        <div class="w-11 h-11 rounded-xl border-2 border-dashed border-foreground/20 shrink-0"></div>
+                        <div class="flex-1 min-w-0">
+                            <div class="text-[15px] font-medium opacity-60 truncate">Empty seat</div>
+                            <div class="text-xs opacity-50 mt-0.5 truncate">Tap a side to fill</div>
                         </div>
-                        <span class="opacity-40">${ICON_PLUS}</span>
+                        <div class="seat-pill inline-flex rounded-full bg-foreground/5 p-[3px] text-[12px] font-medium shrink-0" style="border:1px solid hsl(var(--foreground)/0.08);">
+                            <button data-add="PLAYER" class="seat-add inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer bg-transparent opacity-55 hover:opacity-100 transition-opacity">${ICON_USER}<span>You</span></button>
+                            <button data-add="BOT" class="seat-add inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer bg-transparent opacity-55 hover:opacity-100 transition-opacity">${ICON_BOT}<span>Bot</span></button>
+                        </div>
                     </div>`
                 const emptyEl = htmlToElement(emptyHtml)
-                emptyEl.querySelector(".seat-row-empty").addEventListener("click", () => {
-                    playClickSound()
-                    const usedAll = this.seats.filter(s => s.active).map(s => s.colorIndex)
-                    const freeColor = [0,1,2,3].find(c => !usedAll.includes(c))
-                    if (freeColor === undefined) return
-                    seat.active = true
-                    seat.type = 'BOT'
-                    seat.colorIndex = freeColor
-                    seat.name = `Bot ${i + 1}`
-                    this._renderSeats()
+                emptyEl.querySelectorAll(".seat-add").forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        playClickSound()
+                        const usedAll = this.seats.filter(s => s.active).map(s => s.colorIndex)
+                        const freeColor = [0,1,2,3].find(c => !usedAll.includes(c))
+                        if (freeColor === undefined) return
+                        const target = btn.dataset.add
+                        seat.active = true
+                        seat.type = target
+                        seat.colorIndex = freeColor
+                        seat.name = target === 'BOT' ? `Bot ${i + 1}` : `Player ${i + 1}`
+                        this._renderSeats()
+                    })
                 })
                 container.appendChild(emptyEl)
             }
