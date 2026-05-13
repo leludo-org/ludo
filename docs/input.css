@@ -112,6 +112,15 @@
     animation: capture-pulse 0.5s ease-in forwards;
 }
 
+@keyframes active-dice-pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 12px 24px -8px var(--pulse-color), inset 0 -2px 0 rgba(0,0,0,0.12), 0 0 0 0 var(--pulse-color); }
+    50%      { transform: scale(1.05); box-shadow: 0 14px 28px -8px var(--pulse-color), inset 0 -2px 0 rgba(0,0,0,0.12), 0 0 0 10px transparent; }
+}
+
+.active-dice-pulse {
+    animation: active-dice-pulse 1.6s ease-in-out infinite;
+}
+
 @keyframes board-shake {
     0%, 100% { transform: translate(0); }
     15% { transform: translate(-3px, 1px); }

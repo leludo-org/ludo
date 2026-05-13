@@ -718,32 +718,16 @@ html{
   bottom: 0px;
 }
 
-.bottom-\[-12\%\]{
-  bottom: -12%;
-}
-
 .left-1\/2{
   left: 50%;
-}
-
-.left-\[-12\%\]{
-  left: -12%;
 }
 
 .right-0{
   right: 0px;
 }
 
-.right-\[-12\%\]{
-  right: -12%;
-}
-
 .right-\[4\%\]{
   right: 4%;
-}
-
-.top-\[-12\%\]{
-  top: -12%;
 }
 
 .top-\[4\%\]{
@@ -841,6 +825,10 @@ html{
 
 .grid{
   display: grid;
+}
+
+.contents{
+  display: contents;
 }
 
 .hidden{
@@ -957,10 +945,6 @@ html{
 
 .w-3\.5{
   width: 0.875rem;
-}
-
-.w-\[11\%\]{
-  width: 11%;
 }
 
 .w-\[18px\]{
@@ -1106,6 +1090,10 @@ html{
   flex-direction: column;
 }
 
+.items-start{
+  align-items: flex-start;
+}
+
 .items-end{
   align-items: flex-end;
 }
@@ -1222,6 +1210,10 @@ html{
   border-bottom-width: 1px;
 }
 
+.border-l{
+  border-left-width: 1px;
+}
+
 .border-dashed{
   border-style: dashed;
 }
@@ -1276,6 +1268,10 @@ html{
 
 .border-transparent{
   border-color: transparent;
+}
+
+.border-white\/25{
+  border-color: rgb(255 255 255 / 0.25);
 }
 
 .border-white\/\[0\.08\]{
@@ -1362,6 +1358,11 @@ html{
   background-color: transparent;
 }
 
+.bg-white{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+
 .bg-white\/65{
   background-color: rgb(255 255 255 / 0.65);
 }
@@ -1429,11 +1430,6 @@ html{
   padding-right: 0.5rem;
 }
 
-.px-2\.5{
-  padding-left: 0.625rem;
-  padding-right: 0.625rem;
-}
-
 .px-3{
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -1481,6 +1477,10 @@ html{
 
 .pb-0{
   padding-bottom: 0px;
+}
+
+.pb-10{
+  padding-bottom: 2.5rem;
 }
 
 .pb-2{
@@ -1533,6 +1533,10 @@ html{
 
 .text-\[11px\]{
   font-size: 11px;
+}
+
+.text-\[12px\]{
+  font-size: 12px;
 }
 
 .text-\[13px\]{
@@ -1666,6 +1670,10 @@ html{
 
 .text-white\/60{
   color: rgb(255 255 255 / 0.6);
+}
+
+.text-white\/70{
+  color: rgb(255 255 255 / 0.7);
 }
 
 .opacity-30{
@@ -1845,6 +1853,22 @@ html{
   animation: capture-pulse 0.5s ease-in forwards;
 }
 
+@keyframes active-dice-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 12px 24px -8px var(--pulse-color), inset 0 -2px 0 rgba(0,0,0,0.12), 0 0 0 0 var(--pulse-color);
+  }
+
+  50%      {
+    transform: scale(1.05);
+    box-shadow: 0 14px 28px -8px var(--pulse-color), inset 0 -2px 0 rgba(0,0,0,0.12), 0 0 0 10px transparent;
+  }
+}
+
+.active-dice-pulse {
+  animation: active-dice-pulse 1.6s ease-in-out infinite;
+}
+
 @keyframes board-shake {
   0%, 100% {
     transform: translate(0);
@@ -1929,6 +1953,10 @@ wc-token .animate-bounce {
 
 table td {
   font-variant-numeric: tabular-nums;
+}
+
+.empty\:hidden:empty{
+  display: none;
 }
 
 .hover\:bg-card-hover:hover{

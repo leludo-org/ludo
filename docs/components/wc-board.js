@@ -20,7 +20,7 @@ const SC = "relative"; // cell base class for stacking
 const BOARD_HTML = /*html*/ `
     <div class="flex flex-col">
         <!-- Top bar -->
-        <div class="flex items-center px-3 pt-3 pb-0 gap-2">
+        <div class="flex items-center px-3 pt-3 pb-10 gap-2">
             <button id="g-pause-btn" class="w-[38px] h-[38px] rounded-full bg-transparent border border-foreground/15 flex items-center justify-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
             </button>
@@ -33,18 +33,20 @@ const BOARD_HTML = /*html*/ `
         </div>
 
         <!-- Player rail -->
-        <div class="px-3 pt-2.5">
+        <div id="player-rail-wrap" class="px-3 pt-2.5">
             <div id="player-rail" class="flex gap-1.5 p-1 rounded-[14px] bg-card border border-foreground/10"></div>
+        </div>
+
+        <!-- Local · top corner row (rotated to face top seats) -->
+        <div id="corner-row-top" class="hidden flex justify-between items-start px-3 pt-2 gap-2" style="min-height:56px;">
+            <div id="b0" class="empty:hidden"></div>
+            <div id="b1" class="empty:hidden"></div>
         </div>
 
         <!-- Board -->
         <div class="flex-1 flex items-center justify-center px-3 pt-3">
             <div class="relative w-full">
-                <div id="b0" class="absolute w-[11%] z-10 hidden" style="top: -3%; left: -3%;"></div>
-                <div id="b1" class="absolute w-[11%] z-10 hidden" style="top: -3%; right: -3%;"></div>
-                <div id="b2" class="absolute w-[11%] z-10 hidden" style="bottom: -3%; right: -3%;"></div>
-                <div id="b3" class="absolute w-[11%] z-10 hidden" style="bottom: -3%; left: -3%;"></div>
-                <div class="grid grid-rows-5 grid-cols-5 gap-0 overflow-clip rounded-xl" style="box-shadow: 0 14px 40px -10px rgba(31,27,20,0.22), 0 2px 6px rgba(31,27,20,0.06), inset 0 0 0 1px rgba(31,27,20,0.06);">
+                <div class="grid grid-rows-5 grid-cols-5 gap-0 overflow-clip rounded-xl aspect-square w-full" style="box-shadow: 0 14px 40px -10px rgba(31,27,20,0.22), 0 2px 6px rgba(31,27,20,0.06), inset 0 0 0 1px rgba(31,27,20,0.06);">
 
             <div class="bg-player-0 row-span-2 col-span-2 flex items-center justify-center">
                 <div class="bg-player-0-light size-4/6 grid grid-cols-2 grid-rows-2 rounded-lg shadow-inner border border-board-border/30">
@@ -214,9 +216,15 @@ const BOARD_HTML = /*html*/ `
             </div>
         </div>
 
+        <!-- Local · bottom corner row -->
+        <div id="corner-row-bottom" class="hidden justify-between items-end px-3 pt-2 gap-2" style="min-height:56px;">
+            <div id="b3" class="empty:hidden"></div>
+            <div id="b2" class="empty:hidden"></div>
+        </div>
+
         <!-- Action zone -->
-        <div class="px-3 pt-3 pb-2">
-            <div id="action-zone" class="flex items-center gap-3.5">
+        <div id="action-zone-wrap" class="px-3 pt-3 pb-2">
+            <div id="action-zone" class="flex items-center gap-3.5 bg-card rounded-2xl p-3.5 px-4 border border-foreground/10">
                 <div id="action-text" class="flex-1">
                     <div class="text-xs opacity-50 tracking-widest uppercase">Your turn</div>
                     <div class="text-[22px] font-display leading-tight mt-0.5 tracking-tight">Tap to roll</div>

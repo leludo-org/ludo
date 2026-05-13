@@ -277,6 +277,8 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
         function step() {
             if (stepIndex >= path.length) {
                 element.style.willChange = '';
+                element.style.position = '';
+                element.style.zIndex = '';
                 updateCellStacking(element.parentElement);
                 resolve();
                 return;
@@ -284,6 +286,8 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
 
             if (stepIndex === 0) {
                 element.style.willChange = 'transform';
+                element.style.position = 'relative';
+                element.style.zIndex = '50';
             }
 
             playStepSound();
@@ -402,44 +406,113 @@ export function initRailDeps(pt, getCpi, getFC, getIsLMP) {
     _getIsLocalMultiplayer = getIsLMP;
 }
 
-const CORNER_POS = ['b0', 'b1', 'b2', 'b3'];
-const CORNER_ROTATED = [true, true, false, false];
+// idx → { anchor, rot, layout }  TD = pill-then-dice, DT = dice-then-pill
+const CORNER_CFG = [
+    { anchor: 'b0', rot: 180, layout: 'TD' }, // top-left
+    { anchor: 'b1', rot: 180, layout: 'DT' }, // top-right
+    { anchor: 'b2', rot: 0,   layout: 'TD' }, // bottom-right
+    { anchor: 'b3', rot: 0,   layout: 'DT' }, // bottom-left
+];
+
+function pillMarkup(idx, finished, active) {
+    const dot = active
+        ? `<div class="w-3 h-3 rounded-full bg-white"></div>`
+        : `<div class="w-3 h-3 rounded-full bg-player-${idx}"></div>`;
+    const cls = active
+        ? `bg-player-${idx} text-white border-player-${idx}`
+        : `bg-card text-foreground border-foreground/10`;
+    const countCls = active
+        ? `text-white/70 border-l border-white/25`
+        : `opacity-50 border-l border-foreground/10`;
+    return `
+        <div class="flex items-center gap-2 rounded-full border ${cls} shadow-sm" style="padding:7px 11px;height:32px;box-sizing:border-box;">
+            ${dot}
+            <div class="text-[12px] font-medium leading-none">P${idx + 1}</div>
+            <div class="text-[10px] font-mono leading-none ${countCls}" style="padding-left:6px;margin-left:2px;">${finished}/4</div>
+        </div>`;
+}
+
+function restoreDiceToActionZone() {
+    const dice = document.getElementById('wc-dice');
+    const home = document.getElementById('dice-holder');
+    if (dice && home && dice.parentElement !== home) {
+        home.appendChild(dice);
+        dice.style.cssText = '';
+        dice.className = 'relative w-full';
+    }
+}
 
 export function updateCornerWidgets() {
     if (!_playerTypes || !_getIsLocalMultiplayer) return;
     const isLMP = _getIsLocalMultiplayer();
     const pi = _getCurrentPlayerIndex();
 
-    const rail = document.getElementById('player-rail')?.parentElement;
-    const actionZone = document.getElementById('action-zone')?.parentElement;
+    const railWrap = document.getElementById('player-rail-wrap');
+    const actionWrap = document.getElementById('action-zone-wrap');
+    const topRow = document.getElementById('corner-row-top');
+    const botRow = document.getElementById('corner-row-bottom');
 
     if (!isLMP) {
-        CORNER_POS.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) { el.classList.add('hidden'); el.innerHTML = ''; }
+        CORNER_CFG.forEach(({ anchor }) => {
+            const el = document.getElementById(anchor);
+            if (el) el.innerHTML = '';
         });
-        if (rail) rail.classList.remove('hidden');
+        if (topRow) { topRow.classList.add('hidden'); topRow.classList.remove('flex'); }
+        if (botRow) { botRow.classList.add('hidden'); botRow.classList.remove('flex'); }
+        if (railWrap) railWrap.classList.remove('hidden');
+        if (actionWrap) actionWrap.classList.remove('hidden');
+        restoreDiceToActionZone();
         return;
     }
 
-    if (rail) rail.classList.add('hidden');
+    if (railWrap) railWrap.classList.add('hidden');
+    if (actionWrap) actionWrap.classList.add('hidden');
+    if (topRow) { topRow.classList.remove('hidden'); topRow.classList.add('flex'); }
+    if (botRow) { botRow.classList.remove('hidden'); botRow.classList.add('flex'); }
 
-    CORNER_POS.forEach((id, idx) => {
-        const el = document.getElementById(id);
+    // Detach wc-dice before wiping any corner contents so we can reparent it.
+    const dice = document.getElementById('wc-dice');
+    if (dice && dice.parentElement) dice.parentElement.removeChild(dice);
+
+    CORNER_CFG.forEach(({ anchor, rot, layout }, idx) => {
+        const el = document.getElementById(anchor);
         if (!el) return;
-        if (!_playerTypes[idx]) { el.classList.add('hidden'); el.innerHTML = ''; return; }
-        el.classList.remove('hidden');
-        el.style.width = '';
-        el.className = `absolute z-20 ${idx === 0 ? 'top-[-12%] left-[-12%]' : idx === 1 ? 'top-[-12%] right-[-12%]' : idx === 2 ? 'bottom-[-12%] right-[-12%]' : 'bottom-[-12%] left-[-12%]'}`;
+        el.innerHTML = '';
+        if (!_playerTypes[idx]) return;
+
         const isActive = idx === pi;
         const finished = _getFinishedCount(idx);
-        const rotate = CORNER_ROTATED[idx] ? 'transform: rotate(180deg);' : '';
-        el.innerHTML = `
-            <div class="rounded-2xl border ${isActive ? 'bg-player-' + idx + '-light border-player-' + idx : 'bg-card border-foreground/10'} px-2.5 py-1.5 flex items-center gap-1.5 shadow-sm" style="${rotate}">
-                <div class="w-3 h-3 rounded-full bg-player-${idx} ${isActive ? 'ring-2 ring-player-' + idx + '/40' : ''}"></div>
-                <div class="text-[11px] font-medium leading-none">P${idx + 1}</div>
-                <div class="text-[10px] font-mono opacity-50 leading-none">${finished}/4</div>
-            </div>`;
+
+        const wrap = document.createElement('div');
+        wrap.className = 'flex items-center gap-2';
+        wrap.style.transform = `rotate(${rot}deg)`;
+
+        const pill = document.createElement('div');
+        pill.innerHTML = pillMarkup(idx, finished, isActive);
+        const pillEl = pill.firstElementChild;
+
+        const diceBtn = document.createElement('div');
+        if (isActive) {
+            diceBtn.className = `rounded-2xl flex items-center justify-center bg-player-${idx} active-dice-pulse`;
+            diceBtn.style.cssText = 'width:56px;height:56px;padding:6px;box-sizing:border-box;--pulse-color:hsl(var(--player-' + idx + ') / 0.55);';
+            if (dice) {
+                dice.style.cssText = 'width:100%;height:100%;';
+                dice.className = '';
+                diceBtn.appendChild(dice);
+            }
+        } else {
+            diceBtn.className = `rounded-2xl bg-player-${idx}`;
+            diceBtn.style.cssText = 'width:56px;height:56px;box-sizing:border-box;opacity:0.4;';
+        }
+
+        if (layout === 'TD') {
+            wrap.appendChild(pillEl);
+            wrap.appendChild(diceBtn);
+        } else {
+            wrap.appendChild(diceBtn);
+            wrap.appendChild(pillEl);
+        }
+        el.appendChild(wrap);
     });
 }
 
@@ -483,18 +556,19 @@ export function updateActionZone(state, diceValue, playerIndex) {
         holder.classList.add(colorClasses[pi]);
     }
 
+    const zoneBase = 'flex items-center gap-3.5 bg-card rounded-2xl p-3.5 px-4 border border-foreground/10';
     if (state === 'select') {
-        zone.className = 'flex items-center gap-3.5 bg-card rounded-2xl p-3.5 px-4 border border-foreground/10';
+        zone.className = zoneBase;
         textEl.innerHTML = `
             <div class="text-[15px] font-medium">${isBot ? 'Bot' : 'You'} rolled a ${diceValue}</div>
             <div class="text-[13px] opacity-50 mt-0.5">${isBot ? 'Choosing move…' : 'Tap a glowing piece to move it.'}</div>`;
     } else if (state === 'rolling') {
-        zone.className = 'flex items-center gap-3.5';
+        zone.className = zoneBase;
         textEl.innerHTML = `
             <div class="text-xs opacity-50 tracking-widest uppercase">${who}</div>
             <div class="text-[22px] font-display leading-tight mt-0.5 tracking-tight">Rolling…</div>`;
     } else {
-        zone.className = 'flex items-center gap-3.5';
+        zone.className = zoneBase;
         textEl.innerHTML = `
             <div class="text-xs opacity-50 tracking-widest uppercase">${who}</div>
             <div class="text-[22px] font-display leading-tight mt-0.5 tracking-tight">${isBot ? 'Waiting…' : 'Tap to roll'}</div>`;

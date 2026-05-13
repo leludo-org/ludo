@@ -52,10 +52,10 @@ class QuickStart extends HTMLElement {
     constructor() {
         super();
         this.seats = [
-            { active: true,  type: 'PLAYER', colorIndex: 0, name: 'You' },
-            { active: true,  type: 'BOT',    colorIndex: 1, name: 'Bot 1' },
-            { active: true,  type: 'BOT',    colorIndex: 2, name: 'Bot 2' },
-            { active: true,  type: 'BOT',    colorIndex: 3, name: 'Bot 3' },
+            { active: true, type: 'PLAYER', colorIndex: 0, name: 'Player 1' },
+            { active: true, type: 'PLAYER', colorIndex: 1, name: 'Player 2' },
+            { active: true, type: 'PLAYER', colorIndex: 2, name: 'Player 3' },
+            { active: true, type: 'PLAYER', colorIndex: 3, name: 'Player 4' },
         ];
     }
 
@@ -131,7 +131,7 @@ class QuickStart extends HTMLElement {
 
         const html = /*html*/ `
             <div class="flex flex-col min-h-[70vh]">
-                <div class="flex items-center gap-2 pb-2">
+                <div class="flex items-center gap-2 pb-8">
                     <button class="back-btn ${CIRCLE_BTN}">${ICON_BACK}</button>
                     <div class="flex-1 text-center text-xs font-medium tracking-[0.16em] uppercase opacity-50">Setup</div>
                     <div class="w-[38px]"></div>
