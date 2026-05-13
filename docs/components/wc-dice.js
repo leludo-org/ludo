@@ -10,7 +10,7 @@ const DS = "background:radial-gradient(circle at 40% 35%,#333,#111);box-shadow:i
 
 //language=HTML
 const DICE_HTML = /*html*/ `
-<div id="dice" class="size-full rounded-xl aspect-square cursor-pointer transition-all duration-200"
+<div id="dice" class="size-full rounded-xl aspect-square cursor-pointer transition-all duration-200 overflow-hidden"
      style="background:linear-gradient(145deg,#faf8f5,#e8e4df);box-shadow:3px 3px 8px rgba(0,0,0,0.25),-1px -1px 4px rgba(255,255,255,0.8),inset 0 1px 0 rgba(255,255,255,0.6);border:1px solid rgba(0,0,0,0.08);padding:14%;">
     <div id="d1" class="size-full grid grid-rows-3 grid-cols-3 gap-[10%]">
         <div class="dice-dot rounded-full row-start-2 col-start-2" style="${DS}"></div>

@@ -5,7 +5,8 @@ import {
     htmlToElement
 } from "./index.js"
 
-//language=HTML
+const ICON_BACK = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>`;
+
 const SETTINGS_HTML = /*html*/ `
 <button id="settings-icon" class="flex items-center">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6">
@@ -13,38 +14,91 @@ const SETTINGS_HTML = /*html*/ `
         <circle cx="12" cy="12" r="3" />
     </svg>
 </button>
-<div id="settings-container" class="fixed flex flex-col bg-card p-2 gap-2 right-8 top-12 w-56 hidden">
-    <h1 class="font-bold">Settings</h1>
-    <div class="text-sm flex flex-col gap-4">
-        <div class="flex flex-col gap-1">
-            <div>Theme</div>
+`;
 
-            <div class="grid grid-cols-3 text-center cursor-pointer gap-[1px] [&>input:checked+label]:bg-background [&>input]:hidden [&>label]:outline [&>label]:outline-1 [&>label]: outline-border [&>label]:p-1">
-                <input type="radio" name="s-theme" id="theme-system" value="system" /> <label for="theme-system">System</label>
-                <input type="radio" name="s-theme" id="theme-light" value="light" /> <label for="theme-light">Light</label>
-                <input type="radio" name="s-theme" id="theme-dark" value="dark" /> <label for="theme-dark">Dark</label>
+function toggleHtml(id, label, checked = false) {
+    return `<div class="flex items-center justify-between py-2.5 ${id !== 'last' ? 'border-b border-foreground/5' : ''}">
+        <label for="${id}" class="text-sm cursor-pointer">${label}</label>
+        <input type="checkbox" id="${id}" class="hidden peer" ${checked ? 'checked' : ''} />
+        <label for="${id}" class="w-10 h-[22px] bg-foreground/20 peer-checked:bg-foreground rounded-full flex items-center p-[2px] cursor-pointer transition-all peer-checked:justify-end">
+            <div class="size-[18px] rounded-full bg-background shadow-sm"></div>
+        </label>
+    </div>`;
+}
+
+function settingsGroup(label, content) {
+    return `<div>
+        <div class="text-[11px] tracking-widest uppercase opacity-40 mb-2">${label}</div>
+        <div class="bg-card rounded-2xl px-3.5 border border-foreground/10">${content}</div>
+    </div>`;
+}
+
+function buildSettingsOverlay() {
+    return `<div id="settings-overlay" class="fixed inset-0 z-50 bg-background overflow-y-auto hidden">
+        <div class="max-w-sm mx-auto">
+            <div class="flex items-center px-4 pt-4 pb-0 gap-2">
+                <button id="settings-back" class="w-[38px] h-[38px] rounded-full bg-transparent border border-foreground/15 flex items-center justify-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity">${ICON_BACK}</button>
+                <div class="flex-1 text-center text-xs tracking-widest uppercase opacity-50">Settings</div>
+                <div class="w-[38px]"></div>
+            </div>
+
+            <div class="px-5 pt-2">
+                <div class="font-display text-[40px] leading-none tracking-tight">Preferences.</div>
+            </div>
+
+            <div class="px-4 pt-4 pb-8 flex flex-col gap-6">
+                ${settingsGroup('Theme', `
+                    <div class="flex gap-2.5 py-2.5">
+                        <label class="flex-1 cursor-pointer">
+                            <input type="radio" name="s-theme" value="light" class="hidden peer" />
+                            <div class="aspect-[1.4] rounded-xl p-2.5 flex flex-col justify-between border-[1.5px] border-transparent peer-checked:border-foreground" style="background:#EFE9DC;color:#1F1B14;">
+                                <div class="font-display text-xl leading-none">Aa</div>
+                                <div class="text-[11px]">Paper</div>
+                            </div>
+                        </label>
+                        <label class="flex-1 cursor-pointer">
+                            <input type="radio" name="s-theme" value="dark" class="hidden peer" />
+                            <div class="aspect-[1.4] rounded-xl p-2.5 flex flex-col justify-between border-[1.5px] border-transparent peer-checked:border-foreground" style="background:#1F1B14;color:#F2EDE3;">
+                                <div class="font-display text-xl leading-none">Aa</div>
+                                <div class="text-[11px]">Dusk</div>
+                            </div>
+                        </label>
+                        <label class="flex-1 cursor-pointer">
+                            <input type="radio" name="s-theme" value="system" class="hidden peer" />
+                            <div class="aspect-[1.4] rounded-xl p-2.5 flex flex-col justify-between border-[1.5px] border-transparent peer-checked:border-foreground" style="background:#0d0d0d;color:#fff;">
+                                <div class="font-display text-xl leading-none">Aa</div>
+                                <div class="text-[11px]">System</div>
+                            </div>
+                        </label>
+                    </div>
+                `)}
+
+                ${settingsGroup('Play', `
+                    ${toggleHtml('s-assist-mode', 'Assist mode')}
+                    ${toggleHtml('s-show-legal', 'Show legal moves', true)}
+                `)}
+
+                ${settingsGroup('About', `
+                    <div class="flex flex-col gap-2 py-2.5">
+                        <div class="flex justify-between text-sm">
+                            <span class="opacity-50">Version</span>
+                            <span class="font-mono">0.1.17</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="opacity-50">Source</span>
+                            <a href="https://github.com/nicOPTIONS/ludo" class="font-mono opacity-70 hover:opacity-100">github.com/leludo</a>
+                        </div>
+                    </div>
+                `)}
             </div>
         </div>
-        <div class="flex justify-between gap-1">
-            <label for="s-assist-mode" class="cursor-pointer">Assist Mode</label>
-            <input type="checkbox" id="s-assist-mode" class="hidden [&:checked+label]:justify-end" />
-            <label for="s-assist-mode" class="w-10 bg-foreground rounded-full flex items-center p-[2px] cursor-pointer">
-                <div class="size-4 rounded-full bg-background">
-            </label>
-        </div>
-    </div>
-</div>
-`
+    </div>`;
+}
 
-/**
- *
- * @param {'dark'|'light'|'system'} theme
- */
 function updateTheme(theme) {
     const rootElement = window.document.documentElement
     rootElement.classList.remove("dark", "light", "system")
 
-    // note: didn't subscribe to watch for system change yet...
     const themeToApply = theme === "system" ?
         (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light") :
         theme;
@@ -64,49 +118,50 @@ class Header extends HTMLElement {
 
     connectedCallback() {
         const settingsElement = htmlToElement(SETTINGS_HTML)
-
         const settingsIcon = settingsElement.querySelector("#settings-icon")
-        const settingsContainer = settingsElement.querySelector("#settings-container")
 
-        settingsIcon.addEventListener("click", () => {
-            if (settingsContainer.classList.contains("hidden")) {
-                settingsContainer.classList.remove("hidden")
-            } else {
-                settingsContainer.classList.add("hidden")
+        const overlayHTML = buildSettingsOverlay();
+        document.body.insertAdjacentHTML('beforeend', overlayHTML);
+        const overlay = document.getElementById('settings-overlay');
+
+        const openSettings = () => {
+            overlay.classList.remove('hidden');
+        };
+        const closeSettings = () => {
+            overlay.classList.add('hidden');
+        };
+
+        settingsIcon.addEventListener("click", openSettings);
+        overlay.querySelector("#settings-back").addEventListener("click", closeSettings);
+
+        document.addEventListener('click', (e) => {
+            if (e.target.id === 'g-settings-btn' || e.target.closest('#g-settings-btn')) {
+                openSettings();
             }
-        })
-
-        document.addEventListener("click", ($event) => {
-            const isOutsideClick = !this.contains($event.target)
-            if (isOutsideClick) {
-                settingsContainer.classList.add("hidden")
-            }
-        })
-
+        });
 
         const defaultTheme = localStorage.getItem("theme") || "light"
         updateTheme(defaultTheme)
-        settingsContainer.querySelector(`#theme-${defaultTheme}`).setAttribute("checked", "checked")
-        settingsContainer.querySelectorAll("input[name='s-theme']").forEach((themeSettingElement) => {
-            themeSettingElement.addEventListener("change", ($event) => {
-                const theme = $event.target.value;
-                updateTheme(theme);
+        const themeRadio = overlay.querySelector(`input[name="s-theme"][value="${defaultTheme}"]`);
+        if (themeRadio) themeRadio.checked = true;
+
+        overlay.querySelectorAll("input[name='s-theme']").forEach((el) => {
+            el.addEventListener("change", ($event) => {
+                updateTheme($event.target.value);
             })
         })
 
         const defaultAssistMode = (localStorage.getItem("assist-mode") || "false") === "true";
-
         if (defaultAssistMode) {
-            settingsContainer.querySelector("#s-assist-mode").setAttribute("checked", "checked");
+            overlay.querySelector("#s-assist-mode").checked = true;
             handleAssistModeChanged(true)
         }
 
-        settingsContainer.querySelector("#s-assist-mode").addEventListener("change", ($event) => {
+        overlay.querySelector("#s-assist-mode").addEventListener("change", ($event) => {
             const assistMode = $event.target.checked;
             localStorage.setItem("assist-mode", assistMode);
             handleAssistModeChanged(assistMode);
         });
-
 
         this.appendChild(settingsElement)
     }

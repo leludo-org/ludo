@@ -5,6 +5,7 @@ import {
     findCapturedOpponents,
     generateDiceRoll, getBestPossibleTokenIndexForMove,
     applyColorMap, getPlayerTypes,
+    getTokenContainerId,
     getTokenElementId,
     getTokenNewPosition, getUniqueTokenPositions,
     inactiveDice,
@@ -18,7 +19,11 @@ import {
     showGame,
     showPauseMenu,
     updateDiceFace,
-    updateTokenContainer
+    updateTokenContainer,
+    updateActionZone,
+    updateTurnCounter,
+    resetTurnCount,
+    initRailDeps,
 } from "./index.js";
 
 /**
@@ -58,6 +63,20 @@ export const playerCaptures = new Array(4).fill(0)
  */
 const playerTokenPositions = new Array(4);
 
+
+export function getCurrentPlayerIndex() { return currentPlayerIndex }
+export function getIsLocalMultiplayer() {
+    let humans = 0, defined = 0;
+    for (let i = 0; i < 4; i++) {
+        if (playerTypes[i]) defined++;
+        if (playerTypes[i] === 'PLAYER') humans++;
+    }
+    return defined >= 2 && humans === defined;
+}
+export function getFinishedCount(playerIndex) {
+    if (!playerTokenPositions[playerIndex]) return 0;
+    return playerTokenPositions[playerIndex].filter(p => p === 56).length;
+}
 
 /**
  *
@@ -103,6 +122,7 @@ function updateCurrentPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % 4
     } while (playerTypes[currentPlayerIndex] === undefined || isPlayerFinished(currentPlayerIndex))
 
+    updateTurnCounter()
     handlePayerUpdated()
 }
 
@@ -112,7 +132,10 @@ function updateCurrentPlayer() {
  * @param {string} quickStartId
  */
 export function handleGameStart(quickStartId) {
+    _quickStartId = quickStartId;
     gameStartedAt = new Date().getTime()
+    resetTurnCount()
+    initRailDeps(playerTypes, getCurrentPlayerIndex, getFinishedCount, getIsLocalMultiplayer)
 
     initPlayers(quickStartId)
 
@@ -174,6 +197,7 @@ export function handlePayerUpdated() {
 
 
 export function handleDiceRoll() {
+    updateActionZone('rolling');
     animateDiceRoll(currentDiceRoll)
         .then(() => {
             const lastDiceRoll = currentDiceRoll
@@ -205,6 +229,7 @@ function handleAfterDiceRoll() {
 
         if (movableTokenIndexes.length > 0) {
             inactiveDice();
+            updateActionZone('select', currentDiceRoll);
 
             if (isCurrentPlayerBot()) {
                 setTimeout(() => {
@@ -308,6 +333,7 @@ function handleAfterTokenMove(tripComplete, captureCount) {
     }
 
     if (!isGameDone) {
+        saveGameState();
         activateDice();
 
         const diceElement = document.getElementById("wc-dice");
@@ -318,6 +344,8 @@ function handleAfterTokenMove(tripComplete, captureCount) {
                 setTimeout(() => diceElement.click(), 600)
             }
         }
+    } else {
+        clearSavedGame();
     }
 }
 
@@ -334,5 +362,75 @@ function handleDiceMoved() {
  */
 export function handleAssistModeChanged(assistMode) {
     isAssistModeEnabled = assistMode
-    // todo: start assisting right away...
+}
+
+let _quickStartId = null;
+
+function saveGameState() {
+    if (!_quickStartId) return;
+    const state = {
+        quickStartId: _quickStartId,
+        playerTypesArr: Array.from(playerTypes),
+        positions: playerTokenPositions.map(p => p ? Array.from(p) : null),
+        currentPlayerIndex,
+        currentDiceRoll,
+        consecutiveSixesCount,
+        capturesArr: Array.from(playerCaptures),
+        ranksArr: Array.from(playerRanks),
+        timesArr: Array.from(playerTimes),
+        lastRank,
+        gameStartedAt,
+    };
+    localStorage.setItem('ludo-save', JSON.stringify(state));
+}
+
+export function clearSavedGame() {
+    localStorage.removeItem('ludo-save');
+}
+
+export function getSavedGame() {
+    try {
+        const raw = localStorage.getItem('ludo-save');
+        return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+}
+
+export function handleGameResume() {
+    const saved = getSavedGame();
+    if (!saved) return;
+
+    _quickStartId = saved.quickStartId;
+    gameStartedAt = saved.gameStartedAt;
+    lastRank = saved.lastRank;
+    consecutiveSixesCount = saved.consecutiveSixesCount;
+    currentDiceRoll = saved.currentDiceRoll;
+    resetTurnCount();
+    initRailDeps(playerTypes, getCurrentPlayerIndex, getFinishedCount, getIsLocalMultiplayer);
+
+    initPlayers(saved.quickStartId);
+
+    saved.playerTypesArr.forEach((t, i) => playerTypes[i] = t);
+    saved.capturesArr.forEach((c, i) => playerCaptures[i] = c);
+    saved.ranksArr.forEach((r, i) => playerRanks[i] = r);
+    saved.timesArr.forEach((t, i) => playerTimes[i] = t);
+
+    currentPlayerIndex = saved.currentPlayerIndex;
+
+    showGame();
+
+    playerTypes.forEach((playerType, playerIndex) => {
+        if (playerType && saved.positions[playerIndex]) {
+            saved.positions[playerIndex].forEach((pos, tokenIndex) => {
+                playerTokenPositions[playerIndex][tokenIndex] = pos;
+                const token = document.createElement("wc-token");
+                token.setAttribute("id", getTokenElementId(playerIndex, tokenIndex));
+                const containerId = getTokenContainerId(playerIndex, tokenIndex, pos);
+                const container = document.getElementById(containerId);
+                if (container) container.appendChild(token);
+            });
+        }
+    });
+
+    moveDice(currentPlayerIndex);
+    handleDiceMoved();
 }

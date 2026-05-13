@@ -20,8 +20,18 @@ export default {
                 "player-1-light": "hsl(var(--player-1-light))",
                 "player-2-light": "hsl(var(--player-2-light))",
                 "player-3-light": "hsl(var(--player-3-light))",
+                "player-0-path": "hsl(var(--player-0-path))",
+                "player-1-path": "hsl(var(--player-1-path))",
+                "player-2-path": "hsl(var(--player-2-path))",
+                "player-3-path": "hsl(var(--player-3-path))",
+                "safe-tint": "hsl(var(--safe-tint))",
                 "board-cell": "hsl(var(--board-cell))",
                 "board-border": "hsl(var(--board-border))"
+            },
+            fontFamily: {
+                "display": ['"Instrument Serif"', 'Georgia', 'serif'],
+                "sans": ['"DM Sans"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+                "mono": ['"JetBrains Mono"', '"SF Mono"', 'ui-monospace', 'monospace'],
             }
         },
     },

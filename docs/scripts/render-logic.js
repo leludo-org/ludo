@@ -209,6 +209,54 @@ function getContainerPath(playerIndex, tokenIndex, currentPosition, newPosition)
     return path;
 }
 
+export function updateCellStacking(cell) {
+    if (!cell) return;
+    const tokens = Array.from(cell.querySelectorAll(':scope > wc-token'));
+    const n = tokens.length;
+
+    tokens.forEach(t => {
+        t.style.removeProperty('position');
+        t.style.removeProperty('width');
+        t.style.removeProperty('height');
+        t.style.removeProperty('top');
+        t.style.removeProperty('left');
+        t.style.removeProperty('right');
+        t.style.removeProperty('bottom');
+        t.style.removeProperty('z-index');
+        t.style.removeProperty('display');
+    });
+    const badge = cell.querySelector('.stack-badge');
+    if (badge) badge.remove();
+
+    if (n <= 1) return;
+
+    cell.style.position = 'relative';
+
+    if (n === 2) {
+        tokens[0].style.cssText += ';position:absolute;top:4%;left:4%;width:64%;height:64%;z-index:1;';
+        tokens[1].style.cssText += ';position:absolute;bottom:4%;right:4%;width:64%;height:64%;z-index:2;';
+    } else if (n === 3) {
+        tokens[0].style.cssText += ';position:absolute;top:2%;left:50%;width:52%;height:52%;z-index:3;margin-left:-26%;';
+        tokens[1].style.cssText += ';position:absolute;bottom:4%;left:0%;width:52%;height:52%;z-index:2;';
+        tokens[2].style.cssText += ';position:absolute;bottom:4%;right:0%;width:52%;height:52%;z-index:2;';
+    } else if (n === 4) {
+        tokens[0].style.cssText += ';position:absolute;top:4%;left:4%;width:46%;height:46%;z-index:1;';
+        tokens[1].style.cssText += ';position:absolute;top:4%;right:4%;width:46%;height:46%;z-index:1;';
+        tokens[2].style.cssText += ';position:absolute;bottom:4%;left:4%;width:46%;height:46%;z-index:1;';
+        tokens[3].style.cssText += ';position:absolute;bottom:4%;right:4%;width:46%;height:46%;z-index:1;';
+    } else {
+        tokens.forEach((t, i) => {
+            if (i > 0) t.style.display = 'none';
+        });
+        tokens[0].style.cssText += ';position:absolute;inset:8%;width:84%;height:84%;z-index:1;';
+        const badgeEl = document.createElement('div');
+        badgeEl.className = 'stack-badge';
+        badgeEl.textContent = `×${n}`;
+        badgeEl.style.cssText = 'position:absolute;bottom:-6%;right:-6%;min-width:46%;height:46%;padding:0 4px;border-radius:50%;background:hsl(var(--foreground));color:hsl(var(--background));font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.3);z-index:3;';
+        cell.appendChild(badgeEl);
+    }
+}
+
 /**
  *
  * @param {number} playerIndex
@@ -229,6 +277,7 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
         function step() {
             if (stepIndex >= path.length) {
                 element.style.willChange = '';
+                updateCellStacking(element.parentElement);
                 resolve();
                 return;
             }
@@ -238,6 +287,7 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
             }
 
             playStepSound();
+            const sourceCell = element.parentElement;
             const targetContainer = document.getElementById(path[stepIndex]);
             const initialPosition = element.getBoundingClientRect();
             const finalPosition = targetContainer.getBoundingClientRect();
@@ -254,6 +304,7 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
                 clearTimeout(fallbackTimer);
                 element.style.removeProperty("transform");
                 targetContainer.appendChild(element);
+                updateCellStacking(sourceCell);
                 stepIndex++;
                 requestAnimationFrame(step);
             };
@@ -335,11 +386,133 @@ export function applyColorMap(colorMap) {
     })
 }
 
+let turnCount = 0;
+
+const PLAYER_NAMES = ['You', 'Bot 1', 'Bot 2', 'Bot 3'];
+
+let _playerTypes = null;
+let _getCurrentPlayerIndex = null;
+let _getFinishedCount = null;
+let _getIsLocalMultiplayer = null;
+
+export function initRailDeps(pt, getCpi, getFC, getIsLMP) {
+    _playerTypes = pt;
+    _getCurrentPlayerIndex = getCpi;
+    _getFinishedCount = getFC;
+    _getIsLocalMultiplayer = getIsLMP;
+}
+
+const CORNER_POS = ['b0', 'b1', 'b2', 'b3'];
+const CORNER_ROTATED = [true, true, false, false];
+
+export function updateCornerWidgets() {
+    if (!_playerTypes || !_getIsLocalMultiplayer) return;
+    const isLMP = _getIsLocalMultiplayer();
+    const pi = _getCurrentPlayerIndex();
+
+    const rail = document.getElementById('player-rail')?.parentElement;
+    const actionZone = document.getElementById('action-zone')?.parentElement;
+
+    if (!isLMP) {
+        CORNER_POS.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) { el.classList.add('hidden'); el.innerHTML = ''; }
+        });
+        if (rail) rail.classList.remove('hidden');
+        return;
+    }
+
+    if (rail) rail.classList.add('hidden');
+
+    CORNER_POS.forEach((id, idx) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (!_playerTypes[idx]) { el.classList.add('hidden'); el.innerHTML = ''; return; }
+        el.classList.remove('hidden');
+        el.style.width = '';
+        el.className = `absolute z-20 ${idx === 0 ? 'top-[-12%] left-[-12%]' : idx === 1 ? 'top-[-12%] right-[-12%]' : idx === 2 ? 'bottom-[-12%] right-[-12%]' : 'bottom-[-12%] left-[-12%]'}`;
+        const isActive = idx === pi;
+        const finished = _getFinishedCount(idx);
+        const rotate = CORNER_ROTATED[idx] ? 'transform: rotate(180deg);' : '';
+        el.innerHTML = `
+            <div class="rounded-2xl border ${isActive ? 'bg-player-' + idx + '-light border-player-' + idx : 'bg-card border-foreground/10'} px-2.5 py-1.5 flex items-center gap-1.5 shadow-sm" style="${rotate}">
+                <div class="w-3 h-3 rounded-full bg-player-${idx} ${isActive ? 'ring-2 ring-player-' + idx + '/40' : ''}"></div>
+                <div class="text-[11px] font-medium leading-none">P${idx + 1}</div>
+                <div class="text-[10px] font-mono opacity-50 leading-none">${finished}/4</div>
+            </div>`;
+    });
+}
+
+export function updatePlayerRail() {
+    const rail = document.getElementById('player-rail');
+    if (!rail || !_playerTypes) return;
+    const pi = _getCurrentPlayerIndex();
+
+    rail.innerHTML = '';
+    for (let i = 0; i < 4; i++) {
+        if (!_playerTypes[i]) continue;
+        const isActive = i === pi;
+        const finished = _getFinishedCount(i);
+        const name = _playerTypes[i] === 'PLAYER' ? 'You' : `Bot`;
+        const slot = document.createElement('div');
+        slot.className = `flex-1 flex flex-col items-center gap-0.5 py-1.5 px-1 rounded-[10px] relative transition-colors ${isActive ? 'bg-player-' + i + '-light' : ''}`;
+        slot.innerHTML = `
+            <div class="w-[22px] h-[22px] rounded-full bg-player-${i} flex items-center justify-center ${isActive ? 'ring-2 ring-player-' + i + ' ring-offset-2 ring-offset-card' : ''}">
+                <div class="w-1.5 h-1.5 rounded-full bg-white/65"></div>
+            </div>
+            <div class="text-[11px] font-medium ${isActive ? '' : 'opacity-50'}">${name}</div>
+            <div class="text-[10px] opacity-40 font-mono">${finished}/4</div>
+            ${isActive ? '<div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-player-' + i + '"></div>' : ''}`;
+        rail.appendChild(slot);
+    }
+}
+
+export function updateActionZone(state, diceValue, playerIndex) {
+    const zone = document.getElementById('action-zone');
+    const textEl = document.getElementById('action-text');
+    const holder = document.getElementById('dice-holder');
+    if (!zone || !textEl) return;
+
+    const pi = playerIndex ?? (_getCurrentPlayerIndex ? _getCurrentPlayerIndex() : 0);
+    const isBot = _playerTypes ? _playerTypes[pi] === 'BOT' : false;
+    const who = isBot ? 'Bot\'s turn' : 'Your turn';
+
+    const colorClasses = ["text-player-0", "text-player-1", "text-player-2", "text-player-3"];
+    if (holder) {
+        colorClasses.forEach(c => holder.classList.remove(c));
+        holder.classList.add(colorClasses[pi]);
+    }
+
+    if (state === 'select') {
+        zone.className = 'flex items-center gap-3.5 bg-card rounded-2xl p-3.5 px-4 border border-foreground/10';
+        textEl.innerHTML = `
+            <div class="text-[15px] font-medium">${isBot ? 'Bot' : 'You'} rolled a ${diceValue}</div>
+            <div class="text-[13px] opacity-50 mt-0.5">${isBot ? 'Choosing move…' : 'Tap a glowing piece to move it.'}</div>`;
+    } else if (state === 'rolling') {
+        zone.className = 'flex items-center gap-3.5';
+        textEl.innerHTML = `
+            <div class="text-xs opacity-50 tracking-widest uppercase">${who}</div>
+            <div class="text-[22px] font-display leading-tight mt-0.5 tracking-tight">Rolling…</div>`;
+    } else {
+        zone.className = 'flex items-center gap-3.5';
+        textEl.innerHTML = `
+            <div class="text-xs opacity-50 tracking-widest uppercase">${who}</div>
+            <div class="text-[22px] font-display leading-tight mt-0.5 tracking-tight">${isBot ? 'Waiting…' : 'Tap to roll'}</div>`;
+    }
+}
+
+export function updateTurnCounter() {
+    turnCount++;
+    const el = document.getElementById('turn-counter');
+    if (el) el.textContent = `Turn ${turnCount}`;
+}
+
+export function resetTurnCount() {
+    turnCount = 0;
+}
+
 export function moveDice(currentPlayerIndex) {
-    const targetContainer = document.getElementById(`b${currentPlayerIndex}`)
-    const holder = document.getElementById("dice-holder")
-    targetContainer.appendChild(holder)
-    const colorClasses = ["text-player-0", "text-player-1", "text-player-2", "text-player-3"]
-    colorClasses.forEach(c => holder.classList.remove(c))
-    holder.classList.add(colorClasses[currentPlayerIndex])
+    updatePlayerRail();
+    updateActionZone('idle', null, currentPlayerIndex);
+    updateCornerWidgets();
 }

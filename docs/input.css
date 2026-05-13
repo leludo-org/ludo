@@ -1,22 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
     :root {
-        --border: 220 13% 78%;
-        --background: 220 14% 93%;
-        --foreground: 224 71.4% 4.1%;
-        --card: 0 0% 99%;
-        --card-hover: 220 14% 96%;
-        --base-color-0: 355 72% 52%;
-        --base-color-1: 152 56% 39%;
-        --base-color-2: 42 88% 50%;
-        --base-color-3: 220 68% 50%;
-        --base-color-0-light: 355 80% 88%;
-        --base-color-1-light: 152 50% 85%;
-        --base-color-2-light: 42 85% 87%;
-        --base-color-3-light: 220 70% 88%;
+        --border: 37 15% 78%;
+        --background: 37 22% 90%;
+        --foreground: 36 18% 10%;
+        --card: 39 36% 93%;
+        --card-hover: 39 28% 95%;
+        --base-color-0: 10 63% 48%;
+        --base-color-1: 152 38% 39%;
+        --base-color-2: 43 75% 48%;
+        --base-color-3: 223 54% 43%;
+        --base-color-0-light: 16 68% 88%;
+        --base-color-1-light: 148 30% 85%;
+        --base-color-2-light: 46 64% 82%;
+        --base-color-3-light: 220 42% 88%;
         --player-0: var(--base-color-0);
         --player-1: var(--base-color-1);
         --player-2: var(--base-color-2);
@@ -25,24 +27,29 @@
         --player-1-light: var(--base-color-1-light);
         --player-2-light: var(--base-color-2-light);
         --player-3-light: var(--base-color-3-light);
-        --board-cell: 40 20% 96%;
-        --board-border: 220 10% 82%;
+        --player-0-path: 18 48% 83%;
+        --player-1-path: 148 26% 83%;
+        --player-2-path: 46 60% 78%;
+        --player-3-path: 215 38% 85%;
+        --safe-tint: 40 28% 87%;
+        --board-cell: 42 38% 95%;
+        --board-border: 37 15% 78%;
     }
 
     .dark {
-        --border: 220 10% 30%;
-        --background: 224 30% 10%;
-        --foreground: 210 20% 92%;
-        --card: 224 20% 16%;
-        --card-hover: 224 20% 20%;
-        --base-color-0: 355 72% 58%;
-        --base-color-1: 152 50% 45%;
-        --base-color-2: 42 85% 55%;
-        --base-color-3: 220 65% 56%;
-        --base-color-0-light: 355 50% 22%;
-        --base-color-1-light: 152 35% 20%;
-        --base-color-2-light: 42 45% 20%;
-        --base-color-3-light: 220 40% 22%;
+        --border: 30 10% 25%;
+        --background: 30 20% 8%;
+        --foreground: 35 20% 90%;
+        --card: 30 15% 14%;
+        --card-hover: 30 15% 18%;
+        --base-color-0: 10 63% 55%;
+        --base-color-1: 152 38% 45%;
+        --base-color-2: 43 75% 55%;
+        --base-color-3: 223 54% 55%;
+        --base-color-0-light: 10 40% 20%;
+        --base-color-1-light: 152 30% 18%;
+        --base-color-2-light: 43 40% 18%;
+        --base-color-3-light: 223 35% 20%;
         --player-0: var(--base-color-0);
         --player-1: var(--base-color-1);
         --player-2: var(--base-color-2);
@@ -51,24 +58,18 @@
         --player-1-light: var(--base-color-1-light);
         --player-2-light: var(--base-color-2-light);
         --player-3-light: var(--base-color-3-light);
-        --board-cell: 224 12% 24%;
-        --board-border: 220 12% 30%;
+        --player-0-path: 10 30% 25%;
+        --player-1-path: 148 20% 22%;
+        --player-2-path: 43 30% 22%;
+        --player-3-path: 223 25% 25%;
+        --safe-tint: 30 15% 20%;
+        --board-cell: 30 12% 20%;
+        --board-border: 30 12% 28%;
     }
-
-    /* latin */
-    @font-face {
-        font-family: 'Merriweather';
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url(assets/fonts/u-440qyriQwlOrhSvowK_l5-fCZM.woff2) format('woff2');
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-
 
     * {
         @apply border-border;
-        font-family: "Merriweather", sans-serif;
+        font-family: "DM Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     }
 
     html {
