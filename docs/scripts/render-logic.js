@@ -432,43 +432,9 @@ function pillMarkup(idx, finished, active) {
         </div>`;
 }
 
-function restoreDiceToActionZone() {
-    const dice = document.getElementById('wc-dice');
-    const home = document.getElementById('dice-holder');
-    if (dice && home && dice.parentElement !== home) {
-        home.appendChild(dice);
-        dice.style.cssText = '';
-        dice.className = 'relative w-full';
-    }
-}
-
 export function updateCornerWidgets() {
-    if (!_playerTypes || !_getIsLocalMultiplayer) return;
-    const isLMP = _getIsLocalMultiplayer();
+    if (!_playerTypes) return;
     const pi = _getCurrentPlayerIndex();
-
-    const railWrap = document.getElementById('player-rail-wrap');
-    const actionWrap = document.getElementById('action-zone-wrap');
-    const topRow = document.getElementById('corner-row-top');
-    const botRow = document.getElementById('corner-row-bottom');
-
-    if (!isLMP) {
-        CORNER_CFG.forEach(({ anchor }) => {
-            const el = document.getElementById(anchor);
-            if (el) el.innerHTML = '';
-        });
-        if (topRow) { topRow.classList.add('hidden'); topRow.classList.remove('flex'); }
-        if (botRow) { botRow.classList.add('hidden'); botRow.classList.remove('flex'); }
-        if (railWrap) railWrap.classList.remove('hidden');
-        if (actionWrap) actionWrap.classList.remove('hidden');
-        restoreDiceToActionZone();
-        return;
-    }
-
-    if (railWrap) railWrap.classList.add('hidden');
-    if (actionWrap) actionWrap.classList.add('hidden');
-    if (topRow) { topRow.classList.remove('hidden'); topRow.classList.add('flex'); }
-    if (botRow) { botRow.classList.remove('hidden'); botRow.classList.add('flex'); }
 
     // Detach wc-dice before wiping any corner contents so we can reparent it.
     const dice = document.getElementById('wc-dice');
@@ -516,64 +482,8 @@ export function updateCornerWidgets() {
     });
 }
 
-export function updatePlayerRail() {
-    const rail = document.getElementById('player-rail');
-    if (!rail || !_playerTypes) return;
-    const pi = _getCurrentPlayerIndex();
-
-    rail.innerHTML = '';
-    for (let i = 0; i < 4; i++) {
-        if (!_playerTypes[i]) continue;
-        const isActive = i === pi;
-        const finished = _getFinishedCount(i);
-        const name = _playerTypes[i] === 'PLAYER' ? 'You' : `Bot`;
-        const slot = document.createElement('div');
-        slot.className = `flex-1 flex flex-col items-center gap-0.5 py-1.5 px-1 rounded-[10px] relative transition-colors ${isActive ? 'bg-player-' + i + '-light' : ''}`;
-        slot.innerHTML = `
-            <div class="w-[22px] h-[22px] rounded-full bg-player-${i} flex items-center justify-center ${isActive ? 'ring-2 ring-player-' + i + ' ring-offset-2 ring-offset-card' : ''}">
-                <div class="w-1.5 h-1.5 rounded-full bg-white/65"></div>
-            </div>
-            <div class="text-[11px] font-medium ${isActive ? '' : 'opacity-50'}">${name}</div>
-            <div class="text-[10px] opacity-40 font-mono">${finished}/4</div>
-            ${isActive ? '<div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-player-' + i + '"></div>' : ''}`;
-        rail.appendChild(slot);
-    }
-}
-
-export function updateActionZone(state, diceValue, playerIndex) {
-    const zone = document.getElementById('action-zone');
-    const textEl = document.getElementById('action-text');
-    const holder = document.getElementById('dice-holder');
-    if (!zone || !textEl) return;
-
-    const pi = playerIndex ?? (_getCurrentPlayerIndex ? _getCurrentPlayerIndex() : 0);
-    const isBot = _playerTypes ? _playerTypes[pi] === 'BOT' : false;
-    const who = isBot ? 'Bot\'s turn' : 'Your turn';
-
-    const colorClasses = ["text-player-0", "text-player-1", "text-player-2", "text-player-3"];
-    if (holder) {
-        colorClasses.forEach(c => holder.classList.remove(c));
-        holder.classList.add(colorClasses[pi]);
-    }
-
-    const zoneBase = 'flex items-center gap-3.5 bg-card rounded-2xl p-3.5 px-4 border border-foreground/10';
-    if (state === 'select') {
-        zone.className = zoneBase;
-        textEl.innerHTML = `
-            <div class="text-[15px] font-medium">${isBot ? 'Bot' : 'You'} rolled a ${diceValue}</div>
-            <div class="text-[13px] opacity-50 mt-0.5">${isBot ? 'Choosing move…' : 'Tap a glowing piece to move it.'}</div>`;
-    } else if (state === 'rolling') {
-        zone.className = zoneBase;
-        textEl.innerHTML = `
-            <div class="text-xs opacity-50 tracking-widest uppercase">${who}</div>
-            <div class="text-[22px] font-display leading-tight mt-0.5 tracking-tight">Rolling…</div>`;
-    } else {
-        zone.className = zoneBase;
-        textEl.innerHTML = `
-            <div class="text-xs opacity-50 tracking-widest uppercase">${who}</div>
-            <div class="text-[22px] font-display leading-tight mt-0.5 tracking-tight">${isBot ? 'Waiting…' : 'Tap to roll'}</div>`;
-    }
-}
+export function updatePlayerRail() {}
+export function updateActionZone() {}
 
 export function updateTurnCounter() {
     turnCount++;
@@ -585,8 +495,6 @@ export function resetTurnCount() {
     turnCount = 0;
 }
 
-export function moveDice(currentPlayerIndex) {
-    updatePlayerRail();
-    updateActionZone('idle', null, currentPlayerIndex);
+export function moveDice() {
     updateCornerWidgets();
 }

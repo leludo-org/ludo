@@ -32,13 +32,11 @@ const BOARD_HTML = /*html*/ `
             </button>
         </div>
 
-        <!-- Player rail -->
-        <div id="player-rail-wrap" class="px-3 pt-2.5">
-            <div id="player-rail" class="flex gap-1.5 p-1 rounded-[14px] bg-card border border-foreground/10"></div>
-        </div>
+        <!-- Hidden home for wc-dice when no active corner has it yet -->
+        <div id="dice-home" class="hidden"><wc-dice id="wc-dice"></wc-dice></div>
 
-        <!-- Local · top corner row (rotated to face top seats) -->
-        <div id="corner-row-top" class="hidden flex justify-between items-start px-3 pt-2 gap-2" style="min-height:56px;">
+        <!-- Top corner row (seats 0/1, rotated 180°) -->
+        <div id="corner-row-top" class="flex justify-between items-start px-3 pt-2 gap-2" style="min-height:56px;">
             <div id="b0" class="empty:hidden"></div>
             <div id="b1" class="empty:hidden"></div>
         </div>
@@ -216,25 +214,10 @@ const BOARD_HTML = /*html*/ `
             </div>
         </div>
 
-        <!-- Local · bottom corner row -->
-        <div id="corner-row-bottom" class="hidden justify-between items-end px-3 pt-2 gap-2" style="min-height:56px;">
+        <!-- Bottom corner row (seats 3/2, upright) -->
+        <div id="corner-row-bottom" class="flex justify-between items-end px-3 pt-3 pb-2 gap-2" style="min-height:56px;">
             <div id="b3" class="empty:hidden"></div>
             <div id="b2" class="empty:hidden"></div>
-        </div>
-
-        <!-- Action zone -->
-        <div id="action-zone-wrap" class="px-3 pt-3 pb-2">
-            <div id="action-zone" class="flex items-center gap-3.5 bg-card rounded-2xl p-3.5 px-4 border border-foreground/10">
-                <div id="action-text" class="flex-1">
-                    <div class="text-xs opacity-50 tracking-widest uppercase">Your turn</div>
-                    <div class="text-[22px] font-display leading-tight mt-0.5 tracking-tight">Tap to roll</div>
-                </div>
-                <div id="dice-holder" class="relative flex items-center justify-center overflow-hidden rounded-3xl" style="width:84px;height:84px;">
-                    <div class="dice-ripple absolute rounded-full bg-current" style="opacity:0.15;"></div>
-                    <div class="dice-ripple absolute rounded-full bg-current" style="animation-delay: 0.6s;opacity:0.15;"></div>
-                    <wc-dice id="wc-dice" class="relative w-full"></wc-dice>
-                </div>
-            </div>
         </div>
     </div>
 `
