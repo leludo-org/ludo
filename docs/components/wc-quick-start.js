@@ -55,7 +55,7 @@ class QuickStart extends HTMLElement {
             { active: true,  type: 'PLAYER', colorIndex: 0, name: 'You' },
             { active: true,  type: 'BOT',    colorIndex: 1, name: 'Bot 1' },
             { active: true,  type: 'BOT',    colorIndex: 2, name: 'Bot 2' },
-            { active: false, type: 'empty',  colorIndex: null, name: '' },
+            { active: true,  type: 'BOT',    colorIndex: 3, name: 'Bot 3' },
         ];
     }
 
