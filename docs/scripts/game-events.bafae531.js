@@ -36,6 +36,41 @@ import { pickBestMove, PERSONALITIES, randomPersonality } from "./bot-ai.81a6eea
 let currentPlayerIndex = 2;
 let currentDiceRoll = 1;
 let consecutiveSixesCount = 0
+let inputLockDepth = 0;
+let inputLockOverlay = null;
+
+function ensureInputLockOverlay() {
+    if (inputLockOverlay) return inputLockOverlay;
+    inputLockOverlay = document.createElement('div');
+    inputLockOverlay.id = 'input-lock-overlay';
+    inputLockOverlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:transparent;pointer-events:auto;display:none;';
+    document.body.appendChild(inputLockOverlay);
+    return inputLockOverlay;
+}
+
+export function isInputLocked() {
+    return inputLockDepth > 0;
+}
+
+export function acquireInputLock() {
+    inputLockDepth++;
+    if (inputLockDepth === 1) {
+        ensureInputLockOverlay().style.display = 'block';
+    }
+}
+
+export function releaseInputLock() {
+    if (inputLockDepth === 0) return;
+    inputLockDepth--;
+    if (inputLockDepth === 0 && inputLockOverlay) {
+        inputLockOverlay.style.display = 'none';
+    }
+}
+
+export function resetInputLock() {
+    inputLockDepth = 0;
+    if (inputLockOverlay) inputLockOverlay.style.display = 'none';
+}
 const assistFlags = {
     autoRollDice: false,
     autoMoveSingleOption: false,
@@ -154,6 +189,8 @@ function updateCurrentPlayer() {
  * @param {string} quickStartId
  */
 export function handleGameStart(quickStartId, namesByPlayerIndex) {
+    if (isInputLocked()) return;
+    resetInputLock();
     _quickStartId = quickStartId;
     gameStartedAt = new Date().getTime()
     resetTurnCount()
@@ -225,6 +262,8 @@ export function handlePayerUpdated() {
 
 
 export function handleDiceRoll() {
+    if (isInputLocked()) return;
+    acquireInputLock();
     updateActionZone('rolling');
     animateDiceRoll(currentDiceRoll)
         .then(() => {
@@ -238,6 +277,9 @@ export function handleDiceRoll() {
             }
 
             handleAfterDiceRoll()
+        })
+        .finally(() => {
+            releaseInputLock();
         });
 }
 
@@ -292,43 +334,49 @@ function handleAfterDiceRoll() {
  * @param {number} tokenIndex
  */
 export async function handleOnTokenMove(playerIndex, tokenIndex) {
-    inactiveTokens();
+    if (isInputLocked()) return;
+    acquireInputLock();
+    try {
+        inactiveTokens();
 
-    const tokenOldPosition = playerTokenPositions[currentPlayerIndex][tokenIndex]
-    const tokenNewPosition = getTokenNewPosition(playerTokenPositions[currentPlayerIndex][tokenIndex], currentDiceRoll)
-    playerTokenPositions[currentPlayerIndex][tokenIndex] = tokenNewPosition
+        const tokenOldPosition = playerTokenPositions[currentPlayerIndex][tokenIndex]
+        const tokenNewPosition = getTokenNewPosition(playerTokenPositions[currentPlayerIndex][tokenIndex], currentDiceRoll)
+        playerTokenPositions[currentPlayerIndex][tokenIndex] = tokenNewPosition
 
-    const tripComplete = isTripComplete(tokenNewPosition)
+        const tripComplete = isTripComplete(tokenNewPosition)
 
-    await updateTokenContainer(playerIndex, tokenIndex, tokenOldPosition, tokenNewPosition)
+        await updateTokenContainer(playerIndex, tokenIndex, tokenOldPosition, tokenNewPosition)
 
-    const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, playerTokenPositions[playerIndex][tokenIndex], playerTokenPositions);
-    let captureCount = 0
+        const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, playerTokenPositions[playerIndex][tokenIndex], playerTokenPositions);
+        let captureCount = 0
 
-    for (const [pi, pt] of otherPlayerTokensOnThatMarkIndex.entries()) {
-        for (const ti of pt) {
-            playCaptureSound()
-            const capturedToken = document.getElementById(`p-${pi}-${ti}`);
-            const capturedSvg = capturedToken?.children[0];
-            if (capturedSvg) {
-                capturedSvg.classList.add("token-captured");
-                await new Promise(r => setTimeout(r, 500));
-                capturedSvg.classList.remove("token-captured");
+        for (const [pi, pt] of otherPlayerTokensOnThatMarkIndex.entries()) {
+            for (const ti of pt) {
+                playCaptureSound()
+                const capturedToken = document.getElementById(`p-${pi}-${ti}`);
+                const capturedSvg = capturedToken?.children[0];
+                if (capturedSvg) {
+                    capturedSvg.classList.add("token-captured");
+                    await new Promise(r => setTimeout(r, 500));
+                    capturedSvg.classList.remove("token-captured");
+                }
+                await updateTokenContainer(pi, ti, playerTokenPositions[pi][ti], -1)
+                playerTokenPositions[pi][ti] = -1
+                captureCount++
             }
-            await updateTokenContainer(pi, ti, playerTokenPositions[pi][ti], -1)
-            playerTokenPositions[pi][ti] = -1
-            captureCount++
         }
-    }
 
-    if (captureCount > 0) {
-        playerCaptures[currentPlayerIndex] += captureCount
-        const board = document.getElementById("game");
-        board.classList.add("board-shake");
-        board.addEventListener("animationend", () => board.classList.remove("board-shake"), { once: true });
-    }
+        if (captureCount > 0) {
+            playerCaptures[currentPlayerIndex] += captureCount
+            const board = document.getElementById("game");
+            board.classList.add("board-shake");
+            board.addEventListener("animationend", () => board.classList.remove("board-shake"), { once: true });
+        }
 
-    handleAfterTokenMove(tripComplete, captureCount)
+        handleAfterTokenMove(tripComplete, captureCount)
+    } finally {
+        releaseInputLock();
+    }
 }
 
 
@@ -447,6 +495,8 @@ export function getSavedGame() {
 }
 
 export function handleGameResume() {
+    if (isInputLocked()) return;
+    resetInputLock();
     const saved = getSavedGame();
     if (!saved) return;
 
