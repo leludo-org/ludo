@@ -220,6 +220,44 @@ function clearStackStyles(t) {
     t.style.removeProperty('margin-left');
 }
 
+function applyFinishStacking(cell, tokens) {
+    const n = tokens.length;
+    if (n === 0) return;
+    const playerIdx = parseInt(cell.id[1], 10);
+    const edge = 4;
+
+    function place(t, alongPct, depthPct, sizePct) {
+        let top, left;
+        switch (playerIdx) {
+            case 0: left = depthPct; top = alongPct; break;
+            case 1: left = alongPct; top = depthPct; break;
+            case 2: left = 100 - depthPct - sizePct; top = alongPct; break;
+            case 3: left = alongPct; top = 100 - depthPct - sizePct; break;
+        }
+        t.style.cssText = `position:absolute;top:${top}%;left:${left}%;width:${sizePct}%;height:${sizePct}%;`;
+    }
+
+    if (n <= 3) {
+        const sizeMap = [22, 22, 22, 17];
+        const gapMap = [0, 0, 4, 3];
+        const s = sizeMap[n];
+        const g = gapMap[n];
+        const totalLen = n * s + (n - 1) * g;
+        const startAlong = (100 - totalLen) / 2;
+        tokens.forEach((t, i) => place(t, startAlong + i * (s + g), edge, s));
+        return;
+    }
+
+    const s = 17;
+    const g = 3;
+    const lineLen = 3 * s + 2 * g;
+    const startAlong = (100 - lineLen) / 2;
+    for (let i = 0; i < 3; i++) {
+        place(tokens[i], startAlong + i * (s + g), edge, s);
+    }
+    place(tokens[3], (100 - s) / 2, edge + s + g, s);
+}
+
 export function updateCellStacking(cell) {
     if (!cell) return;
     const allTokens = Array.from(cell.querySelectorAll(':scope > wc-token'));
@@ -230,10 +268,12 @@ export function updateCellStacking(cell) {
     const badge = cell.querySelector('.stack-badge');
     if (badge) badge.remove();
 
-    if (n <= 1) return;
+    if (/^p\ds6$/.test(cell.id)) {
+        applyFinishStacking(cell, tokens);
+        return;
+    }
 
-    // Home-stretch finish cells (p*s6) use CSS grid + rotate-45 layout; skip absolute stacking.
-    if (/^p\ds6$/.test(cell.id)) return;
+    if (n <= 1) return;
 
     cell.style.position = 'relative';
 
@@ -306,7 +346,54 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
             }
 
             playStepSound();
-            const targetContainer = document.getElementById(path[stepIndex]);
+            const isFinalStep = stepIndex === path.length - 1;
+            const targetId = path[stepIndex];
+            const isFinishCell = /^p\ds6$/.test(targetId);
+
+            if (isFinalStep && isFinishCell) {
+                const targetContainer = document.getElementById(targetId);
+                const preRect = element.getBoundingClientRect();
+                element.style.transition = 'none';
+                element.style.transform = '';
+                element.style.position = '';
+                element.style.zIndex = '';
+                element.style.willChange = '';
+                targetContainer.appendChild(element);
+                delete element.dataset.moving;
+                updateCellStacking(targetContainer);
+                element.style.transition = 'none';
+                const finalRect = element.getBoundingClientRect();
+                const dx = preRect.left - finalRect.left;
+                const dy = preRect.top - finalRect.top;
+                const sx = finalRect.width ? preRect.width / finalRect.width : 1;
+                const sy = finalRect.height ? preRect.height / finalRect.height : 1;
+                element.style.transformOrigin = '0 0';
+                element.style.zIndex = '50';
+                element.style.willChange = 'transform';
+                element.style.transform = `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`;
+                void element.offsetWidth;
+                element.style.transition = '';
+
+                let settled = false;
+                const settle = () => {
+                    if (settled) return;
+                    settled = true;
+                    clearTimeout(fallbackTimer);
+                    element.style.willChange = '';
+                    element.style.zIndex = '';
+                    element.style.transformOrigin = '';
+                    element.style.removeProperty('transform');
+                    resolve();
+                };
+                element.addEventListener('transitionend', settle, { once: true });
+                const fallbackTimer = setTimeout(settle, 400);
+                requestAnimationFrame(() => {
+                    element.style.transform = '';
+                });
+                return;
+            }
+
+            const targetContainer = document.getElementById(targetId);
             const targetRect = targetContainer.getBoundingClientRect();
             const offsetX = targetRect.left - originRect.left;
             const offsetY = targetRect.top - originRect.top;

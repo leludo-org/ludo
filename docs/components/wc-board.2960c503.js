@@ -127,13 +127,13 @@ const BOARD_HTML = /*html*/ `
 
             <div class="relative overflow-clip bg-board-cell">
                 <div id="p0s6"
-                     class="absolute size-full bg-player-0-path [clip-path:polygon(0_0,_0_100%,_50%_50%)] flex flex-col items-start justify-center pl-[4%] gap-[3%] [&>wc-token]:size-[22%]"></div>
+                     class="absolute size-full bg-player-0-path [clip-path:polygon(0_0,_0_100%,_50%_50%)]"></div>
                 <div id="p1s6"
-                     class="absolute size-full bg-player-1-path [clip-path:polygon(0_0,_100%_0,_50%_50%)] flex flex-row items-start justify-center pt-[4%] gap-[3%] [&>wc-token]:size-[22%]"></div>
+                     class="absolute size-full bg-player-1-path [clip-path:polygon(0_0,_100%_0,_50%_50%)]"></div>
                 <div id="p3s6"
-                     class="absolute size-full bg-player-3-path [clip-path:polygon(0_100%,_100%_100%,_50%_50%)] flex flex-row items-end justify-center pb-[4%] gap-[3%] [&>wc-token]:size-[22%]"></div>
+                     class="absolute size-full bg-player-3-path [clip-path:polygon(0_100%,_100%_100%,_50%_50%)]"></div>
                 <div id="p2s6"
-                     class="absolute size-full bg-player-2-path [clip-path:polygon(100%_0,_100%_100%,_50%_50%)] flex flex-col items-end justify-center pr-[4%] gap-[3%] [&>wc-token]:size-[22%]"></div>
+                     class="absolute size-full bg-player-2-path [clip-path:polygon(100%_0,_100%_100%,_50%_50%)]"></div>
             </div>
 
             <div class="-x col-span-2 grid grid-cols-6 grid-rows-3 [&>div]:outline [&>div]:outline-1 [&>div]:outline-board-border/40">
