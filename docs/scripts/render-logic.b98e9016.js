@@ -442,23 +442,61 @@ export function inactiveDice() {
     document.getElementById("wc-dice").dataset.active = "false"
 }
 
+let _wakeLock = null;
+let _wakeWanted = false;
+let _wakeListenerAttached = false;
+
+async function _acquireWakeLock() {
+    if (!("wakeLock" in navigator)) return;
+    if (_wakeLock || document.visibilityState !== "visible") return;
+    try {
+        _wakeLock = await navigator.wakeLock.request("screen");
+        _wakeLock.addEventListener("release", () => { _wakeLock = null; });
+    } catch (e) {
+        // permission denied / battery saver — silently ignore
+    }
+}
+
+export function requestWakeLock() {
+    _wakeWanted = true;
+    if (!_wakeListenerAttached) {
+        document.addEventListener("visibilitychange", () => {
+            if (_wakeWanted && document.visibilityState === "visible") _acquireWakeLock();
+        });
+        _wakeListenerAttached = true;
+    }
+    _acquireWakeLock();
+}
+
+export function releaseWakeLock() {
+    _wakeWanted = false;
+    if (_wakeLock) {
+        _wakeLock.release().catch(() => {});
+        _wakeLock = null;
+    }
+}
+
 export function showGame() {
     document.getElementById("main-menu").classList.add("hidden")
     document.getElementById("game").classList.remove("hidden")
+    requestWakeLock()
 }
 
 export function slideBackToMenu() {
+    releaseWakeLock()
     return Promise.resolve()
 }
 
 export function showPauseMenu() {
     document.getElementById("game").classList.add("hidden")
     document.getElementById("pause-menu").classList.remove("hidden")
+    releaseWakeLock()
 }
 
 export function resumeGame() {
     document.getElementById("pause-menu").classList.add("hidden")
     document.getElementById("game").classList.remove("hidden")
+    requestWakeLock()
 }
 
 /**

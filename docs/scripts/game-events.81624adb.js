@@ -15,6 +15,7 @@ import {
     moveDice,
     playCaptureSound,
     playClickSound,
+    releaseWakeLock,
     resumeGame,
     showGame,
     showPauseMenu,
@@ -427,6 +428,7 @@ function handleAfterTokenMove(tripComplete, captureCount) {
 
             document.getElementById("game-container").appendChild(document.createElement("wc-game-end"))
             document.getElementById("game").classList.add("hidden")
+            releaseWakeLock()
             isGameDone = true;
         }
     }
