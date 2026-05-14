@@ -1,4 +1,4 @@
-import {getMarkIndex} from "./index.js";
+import {getMarkIndex} from "./index.e8f102de.js";
 
 export function playClickSound() {
     const ctx = getAudioCtx();

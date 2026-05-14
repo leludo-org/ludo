@@ -1,5 +1,5 @@
-import {htmlToElement} from "./index.js"
-import {playerCaptures, playerNames, playerRanks, playerTimes, playerTypes, playClickSound} from "../scripts/index.js";
+import {htmlToElement} from "./index.bf0b1971.js"
+import {playerCaptures, playerNames, playerRanks, playerTimes, playerTypes, playClickSound} from "../scripts/index.e8f102de.js";
 
 const CONFETTI_COLORS = ['var(--base-color-0)', 'var(--base-color-1)', 'var(--base-color-2)', 'var(--base-color-3)'];
 

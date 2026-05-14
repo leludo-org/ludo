@@ -1,7 +1,7 @@
 import {
     htmlToElement
-} from "./index.js"
-import {handleGamePause, playClickSound} from "../scripts/index.js";
+} from "./index.bf0b1971.js"
+import {handleGamePause, playClickSound} from "../scripts/index.e8f102de.js";
 
 //language=HTML
 const STAR_D = "M12 2.2l2.8 6.3 6.8.5-5.2 4.4 1.6 6.6L12 16.6l-6 3.4 1.6-6.6L2.4 9l6.8-.5z";

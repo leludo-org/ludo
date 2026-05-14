@@ -1,6 +1,6 @@
 import {
     htmlToElement
-} from "./index.js"
+} from "./index.bf0b1971.js"
 
 //language=HTML
 const BUTTON_HTML = /*html*/ `

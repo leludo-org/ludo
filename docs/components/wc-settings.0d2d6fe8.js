@@ -1,6 +1,6 @@
 import {
     setAssistFlag,
-} from "../scripts/index.js";
+} from "../scripts/index.e8f102de.js";
 
 const ASSIST_TOGGLES = [
     { id: 's-auto-roll', flag: 'autoRollDice', label: 'Auto-roll dice', storageKey: 'assist-auto-roll', default: false },
@@ -18,10 +18,10 @@ import {
     BOT_POOL_LABELS,
     getActivePoolKey,
     setActivePoolKey,
-} from "../scripts/bot-names.js";
+} from "../scripts/bot-names.af5235e8.js";
 import {
     htmlToElement
-} from "./index.js"
+} from "./index.bf0b1971.js"
 
 const ICON_BACK = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>`;
 

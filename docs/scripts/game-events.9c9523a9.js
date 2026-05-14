@@ -26,7 +26,7 @@ import {
     resetTurnCount,
     initRailDeps,
     setPlayerNames,
-} from "./index.js";
+} from "./index.e8f102de.js";
 
 /**
  * @typedef {'PLAYER'|'BOT'} PlayerType

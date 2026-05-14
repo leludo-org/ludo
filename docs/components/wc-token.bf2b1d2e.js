@@ -1,10 +1,10 @@
 import {
     htmlToElement
-} from "./index.js"
+} from "./index.bf0b1971.js"
 import {
     handleOnTokenMove,
     playClickSound,
-} from "../scripts/index.js";
+} from "../scripts/index.e8f102de.js";
 
 //language=HTML
 const TOKEN_HTML = (playerIndex) => /*html*/ `
