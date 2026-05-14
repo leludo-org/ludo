@@ -3,7 +3,7 @@ import {
     activateToken,
     animateDiceRoll,
     findCapturedOpponents,
-    generateDiceRoll, getBestPossibleTokenIndexForMove,
+    generateDiceRoll,
     applyColorMap, getPlayerTypes,
     getTokenContainerId,
     getTokenElementId,
@@ -27,6 +27,7 @@ import {
     initRailDeps,
     setPlayerNames,
 } from "./index.e8f102de.js";
+import { pickBestMove, PERSONALITIES, randomPersonality } from "./bot-ai.81a6eea3.js";
 
 /**
  * @typedef {'PLAYER'|'BOT'} PlayerType
@@ -68,6 +69,11 @@ export const playerCaptures = new Array(4).fill(0)
  * @type {string[]}
  */
 export const playerNames = new Array(4).fill('')
+/**
+ *
+ * @type {string[]}
+ */
+export const botPersonalities = new Array(4).fill(null)
 /**
  *
  * @type {number[][]}
@@ -118,6 +124,7 @@ function initPlayers(quickStartId) {
     result.playerTypes.forEach((playerType, playerIndex) => {
         playerTypes[playerIndex] = playerType
         playerTokenPositions[playerIndex] = new Array(4).fill(-1)
+        botPersonalities[playerIndex] = playerType === "BOT" ? randomPersonality() : null
     })
     applyColorMap(result.colorMap)
 }
@@ -258,8 +265,9 @@ function handleAfterDiceRoll() {
                     if (uniqueTokenIndexPositions.size === 1) {
                         handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0]);
                     } else {
-                        const bestMoveTokenIndex = getBestPossibleTokenIndexForMove(currentPlayerIndex, movableTokenIndexes, currentDiceRoll, playerTokenPositions);
-                        handleOnTokenMove(currentPlayerIndex, bestMoveTokenIndex);
+                        const weights = PERSONALITIES[botPersonalities[currentPlayerIndex]] || PERSONALITIES.balanced;
+                        const bestMoveTokenIndex = pickBestMove(currentPlayerIndex, currentDiceRoll, playerTokenPositions, weights, 1);
+                        handleOnTokenMove(currentPlayerIndex, bestMoveTokenIndex >= 0 ? bestMoveTokenIndex : movableTokenIndexes[0]);
                     }
                 }, 400);
             } else {
@@ -336,18 +344,34 @@ function handleAfterTokenMove(tripComplete, captureCount) {
         playerTimes[currentPlayerIndex] = new Date().getTime() - gameStartedAt
 
         let numberOfRemainingPlayers = 0;
+        let remainingHumans = 0;
+        let hasAnyHuman = false;
         playerTypes.forEach((playerType, playerIndex) => {
-            if (playerType && !isPlayerFinished(playerIndex)) {
+            if (!playerType) return;
+            if (playerType === 'PLAYER') hasAnyHuman = true;
+            if (!isPlayerFinished(playerIndex)) {
                 numberOfRemainingPlayers++;
+                if (playerType === 'PLAYER') remainingHumans++;
             }
         })
 
-        if (numberOfRemainingPlayers === 1) {
+        const allHumansDoneVsBots = hasAnyHuman && remainingHumans === 0 && numberOfRemainingPlayers > 0;
+
+        if (numberOfRemainingPlayers === 1 || allHumansDoneVsBots) {
+            const leftover = [];
             playerTypes.forEach((playerType, playerIndex) => {
-                if (playerType && playerRanks[playerIndex] === 0) {
-                    playerRanks[playerIndex] = ++lastRank
-                    playerTimes[playerIndex] = new Date().getTime() - gameStartedAt
-                }
+                if (playerType && playerRanks[playerIndex] === 0) leftover.push(playerIndex);
+            })
+            leftover.sort((a, b) => {
+                const fa = getFinishedCount(a), fb = getFinishedCount(b);
+                if (fb !== fa) return fb - fa;
+                const sa = playerTokenPositions[a].reduce((s, p) => s + (p < 0 ? 0 : p), 0);
+                const sb = playerTokenPositions[b].reduce((s, p) => s + (p < 0 ? 0 : p), 0);
+                return sb - sa;
+            });
+            leftover.forEach(playerIndex => {
+                playerRanks[playerIndex] = ++lastRank
+                playerTimes[playerIndex] = new Date().getTime() - gameStartedAt
             })
 
             document.getElementById("game-container").appendChild(document.createElement("wc-game-end"))
@@ -397,6 +421,7 @@ function saveGameState() {
         quickStartId: _quickStartId,
         playerNamesArr: Array.from(playerNames),
         playerTypesArr: Array.from(playerTypes),
+        botPersonalitiesArr: Array.from(botPersonalities),
         positions: playerTokenPositions.map(p => p ? Array.from(p) : null),
         currentPlayerIndex,
         currentDiceRoll,
@@ -436,6 +461,11 @@ export function handleGameResume() {
     initPlayers(saved.quickStartId);
 
     saved.playerTypesArr.forEach((t, i) => playerTypes[i] = t);
+    if (saved.botPersonalitiesArr) {
+        saved.botPersonalitiesArr.forEach((p, i) => botPersonalities[i] = p || null);
+    } else {
+        playerTypes.forEach((t, i) => botPersonalities[i] = t === "BOT" ? randomPersonality() : null);
+    }
     (saved.playerNamesArr || []).forEach((n, i) => playerNames[i] = n || '');
     setPlayerNames(playerNames);
     saved.capturesArr.forEach((c, i) => playerCaptures[i] = c);

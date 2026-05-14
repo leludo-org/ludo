@@ -118,7 +118,7 @@ class QuickStart extends HTMLElement {
             <div class="flex flex-col h-full min-h-[70vh]">
                 <div class="flex items-center gap-2 pt-1 pb-6">
                     <a href="https://github.com/leludo-org/ludo" target="_blank" rel="noopener" class="${CIRCLE_BTN} text-foreground no-underline">${ICON_GITHUB}</a>
-                    <div class="flex-1 text-center text-[11px] font-medium tracking-[0.16em] uppercase opacity-50">v0.2.0</div>
+                    <div class="flex-1 text-center text-[11px] font-medium tracking-[0.16em] uppercase opacity-50">v0.3.0</div>
                     <wc-settings></wc-settings>
                 </div>
                 <div class="flex-1 flex flex-col justify-center px-2">

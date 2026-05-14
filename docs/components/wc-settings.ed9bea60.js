@@ -114,7 +114,7 @@ function buildSettingsOverlay() {
                     <div class="flex flex-col gap-2 py-2.5">
                         <div class="flex justify-between text-sm">
                             <span class="opacity-50">Version</span>
-                            <span class="font-mono">0.2.0</span>
+                            <span class="font-mono">0.3.0</span>
                         </div>
                         <div class="flex justify-between text-sm">
                             <span class="opacity-50">Source</span>
