@@ -124,6 +124,10 @@ function buildSettingsOverlay() {
                             <span class="opacity-50">Source</span>
                             <a href="https://github.com/nicOPTIONS/ludo" class="font-mono opacity-70 hover:opacity-100">github.com/leludo</a>
                         </div>
+                        <div class="flex justify-between text-sm border-t border-foreground/5 pt-2 mt-1">
+                            <span class="opacity-50">Privacy</span>
+                            <a href="privacy.html" class="opacity-70 hover:opacity-100">Read policy</a>
+                        </div>
                     </div>
                 `)}
                 </div>

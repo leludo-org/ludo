@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en" class="h-full">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="theme-color" content="#EFE9DC"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="stylesheet" href="output.css"/>
+    <link rel="icon" href="assets/icons/favicon.svg" sizes="any" type="image/svg+xml"/>
+    <title>Privacy · Leludo</title>
+
+    <script>
+        (function () {
+            var stored = localStorage.getItem('theme') || 'light';
+            var resolved = stored === 'system'
+                ? (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+                : stored;
+            document.documentElement.classList.add(resolved);
+        })();
+    </script>
+</head>
+
+<body class="h-full flex flex-col">
+
+<div class="flex-1 flex items-start justify-center p-2">
+    <div class="max-w-96 w-full flex flex-col min-h-[calc(100dvh-16px)]">
+        <div class="flex items-center gap-2 pt-1 pb-6">
+            <a href="index.html" class="w-[38px] h-[38px] rounded-full bg-transparent border border-foreground/15 flex items-center justify-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity text-foreground no-underline" aria-label="Back">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </a>
+            <div class="flex-1 text-center text-[11px] font-medium tracking-[0.16em] uppercase opacity-50">Privacy</div>
+            <div class="w-[38px]"></div>
+        </div>
+
+        <div class="flex-1 flex flex-col">
+            <div class="px-3 pt-2">
+                <h1 class="font-display text-[40px] leading-none tracking-tight">Privacy<br>policy.</h1>
+                <div class="text-[12px] opacity-50 mt-3">Effective May 14, 2026</div>
+            </div>
+
+            <div class="px-2 pt-6 pb-8 flex flex-col gap-5">
+                <section>
+                    <div class="text-[11px] tracking-widest uppercase opacity-40 mb-2">The short version</div>
+                    <div class="bg-card rounded-2xl p-4 border border-foreground/10 text-[14px] leading-relaxed opacity-85">
+                        Leludo runs entirely on your device. We don&rsquo;t collect, transmit, or sell personal data.
+                        No accounts, no analytics, no trackers, no ads.
+                    </div>
+                </section>
+
+                <section>
+                    <div class="text-[11px] tracking-widest uppercase opacity-40 mb-2">What stays on your device</div>
+                    <div class="bg-card rounded-2xl p-4 border border-foreground/10 text-[14px] leading-relaxed opacity-85">
+                        The game uses your browser&rsquo;s local storage to remember:
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li>Theme choice (Paper / Dusk / System)</li>
+                            <li>Assist toggles (auto-roll, auto-move)</li>
+                            <li>Bot name pool preference</li>
+                            <li>Names you&rsquo;ve typed for seats</li>
+                            <li>Your in-progress saved game</li>
+                        </ul>
+                        <p class="mt-3">None of this ever leaves your device.</p>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="text-[11px] tracking-widest uppercase opacity-40 mb-2">What we don&rsquo;t do</div>
+                    <div class="bg-card rounded-2xl p-4 border border-foreground/10 text-[14px] leading-relaxed opacity-85">
+                        No cookies for tracking. No fingerprinting. No third-party analytics or advertising SDKs.
+                        No remote servers receive gameplay, names, or device info.
+                    </div>
+                </section>
+
+                <section>
+                    <div class="text-[11px] tracking-widest uppercase opacity-40 mb-2">External links</div>
+                    <div class="bg-card rounded-2xl p-4 border border-foreground/10 text-[14px] leading-relaxed opacity-85">
+                        The home screen links to the project&rsquo;s GitHub repository. Following that link takes you to
+                        github.com, which has its own privacy policy. We have no insight into what GitHub does with
+                        that visit.
+                    </div>
+                </section>
+
+                <section>
+                    <div class="text-[11px] tracking-widest uppercase opacity-40 mb-2">Android app</div>
+                    <div class="bg-card rounded-2xl p-4 border border-foreground/10 text-[14px] leading-relaxed opacity-85">
+                        The Android build is the same app packaged with Capacitor. It requests no special permissions
+                        and makes no network calls beyond what you initiate by tapping a link.
+                    </div>
+                </section>
+
+                <section>
+                    <div class="text-[11px] tracking-widest uppercase opacity-40 mb-2">Clearing your data</div>
+                    <div class="bg-card rounded-2xl p-4 border border-foreground/10 text-[14px] leading-relaxed opacity-85">
+                        In a browser: clear site data for this domain in your browser settings.
+                        On Android: clear app storage in system settings, or uninstall the app.
+                        Either action wipes every preference and saved game listed above.
+                    </div>
+                </section>
+
+                <section>
+                    <div class="text-[11px] tracking-widest uppercase opacity-40 mb-2">Children</div>
+                    <div class="bg-card rounded-2xl p-4 border border-foreground/10 text-[14px] leading-relaxed opacity-85">
+                        The game is suitable for all ages. Because we collect nothing, there is nothing child-specific
+                        to disclose under COPPA, GDPR-K, or similar regimes.
+                    </div>
+                </section>
+
+                <section>
+                    <div class="text-[11px] tracking-widest uppercase opacity-40 mb-2">Changes</div>
+                    <div class="bg-card rounded-2xl p-4 border border-foreground/10 text-[14px] leading-relaxed opacity-85">
+                        If this policy ever changes, the effective date at the top of this page updates with it.
+                        Material changes will be called out in the project changelog on GitHub.
+                    </div>
+                </section>
+
+                <section>
+                    <div class="text-[11px] tracking-widest uppercase opacity-40 mb-2">Contact</div>
+                    <div class="bg-card rounded-2xl p-4 border border-foreground/10 text-[14px] leading-relaxed opacity-85">
+                        Questions or concerns: open an issue at
+                        <a href="https://github.com/leludo-org/ludo/issues" target="_blank" rel="noopener" class="underline opacity-90 hover:opacity-100">github.com/leludo-org/ludo</a>.
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
