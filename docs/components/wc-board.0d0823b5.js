@@ -47,9 +47,9 @@ const BOARD_HTML = /*html*/ `
         <!-- Board -->
         <div class="flex-1 flex items-center justify-center px-3 pt-3">
             <div class="relative w-full">
-                <div class="grid grid-rows-5 grid-cols-5 gap-0 overflow-clip rounded-xl aspect-square w-full" style="box-shadow: 0 14px 40px -10px rgba(31,27,20,0.22), 0 2px 6px rgba(31,27,20,0.06), inset 0 0 0 1px rgba(31,27,20,0.06);">
+                <div class="grid grid-rows-5 grid-cols-5 gap-0 rounded-xl aspect-square w-full" style="box-shadow: 0 14px 40px -10px rgba(31,27,20,0.22), 0 2px 6px rgba(31,27,20,0.06), inset 0 0 0 1px rgba(31,27,20,0.06);">
 
-            <div class="bg-player-0 row-span-2 col-span-2 flex items-center justify-center">
+            <div class="bg-player-0 row-span-2 col-span-2 flex items-center justify-center rounded-tl-xl">
                 <div class="bg-player-0-light size-4/6 grid grid-cols-2 grid-rows-2 rounded-lg shadow-inner border border-board-border/30">
                     <div class="flex items-center justify-center">
                         <div id="h-0-0" class="size-1/2 rounded-full bg-background border-2 border-player-0"></div>
@@ -87,7 +87,7 @@ const BOARD_HTML = /*html*/ `
                 <div id="m17" class="${SC}"></div>
             </div>
 
-            <div class="bg-player-1 row-span-2 col-span-2 flex items-center justify-center">
+            <div class="bg-player-1 row-span-2 col-span-2 flex items-center justify-center rounded-tr-xl">
                 <div class="bg-player-1-light size-4/6 grid grid-cols-2 grid-rows-2 rounded-lg shadow-inner border border-board-border/30">
                     <div class="flex items-center justify-center">
                         <div id="h-1-0" class="size-1/2 rounded-full bg-background border-2 border-player-1"></div>
@@ -157,7 +157,7 @@ const BOARD_HTML = /*html*/ `
                 <div id="m25" class="${SC}"></div>
             </div>
 
-            <div class="bg-player-3 row-span-2 col-span-2 flex items-center justify-center">
+            <div class="bg-player-3 row-span-2 col-span-2 flex items-center justify-center rounded-bl-xl">
                 <div class="bg-player-3-light size-4/6 grid grid-cols-2 grid-rows-2 rounded-lg shadow-inner border border-board-border/30">
                     <div class="flex items-center justify-center">
                         <div id="h-3-0" class="size-1/2 rounded-full bg-background border-2 border-player-3"></div>
@@ -195,7 +195,7 @@ const BOARD_HTML = /*html*/ `
                 <div id="m36" class="${SC}"></div>
             </div>
 
-            <div class="bg-player-2 row-span-2 col-span-2 flex items-center justify-center">
+            <div class="bg-player-2 row-span-2 col-span-2 flex items-center justify-center rounded-br-xl">
                 <div class="bg-player-2-light size-4/6 grid grid-cols-2 grid-rows-2 rounded-lg shadow-inner border border-board-border/30">
                     <div class="flex items-center justify-center">
                         <div id="h-2-0" class="size-1/2 rounded-full bg-background border-2 border-player-2"></div>
