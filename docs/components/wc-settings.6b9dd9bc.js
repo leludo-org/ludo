@@ -18,7 +18,7 @@ import {
     BOT_POOL_LABELS,
     getActivePoolKey,
     setActivePoolKey,
-} from "../scripts/bot-names.054af0c7.js";
+} from "../scripts/bot-names.5b9dd5f1.js";
 import {
     htmlToElement,
     VERSION,

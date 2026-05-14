@@ -60,19 +60,21 @@ class GameEnd extends HTMLElement {
         }).join('');
 
         const html = `
-            <div class="flex flex-col min-h-[70vh] text-white" style="background:#1F1B14;">
-                <div class="flex-1 flex flex-col items-center justify-center px-6 relative">
-                    <div class="absolute inset-0 overflow-hidden pointer-events-none">${confettiDots()}</div>
-                    <div class="mb-6 relative z-10">${PAWN_SVG(winnerIndex)}</div>
-                    <div class="font-display text-[56px] leading-none tracking-tight text-center relative z-10" style="color:#F2EDE3;">${winText}</div>
-                    <div class="text-[15px] mt-3 text-center max-w-[280px] leading-relaxed relative z-10" style="color:rgba(242,237,227,0.55);">Final standings</div>
-                    <div class="mt-8 w-full rounded-2xl p-3.5 relative z-10" style="background:rgba(242,237,227,0.06);border:1px solid rgba(242,237,227,0.1);">
-                        ${standingsHTML}
+            <div class="flex flex-col text-white" style="position:fixed;inset:0;z-index:50;background:#1F1B14;overflow-y:auto;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);">
+                <div class="flex-1 w-full max-w-96 mx-auto flex flex-col" style="min-height:100%;">
+                    <div class="flex-1 flex flex-col items-center justify-center px-6 py-8 relative">
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">${confettiDots()}</div>
+                        <div class="mb-6 relative z-10">${PAWN_SVG(winnerIndex)}</div>
+                        <div class="font-display text-[56px] leading-none tracking-tight text-center relative z-10" style="color:#F2EDE3;">${winText}</div>
+                        <div class="text-[15px] mt-3 text-center max-w-[280px] leading-relaxed relative z-10" style="color:rgba(242,237,227,0.55);">Final standings</div>
+                        <div class="mt-8 w-full rounded-2xl p-3.5 relative z-10" style="background:rgba(242,237,227,0.06);border:1px solid rgba(242,237,227,0.1);">
+                            ${standingsHTML}
+                        </div>
                     </div>
-                </div>
-                <div class="flex gap-2.5 px-4 pt-3 pb-4 relative z-10">
-                    <button id="share-btn" class="flex-1 h-14 rounded-2xl bg-transparent cursor-pointer text-[15px]" style="color:#F2EDE3;border:1px solid rgba(242,237,227,0.2);">Share</button>
-                    <button id="play-again" class="flex-[2] h-14 rounded-2xl border-0 cursor-pointer text-[15px] font-medium" style="background:#F2EDE3;color:#1F1B14;">Play again</button>
+                    <div class="flex gap-2.5 px-4 pt-3 pb-4 relative z-10">
+                        <button id="share-btn" class="flex-1 h-14 rounded-2xl bg-transparent cursor-pointer text-[15px]" style="color:#F2EDE3;border:1px solid rgba(242,237,227,0.2);">Share</button>
+                        <button id="play-again" class="flex-[2] h-14 rounded-2xl border-0 cursor-pointer text-[15px] font-medium" style="background:#F2EDE3;color:#1F1B14;">Play again</button>
+                    </div>
                 </div>
             </div>`;
 
@@ -82,6 +84,10 @@ class GameEnd extends HTMLElement {
             playClickSound();
             window.location.href = window.location.origin;
         });
+
+        const themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeMeta) themeMeta.setAttribute('content', '#1F1B14');
+        document.body.style.background = '#1F1B14';
 
         this.appendChild(el);
     }

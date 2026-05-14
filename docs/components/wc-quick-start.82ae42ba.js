@@ -3,7 +3,7 @@ import {
     VERSION,
 } from "./index.bf0b1971.js";
 import {handleGameStart, handleGameResume, playClickSound} from "../scripts/index.e8f102de.js";
-import {randomBotName, isDefaultBotName} from "../scripts/bot-names.054af0c7.js";
+import {randomBotName, isDefaultBotName, getSavedSeatName, setSavedSeatName} from "../scripts/bot-names.5b9dd5f1.js";
 
 const COLOR_NAMES = ["Vermillion", "Emerald", "Saffron", "Cobalt"];
 const COLOR_KEYS = ["red", "green", "yellow", "blue"];
@@ -54,20 +54,35 @@ const CIRCLE_BTN = "w-[38px] h-[38px] rounded-full bg-transparent border border-
 class QuickStart extends HTMLElement {
     constructor() {
         super();
-        const botNames = [];
-        const pickBot = () => { const n = randomBotName(botNames); botNames.push(n); return n; };
-        this.seats = [
-            { active: true, type: 'PLAYER', colorIndex: 0, name: 'Player 1' },
-            { active: true, type: 'BOT', colorIndex: 1, name: pickBot() },
-            { active: true, type: 'BOT', colorIndex: 2, name: pickBot() },
-            { active: true, type: 'BOT', colorIndex: 3, name: pickBot() },
+        const slots = [
+            { type: 'PLAYER', colorIndex: 0 },
+            { type: 'BOT', colorIndex: 1 },
+            { type: 'BOT', colorIndex: 2 },
+            { type: 'BOT', colorIndex: 3 },
         ];
+        const botNames = [];
+        this.seats = slots.map((slot, i) => {
+            const saved = getSavedSeatName(slot.type, i);
+            let name;
+            if (slot.type === 'PLAYER') {
+                name = saved || `Player ${i + 1}`;
+            } else if (saved && !botNames.includes(saved)) {
+                name = saved;
+                botNames.push(name);
+            } else {
+                name = randomBotName(botNames);
+                botNames.push(name);
+            }
+            return { active: true, type: slot.type, colorIndex: slot.colorIndex, name };
+        });
         this._focusedSeatIndex = null;
     }
 
     _defaultName(seat, seatIndex) {
-        if (seat.type !== 'BOT') return `Player ${seatIndex + 1}`
+        const saved = getSavedSeatName(seat.type, seatIndex)
+        if (seat.type !== 'BOT') return saved || `Player ${seatIndex + 1}`
         const used = this.seats.filter(s => s !== seat && s.active && s.type === 'BOT').map(s => s.name)
+        if (saved && !used.includes(saved)) return saved
         return randomBotName(used)
     }
 
@@ -88,8 +103,9 @@ class QuickStart extends HTMLElement {
 
     _reshuffleBotNames() {
         const used = []
-        this.seats.forEach(seat => {
+        this.seats.forEach((seat, idx) => {
             if (!seat.active || seat.type !== 'BOT') return
+            if (getSavedSeatName('BOT', idx)) return
             if (!isDefaultBotName(seat.name)) return
             seat.name = randomBotName(used)
             used.push(seat.name)
@@ -278,6 +294,7 @@ class QuickStart extends HTMLElement {
                     }
                     nameInput.addEventListener("input", () => {
                         seat.name = nameInput.value
+                        seat._edited = true
                         updateCount()
                     })
                     nameInput.addEventListener("focus", () => {
@@ -297,7 +314,11 @@ class QuickStart extends HTMLElement {
                     })
                     nameInput.addEventListener("blur", () => {
                         const trimmed = (nameInput.value || '').trim()
+                        if (seat._edited) {
+                            setSavedSeatName(seat.type, i, trimmed)
+                        }
                         seat.name = trimmed || this._defaultName(seat, i)
+                        seat._edited = false
                         nameInput.value = seat.name
                         if (nameWrap) {
                             nameWrap.style.borderBottomColor = ''

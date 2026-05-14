@@ -56,3 +56,27 @@ export function randomBotName(used = []) {
 export function isDefaultBotName(name) {
     return Object.values(BOT_NAME_POOLS).some(pool => pool.includes(name));
 }
+
+const SEAT_NAME_KEY = "seat-names";
+
+function readSeatNameMap() {
+    try {
+        const raw = localStorage.getItem(SEAT_NAME_KEY);
+        return raw ? JSON.parse(raw) : {};
+    } catch {
+        return {};
+    }
+}
+
+export function getSavedSeatName(type, seatIndex) {
+    const map = readSeatNameMap();
+    return map[`${type}.${seatIndex}`] || "";
+}
+
+export function setSavedSeatName(type, seatIndex, name) {
+    const map = readSeatNameMap();
+    const key = `${type}.${seatIndex}`;
+    if (name) map[key] = name;
+    else delete map[key];
+    localStorage.setItem(SEAT_NAME_KEY, JSON.stringify(map));
+}
