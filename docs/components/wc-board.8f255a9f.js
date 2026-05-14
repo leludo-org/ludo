@@ -1,7 +1,7 @@
 import {
     htmlToElement
 } from "./index.bf0b1971.js"
-import {handleGamePause, playClickSound} from "../scripts/index.e8f102de.js";
+import {handleGamePause, handleOnTokenMove, playClickSound} from "../scripts/index.e8f102de.js";
 
 //language=HTML
 const STAR_D = "M12 2.2l2.8 6.3 6.8.5-5.2 4.4 1.6 6.6L12 16.6l-6 3.4 1.6-6.6L2.4 9l6.8-.5z";
@@ -237,6 +237,21 @@ class Board extends HTMLElement {
             playClickSound()
             handleGamePause()
         })
+
+        const cellIdPattern = /^(h-\d-\d|m\d+|p\ds[1-6])$/;
+        boardElement.querySelectorAll('[id^="h-"], [id^="m"], [id^="p"][id*="s"]').forEach((cell) => {
+            if (!cellIdPattern.test(cell.id)) return;
+            cell.addEventListener("click", () => {
+                const activeInner = cell.querySelector(':scope > wc-token > .animate-bounce');
+                if (!activeInner) return;
+                const token = activeInner.parentElement;
+                const parts = token.id.split('-');
+                const playerIndex = +parts[1];
+                const tokenIndex = +parts[2];
+                playClickSound();
+                handleOnTokenMove(playerIndex, tokenIndex);
+            });
+        });
 
         this.appendChild(boardElement)
     }

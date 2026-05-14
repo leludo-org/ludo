@@ -3,7 +3,6 @@ import {
 } from "./index.bf0b1971.js"
 import {
     handleOnTokenMove,
-    playClickSound,
 } from "../scripts/index.e8f102de.js";
 
 //language=HTML
@@ -58,11 +57,6 @@ class Token extends HTMLElement {
             let tokenHTML = TOKEN_HTML(playerIndex);
             const tokenElement = htmlToElement(tokenHTML)
             this.appendChild(tokenElement) // fixme: if triggered multiple time would cause issues
-
-            this.addEventListener("click", () => {
-                playClickSound()
-                this.handleTokenClick(playerIndex, tokenIndex);
-            })
 
             document.addEventListener("keyup", ($event) =>  {
                 if ($event.key === (+tokenIndex + 1).toString()) {
