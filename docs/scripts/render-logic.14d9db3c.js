@@ -34,34 +34,32 @@ export function playStepSound() {
     osc.stop(ctx.currentTime + 0.06);
 }
 
+let captureBuffer = null;
+let captureBufferLoading = null;
+const CAPTURE_URL = new URL("../assets/sounds/capture.m4a", import.meta.url).href;
+
+function loadCaptureBuffer() {
+    if (captureBuffer) return Promise.resolve(captureBuffer);
+    if (captureBufferLoading) return captureBufferLoading;
+    const ctx = getAudioCtx();
+    captureBufferLoading = fetch(CAPTURE_URL)
+        .then(r => r.arrayBuffer())
+        .then(buf => ctx.decodeAudioData(buf))
+        .then(decoded => { captureBuffer = decoded; return decoded; });
+    return captureBufferLoading;
+}
+
 export function playCaptureSound() {
     const ctx = getAudioCtx();
-    const t = ctx.currentTime;
-
-    const sweep = ctx.createOscillator();
-    const sweepGain = ctx.createGain();
-    sweep.connect(sweepGain);
-    sweepGain.connect(ctx.destination);
-    sweep.frequency.setValueAtTime(800, t);
-    sweep.frequency.exponentialRampToValueAtTime(200, t + 0.25);
-    sweepGain.gain.setValueAtTime(0.15, t);
-    sweepGain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
-    sweep.start(t);
-    sweep.stop(t + 0.3);
-
-    const bufferSize = ctx.sampleRate * 0.15;
-    const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-    const data = noiseBuffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-    const noise = ctx.createBufferSource();
-    noise.buffer = noiseBuffer;
-    const noiseGain = ctx.createGain();
-    noise.connect(noiseGain);
-    noiseGain.connect(ctx.destination);
-    noiseGain.gain.setValueAtTime(0.12, t);
-    noiseGain.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
-    noise.start(t);
-    noise.stop(t + 0.15);
+    loadCaptureBuffer().then(buffer => {
+        const src = ctx.createBufferSource();
+        src.buffer = buffer;
+        const gain = ctx.createGain();
+        gain.gain.value = 0.6;
+        src.connect(gain);
+        gain.connect(ctx.destination);
+        src.start();
+    });
 }
 
 export function playDiceSound() {
