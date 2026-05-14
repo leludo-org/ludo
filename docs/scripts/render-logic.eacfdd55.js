@@ -487,15 +487,62 @@ export function slideBackToMenu() {
     return Promise.resolve()
 }
 
+const PAWN_SVG_MINI = (playerIndex) => `
+    <svg viewBox="0 0 32 32" class="text-player-${playerIndex}" style="width:100%;height:100%;filter:drop-shadow(0 1px 1px rgba(0,0,0,0.22));">
+        <ellipse cx="16" cy="28" rx="8" ry="1.5" fill="rgba(0,0,0,0.18)"/>
+        <path d="M16 4c3.2 0 5.5 2.4 5.5 5.2 0 1.8-1 3.2-2.4 4 1.7.7 2.9 1.8 3.6 3.4l1.1 2.6c.4 1 .1 2-.7 2.4-.2.1-.4.1-.6.1H9.5c-.9 0-1.6-.7-1.6-1.6 0-.3.1-.6.2-.9l1.1-2.6c.7-1.6 1.9-2.7 3.6-3.4-1.4-.8-2.4-2.2-2.4-4C10.4 6.4 12.8 4 16 4z" fill="currentColor"/>
+        <rect x="7.5" y="22" width="17" height="3.5" rx="1.4" fill="currentColor"/>
+    </svg>`;
+
+function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))
+}
+
+function renderPauseScoreboard() {
+    const board = document.getElementById("pm-scoreboard")
+    if (!board) return
+    if (!_playerTypes) { board.innerHTML = ''; return }
+    const currentIdx = _getCurrentPlayerIndex ? _getCurrentPlayerIndex() : -1
+    const rows = []
+    _playerTypes.forEach((type, idx) => {
+        if (!type) return
+        const finished = _getFinishedCount ? _getFinishedCount(idx) : 0
+        const name = (_playerNames[idx] && String(_playerNames[idx]).trim()) || `P${idx + 1}`
+        const isActive = idx === currentIdx
+        const dotCls = isActive ? `bg-player-${idx}` : 'bg-foreground/15'
+        const tag = isActive
+            ? `<span class="text-[10px] tracking-[0.14em] uppercase font-medium opacity-60 ml-1.5">Up next</span>`
+            : ''
+        rows.push(`
+            <div class="flex items-center gap-3 py-3 ${rows.length > 0 ? 'border-t border-foreground/5' : ''}">
+                <div class="size-7 shrink-0">${PAWN_SVG_MINI(idx)}</div>
+                <div class="flex-1 min-w-0 flex items-center min-w-0">
+                    <span class="text-sm font-medium truncate">${escapeHtml(name)}</span>
+                    ${tag}
+                </div>
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <span class="text-sm font-mono tabular-nums">${finished}<span class="opacity-40">/4</span></span>
+                    <span class="size-1.5 rounded-full ${dotCls}"></span>
+                </div>
+            </div>`)
+    })
+    board.innerHTML = rows.join('')
+}
+
 export function showPauseMenu() {
-    document.getElementById("game").classList.add("hidden")
-    document.getElementById("pause-menu").classList.remove("hidden")
+    const overlay = document.getElementById("pause-menu")
+    const turnEl = overlay.querySelector("#pm-turn-count")
+    if (turnEl) turnEl.textContent = `Turn ${turnCount}`
+    renderPauseScoreboard()
+    overlay.classList.remove("hidden")
+    overlay.classList.add("flex")
     releaseWakeLock()
 }
 
 export function resumeGame() {
-    document.getElementById("pause-menu").classList.add("hidden")
-    document.getElementById("game").classList.remove("hidden")
+    const overlay = document.getElementById("pause-menu")
+    overlay.classList.add("hidden")
+    overlay.classList.remove("flex")
     requestWakeLock()
 }
 

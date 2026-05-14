@@ -241,18 +241,38 @@ export function handleGameStart(quickStartId, namesByPlayerIndex) {
 export function handleGamePause() {
     showPauseMenu();
 
-    document.getElementById("pm-resume").addEventListener("click", () => {
-        playClickSound()
-        resumeGame()
-    }, { once: true })
+    const overlay = document.getElementById("pause-menu")
+    const resumeBtn = document.getElementById("pm-resume")
+    const exitBtns = Array.from(document.querySelectorAll(".restart-game"))
 
-    document.querySelectorAll(".restart-game").forEach(el => {
-        el.addEventListener("click", async () => {
-            playClickSound()
-            await slideBackToMenu()
-            window.location.href = window.location.origin
-        })
-    })
+    const cleanup = () => {
+        resumeBtn.removeEventListener("click", onResume)
+        document.removeEventListener("keydown", onKey)
+        overlay.removeEventListener("click", onBackdrop)
+        exitBtns.forEach(el => el.removeEventListener("click", onExit))
+    }
+    const onResume = () => {
+        playClickSound()
+        cleanup()
+        resumeGame()
+    }
+    const onKey = (e) => {
+        if (e.key === "Escape") onResume()
+    }
+    const onBackdrop = (e) => {
+        if (e.target === overlay) onResume()
+    }
+    const onExit = async () => {
+        playClickSound()
+        cleanup()
+        await slideBackToMenu()
+        window.location.href = window.location.origin
+    }
+
+    resumeBtn.addEventListener("click", onResume)
+    document.addEventListener("keydown", onKey)
+    overlay.addEventListener("click", onBackdrop)
+    exitBtns.forEach(el => el.addEventListener("click", onExit))
 }
 
 
