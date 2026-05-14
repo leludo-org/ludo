@@ -72,6 +72,36 @@ export function resetInputLock() {
     inputLockDepth = 0;
     if (inputLockOverlay) inputLockOverlay.style.display = 'none';
 }
+
+let _paused = false;
+let _pendingResume = null;
+const _pendingTimers = new Set();
+
+function scheduleTurn(fn, delay) {
+    if (_paused) { _pendingResume = fn; return; }
+    const id = setTimeout(() => {
+        _pendingTimers.delete(id);
+        if (_paused) { _pendingResume = fn; return; }
+        fn();
+    }, delay);
+    _pendingTimers.add(id);
+}
+
+export function isGameLogicPaused() { return _paused; }
+
+export function pauseGameLogic() {
+    _paused = true;
+    _pendingTimers.forEach(clearTimeout);
+    _pendingTimers.clear();
+}
+
+export function resumeGameLogic() {
+    _paused = false;
+    const fn = _pendingResume;
+    _pendingResume = null;
+    if (fn) fn();
+}
+
 const assistFlags = {
     autoRollDice: false,
     autoMoveSingleOption: false,
@@ -239,6 +269,8 @@ export function handleGameStart(quickStartId, namesByPlayerIndex) {
 
 
 export function handleGamePause() {
+    if (_paused) return;
+    pauseGameLogic();
     showPauseMenu();
 
     const overlay = document.getElementById("pause-menu")
@@ -255,6 +287,7 @@ export function handleGamePause() {
         playClickSound()
         cleanup()
         resumeGame()
+        resumeGameLogic()
     }
     const onKey = (e) => {
         if (e.key === "Escape") onResume()
@@ -283,6 +316,7 @@ export function handlePayerUpdated() {
 
 
 export function handleDiceRoll() {
+    if (_paused) return;
     if (isInputLocked()) return;
     acquireInputLock();
     updateActionZone('rolling');
@@ -323,7 +357,7 @@ function handleAfterDiceRoll() {
             updateActionZone('select', currentDiceRoll);
 
             if (isCurrentPlayerBot()) {
-                setTimeout(() => {
+                scheduleTurn(() => {
                     const uniqueTokenIndexPositions = getUniqueTokenPositions(currentPlayerIndex, movableTokenIndexes, playerTokenPositions);
                     if (uniqueTokenIndexPositions.size === 1) {
                         handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0]);
@@ -339,7 +373,7 @@ function handleAfterDiceRoll() {
                 const onlyHomeOut = allTokensInHome(currentPlayerIndex) && currentDiceRoll === 6;
                 if ((assistFlags.autoMoveSingleOption && singleOption) ||
                     (assistFlags.autoMoveOutOfHome && onlyHomeOut)) {
-                    setTimeout(() => handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0]), 300);
+                    scheduleTurn(() => handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0]), 300);
                 }
             }
         } else {
@@ -355,6 +389,7 @@ function handleAfterDiceRoll() {
  * @param {number} tokenIndex
  */
 export async function handleOnTokenMove(playerIndex, tokenIndex) {
+    if (_paused) return;
     if (isInputLocked()) return;
     acquireInputLock();
     try {
@@ -462,7 +497,7 @@ function handleAfterTokenMove(tripComplete, captureCount) {
             updateCurrentPlayer();
         } else {
             if (isAutoplay()) {
-                setTimeout(() => diceElement.click(), 600)
+                scheduleTurn(() => diceElement.click(), 600)
             }
         }
     } else {
@@ -473,7 +508,7 @@ function handleAfterTokenMove(tripComplete, captureCount) {
 
 function handleDiceMoved() {
     if (isAutoplay()) {
-        setTimeout(() => handleDiceRoll(), 600)
+        scheduleTurn(() => handleDiceRoll(), 600)
     }
 }
 
