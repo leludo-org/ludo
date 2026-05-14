@@ -5,10 +5,14 @@ import {handleGamePause, playClickSound} from "../scripts/index.e8f102de.js";
 
 //language=HTML
 const STAR_D = "M12 2.2l2.8 6.3 6.8.5-5.2 4.4 1.6 6.6L12 16.6l-6 3.4 1.6-6.6L2.4 9l6.8-.5z";
-const ARROW_D = "M6 1.5L2.5 5h2v5.5h3V5h2z";
 
-const startCellSvg = (playerClass, arrowRot) => `
-    <svg viewBox="0 0 12 12" class="size-[28%] pointer-events-none absolute top-[4%] right-[4%]" style="transform:rotate(${arrowRot}deg)"><path d="${ARROW_D}" class="${playerClass}" opacity="0.7"/></svg>`;
+const CORNER_RIGHT_DOWN = `<polyline points="10 15 15 20 20 15"/><path d="M4 4h7a4 4 0 0 1 4 4v12"/>`;
+const CORNER_UP_RIGHT = `<polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/>`;
+const CORNER_DOWN_LEFT = `<polyline points="9 10 4 15 9 20"/><path d="M20 4v7a4 4 0 0 1-4 4H4"/>`;
+const CORNER_LEFT_UP = `<polyline points="14 9 9 4 4 9"/><path d="M20 20h-7a4 4 0 0 1-4-4V4"/>`;
+
+const entryCellSvg = (playerClass, cornerInner) => `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${playerClass} size-[68%] pointer-events-none absolute inset-0 m-auto opacity-70">${cornerInner}</svg>`;
 
 const safeCellSvg = (playerClass) => `
     <svg viewBox="0 0 24 24" class="size-[72%] pointer-events-none absolute inset-0 m-auto"><path d="${STAR_D}" class="${playerClass}" opacity="0.85"/></svg>`;
@@ -64,11 +68,11 @@ const BOARD_HTML = /*html*/ `
 
             <div class="-y row-span-2 grid grid-cols-3 grid-rows-6 [&>div]:outline [&>div]:outline-1 [&>div]:outline-board-border/40">
                 <div id="m10" class="${SC}"></div>
-                <div id="m11" class="${SC}"></div>
+                <div id="m11" class="relative flex items-center justify-center ${SC}">${entryCellSvg('text-player-1', CORNER_RIGHT_DOWN)}</div>
                 <div id="m12" class="${SC}"></div>
                 <div id="m9" class="${SC}"></div>
                 <div id="p1s1" class="bg-player-1-path ${SC}"></div>
-                <div id="m13" class="bg-player-1-path relative flex items-center justify-center ${SC}">${startCellSvg('fill-player-1', 180)}</div>
+                <div id="m13" class="bg-player-1-path ${SC}"></div>
                 <div id="m8" class="bg-safe-tint relative flex items-center justify-center ${SC}">${safeCellSvg('fill-player-1')}</div>
                 <div id="p1s2" class="bg-player-1-path ${SC}"></div>
                 <div id="m14" class="${SC}"></div>
@@ -102,12 +106,12 @@ const BOARD_HTML = /*html*/ `
 
             <div class="-x col-span-2 grid grid-cols-6 grid-rows-3 [&>div]:outline [&>div]:outline-1 [&>div]:outline-board-border/40">
                 <div id="m51" class="${SC}"></div>
-                <div id="m0" class="bg-player-0-path relative flex items-center justify-center ${SC}">${startCellSvg('fill-player-0', 90)}</div>
+                <div id="m0" class="bg-player-0-path ${SC}"></div>
                 <div id="m1" class="${SC}"></div>
                 <div id="m2" class="${SC}"></div>
                 <div id="m3" class="${SC}"></div>
                 <div id="m4" class="${SC}"></div>
-                <div id="m50" class="${SC}"></div>
+                <div id="m50" class="relative flex items-center justify-center ${SC}">${entryCellSvg('text-player-0', CORNER_UP_RIGHT)}</div>
                 <div id="p0s1" class="bg-player-0-path ${SC}"></div>
                 <div id="p0s2" class="bg-player-0-path ${SC}"></div>
                 <div id="p0s3" class="bg-player-0-path ${SC}"></div>
@@ -144,12 +148,12 @@ const BOARD_HTML = /*html*/ `
                 <div id="p2s3" class="bg-player-2-path ${SC}"></div>
                 <div id="p2s2" class="bg-player-2-path ${SC}"></div>
                 <div id="p2s1" class="bg-player-2-path ${SC}"></div>
-                <div id="m24" class="${SC}"></div>
+                <div id="m24" class="relative flex items-center justify-center ${SC}">${entryCellSvg('text-player-2', CORNER_DOWN_LEFT)}</div>
                 <div id="m30" class="${SC}"></div>
                 <div id="m29" class="${SC}"></div>
                 <div id="m28" class="${SC}"></div>
                 <div id="m27" class="${SC}"></div>
-                <div id="m26" class="bg-player-2-path relative flex items-center justify-center ${SC}">${startCellSvg('fill-player-2', 270)}</div>
+                <div id="m26" class="bg-player-2-path ${SC}"></div>
                 <div id="m25" class="${SC}"></div>
             </div>
 
@@ -183,11 +187,11 @@ const BOARD_HTML = /*html*/ `
                 <div id="m40" class="${SC}"></div>
                 <div id="p3s2" class="bg-player-3-path ${SC}"></div>
                 <div id="m34" class="bg-safe-tint relative flex items-center justify-center ${SC}">${safeCellSvg('fill-player-3')}</div>
-                <div id="m39" class="bg-player-3-path relative flex items-center justify-center ${SC}">${startCellSvg('fill-player-3', 0)}</div>
+                <div id="m39" class="bg-player-3-path ${SC}"></div>
                 <div id="p3s1" class="bg-player-3-path ${SC}"></div>
                 <div id="m35" class="${SC}"></div>
                 <div id="m38" class="${SC}"></div>
-                <div id="m37" class="${SC}"></div>
+                <div id="m37" class="relative flex items-center justify-center ${SC}">${entryCellSvg('text-player-3', CORNER_LEFT_UP)}</div>
                 <div id="m36" class="${SC}"></div>
             </div>
 
