@@ -192,7 +192,7 @@ class QuickStart extends HTMLElement {
                 .seat-name-pencil.hide-on-focus { display: none; }
             </style>
             <div class="flex flex-col min-h-[70vh]">
-                <div class="flex items-center gap-2 pb-8">
+                <div class="flex items-center gap-2 pt-1 pb-6">
                     <button class="back-btn ${CIRCLE_BTN}">${ICON_BACK}</button>
                     <div class="flex-1 text-center text-xs font-medium tracking-[0.16em] uppercase opacity-50">Setup</div>
                     <div class="w-[38px]"></div>

@@ -23,7 +23,7 @@ const SC = "relative"; // cell base class for stacking
 const BOARD_HTML = /*html*/ `
     <div class="flex flex-col">
         <!-- Top bar -->
-        <div class="flex items-center px-3 pt-3 pb-10 gap-2">
+        <div class="flex items-center pt-1 pb-6 gap-2">
             <button id="g-pause-btn" class="w-[38px] h-[38px] rounded-full bg-transparent border border-foreground/15 flex items-center justify-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
             </button>
