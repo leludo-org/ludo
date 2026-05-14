@@ -1,4 +1,4 @@
-// Bakchod bot name pools — cheeky, harmless, region-flavoured.
+// Cheeky bot name pools — harmless, region-flavoured.
 
 export const BOT_NAME_POOLS = {
     english: [
@@ -6,20 +6,24 @@ export const BOT_NAME_POOLS = {
         "Speedrun", "Tilted Tim", "Salty Sam", "AFK Andy", "Lag Larry",
         "McBotface", "Skill Issue", "Sweatlord", "Mid Boss", "Side Quest",
         "Toaster", "NPC Energy", "Backseat", "Loot Goblin", "Edge Lord",
-        "Sir Loses", "Touch Grass", "GG Gary", "Goblin Mode", "Cope Lord",
-        "Yikes Mike", "Doomscroll", "Sketchy", "Wholesome", "Karen 2.0",
-        "Big Yikes", "Misclicks", "Casual Carl", "Throws Lot", "Lag-a-lot",
-        "Lord Buffer", "Dial-up Dan", "Pixel Push", "Lukewarm", "Whoopsie",
-        "Sad Toast", "Lukey", "Wi-Fi Wally", "404 Brian",
+        "Sir Yeets", "Touch Grass", "GG Gary", "Goblin Mode", "Cope Lord",
+        "Doomscroll", "Sketchy", "Cringe Lord", "Vibe Check", "Bonk Bot",
+        "Tilt Pilot", "Misclicks", "Side Eye", "Pog Champ", "Patch Note",
+        "Dial-up Dan", "Touch Stream", "Whoopsie", "Cope Harder", "Ratio Lord",
+        "Wi-Fi Wally", "404 Brian", "Cache Miss", "Stack Trace",
+        "Null Pointer", "Off By One", "Hard Refresh", "Force Quit",
     ],
     hindi: [
-        "Bakchod", "Pappu", "Bantai", "Chacha", "Chatur", "Bhidu", "Munna",
+        "Pappu", "Bantai", "Chacha", "Chatur", "Bhidu", "Munna",
         "Ghonchu", "Gabbar", "Lukkha", "Topibaaz", "Jugaadu", "Fattu", "Dabangg",
         "Chamcha", "Chhotu", "Lallu", "Bewakoof", "Chillar", "Champak", "Hawabaaz",
-        "Pheku", "Tubelight", "Sookha", "Tharki", "Jhakaas", "Bhau",
-        "Mota Bhai", "Daru Singh", "Gappu", "Bantu", "Bunty", "Gulshan", "Tingu",
+        "Pheku", "Tubelight", "Tharki", "Jhakaas", "Bhau",
+        "Mota Bhai", "Daru Singh", "Gappu", "Tingu",
         "Sachin Nahi", "Sasta SRK", "Free Wi-Fi", "Ctrl+Bhej", "404 Bhai",
-        "Auto Wala", "Pan Masala", "Auto Raja", "WhatsApp", "Fwd to All",
+        "Auto Raja", "Pan Masala", "Fwd to All",
+        "Chai Sutta", "Maggi 2-Min", "Filter Coffee", "Adrak Lassi",
+        "Insta Reel", "DJ Babu", "Bina Helmet", "Rickshaw Raja",
+        "Status WhatsApp", "Forward Karo", "Net Pack Khatam", "Buffer Bhai",
     ],
 };
 

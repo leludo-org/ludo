@@ -18,9 +18,10 @@ import {
     BOT_POOL_LABELS,
     getActivePoolKey,
     setActivePoolKey,
-} from "../scripts/bot-names.af5235e8.js";
+} from "../scripts/bot-names.054af0c7.js";
 import {
-    htmlToElement
+    htmlToElement,
+    VERSION,
 } from "./index.bf0b1971.js"
 
 const ICON_BACK = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>`;
@@ -114,7 +115,7 @@ function buildSettingsOverlay() {
                     <div class="flex flex-col gap-2 py-2.5">
                         <div class="flex justify-between text-sm">
                             <span class="opacity-50">Version</span>
-                            <span class="font-mono">0.4.2</span>
+                            <span class="font-mono">${VERSION}</span>
                         </div>
                         <div class="flex justify-between text-sm">
                             <span class="opacity-50">Source</span>
