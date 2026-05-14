@@ -234,6 +234,9 @@ export function updateCellStacking(cell) {
 
     if (n <= 1) return;
 
+    // Home-stretch finish cells (p*s6) use CSS grid + rotate-45 layout; skip absolute stacking.
+    if (/^p\ds6$/.test(cell.id)) return;
+
     cell.style.position = 'relative';
 
     if (n === 2) {

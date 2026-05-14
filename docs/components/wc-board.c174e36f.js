@@ -127,13 +127,13 @@ const BOARD_HTML = /*html*/ `
 
             <div class="relative overflow-clip bg-board-cell">
                 <div id="p0s6"
-                     class="absolute size-full bg-player-0-path rotate-45 -translate-x-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token]:col-start-3 [&>wc-token:nth-of-type(2)]:mt-[-200%] [&>wc-token:nth-of-type(3)]:mt-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-500%]"></div>
+                     class="absolute size-full bg-player-0-path [clip-path:polygon(0_0,_0_100%,_50%_50%)] flex flex-col items-start justify-center pl-[4%] gap-[3%] [&>wc-token]:size-[22%]"></div>
                 <div id="p1s6"
-                     class="absolute size-full bg-player-1-path rotate-45 -translate-y-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token]:col-start-3 [&>wc-token]:row-start-3"></div>
+                     class="absolute size-full bg-player-1-path [clip-path:polygon(0_0,_100%_0,_50%_50%)] flex flex-row items-start justify-center pt-[4%] gap-[3%] [&>wc-token]:size-[22%]"></div>
                 <div id="p3s6"
-                     class="absolute size-full bg-player-3-path rotate-45 translate-y-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:-rotate-45 [&>wc-token:nth-of-type(2)]:ml-[-200%] [&>wc-token:nth-of-type(3)]:ml-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-200%]"></div>
+                     class="absolute size-full bg-player-3-path [clip-path:polygon(0_100%,_100%_100%,_50%_50%)] flex flex-row items-end justify-center pb-[4%] gap-[3%] [&>wc-token]:size-[22%]"></div>
                 <div id="p2s6"
-                     class="absolute size-full bg-player-2-path -rotate-45 translate-x-[70%] grid grid-cols-3 grid-rows-3 [&>wc-token]:rotate-45 [&>wc-token:nth-of-type(2)]:ml-[-200%] [&>wc-token:nth-of-type(3)]:ml-[-400%] [&>wc-token:nth-of-type(4)]:mt-[-200%]"></div>
+                     class="absolute size-full bg-player-2-path [clip-path:polygon(100%_0,_100%_100%,_50%_50%)] flex flex-col items-end justify-center pr-[4%] gap-[3%] [&>wc-token]:size-[22%]"></div>
             </div>
 
             <div class="-x col-span-2 grid grid-cols-6 grid-rows-3 [&>div]:outline [&>div]:outline-1 [&>div]:outline-board-border/40">

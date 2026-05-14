@@ -23,6 +23,15 @@ Entry points wired in [docs/index.html](docs/index.html): components index + scr
 
 Pure logic lives in [docs/scripts/game-logic.*.js](docs/scripts/game-logic.22174650.js) — keep it side-effect-free so tests can import it directly.
 
+## Test Overrides (URL Params)
+
+`handleGameStart` in [docs/scripts/game-events.*.js](docs/scripts/game-events.bafae531.js) reads two query params for scenario testing — bypasses normal home-start:
+
+- `?positions=p0t0,p0t1,p0t2,p0t3,p1t0,...,p3t3` — comma-separated token positions, indexed as `playerIndex * 4 + tokenIndex`. Values: `-1` (home), `0..50` (track), `51..56` (home stretch, `56` = finished). Missing/blank entries stay at `-1`.
+- `?player=N` — force `currentPlayerIndex` (0..3) for first turn.
+
+Example: `http://localhost:8888/?positions=50,,,,,,,,,,,,,,,&player=0` puts P0's first token one step from finish and gives P0 the opening turn. Preserve this behavior when refactoring game start.
+
 ## Cache Busting
 
 All JS files in `docs/components/` and `docs/scripts/` use content-hash filenames: `name.{hash}.js`.
