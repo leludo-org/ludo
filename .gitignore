@@ -8,3 +8,22 @@
 *.njsproj
 *.sln
 *.sw?
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Capacitor / Android build artifacts
+android/.gradle/
+android/build/
+android/app/build/
+android/app/release/
+android/local.properties
+android/captures/
+android/.idea/
+android/app/src/main/assets/public/
+android/app/src/main/assets/capacitor.config.json
+android/app/src/main/assets/capacitor.plugins.json
+*.keystore
+*.jks
+android/keystore.properties

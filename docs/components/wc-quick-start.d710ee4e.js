@@ -186,10 +186,12 @@ class QuickStart extends HTMLElement {
 
         const html = /*html*/ `
             <style>
-                .seat-name { outline: none !important; box-shadow: none !important; -webkit-tap-highlight-color: transparent; }
+                .seat-name { outline: none !important; box-shadow: none !important; -webkit-tap-highlight-color: transparent; color: hsl(var(--foreground)); }
                 .seat-name:focus, .seat-name:focus-visible { outline: none !important; box-shadow: none !important; }
                 .seat-name::selection { background: hsl(var(--foreground) / 0.12); color: inherit; }
                 .seat-name-pencil.hide-on-focus { display: none; }
+                .seat-row { flex-wrap: nowrap; }
+                .seat-pill { display: inline-flex; flex-wrap: nowrap; }
             </style>
             <div class="flex flex-col min-h-[calc(100dvh-16px)]">
                 <div class="flex items-center gap-2 pt-1 pb-6">
@@ -260,7 +262,7 @@ class QuickStart extends HTMLElement {
                         </button>
                         <div class="flex-1 min-w-0">
                             <label class="seat-name-wrap group flex w-full items-center gap-2 cursor-text min-w-0" style="border-bottom:1px solid hsl(var(--foreground)/0.12);transition:border-color 0.15s, border-width 0.15s;padding-bottom:2px;">
-                                <input class="seat-name flex-1 w-full bg-transparent border-none outline-none text-[15px] font-medium truncate p-0 m-0 min-w-0 appearance-none" autocomplete="off" autocapitalize="words" style="caret-color:${colorVar};background:transparent;" value="${(seat.name || '').replace(/"/g, '&quot;')}" maxlength="${NAME_MAX}" spellcheck="false" />
+                                <input class="seat-name flex-1 w-full bg-transparent border-none outline-none text-[15px] font-medium truncate p-0 m-0 min-w-0 appearance-none" type="text" name="ludo-seat-${i}" autocomplete="off" autocorrect="off" autocapitalize="words" data-form-type="other" data-lpignore="true" data-1p-ignore="true" style="caret-color:${colorVar};background:transparent;" value="${(seat.name || '').replace(/"/g, '&quot;')}" maxlength="${NAME_MAX}" spellcheck="false" />
                                 <span class="seat-name-pencil opacity-30 group-hover:opacity-70 transition-opacity shrink-0" style="line-height:0;">${ICON_PENCIL}</span>
                                 <span class="seat-char-count text-[11px] font-mono hidden shrink-0" style="color:${colorVar};">${charLen}/${NAME_MAX}</span>
                             </label>
