@@ -21,7 +21,7 @@ const SC = "relative"; // cell base class for stacking
 
 //language=HTML
 const BOARD_HTML = /*html*/ `
-    <div class="flex flex-col min-h-[calc(100vh-16px)]">
+    <div class="flex flex-col min-h-[calc(100dvh-16px)]">
         <!-- Top bar -->
         <div class="flex items-center pt-1 pb-6 gap-2">
             <button id="g-pause-btn" class="w-[38px] h-[38px] rounded-full bg-transparent border border-foreground/15 flex items-center justify-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
