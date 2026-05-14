@@ -28,27 +28,35 @@
 
 </div>
 
-<div id="pause-menu" class="fixed inset-0 z-50 hidden items-center justify-center p-4"
-     style="background:hsl(var(--background)/0.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);">
-    <div id="pm-card" class="w-full max-w-96 bg-card rounded-3xl border border-foreground/10 p-6 flex flex-col"
-         style="box-shadow:0 30px 70px -10px rgba(31,27,20,0.4);">
-        <div class="flex items-center gap-2 pb-5">
-            <div class="w-[38px] h-[38px] rounded-full bg-foreground/5 border border-foreground/10 flex items-center justify-center">
+<div id="pause-menu" class="fixed inset-0 z-50 bg-background overflow-y-auto hidden items-center justify-center p-2">
+    <div class="max-w-96 w-full flex flex-col min-h-[70vh] px-2">
+        <div class="flex items-center gap-2 pt-1 pb-6">
+            <div class="w-[38px] h-[38px] rounded-full bg-transparent border border-foreground/15 flex items-center justify-center opacity-70">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
             </div>
-            <div class="flex-1 text-[11px] font-medium tracking-[0.16em] uppercase opacity-50">Paused</div>
-            <div id="pm-turn-count" class="text-[11px] font-medium tracking-[0.16em] uppercase opacity-50">Turn 0</div>
+            <div class="flex-1 text-center text-[11px] font-medium tracking-[0.16em] uppercase opacity-50">Paused</div>
+            <div class="w-[38px]"></div>
         </div>
 
-        <h2 class="font-display text-[44px] leading-[0.9] tracking-tight pb-5">
-            Take a<br>breather.
-        </h2>
+        <div class="flex-1 flex flex-col justify-center">
+            <h2 class="font-display text-[40px] leading-none tracking-tight px-1 pt-2 pb-2">
+                Take a<br>breather.
+            </h2>
+            <p class="text-sm opacity-50 px-1 pt-2 pb-4 max-w-[320px]">The board's right where you left it. Resume when you're ready, or bow out to the menu.</p>
 
-        <div id="pm-scoreboard" class="bg-background/40 rounded-2xl px-4 mb-5 border border-foreground/5"></div>
+            <div class="px-0 pt-4 pb-4 flex flex-col gap-6">
+                <div>
+                    <div class="flex items-baseline justify-between mb-2">
+                        <div class="text-[11px] tracking-widest uppercase opacity-40">Standings</div>
+                        <div id="pm-turn-count" class="text-[11px] tracking-widest uppercase opacity-40">Turn 0</div>
+                    </div>
+                    <div id="pm-scoreboard" class="bg-card rounded-2xl px-3.5 border border-foreground/10"></div>
+                </div>
+            </div>
+        </div>
 
-        <div class="flex flex-col gap-2.5">
-            <button id="pm-resume" class="w-full h-[56px] rounded-2xl bg-foreground text-background font-medium text-[16px] tracking-wide border-none cursor-pointer flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
-                    style="box-shadow: 0 8px 22px -8px rgba(31,27,20,0.4);">
+        <div class="pt-4 pb-2 flex flex-col gap-2.5">
+            <button id="pm-resume" class="w-full h-[60px] rounded-2xl bg-foreground text-background font-medium text-[17px] tracking-wide border-none cursor-pointer flex items-center justify-center gap-2.5 hover:opacity-90 transition-opacity">
                 Resume
             </button>
             <button class="restart-game w-full h-[48px] rounded-2xl bg-transparent text-foreground font-medium text-[14px] border border-foreground/15 cursor-pointer hover:bg-foreground/5 transition-colors opacity-80">
