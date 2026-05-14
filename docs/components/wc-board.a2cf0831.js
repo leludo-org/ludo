@@ -21,7 +21,7 @@ const SC = "relative"; // cell base class for stacking
 
 //language=HTML
 const BOARD_HTML = /*html*/ `
-    <div class="flex flex-col">
+    <div class="flex flex-col min-h-[calc(100vh-16px)]">
         <!-- Top bar -->
         <div class="flex items-center pt-1 pb-6 gap-2">
             <button id="g-pause-btn" class="w-[38px] h-[38px] rounded-full bg-transparent border border-foreground/15 flex items-center justify-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
@@ -35,6 +35,9 @@ const BOARD_HTML = /*html*/ `
             </button>
         </div>
 
+        <!-- Spacer pushes board to bottom -->
+        <div class="flex-1"></div>
+
         <!-- Hidden home for wc-dice when no active corner has it yet -->
         <div id="dice-home" class="hidden"><wc-dice id="wc-dice"></wc-dice></div>
 
@@ -45,7 +48,7 @@ const BOARD_HTML = /*html*/ `
         </div>
 
         <!-- Board -->
-        <div class="flex-1 flex items-center justify-center px-3 pt-3">
+        <div class="flex items-center justify-center px-3 pt-3">
             <div class="relative w-full">
                 <div class="grid grid-rows-5 grid-cols-5 gap-0 rounded-xl aspect-square w-full" style="box-shadow: 0 14px 40px -10px rgba(31,27,20,0.22), 0 2px 6px rgba(31,27,20,0.06), inset 0 0 0 1px rgba(31,27,20,0.06);">
 
@@ -215,7 +218,6 @@ const BOARD_HTML = /*html*/ `
             </div>
                 </div>
             </div>
-        </div>
 
         <!-- Bottom corner row (seats 3/2, upright) -->
         <div id="corner-row-bottom" class="flex justify-between items-end px-3 pt-3 pb-2 gap-2" style="min-height:56px;">

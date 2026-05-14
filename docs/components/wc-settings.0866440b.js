@@ -1,5 +1,8 @@
 import {
     setAssistFlag,
+    pauseGameLogic,
+    resumeGameLogic,
+    isGameLogicPaused,
 } from "../scripts/index.e8f102de.js";
 
 const ASSIST_TOGGLES = [
@@ -161,11 +164,22 @@ class Header extends HTMLElement {
         document.body.insertAdjacentHTML('beforeend', overlayHTML);
         const overlay = document.getElementById('settings-overlay');
 
+        let _pausedBySettings = false;
         const openSettings = () => {
+            const gameEl = document.getElementById('game');
+            const gameVisible = gameEl && !gameEl.classList.contains('hidden');
+            if (gameVisible && !isGameLogicPaused()) {
+                pauseGameLogic();
+                _pausedBySettings = true;
+            }
             overlay.classList.remove('hidden');
         };
         const closeSettings = () => {
             overlay.classList.add('hidden');
+            if (_pausedBySettings) {
+                resumeGameLogic();
+                _pausedBySettings = false;
+            }
         };
 
         settingsIcon.addEventListener("click", openSettings);
