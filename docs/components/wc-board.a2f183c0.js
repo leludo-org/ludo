@@ -224,6 +224,9 @@ const BOARD_HTML = /*html*/ `
             <div id="b3" class="empty:hidden"></div>
             <div id="b2" class="empty:hidden"></div>
         </div>
+
+        <!-- Spacer balances the top one so the board sits vertically centered -->
+        <div class="flex-1"></div>
     </div>
 `
 
