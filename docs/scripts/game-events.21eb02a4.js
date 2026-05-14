@@ -318,7 +318,7 @@ function handleAfterDiceRoll() {
                 const onlyHomeOut = allTokensInHome(currentPlayerIndex) && currentDiceRoll === 6;
                 if ((assistFlags.autoMoveSingleOption && singleOption) ||
                     (assistFlags.autoMoveOutOfHome && onlyHomeOut)) {
-                    handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0]);
+                    setTimeout(() => handleOnTokenMove(currentPlayerIndex, movableTokenIndexes[0]), 300);
                 }
             }
         } else {
@@ -345,11 +345,17 @@ export async function handleOnTokenMove(playerIndex, tokenIndex) {
 
         const tripComplete = isTripComplete(tokenNewPosition)
 
+        const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, tokenNewPosition, playerTokenPositions);
+        for (const [pi, pt] of otherPlayerTokensOnThatMarkIndex.entries()) {
+            for (const ti of pt) {
+                const t = document.getElementById(`p-${pi}-${ti}`);
+                if (t) t.dataset.moving = 'true';
+            }
+        }
+
         await updateTokenContainer(playerIndex, tokenIndex, tokenOldPosition, tokenNewPosition)
 
-        const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, playerTokenPositions[playerIndex][tokenIndex], playerTokenPositions);
         let captureCount = 0
-
         for (const [pi, pt] of otherPlayerTokensOnThatMarkIndex.entries()) {
             for (const ti of pt) {
                 playCaptureSound()
@@ -368,9 +374,6 @@ export async function handleOnTokenMove(playerIndex, tokenIndex) {
 
         if (captureCount > 0) {
             playerCaptures[currentPlayerIndex] += captureCount
-            const board = document.getElementById("game");
-            board.classList.add("board-shake");
-            board.addEventListener("animationend", () => board.classList.remove("board-shake"), { once: true });
         }
 
         handleAfterTokenMove(tripComplete, captureCount)

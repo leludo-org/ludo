@@ -55,7 +55,7 @@ export function playCaptureSound() {
         const src = ctx.createBufferSource();
         src.buffer = buffer;
         const gain = ctx.createGain();
-        gain.gain.value = 0.6;
+        gain.gain.value = 0.3;
         src.connect(gain);
         gain.connect(ctx.destination);
         src.start();
@@ -276,37 +276,40 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
     const path = getContainerPath(playerIndex, tokenIndex, currentTokenPosition, newTokenPosition);
     const element = document.getElementById(getTokenElementId(playerIndex, tokenIndex));
 
-    let stepIndex = 0;
-
     return new Promise((resolve) => {
+        if (path.length === 0) { resolve(); return; }
+
+        const finalContainer = document.getElementById(path[path.length - 1]);
+        const sourceCell = element.parentElement;
+
+        element.dataset.moving = 'true';
+        clearStackStyles(element);
+        updateCellStacking(sourceCell);
+        element.style.willChange = 'transform';
+        element.style.position = 'relative';
+        element.style.zIndex = '50';
+
+        const originRect = element.getBoundingClientRect();
+        let stepIndex = 0;
+
         function step() {
             if (stepIndex >= path.length) {
                 element.style.willChange = '';
                 element.style.position = '';
                 element.style.zIndex = '';
+                element.style.removeProperty('transform');
+                finalContainer.appendChild(element);
                 delete element.dataset.moving;
-                updateCellStacking(element.parentElement);
+                updateCellStacking(finalContainer);
                 resolve();
                 return;
             }
 
-            if (stepIndex === 0) {
-                element.dataset.moving = 'true';
-                clearStackStyles(element);
-                updateCellStacking(element.parentElement);
-                element.style.willChange = 'transform';
-                element.style.position = 'relative';
-                element.style.zIndex = '50';
-            }
-
             playStepSound();
-            const sourceCell = element.parentElement;
             const targetContainer = document.getElementById(path[stepIndex]);
-            const initialPosition = element.getBoundingClientRect();
-            const finalPosition = targetContainer.getBoundingClientRect();
-
-            const offsetX = finalPosition.left - initialPosition.left;
-            const offsetY = finalPosition.top - initialPosition.top;
+            const targetRect = targetContainer.getBoundingClientRect();
+            const offsetX = targetRect.left - originRect.left;
+            const offsetY = targetRect.top - originRect.top;
 
             element.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
 
@@ -315,9 +318,6 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
                 if (settled) return;
                 settled = true;
                 clearTimeout(fallbackTimer);
-                element.style.removeProperty("transform");
-                targetContainer.appendChild(element);
-                updateCellStacking(sourceCell);
                 stepIndex++;
                 requestAnimationFrame(step);
             };

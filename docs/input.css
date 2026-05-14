@@ -121,18 +121,6 @@
     animation: active-dice-pulse 1.6s ease-in-out infinite;
 }
 
-@keyframes board-shake {
-    0%, 100% { transform: translate(0); }
-    15% { transform: translate(-3px, 1px); }
-    35% { transform: translate(3px, -2px); }
-    55% { transform: translate(-2px, 2px); }
-    75% { transform: translate(1px, -1px); }
-}
-
-.board-shake {
-    animation: board-shake 0.5s ease-in-out;
-}
-
 wc-token, wc-dice {
     touch-action: manipulation;
 }

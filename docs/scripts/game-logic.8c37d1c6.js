@@ -126,7 +126,7 @@ export function getPlayerTypes(quickStartId) {
         }
     }
 
-    const chosenColors = parts.slice(3).map(Number)
+    const chosenColors = parts.slice(3).filter(s => s !== "").map(Number)
     const preferredPositions = [2, 0, 1, 3]
 
     const playerTypes = new Array(4).fill(undefined)
