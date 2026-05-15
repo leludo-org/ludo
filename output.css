@@ -628,34 +628,27 @@ html{
   color: hsl(var(--foreground));
 }
 
-body {
+body,
+    #pause-menu,
+    #settings-overlay {
   background-image:
-            linear-gradient(90deg,
-                hsl(28 35% 35% / 0.14) 0%,
-                hsl(28 35% 35% / 0.06) 12%,
-                transparent 22%,
-                transparent 78%,
-                hsl(28 35% 35% / 0.06) 88%,
-                hsl(28 35% 35% / 0.14) 100%),
-            radial-gradient(ellipse 70% 55% at 50% 50%,
-                hsl(40 50% 98% / 0.95) 0%,
-                hsl(40 45% 96% / 0.5) 35%,
-                transparent 70%);
+            radial-gradient(ellipse 80% 70% at 50% 50%,
+                hsl(45 70% 99% / 1) 0%,
+                hsl(42 55% 96% / 0.65) 30%,
+                hsl(40 35% 92% / 0.25) 60%,
+                transparent 90%);
   background-attachment: fixed;
 }
 
-.dark body {
+.dark body,
+    .dark #pause-menu,
+    .dark #settings-overlay {
   background-image:
-            linear-gradient(90deg,
-                hsl(var(--foreground) / 0.09) 0%,
-                hsl(var(--foreground) / 0.04) 12%,
-                transparent 22%,
-                transparent 78%,
-                hsl(var(--foreground) / 0.04) 88%,
-                hsl(var(--foreground) / 0.09) 100%),
-            radial-gradient(ellipse 70% 50% at 50% 50%,
-                hsl(var(--card) / 0.5) 0%,
-                transparent 65%);
+            radial-gradient(ellipse 80% 70% at 50% 50%,
+                hsl(28 45% 25% / 0.85) 0%,
+                hsl(28 35% 20% / 0.5) 35%,
+                hsl(28 25% 15% / 0.2) 65%,
+                transparent 90%);
 }
 
 .\!container{
