@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches-ignore: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-web:
+    name: Web build smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Read VERSION
+        run: node -e "import('./version.js').then(m => console.log('VERSION =', m.VERSION))"
+
+      - name: Build Tailwind CSS
+        run: npx tailwindcss -i input.css -o output.css --minify
+
+      - name: Build www/
+        run: npm run build:www
+
+      - name: Confirm www/ contents
+        run: |
+          test -f www/index.html
+          test -f www/output.css
+          test -f www/sw.js
+          test -f www/version.js
+          test -d www/components
+          test -d www/scripts
+          test -d www/assets
