@@ -268,7 +268,7 @@ class QuickStart extends HTMLElement {
                             </label>
                         </div>
                         <div class="seat-pill inline-flex rounded-full bg-foreground/5 p-[3px] text-[12px] font-medium shrink-0" style="border:1px solid hsl(var(--foreground)/0.08);">
-                            <button data-half="PLAYER" class="seat-half inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer transition-colors ${isPlayer ? '' : inactiveCls}" ${playerActiveStyle}>${ICON_USER}<span>You</span></button>
+                            <button data-half="PLAYER" class="seat-half inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer transition-colors ${isPlayer ? '' : inactiveCls}" ${playerActiveStyle}>${ICON_USER}<span>Human</span></button>
                             <button data-half="BOT" class="seat-half inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer transition-colors ${!isPlayer ? '' : inactiveCls}" ${botActiveStyle}>${ICON_BOT}<span>Bot</span></button>
                         </div>
                         <button class="remove-seat cursor-pointer bg-transparent border-none p-1 opacity-30 hover:opacity-60 transition-opacity shrink-0">${ICON_CLOSE}</button>
@@ -358,7 +358,7 @@ class QuickStart extends HTMLElement {
                             <div class="text-xs opacity-50 mt-0.5 truncate">Tap a side to fill</div>
                         </div>
                         <div class="seat-pill inline-flex rounded-full bg-foreground/5 p-[3px] text-[12px] font-medium shrink-0" style="border:1px solid hsl(var(--foreground)/0.08);">
-                            <button data-add="PLAYER" class="seat-add inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer bg-transparent opacity-55 hover:opacity-100 transition-opacity">${ICON_USER}<span>You</span></button>
+                            <button data-add="PLAYER" class="seat-add inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer bg-transparent opacity-55 hover:opacity-100 transition-opacity">${ICON_USER}<span>Human</span></button>
                             <button data-add="BOT" class="seat-add inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer bg-transparent opacity-55 hover:opacity-100 transition-opacity">${ICON_BOT}<span>Bot</span></button>
                         </div>
                     </div>`
