@@ -1,23 +1,18 @@
 #!/usr/bin/env node
-// Mirror the VERSION constant from components/utils.*.js into
+// Mirror the VERSION constant from version.js into
 // android/app/build.gradle (versionName + versionCode).
 // versionCode is derived from semver: major*10000 + minor*100 + patch.
 
-import { readFile, writeFile, readdir } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 
-const componentsDir = resolve(root, 'components');
-const files = await readdir(componentsDir);
-const utilsFile = files.find((f) => /^utils\.[0-9a-f]+\.js$/.test(f));
-if (!utilsFile) throw new Error('Could not locate utils.<hash>.js');
-
-const utilsSrc = await readFile(resolve(componentsDir, utilsFile), 'utf8');
-const match = utilsSrc.match(/export\s+const\s+VERSION\s*=\s*["']([^"']+)["']/);
-if (!match) throw new Error('VERSION constant not found in ' + utilsFile);
+const versionSrc = await readFile(resolve(root, 'version.js'), 'utf8');
+const match = versionSrc.match(/export\s+const\s+VERSION\s*=\s*["']([^"']+)["']/);
+if (!match) throw new Error('VERSION constant not found in version.js');
 const version = match[1];
 
 const semver = version.match(/^(\d+)\.(\d+)\.(\d+)/);

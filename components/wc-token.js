@@ -1,9 +1,9 @@
 import {
     htmlToElement
-} from "./index.bf0b1971.js"
+} from "./index.js"
 import {
     handleOnTokenMove,
-} from "../scripts/index.e8f102de.js";
+} from "../scripts/index.js";
 
 //language=HTML
 const TOKEN_HTML = (playerIndex) => /*html*/ `

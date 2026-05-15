@@ -74,27 +74,30 @@ Example: `http://localhost:8888/?positions=50,,,,,,,,,,,,,,,&player=0` puts P0's
 
 ## Cache Busting
 
-All JS files in `components/` and `scripts/` use content-hash filenames: `name.{hash}.js`.
+A module service worker at [sw.js](sw.js) owns cache invalidation. JS filenames are canonical (`name.js`) — no content hashes.
 
-**After editing any JS file, run `npm run cache-bust` from repo root.** This:
-- Strips old checksums from filenames
-- Computes new MD5-based 8-char hash (normalized to exclude import path checksums, so hashes are stable/idempotent)
-- Renames files and updates all import/export references across JS and HTML
+How it works:
+- SW imports `VERSION` from [version.js](version.js); cache name = `leludo-${VERSION}`.
+- On install, it precaches the shell (HTML + CSS + every `components/*.js` and `scripts/*.js` + critical assets).
+- On activate, old caches not matching the current name are deleted; `clients.claim()` takes over open tabs.
+- Fetch strategy: network-first for HTML navigations (fresh shell on release), cache-first for everything else.
+- Registered as a module SW (`type: 'module'`), so browsers diff `sw.js` AND its static imports — bumping `version.js` triggers an update.
+- Registration is gated off on `localhost` / `127.0.0.1` to keep `npm run dev` simple.
 
-The script is idempotent — running it multiple times without edits produces no changes. Also updates refs in [index.html](index.html) and [test/](test/) (`index.html`, `test.js`).
+**Release ritual: bump `VERSION` in [version.js](version.js). That's it.** Browsers detect the SW dependency change on next navigation, install the new SW, purge the old cache, and serve fresh assets.
 
-Implementation: [tools/cache-bust.mjs](tools/cache-bust.mjs).
+If you add a new top-level file that must be cached offline, also add it to the `PRECACHE` array in [sw.js](sw.js).
 
 ## Versioning
 
-Single source of truth: `VERSION` constant in `components/utils.*.js`. Consumed by `wc-quick-start` (landing footer) and `wc-settings` (about dialog) via the components barrel.
+Single source of truth: `VERSION` constant in [version.js](version.js). Consumed by `wc-quick-start` (landing footer), `wc-settings` (about dialog), and `sw.js` (cache name). The components barrel re-exports it.
 
 **Bump after any user-visible change.** Semver-ish:
 - Patch (`0.X.Y+1`) — bug fix, polish, copy tweak
 - Minor (`0.X+1.0`) — new feature, AI/UX change, gameplay logic
 - Major (`X+1.0.0`) — breaking save format, full rewrite
 
-Edit `VERSION` in utils, then run `npm run cache-bust`.
+Edit `version.js`. No other steps for web. For Android, `npm run android:prepare` mirrors it into `build.gradle` via [tools/sync-android-version.mjs](tools/sync-android-version.mjs).
 
 ## Changelog
 
@@ -108,11 +111,11 @@ Minimum sections per entry:
 
 ## Android (Capacitor)
 
-Capacitor's `webDir` is `www/`, which is **built** from the root by `tools/build-www.mjs` (copies `index.html`, `changelog.html`, `privacy.html`, `manifest.json`, `output.css`, `components/`, `scripts/`, `assets/`). `www/` is gitignored.
+Capacitor's `webDir` is `www/`, which is **built** from the root by `tools/build-www.mjs` (copies `index.html`, `changelog.html`, `privacy.html`, `manifest.json`, `output.css`, `sw.js`, `version.js`, `components/`, `scripts/`, `assets/`). `www/` is gitignored.
 
 Scripts in `package.json`:
 
-- `npm run android:prepare` — cache-bust → version sync → build:www → `cap sync android`.
+- `npm run android:prepare` — version sync → build:www → `cap sync android`.
 - `npm run android:open` / `npm run android:run` — prepare + open/run in Android Studio.
 
 Anything that works in the browser ships to Android as long as `npm run android:prepare` runs first.

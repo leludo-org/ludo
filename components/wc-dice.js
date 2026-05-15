@@ -1,9 +1,9 @@
 import {
     htmlToElement
-} from "./index.bf0b1971.js"
+} from "./index.js"
 import {
     handleDiceRoll,
-} from "../scripts/index.e8f102de.js";
+} from "../scripts/index.js";
 
 //language=HTML
 const DS = "background:radial-gradient(circle at 40% 35%,#333,#111);box-shadow:inset 0 1px 2px rgba(0,0,0,0.6),0 0.5px 0 rgba(255,255,255,0.15)";

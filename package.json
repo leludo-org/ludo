@@ -8,10 +8,9 @@
   "scripts": {
     "dev": "node tools/dev.mjs",
     "test": "node tools/test.mjs",
-    "cache-bust": "node tools/cache-bust.mjs",
     "build:www": "node tools/build-www.mjs",
     "version:sync": "node tools/sync-android-version.mjs",
-    "android:prepare": "npm run cache-bust && npm run version:sync && npm run build:www && cap sync android",
+    "android:prepare": "npm run version:sync && npm run build:www && cap sync android",
     "android:open": "npm run android:prepare && cap open android",
     "android:run": "npm run android:prepare && cap run android"
   },

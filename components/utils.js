@@ -1,5 +1,3 @@
-export const VERSION = "0.10.0";
-
 /**
  *
  * @param {string} html

@@ -1,9 +1,9 @@
 import {
     htmlToElement,
     VERSION,
-} from "./index.bf0b1971.js";
-import {handleGameStart, handleGameResume, playClickSound} from "../scripts/index.e8f102de.js";
-import {randomBotName, isDefaultBotName, getSavedSeatName, setSavedSeatName} from "../scripts/bot-names.bc6124a2.js";
+} from "./index.js";
+import {handleGameStart, handleGameResume, playClickSound} from "../scripts/index.js";
+import {randomBotName, isDefaultBotName, getSavedSeatName, setSavedSeatName} from "../scripts/bot-names.js";
 
 const COLOR_NAMES = ["Vermillion", "Emerald", "Saffron", "Cobalt"];
 const COLOR_KEYS = ["red", "green", "yellow", "blue"];

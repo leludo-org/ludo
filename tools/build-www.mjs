@@ -16,6 +16,8 @@ const SHIPPED = [
   'privacy.html',
   'manifest.json',
   'output.css',
+  'sw.js',
+  'version.js',
   'components',
   'scripts',
   'assets',

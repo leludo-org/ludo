@@ -27,8 +27,8 @@ import {
     resetTurnCount,
     initRailDeps,
     setPlayerNames,
-} from "./index.e8f102de.js";
-import { pickBestMove, PERSONALITIES, randomPersonality } from "./bot-ai.81a6eea3.js";
+} from "./index.js";
+import { pickBestMove, PERSONALITIES, randomPersonality } from "./bot-ai.js";
 
 /**
  * @typedef {'PLAYER'|'BOT'} PlayerType

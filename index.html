@@ -6,11 +6,21 @@
     <meta name="theme-color" content="#EFE9DC"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <script type="module" src="components/index.bf0b1971.js"></script>
-    <script type="module" src="scripts/index.e8f102de.js"></script>
+    <script type="module" src="components/index.js"></script>
+    <script type="module" src="scripts/index.js"></script>
     <link rel="stylesheet" href="output.css"/>
 
     <link rel="manifest" href="manifest.json"/>
+
+    <script>
+        if ('serviceWorker' in navigator
+            && location.hostname !== 'localhost'
+            && location.hostname !== '127.0.0.1') {
+            window.addEventListener('load', () =>
+                navigator.serviceWorker.register('./sw.js', { type: 'module' })
+            );
+        }
+    </script>
 
     <link rel="icon" href="assets/icons/favicon.svg" sizes="any" type="image/svg+xml"/>
     <title>Leludo</title>
