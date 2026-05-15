@@ -56,8 +56,8 @@ function settingsGroup(label, content) {
 }
 
 function buildSettingsOverlay() {
-    return `<div id="settings-overlay" class="fixed inset-0 z-50 bg-background overflow-y-auto hidden flex items-start justify-center p-2">
-        <div class="max-w-96 w-full flex flex-col min-h-[70vh]">
+    return `<div id="settings-overlay" class="fixed inset-0 z-50 bg-background overflow-y-auto hidden flex items-start sm:items-center justify-center p-2">
+        <div class="max-w-96 w-full flex flex-col min-h-[70vh] sm:min-h-0 sm:h-[820px] sm:max-h-[calc(100dvh-32px)]">
             <div class="flex items-center gap-2 pt-1 pb-6">
                 <button id="settings-back" class="w-[38px] h-[38px] rounded-full bg-transparent border border-foreground/15 flex items-center justify-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity">${ICON_BACK}</button>
                 <div class="flex-1 text-center text-[11px] font-medium tracking-[0.16em] uppercase opacity-50">Settings</div>

@@ -628,6 +628,36 @@ html{
   color: hsl(var(--foreground));
 }
 
+body {
+  background-image:
+            linear-gradient(90deg,
+                hsl(28 35% 35% / 0.14) 0%,
+                hsl(28 35% 35% / 0.06) 12%,
+                transparent 22%,
+                transparent 78%,
+                hsl(28 35% 35% / 0.06) 88%,
+                hsl(28 35% 35% / 0.14) 100%),
+            radial-gradient(ellipse 70% 55% at 50% 50%,
+                hsl(40 50% 98% / 0.95) 0%,
+                hsl(40 45% 96% / 0.5) 35%,
+                transparent 70%);
+  background-attachment: fixed;
+}
+
+.dark body {
+  background-image:
+            linear-gradient(90deg,
+                hsl(var(--foreground) / 0.09) 0%,
+                hsl(var(--foreground) / 0.04) 12%,
+                transparent 22%,
+                transparent 78%,
+                hsl(var(--foreground) / 0.04) 88%,
+                hsl(var(--foreground) / 0.09) 100%),
+            radial-gradient(ellipse 70% 50% at 50% 50%,
+                hsl(var(--card) / 0.5) 0%,
+                transparent 65%);
+}
+
 .\!container{
   width: 100% !important;
 }
@@ -8325,6 +8355,24 @@ table td {
 
 .peer:checked ~ .peer-checked\:bg-foreground{
   background-color: hsl(var(--foreground));
+}
+
+@media (min-width: 640px){
+  .sm\:h-\[820px\]{
+    height: 820px;
+  }
+
+  .sm\:max-h-\[calc\(100dvh-32px\)\]{
+    max-height: calc(100dvh - 32px);
+  }
+
+  .sm\:min-h-0{
+    min-height: 0px;
+  }
+
+  .sm\:items-center{
+    align-items: center;
+  }
 }
 
 .\[\&\>div\]\:outline>div{
