@@ -122,7 +122,7 @@ function buildSettingsOverlay() {
                         </div>
                         <div class="flex justify-between text-sm">
                             <span class="opacity-50">Source</span>
-                            <a href="https://github.com/leludo-org/ludo" class="font-mono opacity-70 hover:opacity-100">github.com/leludo-org/ludo</a>
+                            <a href="https://github.com/LeludoOrg/leludo" class="font-mono opacity-70 hover:opacity-100">github.com/LeludoOrg/leludo</a>
                         </div>
                         <div class="flex justify-between text-sm border-t border-foreground/5 pt-2 mt-1">
                             <span class="opacity-50">Privacy</span>
@@ -155,78 +155,87 @@ function updateTheme(theme) {
     localStorage.setItem("theme", theme)
 }
 
+let _overlayInitialized = false;
+let _pausedBySettings = false;
+
+function openSettings() {
+    ensureOverlay();
+    const overlay = document.getElementById('settings-overlay');
+    const gameEl = document.getElementById('game');
+    const gameVisible = gameEl && !gameEl.classList.contains('hidden');
+    if (gameVisible && !isGameLogicPaused()) {
+        pauseGameLogic();
+        _pausedBySettings = true;
+    }
+    overlay.classList.remove('hidden');
+}
+
+function closeSettings() {
+    const overlay = document.getElementById('settings-overlay');
+    if (overlay) overlay.classList.add('hidden');
+    if (_pausedBySettings) {
+        resumeGameLogic();
+        _pausedBySettings = false;
+    }
+}
+
+function ensureOverlay() {
+    if (_overlayInitialized) return;
+    _overlayInitialized = true;
+
+    document.body.insertAdjacentHTML('beforeend', buildSettingsOverlay());
+    const overlay = document.getElementById('settings-overlay');
+
+    overlay.querySelector("#settings-back").addEventListener("click", closeSettings);
+
+    const defaultTheme = localStorage.getItem("theme") || "light"
+    updateTheme(defaultTheme)
+    const themeRadio = overlay.querySelector(`input[name="s-theme"][value="${defaultTheme}"]`);
+    if (themeRadio) themeRadio.checked = true;
+
+    overlay.querySelectorAll("input[name='s-theme']").forEach((el) => {
+        el.addEventListener("change", ($event) => {
+            updateTheme($event.target.value);
+        })
+    })
+
+    ASSIST_TOGGLES.forEach(t => {
+        const value = readAssistPref(t);
+        const el = overlay.querySelector(`#${t.id}`);
+        el.checked = value;
+        setAssistFlag(t.flag, value);
+        el.addEventListener("change", ($event) => {
+            const next = $event.target.checked;
+            localStorage.setItem(t.storageKey, next);
+            setAssistFlag(t.flag, next);
+        });
+    });
+
+    const activePool = getActivePoolKey();
+    const poolRadio = overlay.querySelector(`input[name="s-bot-pool"][value="${activePool}"]`);
+    if (poolRadio) poolRadio.checked = true;
+    overlay.querySelectorAll("input[name='s-bot-pool']").forEach(el => {
+        el.addEventListener("change", ($event) => {
+            setActivePoolKey($event.target.value);
+        });
+    });
+}
+
+document.addEventListener('click', (e) => {
+    if (e.target.id === 'g-settings-btn' || e.target.closest('#g-settings-btn')) {
+        openSettings();
+    }
+});
+
 class Header extends HTMLElement {
     constructor() {
         super()
     }
 
     connectedCallback() {
+        ensureOverlay();
         const settingsElement = htmlToElement(SETTINGS_HTML)
-        const settingsIcon = settingsElement.querySelector("#settings-icon")
-
-        const overlayHTML = buildSettingsOverlay();
-        document.body.insertAdjacentHTML('beforeend', overlayHTML);
-        const overlay = document.getElementById('settings-overlay');
-
-        let _pausedBySettings = false;
-        const openSettings = () => {
-            const gameEl = document.getElementById('game');
-            const gameVisible = gameEl && !gameEl.classList.contains('hidden');
-            if (gameVisible && !isGameLogicPaused()) {
-                pauseGameLogic();
-                _pausedBySettings = true;
-            }
-            overlay.classList.remove('hidden');
-        };
-        const closeSettings = () => {
-            overlay.classList.add('hidden');
-            if (_pausedBySettings) {
-                resumeGameLogic();
-                _pausedBySettings = false;
-            }
-        };
-
-        settingsIcon.addEventListener("click", openSettings);
-        overlay.querySelector("#settings-back").addEventListener("click", closeSettings);
-
-        document.addEventListener('click', (e) => {
-            if (e.target.id === 'g-settings-btn' || e.target.closest('#g-settings-btn')) {
-                openSettings();
-            }
-        });
-
-        const defaultTheme = localStorage.getItem("theme") || "light"
-        updateTheme(defaultTheme)
-        const themeRadio = overlay.querySelector(`input[name="s-theme"][value="${defaultTheme}"]`);
-        if (themeRadio) themeRadio.checked = true;
-
-        overlay.querySelectorAll("input[name='s-theme']").forEach((el) => {
-            el.addEventListener("change", ($event) => {
-                updateTheme($event.target.value);
-            })
-        })
-
-        ASSIST_TOGGLES.forEach(t => {
-            const value = readAssistPref(t);
-            const el = overlay.querySelector(`#${t.id}`);
-            el.checked = value;
-            setAssistFlag(t.flag, value);
-            el.addEventListener("change", ($event) => {
-                const next = $event.target.checked;
-                localStorage.setItem(t.storageKey, next);
-                setAssistFlag(t.flag, next);
-            });
-        });
-
-        const activePool = getActivePoolKey();
-        const poolRadio = overlay.querySelector(`input[name="s-bot-pool"][value="${activePool}"]`);
-        if (poolRadio) poolRadio.checked = true;
-        overlay.querySelectorAll("input[name='s-bot-pool']").forEach(el => {
-            el.addEventListener("change", ($event) => {
-                setActivePoolKey($event.target.value);
-            });
-        });
-
+        settingsElement.querySelector("#settings-icon").addEventListener("click", openSettings);
         this.appendChild(settingsElement)
     }
 }
