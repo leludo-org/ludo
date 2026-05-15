@@ -3,6 +3,8 @@ import {
     pauseGameLogic,
     resumeGameLogic,
     isGameLogicPaused,
+    isSoundMuted,
+    setSoundMuted,
 } from "../scripts/index.js";
 
 const ASSIST_TOGGLES = [
@@ -95,6 +97,8 @@ function buildSettingsOverlay() {
                         </label>
                     </div>
                 `)}
+
+                ${settingsGroup('Sound', toggleHtml('s-sound', 'Sound effects', !isSoundMuted()))}
 
                 ${settingsGroup('Assist', ASSIST_TOGGLES.map(t => toggleHtml(t.id, t.label, readAssistPref(t))).join(''))}
 
@@ -198,6 +202,12 @@ function ensureOverlay() {
             updateTheme($event.target.value);
         })
     })
+
+    const soundEl = overlay.querySelector('#s-sound');
+    soundEl.checked = !isSoundMuted();
+    soundEl.addEventListener('change', ($event) => {
+        setSoundMuted(!$event.target.checked);
+    });
 
     ASSIST_TOGGLES.forEach(t => {
         const value = readAssistPref(t);

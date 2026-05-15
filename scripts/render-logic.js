@@ -1,6 +1,19 @@
 import {getMarkIndex} from "./index.js";
 
+const SOUND_MUTED_KEY = "sound-muted";
+let _soundMuted = localStorage.getItem(SOUND_MUTED_KEY) === "true";
+
+export function isSoundMuted() {
+    return _soundMuted;
+}
+
+export function setSoundMuted(muted) {
+    _soundMuted = !!muted;
+    localStorage.setItem(SOUND_MUTED_KEY, _soundMuted);
+}
+
 export function playClickSound() {
+    if (_soundMuted) return;
     const ctx = getAudioCtx();
     const t = ctx.currentTime;
     const osc = ctx.createOscillator();
@@ -22,6 +35,7 @@ function getAudioCtx() {
 }
 
 export function playStepSound() {
+    if (_soundMuted) return;
     const ctx = getAudioCtx();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -50,8 +64,10 @@ function loadCaptureBuffer() {
 }
 
 export function playCaptureSound() {
+    if (_soundMuted) return;
     const ctx = getAudioCtx();
     loadCaptureBuffer().then(buffer => {
+        if (_soundMuted) return;
         const src = ctx.createBufferSource();
         src.buffer = buffer;
         const gain = ctx.createGain();
@@ -63,6 +79,7 @@ export function playCaptureSound() {
 }
 
 export function playDiceSound() {
+    if (_soundMuted) return;
     const ctx = getAudioCtx();
     const t = ctx.currentTime;
 
