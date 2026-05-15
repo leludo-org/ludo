@@ -138,8 +138,8 @@ class QuickStart extends HTMLElement {
                 </div>
                 <div class="flex-1 flex flex-col justify-center px-2">
                     <div class="flex items-end gap-3 mb-6">
-                        ${DICE_SVG(4, 48)}
-                        ${DICE_SVG(6, 48)}
+                        <div class="home-dice" data-value="4" style="line-height:0;">${DICE_SVG(4, 48)}</div>
+                        <div class="home-dice" data-value="6" style="line-height:0;">${DICE_SVG(6, 48)}</div>
                     </div>
                     <h1 class="font-display leading-[0.85] tracking-tight" style="font-size: clamp(64px, 18vw, 88px);">
                         le<br>ludo.
@@ -176,9 +176,61 @@ class QuickStart extends HTMLElement {
         }
 
         this.appendChild(el)
+        this._startHomeDiceAnim()
+    }
+
+    _startHomeDiceAnim() {
+        this._stopHomeDiceAnim()
+        const dice = Array.from(this.querySelectorAll('.home-dice'))
+        if (!dice.length) return
+
+        this._homeDiceTimers = []
+
+        const roll = (el) => {
+            el.classList.add('dice-rolling')
+            const finalValue = 1 + Math.floor(Math.random() * 6)
+            const seq = []
+            for (let i = 0; i < 7; i++) seq.push(1 + Math.floor(Math.random() * 6))
+            seq.push(finalValue)
+            const delays = [40, 40, 40, 50, 60, 80, 100, 140]
+            let step = 0
+            const tick = () => {
+                if (step >= seq.length) {
+                    el.classList.remove('dice-rolling')
+                    el.dataset.value = finalValue
+                    return
+                }
+                el.innerHTML = DICE_SVG(seq[step], 48)
+                const d = delays[step]
+                step++
+                this._homeDiceTimers.push(setTimeout(tick, d))
+            }
+            tick()
+        }
+
+        const rollAll = () => {
+            dice.forEach((el, idx) => {
+                this._homeDiceTimers.push(setTimeout(() => roll(el), idx * 180))
+            })
+        }
+
+        this._homeDiceTimers.push(setTimeout(rollAll, 900))
+        this._homeDiceInterval = setInterval(rollAll, 1900)
+    }
+
+    _stopHomeDiceAnim() {
+        if (this._homeDiceInterval) clearInterval(this._homeDiceInterval)
+        if (this._homeDiceTimers) this._homeDiceTimers.forEach(t => clearTimeout(t))
+        this._homeDiceTimers = []
+        this._homeDiceInterval = null
+    }
+
+    disconnectedCallback() {
+        this._stopHomeDiceAnim()
     }
 
     showSetupScreen() {
+        this._stopHomeDiceAnim()
         this.innerHTML = ""
 
         const html = /*html*/ `
