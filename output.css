@@ -633,9 +633,9 @@ body,
     #settings-overlay {
   background-image:
             radial-gradient(ellipse 80% 70% at 50% 50%,
-                hsl(45 70% 99% / 1) 0%,
-                hsl(42 55% 96% / 0.65) 30%,
-                hsl(40 35% 92% / 0.25) 60%,
+                hsl(31 50% 71% / 0.6) 0%,
+                hsl(31 42% 77% / 0.4) 35%,
+                hsl(31 35% 84% / 0.18) 65%,
                 transparent 90%);
   background-attachment: fixed;
 }
