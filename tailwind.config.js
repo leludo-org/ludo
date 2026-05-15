@@ -7,6 +7,7 @@ export default {
         "./components/**/*.js",
         "./scripts/**/*.js",
     ],
+    darkMode: 'class',
     safelist: [
         { pattern: /(bg|text|border|ring|fill|stroke)-player-[0-3](-light|-path)?/ },
     ],

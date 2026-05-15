@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Dev: run live-server (port 8888) + tailwindcss --watch in parallel.
+// Dev: run five-server (port 8888) + tailwindcss --watch in parallel.
 
 import { spawn } from 'node:child_process';
 import { resolve, dirname } from 'node:path';
@@ -9,7 +9,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 
 const procs = [
-  spawn('npx', ['live-server', '--port=8888', '--open=/'], { cwd: root, stdio: 'inherit' }),
+  spawn('npx', ['five-server', '--port=8888', '--open=/'], { cwd: root, stdio: 'inherit' }),
   spawn('npx', ['tailwindcss', '-c', 'tailwind.config.js', '-i', 'input.css', '-o', 'output.css', '--watch'], { cwd: root, stdio: 'inherit' }),
 ];
 

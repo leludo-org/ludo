@@ -1,31 +1,38 @@
-## Contribution Guidelines
+# Contributing
 
-Thanks for your interest in contributing to our project! Here are a few guidelines to make it easy for everyone.
+Thanks for your interest. This is a small hobby project — keep changes focused and the bar is "does it make the game better".
 
-1. ### Issues and Pull Requests
+## Before you start
 
-   - #### Start with an Issue
-        Before making any changes, check if there’s already an issue describing what you want to work on.
-     - If it doesn’t exist, create a new issue to give others context.
-     - Describe the problem or enhancement you want to address.
+1. **Open an issue first** for anything non-trivial (feature, behaviour change, refactor). A short description of the problem and your proposed approach is enough.
+2. **Link the issue from your PR** — `Fixes #N` or `Refs #N` in the description.
 
-   - #### Link Your Pull Request to an Issue
-        Every pull request should link to an issue.
-     - Reference the issue in your PR description (e.g., Fixes #issue_number).
-     - This helps keep discussions organized and gives us a clear record of what each PR is meant to address.
+Tiny fixes (typo, broken link, one-line bug) can skip the issue.
 
-2. ### Submitting a Pull Request
+## Local setup
 
-   - #### Describe Your Changes
-     Provide a short summary of what your PR does and why. If your PR fixes a bug or adds a feature, mention that.
+```bash
+npm install
+npm run dev    # five-server on :8888 + tailwindcss --watch
+npm test       # opens the QUnit suite (needs dev running)
+```
 
-   - #### Make Sure It Works
-     Before submitting, test your changes to make sure they work as expected and don’t break anything else in the project.
+See [README.md](README.md) for the short version, [CLAUDE.md](CLAUDE.md) for the full repo map and architecture notes.
 
-3. ### Working with Feedback
+## House rules
 
-   - #### Respond to Review Comments
-     We may suggest some changes. Please respond or update your PR as needed.
+- **Vanilla JS + Web Components + Tailwind, no bundler.** Don't introduce a build step or framework.
+- **After editing any JS file under `components/` or `scripts/`**, run `npm run cache-bust` — filenames carry an MD5 hash and the script rewrites every import. Idempotent; re-run is safe.
+- **User-visible change?** Bump `VERSION` in `components/utils.*.js` and add an entry to [changelog.html](changelog.html) (semver: patch = fix/polish, minor = feature, major = breaking).
+- **Pure logic stays pure.** `scripts/game-logic.*.js` must remain side-effect-free so the test suite can import it directly.
+- **Pause respect.** Any bot or autoplay `setTimeout` in the turn flow must go through `scheduleTurn` — see the Pause Model section of CLAUDE.md.
 
-   - #### Stay Engaged
-     If you’re available to make changes after your PR is merged, that’s always appreciated.
+## Submitting
+
+- Describe what changed and why. Screenshots / short clips for UI work help a lot.
+- Test the golden path *and* an edge case in the browser before opening the PR.
+- Keep PRs small. Multiple narrow PRs land faster than one sprawling one.
+
+## Reviews
+
+I (Vishal) review when I can. Expect comments — please respond or push updates. If a PR sits stale for a long time, ping the issue.

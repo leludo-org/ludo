@@ -1,25 +1,33 @@
 # Attributions
 
-This open-source Ludo game includes the following public domain assets with proper attribution to their creators. 
+Third-party assets and libraries used by Ludo.
 
 ---
 
 ## Sounds
 
-- **pop.ogg**  
-  - Source: [Freesound.org](https://freesound.org/people/SunnySideSound/sounds/67088/)
----
+- **`assets/sounds/capture.m4a`** — vocal "fahhh" sample sourced from [Zedge](https://www.zedge.net/notification-sounds/60e89d5f-852a-434c-a2f8-91b48010f6a2), trimmed and re-encoded to AAC for size.
 
 ## Fonts
 
-- **Merriweather**  
-  - Source: [Google Fonts](https://fonts.google.com/specimen/Merriweather)
+Loaded at runtime from [Google Fonts](https://fonts.google.com/) (licensed under the [SIL Open Font License 1.1](https://openfontlicense.org/)):
+
+- **[Instrument Serif](https://fonts.google.com/specimen/Instrument+Serif)** — display
+- **[DM Sans](https://fonts.google.com/specimen/DM+Sans)** — UI
+- **[JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono)** — numeric / mono
+
+## Test framework
+
+- **[QUnit](https://qunitjs.com/)** (MIT) — loaded from `code.jquery.com` for the in-browser test suite at `/test/`.
+
+## Build tooling
+
+See [package.json](package.json) for the full dev dependency list. Notable runtime-impacting tools:
+
+- **[Tailwind CSS](https://tailwindcss.com/)** (MIT)
+- **[five-server](https://github.com/yandeu/five-server)** (MIT) — dev server
+- **[Capacitor](https://capacitorjs.com/)** (MIT) — Android shell
 
 ---
 
-## Tools
-
-- **Audio Convert**
-  - Source: [Freeconvert.com](https://www.freeconvert.com/aif-to-ogg) 
-
-Thank you to all creators for making these assets available for public use!
+The board mark, board layout, and color palette are original to this project.
