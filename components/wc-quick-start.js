@@ -157,7 +157,6 @@ class QuickStart extends HTMLElement {
                     <button class="new-game-btn w-full h-[60px] rounded-2xl bg-foreground text-background font-medium text-[17px] tracking-wide border-none cursor-pointer flex items-center justify-center gap-2.5 hover:opacity-90 transition-opacity"
                         style="box-shadow: 0 8px 22px -8px rgba(31,27,20,0.4);">
                         New game
-                        ${ICON_FORWARD}
                     </button>
                 </div>
             </div>
@@ -212,7 +211,6 @@ class QuickStart extends HTMLElement {
                 <div class="pt-4 pb-2">
                     <button class="start-btn w-full h-[60px] rounded-2xl bg-foreground text-background font-medium text-[17px] tracking-wide border-none cursor-pointer flex items-center justify-center gap-2.5 hover:opacity-90 transition-opacity">
                         Start game
-                        ${ICON_FORWARD}
                     </button>
                 </div>
             </div>
