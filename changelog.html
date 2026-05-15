@@ -23,8 +23,8 @@
 
 <body class="h-full flex flex-col">
 
-<div class="flex-1 flex items-start justify-center p-2">
-    <div class="max-w-96 w-full flex flex-col min-h-[calc(100dvh-16px)]">
+<div class="flex-1 flex items-start sm:items-center justify-center p-2">
+    <div class="max-w-96 w-full flex flex-col min-h-[calc(100dvh-16px)] sm:min-h-0 sm:h-[820px] sm:max-h-[calc(100dvh-32px)]">
         <div class="flex items-center gap-2 pt-1 pb-6">
             <a href="index.html" class="w-[38px] h-[38px] rounded-full bg-transparent border border-foreground/15 flex items-center justify-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity text-foreground no-underline" aria-label="Back">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
@@ -40,6 +40,25 @@
             </div>
 
             <div class="px-2 pt-6 pb-8 flex flex-col gap-8">
+
+                <article>
+                    <div class="flex items-baseline gap-3 mb-3 px-1">
+                        <div class="font-display text-[22px] tracking-tight">v0.12.0</div>
+                        <div class="text-[11px] tracking-widest uppercase opacity-40">May 15, 2026</div>
+                    </div>
+
+                    <div class="flex flex-col gap-4">
+                        <section>
+                            <div class="text-[11px] tracking-widest uppercase opacity-40 mb-2">Highlights</div>
+                            <div class="bg-card rounded-2xl p-4 border border-foreground/10 text-[14px] leading-relaxed opacity-85">
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Desktop and tablet now render the game in a centered phone-sized frame instead of stretching edge to edge.</li>
+                                    <li>Added a warm ambient gradient behind the frame so wide screens feel intentional in both light and dark modes.</li>
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+                </article>
 
                 <article>
                     <div class="flex items-baseline gap-3 mb-3 px-1">

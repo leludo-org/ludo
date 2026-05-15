@@ -130,7 +130,7 @@ class QuickStart extends HTMLElement {
             </div>` : ''
 
         const html = /*html*/ `
-            <div class="flex flex-col h-full min-h-[calc(100dvh-16px)]">
+            <div class="flex flex-col h-full min-h-[calc(100dvh-16px)] sm:min-h-0 sm:h-[820px] sm:max-h-[calc(100dvh-32px)]">
                 <div class="flex items-center gap-2 pt-1 pb-6">
                     <a href="https://github.com/LeludoOrg/leludo" target="_blank" rel="noopener" class="${CIRCLE_BTN} text-foreground no-underline">${ICON_GITHUB}</a>
                     <div class="flex-1 text-center text-[11px] font-medium tracking-[0.16em] uppercase opacity-50">v${VERSION}</div>
@@ -190,7 +190,7 @@ class QuickStart extends HTMLElement {
                 .seat-row { flex-wrap: nowrap; }
                 .seat-pill { display: inline-flex; flex-wrap: nowrap; }
             </style>
-            <div class="flex flex-col min-h-[calc(100dvh-16px)]">
+            <div class="flex flex-col min-h-[calc(100dvh-16px)] sm:min-h-0 sm:h-[820px] sm:max-h-[calc(100dvh-32px)]">
                 <div class="flex items-center gap-2 pt-1 pb-6">
                     <button class="back-btn ${CIRCLE_BTN}">${ICON_BACK}</button>
                     <div class="flex-1 text-center text-xs font-medium tracking-[0.16em] uppercase opacity-50">Setup</div>

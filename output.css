@@ -628,6 +628,29 @@ html{
   color: hsl(var(--foreground));
 }
 
+body,
+    #pause-menu,
+    #settings-overlay {
+  background-image:
+            radial-gradient(ellipse 80% 70% at 50% 50%,
+                hsl(31 50% 71% / 0.6) 0%,
+                hsl(31 42% 77% / 0.4) 35%,
+                hsl(31 35% 84% / 0.18) 65%,
+                transparent 90%);
+  background-attachment: fixed;
+}
+
+.dark body,
+    .dark #pause-menu,
+    .dark #settings-overlay {
+  background-image:
+            radial-gradient(ellipse 80% 70% at 50% 50%,
+                hsl(28 45% 25% / 0.85) 0%,
+                hsl(28 35% 20% / 0.5) 35%,
+                hsl(28 25% 15% / 0.2) 65%,
+                transparent 90%);
+}
+
 .\!container{
   width: 100% !important;
 }
@@ -8325,6 +8348,24 @@ table td {
 
 .peer:checked ~ .peer-checked\:bg-foreground{
   background-color: hsl(var(--foreground));
+}
+
+@media (min-width: 640px){
+  .sm\:h-\[820px\]{
+    height: 820px;
+  }
+
+  .sm\:max-h-\[calc\(100dvh-32px\)\]{
+    max-height: calc(100dvh - 32px);
+  }
+
+  .sm\:min-h-0{
+    min-height: 0px;
+  }
+
+  .sm\:items-center{
+    align-items: center;
+  }
 }
 
 .\[\&\>div\]\:outline>div{
