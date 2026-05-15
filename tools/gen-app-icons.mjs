@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Render docs/assets/icons/favicon.svg into the PNG inputs that
+// Render assets/icons/favicon.svg into the PNG inputs that
 // @capacitor/assets consumes. Run before `npx capacitor-assets generate`.
 
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
@@ -10,8 +10,8 @@ import sharp from 'sharp';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
-const srcSvg = resolve(root, 'docs/assets/icons/favicon.svg');
-const outDir = resolve(root, 'assets');
+const srcSvg = resolve(root, 'assets/icons/favicon.svg');
+const outDir = resolve(root, 'design');
 
 const CREAM = { r: 0xfa, g: 0xf6, b: 0xec, alpha: 1 };
 const ICON_SIZE = 1024;
@@ -65,4 +65,4 @@ await writeFile(resolve(outDir, 'splash.png'), splash);
 await writeFile(resolve(outDir, 'splash-dark.png'), splash);
 
 console.log('Generated:', ['icon.png', 'icon-background.png', 'icon-foreground.png', 'splash.png', 'splash-dark.png']
-  .map((f) => `assets/${f}`).join(', '));
+  .map((f) => `design/${f}`).join(', '));

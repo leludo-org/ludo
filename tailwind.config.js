@@ -2,7 +2,10 @@
 export default {
     content: [
         "./index.html",
-        "./**/*.{html,js}",
+        "./changelog.html",
+        "./privacy.html",
+        "./components/**/*.js",
+        "./scripts/**/*.js",
     ],
     safelist: [
         { pattern: /(bg|text|border|ring|fill|stroke)-player-[0-3](-light|-path)?/ },

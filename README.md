@@ -1,34 +1,41 @@
-## Project Setup and Running Local Server
+# Ludo
 
-This project is still in early development, and while the current setup involves several Node.js dependencies, future
-iterations aim to simplify the process with fewer dependencies. For now, please follow these steps to get the local
-server running.
+Browser Ludo game. Vanilla JS + Web Components + Tailwind. No bundler. Ships to web (GitHub Pages) and Android (Capacitor).
 
-### Prerequisites
+## Setup
 
-Ensure the following tools are installed globally:
+```
+npm install
+```
 
-1. Node.js: Download and install from Node.js official website.
-2. Install Development Dependencies:
+## Dev
 
-    ```
-    npm install -g live-server tailwindcss @go-task/cli
-    ```
+```
+npm run dev
+```
 
-## Running the Local Server
+Live-server on http://localhost:8888 + Tailwind `--watch` in parallel.
 
-1. Navigate to the project root in your terminal.
-2. Run the task using Go Task CLI:
+Tests: open http://localhost:8888/test/ (QUnit).
 
-    ```
-    task dev
-    ```
+## After Editing JS
 
-This will start the necessary processes to run the local server.
+Run cache-bust to update content-hash filenames + import refs:
 
----
+```
+npm run cache-bust
+```
 
-### Note
+Idempotent — safe to re-run.
 
-This setup is temporary and intended for development purposes. In the future, this process will be streamlined with
-fewer dependencies, making it easier and cleaner to run.
+## Android (Capacitor)
+
+```
+npm run android:prepare   # cache-bust + version sync + build www/ + cap sync
+npm run android:open      # opens Android Studio
+npm run android:run       # runs on connected device/emulator
+```
+
+## Project Layout
+
+See [CLAUDE.md](CLAUDE.md) for full repo layout and architecture notes.

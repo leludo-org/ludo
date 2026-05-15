@@ -13,6 +13,9 @@
 node_modules/
 npm-debug.log*
 
+# Capacitor web shipping dir (built from root)
+www/
+
 # Capacitor / Android build artifacts
 android/.gradle/
 android/build/

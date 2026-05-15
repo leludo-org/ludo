@@ -1,7 +1,7 @@
 {
   "appId": "com.leludo.ludo",
   "appName": "Ludo",
-  "webDir": "docs",
+  "webDir": "www",
   "android": {
     "allowMixedContent": false,
     "captureInput": true,

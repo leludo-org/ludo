@@ -15,7 +15,7 @@ const GREEN = "#3f8a3f";
 const BLUE = "#2f6fb8";
 const YELLOW = "#d9a93a";
 
-await sharp(resolve(root, "assets/icon.png"))
+await sharp(resolve(root, "design/icon.png"))
   .resize(512, 512, { fit: "cover" })
   .png()
   .toFile(resolve(out, "icon-512.png"));
@@ -25,7 +25,7 @@ const LOGO = 380;
 const LOGO_CX = 250;
 const LOGO_CY = 250;
 
-const logoBuf = await sharp(resolve(root, "assets/icon.png"))
+const logoBuf = await sharp(resolve(root, "design/icon.png"))
   .resize(LOGO, LOGO, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
   .png()
   .toBuffer();
@@ -83,7 +83,7 @@ const SOCIAL_LOGO = 460;
 const SOCIAL_LOGO_CX = 320;
 const SOCIAL_LOGO_CY = 320;
 
-const socialLogoBuf = await sharp(resolve(root, "assets/icon.png"))
+const socialLogoBuf = await sharp(resolve(root, "design/icon.png"))
   .resize(SOCIAL_LOGO, SOCIAL_LOGO, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
   .png()
   .toBuffer();

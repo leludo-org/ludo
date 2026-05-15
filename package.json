@@ -4,9 +4,13 @@
   "description": "Ludo board game — browser + Android via Capacitor",
   "private": true,
   "scripts": {
-    "icons": "node scripts/gen-app-icons.mjs && capacitor-assets generate --android",
-    "version:sync": "node scripts/sync-android-version.mjs",
-    "android:prepare": "python3 cache-bust.py && npm run version:sync && cap sync android",
+    "dev": "node tools/dev.mjs",
+    "cache-bust": "node tools/cache-bust.mjs",
+    "build:www": "node tools/build-www.mjs",
+    "version:sync": "node tools/sync-android-version.mjs",
+    "icons": "node tools/gen-app-icons.mjs && capacitor-assets generate --android",
+    "play-store": "node tools/gen-play-store-assets.mjs",
+    "android:prepare": "npm run cache-bust && npm run version:sync && npm run build:www && cap sync android",
     "android:open": "npm run android:prepare && cap open android",
     "android:run": "npm run android:prepare && cap run android"
   },
@@ -14,7 +18,9 @@
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^8.3.4",
     "@resvg/resvg-js": "^2.6.2",
-    "sharp": "^0.34.5"
+    "live-server": "^1.2.2",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^3.4.0"
   },
   "dependencies": {
     "@capacitor/android": "^8.3.4",

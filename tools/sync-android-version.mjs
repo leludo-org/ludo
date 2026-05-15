@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Mirror the VERSION constant from docs/components/utils.*.js into
+// Mirror the VERSION constant from components/utils.*.js into
 // android/app/build.gradle (versionName + versionCode).
 // versionCode is derived from semver: major*10000 + minor*100 + patch.
 
@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 
-const componentsDir = resolve(root, 'docs/components');
+const componentsDir = resolve(root, 'components');
 const files = await readdir(componentsDir);
 const utilsFile = files.find((f) => /^utils\.[0-9a-f]+\.js$/.test(f));
 if (!utilsFile) throw new Error('Could not locate utils.<hash>.js');
