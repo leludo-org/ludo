@@ -494,11 +494,11 @@ const PAWN_SVG_MINI = (playerIndex) => `
         <rect x="7.5" y="22" width="17" height="3.5" rx="1.4" fill="currentColor"/>
     </svg>`;
 
-const BOT_GLYPH = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%;"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>`;
+const botGlyph = (size) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>`;
 
-const HUMAN_GLYPH = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+const humanGlyph = (size) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
 
-const playerTypeGlyph = (type) => type === 'BOT' ? BOT_GLYPH : HUMAN_GLYPH;
+const playerTypeGlyph = (type, size) => type === 'BOT' ? botGlyph(size) : humanGlyph(size);
 const playerTypeLabel = (type) => type === 'BOT' ? 'Bot' : 'Human';
 
 function escapeHtml(s) {
@@ -521,8 +521,8 @@ function renderPauseScoreboard() {
             ? `<span class="text-[10px] tracking-[0.14em] uppercase font-medium opacity-60 ml-1.5">Up next</span>`
             : ''
         const typeBadge = `
-            <span class="self-start inline-flex items-center gap-1 rounded-full bg-foreground/8 text-foreground/70 px-1.5 py-0.5 text-[10px] tracking-[0.12em] uppercase font-medium">
-                <span class="size-3 inline-flex items-center justify-center">${playerTypeGlyph(type)}</span>
+            <span class="inline-flex items-center gap-1 text-foreground/60 text-[11px] tracking-widest uppercase font-medium" style="align-self:flex-start;">
+                ${playerTypeGlyph(type, 12)}
                 ${playerTypeLabel(type)}
             </span>`
         rows.push(`
@@ -603,7 +603,7 @@ const CORNER_CFG = [
 
 function pillMarkup(idx, finished, active) {
     const type = _playerTypes ? _playerTypes[idx] : null;
-    const glyph = `<span class="inline-flex items-center justify-center" style="width:14px;height:14px;opacity:0.85;">${playerTypeGlyph(type)}</span>`;
+    const glyph = `<span class="inline-flex items-center justify-center" style="width:14px;height:14px;opacity:0.85;">${playerTypeGlyph(type, 14)}</span>`;
     const cls = active
         ? `bg-player-${idx} text-white border-player-${idx}`
         : `bg-card text-foreground border-foreground/10`;

@@ -76,3 +76,55 @@ const adSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="180" height="120">
 </svg>`;
 await sharp(Buffer.from(adSvg)).png().toFile(resolve(out, "ad-banner-180x120.png"));
 console.log("✓ ad-banner-180x120.png");
+
+const SOCIAL_W = 1280;
+const SOCIAL_H = 640;
+const SOCIAL_LOGO = 460;
+const SOCIAL_LOGO_CX = 320;
+const SOCIAL_LOGO_CY = 320;
+
+const socialLogoBuf = await sharp(resolve(root, "assets/icon.png"))
+  .resize(SOCIAL_LOGO, SOCIAL_LOGO, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+  .png()
+  .toBuffer();
+
+const socialSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="${SOCIAL_W}" height="${SOCIAL_H}" viewBox="0 0 ${SOCIAL_W} ${SOCIAL_H}">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf6ec"/>
+      <stop offset="1" stop-color="#ecdfc1"/>
+    </linearGradient>
+  </defs>
+  <rect width="${SOCIAL_W}" height="${SOCIAL_H}" fill="url(#bg)"/>
+
+  <circle cx="80" cy="80" r="14" fill="${RED}" opacity="0.7"/>
+  <circle cx="130" cy="560" r="18" fill="${YELLOW}" opacity="0.7"/>
+  <circle cx="1210" cy="100" r="18" fill="${BLUE}" opacity="0.7"/>
+  <circle cx="1200" cy="555" r="14" fill="${GREEN}" opacity="0.7"/>
+
+  <text x="850" y="265" font-family="Helvetica, Arial, sans-serif" font-size="150" font-weight="900" fill="${INK}" letter-spacing="12" text-anchor="middle">LUDO</text>
+  <text x="850" y="330" font-family="Helvetica, Arial, sans-serif" font-size="28" font-weight="600" fill="${INK}" letter-spacing="5" text-anchor="middle">ROLL · RACE · CAPTURE · WIN</text>
+
+  <line x1="650" y1="380" x2="1050" y2="380" stroke="${INK}" stroke-width="2" opacity="0.25"/>
+
+  <g font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="500" fill="${INK}" text-anchor="middle">
+    <text x="850" y="425">4 AI personalities · offline · ad-free</text>
+    <text x="850" y="465" opacity="0.7" font-size="20">Quick games. Sharp bots. Clean board.</text>
+  </g>
+
+  <text x="850" y="555" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="${INK}" letter-spacing="3" opacity="0.55" text-anchor="middle">github.com/leludo-org/ludo</text>
+</svg>`;
+
+const socialBgPng = await sharp(Buffer.from(socialSvg)).png().toBuffer();
+
+await sharp(socialBgPng)
+  .composite([
+    {
+      input: socialLogoBuf,
+      left: Math.round(SOCIAL_LOGO_CX - SOCIAL_LOGO / 2),
+      top: Math.round(SOCIAL_LOGO_CY - SOCIAL_LOGO / 2),
+    },
+  ])
+  .png()
+  .toFile(resolve(out, "social-preview-1280x640.png"));
+console.log("✓ social-preview-1280x640.png");

@@ -547,6 +547,38 @@ export function clearSavedGame() {
     localStorage.removeItem('ludo-save');
 }
 
+export function restartGame() {
+    if (isInputLocked()) return;
+    resetInputLock();
+
+    const quickStartId = _quickStartId;
+    if (!quickStartId) return;
+    const namesByPlayerIndex = Array.from(playerNames);
+
+    const gameEnd = document.querySelector('wc-game-end');
+    if (gameEnd) gameEnd.remove();
+
+    document.querySelectorAll('wc-token').forEach(t => t.remove());
+
+    for (let i = 0; i < 4; i++) {
+        playerRanks[i] = 0;
+        playerTimes[i] = 0;
+        playerCaptures[i] = 0;
+        playerNames[i] = '';
+    }
+    lastRank = 0;
+    consecutiveSixesCount = 0;
+    currentDiceRoll = 1;
+
+    document.getElementById('game').classList.remove('hidden');
+
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeMeta) themeMeta.setAttribute('content', '#EFE9DC');
+    document.body.style.background = '';
+
+    handleGameStart(quickStartId, namesByPlayerIndex);
+}
+
 export function getSavedGame() {
     try {
         const raw = localStorage.getItem('ludo-save');
