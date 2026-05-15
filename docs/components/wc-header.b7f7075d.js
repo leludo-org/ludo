@@ -1,6 +1,6 @@
 import {
     htmlToElement
-} from "./utils.38fbc9da.js"
+} from "./utils.19e3a8bf.js"
 
 // Brand mark · Direction F · The Board. Mini board silhouette — 3×3 grid
 // of colored home quadrants + washed cross arms + central rosette. Reads

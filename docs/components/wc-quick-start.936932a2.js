@@ -3,7 +3,7 @@ import {
     VERSION,
 } from "./index.bf0b1971.js";
 import {handleGameStart, handleGameResume, playClickSound} from "../scripts/index.e8f102de.js";
-import {randomBotName, isDefaultBotName, getSavedSeatName, setSavedSeatName} from "../scripts/bot-names.5b9dd5f1.js";
+import {randomBotName, isDefaultBotName, getSavedSeatName, setSavedSeatName} from "../scripts/bot-names.bc6124a2.js";
 
 const COLOR_NAMES = ["Vermillion", "Emerald", "Saffron", "Cobalt"];
 const COLOR_KEYS = ["red", "green", "yellow", "blue"];
@@ -245,7 +245,7 @@ class QuickStart extends HTMLElement {
 
             if (filled) {
                 const isPlayer = seat.type === 'PLAYER'
-                const NAME_MAX = 11
+                const NAME_MAX = 9
                 if (!seat.name) seat.name = this._defaultName(seat, i)
                 const colorName = COLOR_NAMES[seat.colorIndex]
                 const colorVar = `hsl(var(--player-${seat.colorIndex}))`
