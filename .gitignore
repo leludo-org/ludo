@@ -16,6 +16,9 @@ npm-debug.log*
 # Capacitor web shipping dir (built from root)
 www/
 
+# Generated Play Store release notes
+distribution/whatsnew/
+
 # Capacitor / Android build artifacts
 android/.gradle/
 android/build/
