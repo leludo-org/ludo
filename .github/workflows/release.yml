@@ -188,7 +188,7 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: com.leludo.ludo
           releaseFiles: android-dist/ludo-v${{ needs.detect-version.outputs.version }}.aab
-          track: production
+          tracks: production
           status: completed
           whatsNewDirectory: distribution/whatsnew
 
