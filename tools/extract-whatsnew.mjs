@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 // Extract the Highlights bullets for the current VERSION from changelog.html
-// and write them to distribution/whatsnew/whatsnew-en-US.txt for the Play Store
-// upload step. Play Store caps each "What's new" locale at 500 chars.
+// and write them to distribution/whatsnew/whatsnew-en-US for the Play Store
+// upload step. The r0adkll/upload-google-play action strips the `whatsnew-`
+// prefix and treats the remainder as the locale code — no file extension.
+// Play Store caps each "What's new" locale at 500 chars.
 
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
@@ -38,7 +40,7 @@ if (text.length > MAX_LEN) {
 
 const outDir = resolve(root, 'distribution/whatsnew');
 await mkdir(outDir, { recursive: true });
-const outPath = resolve(outDir, 'whatsnew-en-US.txt');
+const outPath = resolve(outDir, 'whatsnew-en-US');
 await writeFile(outPath, text + '\n');
 
 console.log(`whatsnew v${version} (${text.length} chars) → ${outPath}`);
