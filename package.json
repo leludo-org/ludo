@@ -10,6 +10,7 @@
     "test": "node tools/test.mjs",
     "build:www": "node tools/build-www.mjs",
     "version:sync": "node tools/sync-android-version.mjs",
+    "whatsnew:extract": "node tools/extract-whatsnew.mjs",
     "android:prepare": "npm run version:sync && npm run build:www && cap sync android",
     "android:open": "npm run android:prepare && cap open android",
     "android:run": "npm run android:prepare && cap run android"

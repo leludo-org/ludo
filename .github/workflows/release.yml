@@ -3,8 +3,6 @@ name: Release
 on:
   push:
     branches: [main]
-    paths:
-      - version.js
   workflow_dispatch:
 
 permissions:
@@ -158,6 +156,39 @@ jobs:
         if: always()
         run: |
           rm -f android/app/release.keystore android/keystore.properties
+
+  publish-play-store:
+    name: Publish to Google Play
+    needs: [detect-version, build-android]
+    if: needs.detect-version.outputs.skip != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Download Android artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: android-dist
+          path: android-dist
+
+      - name: Generate Play Store release notes
+        run: npm run whatsnew:extract
+
+      - name: Upload AAB to Google Play (production)
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.leludo.ludo
+          releaseFiles: android-dist/ludo-v${{ needs.detect-version.outputs.version }}.aab
+          track: production
+          status: completed
+          whatsNewDirectory: distribution/whatsnew
 
   release:
     name: Publish release
