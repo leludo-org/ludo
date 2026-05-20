@@ -27,7 +27,10 @@ Browser Ludo game. Vanilla JS + Web Components + Tailwind. No bundler — ES mod
 
 - `npm install` (one-time).
 - `npm run dev` — five-server on port 8888 + tailwindcss `--watch` in parallel.
-- `npm test` — opens QUnit test page at `http://localhost:8888/test/` (needs `npm run dev` running). Suite in [test/test.js](test/test.js). No CLI test runner.
+- `npm test` — vitest watch mode. Unit + integration suite in `test/**/*.test.js`, mirrors source tree (e.g. [test/scripts/game-logic.test.js](test/scripts/game-logic.test.js) tests [scripts/game-logic.js](scripts/game-logic.js)). Runs in `happy-dom`. Integration tests under [test/integration/](test/integration/) drive full games via the pure [scripts/game-driver.js](scripts/game-driver.js).
+- `npm run test:run` — single-shot vitest run (CI mode, exits when done).
+- `npm run test:coverage` — coverage report (v8 provider) into `coverage/`.
+- `npm run test:e2e` — Playwright smoke tests in [test/e2e/](test/e2e/). Spawns a static server via [tools/serve-static.mjs](tools/serve-static.mjs) on port 8889. Use `npm run test:e2e:ui` for the inspector.
 - `npm run cache-bust` — see Cache Busting below.
 
 ## Architecture
@@ -35,11 +38,18 @@ Browser Ludo game. Vanilla JS + Web Components + Tailwind. No bundler — ES mod
 Two top-level module trees at the repo root, each with an `index.*.js` barrel that re-exports its tree:
 
 - **`components/`** — Web Components (`wc-board`, `wc-token`, `wc-dice`, `wc-quick-start`, `wc-settings`, `wc-game-end`, etc.) + shared `utils`. Each custom element registers itself on import via `customElements.define`. The components barrel re-exports all.
-- **`scripts/`** — Game state machine and rendering. `game-logic` (pure functions: dice, mark index, capture detection, safe squares), `render-logic` (DOM/audio side effects), `game-events` (turn loop, input lock, assist flags, bot scheduling — main orchestrator, 500+ LOC), `bot-ai` (expectiminimax with personality-weighted scoring: `balanced`/`aggressive`/`defensive`/`rusher`), `bot-names`.
+- **`scripts/`** — Game state machine and rendering.
+  - `game-logic` — pure functions: dice, mark index, capture detection, safe squares.
+  - `turn-rules` — pure: player rotation, end-game detection, leftover ranking, save/load serialization.
+  - `bot-ai` — expectiminimax with personality-weighted scoring (`balanced`/`aggressive`/`defensive`/`rusher`).
+  - `game-driver` — pure programmatic game loop that composes `game-logic` + `bot-ai` + `turn-rules` with a seedable RNG. Used by integration tests; no DOM.
+  - `render-logic` — DOM/audio side effects.
+  - `game-events` — turn orchestration, input lock, assist flags, bot scheduling. Thin glue between the pure modules and the DOM.
+  - `bot-names` — name lists.
 
 Entry points wired in [index.html](index.html): components index + scripts index. `wc-board` consumes the scripts barrel for game flow; `render-logic` imports `getMarkIndex` from `game-logic` via the scripts barrel.
 
-Pure logic lives in `scripts/game-logic.*.js` — keep it side-effect-free so tests can import it directly.
+Pure logic lives in `scripts/game-logic.js`, `scripts/turn-rules.js`, `scripts/bot-ai.js`, `scripts/game-driver.js` — keep these side-effect-free so tests can import them directly.
 
 ## Pause Model
 

@@ -7,7 +7,11 @@
   "private": true,
   "scripts": {
     "dev": "node tools/dev.mjs",
-    "test": "node tools/test.mjs",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "build:www": "node tools/build-www.mjs",
     "version:sync": "node tools/sync-android-version.mjs",
     "whatsnew:extract": "node tools/extract-whatsnew.mjs",
@@ -17,8 +21,11 @@
   },
   "devDependencies": {
     "@capacitor/cli": "^8.3.4",
+    "@playwright/test": "^1.60.0",
     "five-server": "^0.5.0",
-    "tailwindcss": "^3.4.0"
+    "happy-dom": "^20.9.0",
+    "tailwindcss": "^3.4.0",
+    "vitest": "^4.1.7"
   },
   "dependencies": {
     "@capacitor/android": "^8.3.4",

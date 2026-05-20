@@ -36,13 +36,14 @@ export function isSafePosition(tokenPosition) {
 }
 
 /**
+ * @param {() => number} [randomFn]  defaults to Math.random; pass a seeded PRNG to make rolls reproducible (e.g. in tests).
  * @returns {number}
  */
-export function generateDiceRoll() {
+export function generateDiceRoll(randomFn = Math.random) {
     const weights = [1, 2, 2, 1, 2, 2];
     const cumulativeWeights = weights.map((sum => value => sum += value)(0));
     const maxWeight = cumulativeWeights[cumulativeWeights.length - 1];
-    const randomValue = Math.random() * maxWeight;
+    const randomValue = randomFn() * maxWeight;
     return cumulativeWeights.findIndex(cw => randomValue < cw) + 1
 }
 

@@ -1,0 +1,193 @@
+/**
+ * Pure programmatic game driver. No DOM, no timers. Composes game-logic,
+ * bot-ai, and turn-rules into a deterministic game loop given an RNG.
+ * Used by integration tests; can also be reused for replay / sim tooling.
+ */
+import {
+    isTokenMovable,
+    getTokenNewPosition,
+    findCapturedOpponents,
+    isTripComplete,
+    generateDiceRoll,
+} from './game-logic.js';
+import { pickBestMove, PERSONALITIES } from './bot-ai.js';
+import {
+    isPlayerFinished,
+    getNextPlayerIndex,
+    shouldEndGame,
+    computeLeftoverRankOrder,
+} from './turn-rules.js';
+
+/**
+ * Seedable PRNG (mulberry32). Returns a function compatible with Math.random.
+ * @param {number} seed
+ */
+export function makeRng(seed) {
+    let s = seed >>> 0;
+    return function rng() {
+        s = (s + 0x6D2B79F5) >>> 0;
+        let t = s;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+}
+
+function cloneBoard(positions) {
+    return positions.map(p => (p ? p.slice() : null));
+}
+
+function listMovableTokenIndexes(playerTokens, dice) {
+    const out = [];
+    for (let ti = 0; ti < 4; ti++) {
+        if (isTokenMovable(playerTokens[ti], dice)) out.push(ti);
+    }
+    return out;
+}
+
+function applyMove(positions, playerIndex, tokenIndex, dice) {
+    const next = cloneBoard(positions);
+    const newPos = getTokenNewPosition(next[playerIndex][tokenIndex], dice);
+    next[playerIndex][tokenIndex] = newPos;
+
+    const captured = findCapturedOpponents(playerIndex, newPos, next);
+    let captureCount = 0;
+    for (let pi = 0; pi < captured.length; pi++) {
+        const list = captured[pi];
+        if (!list) continue;
+        for (const ti of list) {
+            next[pi][ti] = -1;
+            captureCount++;
+        }
+    }
+    return {
+        next,
+        newPosition: newPos,
+        captureCount,
+        tripComplete: isTripComplete(newPos),
+    };
+}
+
+/**
+ * Run a full game programmatically.
+ *
+ * @param {object} opts
+ * @param {('PLAYER'|'BOT'|undefined)[]} opts.playerTypes
+ * @param {number[][]} [opts.initialPositions]  defaults to all-home for defined players
+ * @param {number} [opts.startingPlayerIndex]
+ * @param {() => number} [opts.rng]             defaults to seed=1 mulberry32
+ * @param {string[]} [opts.botPersonalities]    per-player personality name (driver treats PLAYER same as BOT for decisions)
+ * @param {number} [opts.botDepth]              expectiminimax depth (default 0 for test speed)
+ * @param {number} [opts.maxTurns]              safety bail (default 5000)
+ * @returns {{
+ *   positions: number[][],
+ *   ranks: number[],
+ *   captures: number[],
+ *   turns: number,
+ *   ended: boolean,
+ *   lastRank: number,
+ *   winner: number,    -1 if not ended
+ * }}
+ */
+export function runGame(opts) {
+    const playerTypes = opts.playerTypes;
+    const rng = opts.rng || makeRng(1);
+    const botDepth = opts.botDepth ?? 0;
+    const maxTurns = opts.maxTurns ?? 5000;
+    const personalities = opts.botPersonalities
+        || playerTypes.map(t => (t ? 'balanced' : null));
+
+    const positions = playerTypes.map((t, i) => {
+        if (!t) return null;
+        if (opts.initialPositions && opts.initialPositions[i]) {
+            return opts.initialPositions[i].slice();
+        }
+        return [-1, -1, -1, -1];
+    });
+
+    const ranks = [0, 0, 0, 0];
+    const captures = [0, 0, 0, 0];
+
+    let currentPlayerIndex = opts.startingPlayerIndex
+        ?? playerTypes.findIndex(t => t !== undefined);
+    let consecutiveSixes = 0;
+    let lastRank = 0;
+    let turns = 0;
+    let ended = false;
+    let winner = -1;
+
+    while (turns++ < maxTurns) {
+        if (positions[currentPlayerIndex] === null) {
+            // Should never happen given valid inputs, guard anyway.
+            const next = getNextPlayerIndex(currentPlayerIndex, playerTypes, positions);
+            if (next === -1) break;
+            currentPlayerIndex = next;
+            continue;
+        }
+
+        const dice = generateDiceRoll(rng);
+        if (dice === 6) consecutiveSixes++;
+        else consecutiveSixes = 0;
+
+        if (consecutiveSixes === 3) {
+            // Three sixes -> lose turn.
+            consecutiveSixes = 0;
+            const next = getNextPlayerIndex(currentPlayerIndex, playerTypes, positions);
+            if (next === -1) { ended = true; break; }
+            currentPlayerIndex = next;
+            continue;
+        }
+
+        const movable = listMovableTokenIndexes(positions[currentPlayerIndex], dice);
+
+        if (movable.length === 0) {
+            consecutiveSixes = 0;
+            const next = getNextPlayerIndex(currentPlayerIndex, playerTypes, positions);
+            if (next === -1) { ended = true; break; }
+            currentPlayerIndex = next;
+            continue;
+        }
+
+        const weights = PERSONALITIES[personalities[currentPlayerIndex]] || PERSONALITIES.balanced;
+        let tokenIndex = pickBestMove(currentPlayerIndex, dice, positions, weights, botDepth);
+        if (tokenIndex < 0) tokenIndex = movable[0];
+
+        const result = applyMove(positions, currentPlayerIndex, tokenIndex, dice);
+        for (let pi = 0; pi < 4; pi++) {
+            for (let ti = 0; ti < 4; ti++) {
+                if (positions[pi] && result.next[pi] && positions[pi][ti] !== result.next[pi][ti]) {
+                    positions[pi][ti] = result.next[pi][ti];
+                }
+            }
+        }
+        captures[currentPlayerIndex] += result.captureCount;
+
+        let isGameDone = false;
+        if (result.tripComplete && isPlayerFinished(positions[currentPlayerIndex])) {
+            ranks[currentPlayerIndex] = ++lastRank;
+            if (shouldEndGame(playerTypes, positions)) {
+                computeLeftoverRankOrder(playerTypes, positions, ranks)
+                    .forEach(pi => { ranks[pi] = ++lastRank; });
+                isGameDone = true;
+                if (winner === -1) winner = currentPlayerIndex;
+            } else if (winner === -1) {
+                winner = currentPlayerIndex;
+            }
+        }
+
+        if (isGameDone) {
+            ended = true;
+            break;
+        }
+
+        const playsAgain = dice === 6 || result.captureCount > 0 || result.tripComplete;
+        if (!playsAgain) {
+            const next = getNextPlayerIndex(currentPlayerIndex, playerTypes, positions);
+            if (next === -1) { ended = true; break; }
+            currentPlayerIndex = next;
+            consecutiveSixes = 0;
+        }
+    }
+
+    return { positions, ranks, captures, turns, ended, lastRank, winner };
+}
