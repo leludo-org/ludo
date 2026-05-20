@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <!-- Leludo brand mark · Direction F · The Board.
+       3×3 grid: 4 colored home quadrants at corners with pawn dots,
+       washed-out path arms in the cross, central rosette diamond split
+       into the same 4 colors on cream. -->
+  <defs>
+    <clipPath id="round">
+      <rect width="96" height="96" rx="6"/>
+    </clipPath>
+  </defs>
+  <rect width="96" height="96" rx="6" fill="#FAF6EC"/>
+  <g clip-path="url(#round)">
+    <!-- Path arms (washed-out player colors) -->
+    <rect x="32" y="0"  width="32" height="32" fill="#F0DDA0"/>
+    <rect x="64" y="32" width="32" height="32" fill="#C9E1D2"/>
+    <rect x="32" y="64" width="32" height="32" fill="#C5D5E8"/>
+    <rect x="0"  y="32" width="32" height="32" fill="#ECCBBA"/>
+    <!-- Home quadrants -->
+    <rect x="0"  y="0"  width="32" height="32" fill="#C8472E"/>
+    <rect x="64" y="0"  width="32" height="32" fill="#D7A21F"/>
+    <rect x="0"  y="64" width="32" height="32" fill="#3253A8"/>
+    <rect x="64" y="64" width="32" height="32" fill="#3D8A5E"/>
+    <!-- Pawn dots on each home -->
+    <circle cx="16" cy="16" r="8" fill="#FAF6EC"/>
+    <circle cx="16" cy="16" r="4" fill="#1F1B14"/>
+    <circle cx="80" cy="16" r="8" fill="#FAF6EC"/>
+    <circle cx="80" cy="16" r="4" fill="#1F1B14"/>
+    <circle cx="16" cy="80" r="8" fill="#FAF6EC"/>
+    <circle cx="16" cy="80" r="4" fill="#1F1B14"/>
+    <circle cx="80" cy="80" r="8" fill="#FAF6EC"/>
+    <circle cx="80" cy="80" r="4" fill="#1F1B14"/>
+    <!-- Central rosette: 4 triangles meeting at centre -->
+    <path d="M48 48 L48 34.56 L61.44 48 Z" fill="#D7A21F"/>
+    <path d="M48 48 L61.44 48 L48 61.44 Z" fill="#3D8A5E"/>
+    <path d="M48 48 L48 61.44 L34.56 48 Z" fill="#3253A8"/>
+    <path d="M48 48 L34.56 48 L48 34.56 Z" fill="#C8472E"/>
+  </g>
+  <!-- Outer rule -->
+  <rect x="0.5" y="0.5" width="95" height="95" rx="6" fill="none" stroke="#1F1B14" stroke-opacity="0.18"/>
+</svg>
