@@ -4,9 +4,7 @@ import {
 } from "./index.js";
 import {handleGameStart, handleGameResume, playClickSound} from "../scripts/index.js";
 import {randomBotName, isDefaultBotName, getSavedSeatName, setSavedSeatName} from "../scripts/bot-names.js";
-
-const COLOR_NAMES = ["Vermillion", "Emerald", "Saffron", "Cobalt"];
-const COLOR_KEYS = ["red", "green", "yellow", "blue"];
+import {HUMAN_PREFERRED_POSITIONS} from "../scripts/game-logic.js";
 
 const DICE_SVG = (value, size = 56) => {
     const PIP_LAYOUTS = {
@@ -39,7 +37,6 @@ const PAWN_SVG = (playerIndex) => `
         <rect x="7.5" y="22" width="17" height="1.2" rx="0.6" fill="rgba(255,255,255,0.38)"/>
     </svg>`;
 
-const ICON_GEAR = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM19.4 13.5a7.6 7.6 0 000-3l2-1.6-2-3.5-2.4.8a7.5 7.5 0 00-2.6-1.5l-.4-2.5h-4l-.4 2.5a7.5 7.5 0 00-2.6 1.5l-2.4-.8-2 3.5 2 1.6a7.6 7.6 0 000 3l-2 1.6 2 3.5 2.4-.8a7.5 7.5 0 002.6 1.5l.4 2.5h4l.4-2.5a7.5 7.5 0 002.6-1.5l2.4.8 2-3.5-2-1.6z"/></svg>`;
 const ICON_GITHUB = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 00-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.5 9.5 0 015 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.8v2.6c0 .3.2.6.7.5A10 10 0 0012 2z"/></svg>`;
 const ICON_BACK = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>`;
 const ICON_CLOSE = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
@@ -430,7 +427,7 @@ class QuickStart extends HTMLElement {
         if (humanCount === 4) {
             humans.forEach((s, idx) => { namesByPlayerIndex[idx] = s.name })
         } else {
-            const preferredPositions = [2, 0, 1, 3]
+            const preferredPositions = HUMAN_PREFERRED_POSITIONS
             const usedPositions = new Set()
             humans.forEach((s, idx) => {
                 const pos = preferredPositions[idx]
@@ -450,17 +447,6 @@ class QuickStart extends HTMLElement {
         handleGameStart(quickStartId, namesByPlayerIndex)
     }
 
-    // Keep old methods for compatibility
-    showPlayerCount() { this.showHomeScreen() }
-    showBotCount() { this.showHomeScreen() }
-    showColorPicker() { this.showHomeScreen() }
 }
-
-const PLAYER_COLORS_MAP = {
-    0: { name: 'Vermillion', key: 'red' },
-    1: { name: 'Emerald', key: 'green' },
-    2: { name: 'Saffron', key: 'yellow' },
-    3: { name: 'Cobalt', key: 'blue' },
-};
 
 window.customElements.define("wc-quick-start", QuickStart)

@@ -328,7 +328,6 @@ export function updateCellStacking(cell) {
  * @returns {Promise<void>}
  */
 export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPosition, newTokenPosition) {
-    console.debug("updateTokenContainer", playerIndex, tokenIndex, currentTokenPosition, newTokenPosition)
 
     const path = getContainerPath(playerIndex, tokenIndex, currentTokenPosition, newTokenPosition);
     const element = document.getElementById(getTokenElementId(playerIndex, tokenIndex));
@@ -502,11 +501,6 @@ export function showGame() {
     requestWakeLock()
 }
 
-export function slideBackToMenu() {
-    releaseWakeLock()
-    return Promise.resolve()
-}
-
 const PAWN_SVG_MINI = (playerIndex) => `
     <svg viewBox="0 0 32 32" class="player-fg-${playerIndex}" style="width:100%;height:100%;filter:drop-shadow(0 1px 1px rgba(0,0,0,0.22));">
         <ellipse cx="16" cy="28" rx="8" ry="1.5" fill="rgba(0,0,0,0.18)"/>
@@ -622,7 +616,7 @@ function pillMarkup(idx, finished, active) {
     const glyph = `<span class="corner-pill-glyph">${playerTypeGlyph(type, 14)}</span>`;
     const cls = active ? `corner-pill corner-pill--active player-bg-${idx}` : `corner-pill`;
     const name = (_playerNames[idx] && String(_playerNames[idx]).trim()) || `P${idx + 1}`;
-    const safe = name.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const safe = escapeHtml(name);
     return `
         <div class="${cls}">
             ${glyph}
@@ -677,9 +671,6 @@ export function updateCornerWidgets() {
         el.appendChild(wrap);
     });
 }
-
-export function updatePlayerRail() {}
-export function updateActionZone() {}
 
 export function updateTurnCounter() {
     turnCount++;
