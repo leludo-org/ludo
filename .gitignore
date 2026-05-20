@@ -25,6 +25,9 @@ www/
 # Generated Play Store release notes
 distribution/whatsnew/
 
+# Local release artifacts (signed AAB/APK)
+release/
+
 # Capacitor / Android build artifacts
 android/.gradle/
 android/build/
