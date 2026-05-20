@@ -66,4 +66,22 @@ test.describe('Game start (URL overrides)', () => {
         // Board should be visible (not hidden).
         await expect(page.locator('wc-board')).not.toHaveClass(/hidden/);
     });
+
+    test('overridden tokens land in target container immediately (no init animation race)', async ({ page }) => {
+        // Regression: handleGameStart used to fire-and-forget an animated
+        // updateTokenContainer for each ?positions= override, leaving tokens
+        // in their home cell while subsequent state mutations ran.
+        // After fix, init-position tokens are appended directly to their
+        // target container with no animation in flight.
+        const positions = '50,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1';
+        await page.goto(`/?positions=${positions}&player=0`);
+        await page.locator('.new-game-btn').click();
+        await page.locator('.start-btn').click();
+        const token = page.locator('#p-0-0');
+        await expect(token).toBeVisible();
+        const parentId = await token.evaluate(el => el.parentElement?.id);
+        // Pos 50 → main-track mark cell, not the home pocket h-0-0.
+        expect(parentId).not.toBe('h-0-0');
+        expect(parentId).toMatch(/^(m\d+|p\ds\d)$/);
+    });
 });

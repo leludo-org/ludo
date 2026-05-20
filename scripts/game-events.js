@@ -2,10 +2,12 @@ import {
     activateDice,
     activateToken,
     animateDiceRoll,
+    clearTokenElementCache,
     findCapturedOpponents,
     generateDiceRoll,
     applyColorMap, getPlayerTypes,
     getTokenContainerId,
+    getTokenElement,
     getTokenElementId,
     getTokenNewPosition, getUniqueTokenPositions,
     inactiveDice,
@@ -251,12 +253,14 @@ export function handleGameStart(quickStartId, namesByPlayerIndex) {
             playerTokenPositions[playerIndex].forEach((tokenPosition, tokenIndex) => {
                 const token = document.createElement("wc-token")
                 token.setAttribute("id", getTokenElementId(playerIndex, tokenIndex))
-                document.getElementById(`h-${playerIndex}-${tokenIndex}`).appendChild(token)
 
-                if (initPositions && initPositions[(playerIndex * 4) + tokenIndex] !== undefined) {
-                    playerTokenPositions[playerIndex][tokenIndex] = +initPositions[(playerIndex * 4) + tokenIndex]
-                    updateTokenContainer(playerIndex, tokenIndex, -1, playerTokenPositions[playerIndex][tokenIndex]).then()
-                }
+                const initOverride = initPositions && initPositions[(playerIndex * 4) + tokenIndex]
+                const initialPosition = initOverride !== undefined && initOverride !== '' ? +initOverride : -1
+                playerTokenPositions[playerIndex][tokenIndex] = initialPosition
+
+                const containerId = getTokenContainerId(playerIndex, tokenIndex, initialPosition)
+                const targetContainer = document.getElementById(containerId)
+                if (targetContainer) targetContainer.appendChild(token)
             })
         }
     })
@@ -405,7 +409,7 @@ export async function handleOnTokenMove(playerIndex, tokenIndex) {
         const otherPlayerTokensOnThatMarkIndex = findCapturedOpponents(playerIndex, tokenNewPosition, playerTokenPositions);
         for (const [pi, pt] of otherPlayerTokensOnThatMarkIndex.entries()) {
             for (const ti of pt) {
-                const t = document.getElementById(`p-${pi}-${ti}`);
+                const t = getTokenElement(pi, ti);
                 if (t) t.dataset.moving = 'true';
             }
         }
@@ -416,7 +420,7 @@ export async function handleOnTokenMove(playerIndex, tokenIndex) {
         for (const [pi, pt] of otherPlayerTokensOnThatMarkIndex.entries()) {
             for (const ti of pt) {
                 playCaptureSound()
-                const capturedToken = document.getElementById(`p-${pi}-${ti}`);
+                const capturedToken = getTokenElement(pi, ti);
                 const capturedSvg = capturedToken?.children[0];
                 if (capturedSvg) {
                     capturedSvg.classList.add("token-captured");
@@ -537,6 +541,7 @@ export function restartGame() {
     if (gameEnd) gameEnd.remove();
 
     document.querySelectorAll('wc-token').forEach(t => t.remove());
+    clearTokenElementCache();
 
     for (let i = 0; i < 4; i++) {
         playerRanks[i] = 0;

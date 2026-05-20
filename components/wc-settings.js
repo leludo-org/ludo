@@ -53,7 +53,7 @@ function toggleHtml(id, label, checked = false, withBorder = true) {
 function settingsGroup(label, content) {
     return `<div>
         <div class="section-label" style="margin-bottom:8px;">${label}</div>
-        <div class="settings-group-card">${content}</div>
+        <div class="surface-card settings-group-card">${content}</div>
     </div>`;
 }
 
