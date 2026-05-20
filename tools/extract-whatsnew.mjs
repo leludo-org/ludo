@@ -20,7 +20,7 @@ const version = vMatch[1];
 
 const changelog = await readFile(resolve(root, 'changelog.html'), 'utf8');
 
-const articles = [...changelog.matchAll(/<article>([\s\S]*?)<\/article>/g)].map((m) => m[1]);
+const articles = [...changelog.matchAll(/<article\b[^>]*>([\s\S]*?)<\/article>/g)].map((m) => m[1]);
 const target = articles.find((body) => new RegExp(`>v${version.replace(/\./g, '\\.')}<`).test(body));
 if (!target) throw new Error(`No changelog article found for v${version}`);
 
