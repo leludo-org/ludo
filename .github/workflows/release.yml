@@ -98,6 +98,44 @@ jobs:
           path: ludo-web-v*.zip
           if-no-files-found: error
 
+  publish-pages:
+    name: Publish to gh-pages
+    needs: [detect-version, build-web]
+    if: needs.detect-version.outputs.skip != 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: pages-deploy
+      cancel-in-progress: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build www/
+        run: node tools/build-www.mjs
+
+      - name: Publish to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./www
+          publish_branch: gh-pages
+          # tools/build-www.mjs already copies CNAME + .nojekyll into
+          # www/, so peaceiris doesn't need its `cname` / Jekyll flags.
+          commit_message: "deploy: ${{ github.sha }}"
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
+
   build-android:
     name: Build Android
     needs: [detect-version, test]
