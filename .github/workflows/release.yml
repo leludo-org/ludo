@@ -84,9 +84,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Tailwind CSS
-        run: npx tailwindcss -i input.css -o output.css --minify
-
       - name: Build www/
         run: npm run build:www
 
@@ -131,9 +128,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Build Tailwind CSS
-        run: npx tailwindcss -i input.css -o output.css --minify
 
       - name: Prepare Android (version sync + build:www + cap sync)
         run: npm run android:prepare
