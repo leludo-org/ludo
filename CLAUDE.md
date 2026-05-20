@@ -109,6 +109,34 @@ Overlays (`#pause-menu`, `#settings-overlay`, `wc-game-end`'s root) use `.frame-
 
 Example: `http://localhost:8888/?positions=50,,,,,,,,,,,,,,,&player=0` puts P0's first token one step from finish and gives P0 the opening turn. Preserve this behavior when refactoring game start.
 
+## Web Deployment (GitHub Pages)
+
+`leludo.org` is served from the `gh-pages` branch, NOT from the repo
+root. The branch is rebuilt and force-pushed by
+[.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml)
+on every push to `main`:
+
+1. `npm ci`
+2. `node tools/build-www.mjs` → assembles `www/` (HTML + CSS + JS +
+   service worker + assets + `CNAME` + `.nojekyll`).
+3. `peaceiris/actions-gh-pages@v4` publishes `./www` to `gh-pages`.
+
+The public domain therefore only ever sees runtime artifacts —
+internal docs (`CLAUDE.md`, `CONTRIBUTING.md`), tooling (`tools/`,
+`test/`, `vitest.config.js`, `playwright.config.js`), the Android
+project (`android/`), the design source (`design/`), and the
+`package*.json` files stay invisible to clients of `leludo.org`. They
+remain visible on the GitHub repo page; that's intentional.
+
+**One-time repo setup**: Settings → Pages → Source = `gh-pages` branch
+(root). After the first workflow run lands, set this and the custom
+domain (`leludo.org`) will pick up the deployed branch.
+
+When adding a new shipping file (e.g. another CSS file, font, sound),
+add it to `SHIPPED` in [tools/build-www.mjs](tools/build-www.mjs) AND
+to `PRECACHE` in [sw.js](sw.js). The deploy workflow copies whatever
+`build-www.mjs` emits — nothing else.
+
 ## Cache Busting
 
 A module service worker at [sw.js](sw.js) owns cache invalidation. JS filenames are canonical (`name.js`) — no content hashes.

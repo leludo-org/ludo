@@ -1,0 +1,52 @@
+name: Deploy GitHub Pages
+
+# Builds the publishable site (the same tree we ship to Capacitor)
+# and pushes it to the `gh-pages` branch. GitHub Pages is configured
+# to serve from `gh-pages` so the public domain (leludo.org) sees
+# *only* the runtime artifacts — HTML, CSS, JS, service worker, and
+# bundled assets — and never the source tree (tools/, test/, android/,
+# package.json, internal docs, etc.).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build www/ and publish to gh-pages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build www/
+        run: node tools/build-www.mjs
+
+      - name: Publish to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./www
+          publish_branch: gh-pages
+          # tools/build-www.mjs already copies CNAME + .nojekyll into
+          # www/, so peaceiris doesn't need its `cname` / Jekyll flags.
+          commit_message: "deploy: ${{ github.sha }}"
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
