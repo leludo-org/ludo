@@ -1,3 +1,7 @@
+export const SAFE_SQUARES = [0, 8, 13, 21, 26, 34, 39, 47];
+
+export const HUMAN_PREFERRED_POSITIONS = [2, 0, 1, 3];
+
 /**
  *
  * @param {number} tokenPosition
@@ -32,7 +36,7 @@ export function getMarkIndex(playerIndex, tokenPosition) {
  * @returns {boolean}
  */
 export function isSafePosition(tokenPosition) {
-    return [0, 8, 13, 21, 26, 34, 39, 47].includes(tokenPosition) || tokenPosition > 50;
+    return SAFE_SQUARES.includes(tokenPosition) || tokenPosition > 50;
 }
 
 /**
@@ -128,7 +132,7 @@ export function getPlayerTypes(quickStartId) {
     }
 
     const chosenColors = parts.slice(3).filter(s => s !== "").map(Number)
-    const preferredPositions = [2, 0, 1, 3]
+    const preferredPositions = HUMAN_PREFERRED_POSITIONS
 
     const playerTypes = new Array(4).fill(undefined)
     const colorMap = new Array(4).fill(-1)

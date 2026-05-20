@@ -126,16 +126,16 @@ export function serializeGameState({
 }) {
     return {
         quickStartId,
-        playerNamesArr: Array.from(playerNames),
-        playerTypesArr: Array.from(playerTypes),
-        botPersonalitiesArr: Array.from(botPersonalities),
-        positions: playerTokenPositions.map(p => (p ? Array.from(p) : null)),
+        playerNamesArr: playerNames.slice(),
+        playerTypesArr: playerTypes.slice(),
+        botPersonalitiesArr: botPersonalities.slice(),
+        positions: playerTokenPositions.map(p => (p ? p.slice() : null)),
         currentPlayerIndex,
         currentDiceRoll,
         consecutiveSixesCount,
-        capturesArr: Array.from(playerCaptures),
-        ranksArr: Array.from(playerRanks),
-        timesArr: Array.from(playerTimes),
+        capturesArr: playerCaptures.slice(),
+        ranksArr: playerRanks.slice(),
+        timesArr: playerTimes.slice(),
         lastRank,
         gameStartedAt,
     };

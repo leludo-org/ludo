@@ -1,4 +1,6 @@
-const SAFE_SQUARES = new Set([0, 8, 13, 21, 26, 34, 39, 47]);
+import { SAFE_SQUARES as SAFE_SQUARES_ARR } from "./game-logic.js";
+
+const SAFE_SQUARES = new Set(SAFE_SQUARES_ARR);
 
 const DICE_PROB = [0, 1/9, 2/9, 2/9, 1/9, 2/9, 2/9];
 
