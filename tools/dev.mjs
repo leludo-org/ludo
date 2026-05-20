@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// Dev: run five-server (port 8888) + tailwindcss --watch in parallel.
+// Dev: serve the repo root via five-server on port 8888. No build step —
+// browsers load CSS + ES modules directly.
 
 import { spawn } from 'node:child_process';
 import { resolve, dirname } from 'node:path';
@@ -8,16 +9,13 @@ import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 
-const procs = [
-  spawn('npx', ['five-server', '--port=8888', '--open=/'], { cwd: root, stdio: 'inherit' }),
-  spawn('npx', ['tailwindcss', '-c', 'tailwind.config.js', '-i', 'input.css', '-o', 'output.css', '--watch'], { cwd: root, stdio: 'inherit' }),
-];
+const proc = spawn('npx', ['five-server', '--port=8888', '--open=/'], { cwd: root, stdio: 'inherit' });
 
 const shutdown = () => {
-  for (const p of procs) if (!p.killed) p.kill('SIGTERM');
+  if (!proc.killed) proc.kill('SIGTERM');
   process.exit(0);
 };
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 
-for (const p of procs) p.on('exit', (code) => { if (code !== 0) shutdown(); });
+proc.on('exit', (code) => { if (code !== 0) shutdown(); });

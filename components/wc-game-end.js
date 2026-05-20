@@ -15,7 +15,7 @@ function confettiDots() {
 }
 
 const PAWN_SVG = (playerIndex) => `
-    <svg viewBox="0 0 32 32" class="text-player-${playerIndex}" style="width:160px;height:160px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
+    <svg viewBox="0 0 32 32" class="player-fg-${playerIndex}" style="width:160px;height:160px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
         <ellipse cx="16" cy="28" rx="8" ry="1.5" fill="rgba(0,0,0,0.25)"/>
         <path d="M16 4c3.2 0 5.5 2.4 5.5 5.2 0 1.8-1 3.2-2.4 4 1.7.7 2.9 1.8 3.6 3.4l1.1 2.6c.4 1 .1 2-.7 2.4-.2.1-.4.1-.6.1H9.5c-.9 0-1.6-.7-1.6-1.6 0-.3.1-.6.2-.9l1.1-2.6c.7-1.6 1.9-2.7 3.6-3.4-1.4-.8-2.4-2.2-2.4-4C10.4 6.4 12.8 4 16 4z" fill="currentColor"/>
         <path d="M16 4c3.2 0 5.5 2.4 5.5 5.2 0 1.8-1 3.2-2.4 4-.6-.3-1.3-.5-2-.5h-2.2c-.7 0-1.4.2-2 .5-1.4-.8-2.4-2.2-2.4-4C10.4 6.4 12.8 4 16 4z" fill="rgba(255,255,255,0.24)"/>
@@ -230,29 +230,27 @@ class GameEnd extends HTMLElement {
         const standingsHTML = rankArray.filter(pi => pi !== undefined).map((pi, idx) => {
             const name = (playerNames[pi] && String(playerNames[pi]).trim()) || (playerTypes[pi] === 'PLAYER' ? 'You' : 'Bot');
             const time = playerTimes[pi] > 0 ? formatGameTime(playerTimes[pi]) : '—';
-            return `<div class="flex items-center gap-3 py-2 px-1 ${idx < 3 ? 'border-b border-white/[0.08]' : ''}">
-                <div class="w-[18px] font-mono text-[13px] text-white/50">${idx + 1}.</div>
-                <div class="w-3.5 h-3.5 rounded-full bg-player-${pi}"></div>
-                <div class="flex-1 text-[15px]">${name}</div>
-                <div class="font-mono text-[13px] text-white/60">${time}</div>
+            return `<div class="standing-row">
+                <div class="standing-rank">${idx + 1}.</div>
+                <div class="standing-dot player-bg-${pi}"></div>
+                <div class="standing-name">${name}</div>
+                <div class="standing-time">${time}</div>
             </div>`;
         }).join('');
 
         const html = `
-            <div class="flex flex-col text-white" style="position:fixed;inset:0;z-index:50;background:#1F1B14;overflow-y:auto;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);">
-                <div class="flex-1 w-full max-w-96 mx-auto flex flex-col" style="min-height:100%;">
-                    <div class="flex-1 flex flex-col items-center justify-center px-6 py-8 relative">
-                        <div class="absolute inset-0 overflow-hidden pointer-events-none">${confettiDots()}</div>
-                        <div class="mb-6 relative z-10">${PAWN_SVG(winnerIndex)}</div>
-                        <div class="font-display text-[56px] leading-none tracking-tight text-center relative z-10" style="color:#F2EDE3;">${winText}</div>
-                        <div class="text-[15px] mt-3 text-center max-w-[280px] leading-relaxed relative z-10" style="color:rgba(242,237,227,0.55);">Final standings</div>
-                        <div class="mt-8 w-full rounded-2xl p-3.5 relative z-10" style="background:rgba(242,237,227,0.06);border:1px solid rgba(242,237,227,0.1);">
-                            ${standingsHTML}
-                        </div>
+            <div class="game-end">
+                <div class="game-end-inner">
+                    <div class="game-end-hero">
+                        <div class="game-end-confetti">${confettiDots()}</div>
+                        <div class="game-end-pawn">${PAWN_SVG(winnerIndex)}</div>
+                        <div class="game-end-title">${winText}</div>
+                        <div class="game-end-sub">Final standings</div>
+                        <div class="game-end-standings">${standingsHTML}</div>
                     </div>
-                    <div class="flex gap-2.5 px-4 pt-3 pb-4 relative z-10">
-                        <button id="share-btn" class="flex-1 h-14 rounded-2xl bg-transparent cursor-pointer text-[15px]" style="color:#F2EDE3;border:1px solid rgba(242,237,227,0.2);">Share</button>
-                        <button id="play-again" class="flex-[2] h-14 rounded-2xl border-0 cursor-pointer text-[15px] font-medium" style="background:#F2EDE3;color:#1F1B14;">Play again</button>
+                    <div class="game-end-actions">
+                        <button id="share-btn" class="game-end-btn game-end-btn--share">Share</button>
+                        <button id="play-again" class="game-end-btn game-end-btn--again">Play again</button>
                     </div>
                 </div>
             </div>`;

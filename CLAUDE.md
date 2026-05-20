@@ -4,18 +4,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # Ludo
 
-Browser Ludo game. Vanilla JS + Web Components + Tailwind. No bundler — ES modules load directly via `<script type="module">`. GitHub Pages serves the repo root as site root.
+Browser Ludo game. Vanilla JS + Web Components + hand-written CSS. No bundler, no Tailwind — ES modules and stylesheets load directly via `<script type="module">` / `<link rel="stylesheet">`. GitHub Pages serves the repo root as site root.
 
 ## Repo Layout
 
 ```
 /
 ├── index.html, changelog.html, privacy.html, manifest.json, CNAME
-├── input.css, output.css, tailwind.config.js
-├── components/          Web Components (wc-board, wc-dice, …)
+├── styles/base.css      design tokens + reset + layout primitives + player color helpers
+├── changelog.css        shared chrome for changelog.html + privacy.html
+├── components/          Web Components (wc-*.js) + per-component CSS (wc-*.css)
 ├── scripts/             game logic (game-events, game-logic, render-logic, bot-ai, bot-names)
 ├── assets/              shipped fonts, icons, sounds
-├── test/                QUnit test suite
+├── test/                vitest + Playwright suites
 ├── design/              source PNGs/SVGs for app icons
 ├── tools/               build helpers (all Node .mjs)
 ├── play-store/          generated store listing assets
@@ -26,7 +27,7 @@ Browser Ludo game. Vanilla JS + Web Components + Tailwind. No bundler — ES mod
 ## Dev Commands
 
 - `npm install` (one-time).
-- `npm run dev` — five-server on port 8888 + tailwindcss `--watch` in parallel.
+- `npm run dev` — five-server on port 8888. No build step; CSS and JS load directly.
 - `npm test` — vitest watch mode. Unit + integration suite in `test/**/*.test.js`, mirrors source tree (e.g. [test/scripts/game-logic.test.js](test/scripts/game-logic.test.js) tests [scripts/game-logic.js](scripts/game-logic.js)). Runs in `happy-dom`. Integration tests under [test/integration/](test/integration/) drive full games via the pure [scripts/game-driver.js](scripts/game-driver.js).
 - `npm run test:run` — single-shot vitest run (CI mode, exits when done).
 - `npm run test:coverage` — coverage report (v8 provider) into `coverage/`.
@@ -61,17 +62,43 @@ Two surfaces pause the game today:
 
 If you add a new modal that overlays the game, decide whether it should pause; if yes, use the same pattern (call `pauseGameLogic` on open, `resumeGameLogic` on close).
 
-## Full-Page Layout Shell
+## Styling
 
-Home, setup, settings, and pause all share one layout pattern — keep new full-page screens consistent:
+Hand-authored CSS, organized as one global stylesheet + one file per component:
 
-- Outer overlay (or `#root`) uses `flex items-start justify-center p-2`.
-- Inner column: `max-w-96 w-full flex flex-col min-h-[calc(100vh-16px)]`.
-- Top icon row: `flex items-center gap-2 pt-1 pb-6` with a 38×38 circle button (`CIRCLE_BTN` in `wc-quick-start`) on each side and a centered tracking-widest uppercase label.
-- Middle content sits inside `flex-1 flex flex-col justify-center`.
-- Primary CTA (`bg-foreground text-background` h-[60px] rounded-2xl) at the bottom of the column inside a `pt-4 pb-2` wrapper.
+- `styles/base.css` — design tokens (`:root` / `.dark`), CSS reset, fonts, layout primitives (`.page`, `.frame`, `.top-bar`, `.icon-btn`, `.cta-primary`, `.cta-secondary`, `.surface-card`, `.section-label`, `.display-title`, `.frame-overlay`), keyframes, and player color helpers (`.player-bg-N`, `.player-fg-N`, `.player-bg-path-N`, `.player-bg-soft-N`, `.player-border-N`, `.player-fill-N`).
+- `components/wc-*.css` — one file per Web Component, selectors scoped via the component tag (e.g. `wc-board .home-quad { … }`). Loose semantic class names, no BEM.
+- `changelog.css` — shared chrome for `changelog.html` + `privacy.html`.
 
-The game board (`wc-board`) uses the same outer min-height plus `flex-1` spacers above corner-row-top *and* below corner-row-bottom to vertically center the play area while keeping the top icon row aligned with the other screens.
+`index.html` links the global stylesheet plus every component stylesheet directly (no bundler). When adding a new component:
+
+1. Create `components/wc-foo.js` + `components/wc-foo.css`.
+2. Link the CSS from `index.html`.
+3. Add both files to the `PRECACHE` array in [sw.js](sw.js).
+4. If the component ships to the APK, add nothing extra — `tools/build-www.mjs` copies the whole `components/` tree.
+
+### Design tokens
+
+Colors are CSS variables. Two flavors:
+
+- **Semantic colors** (`--color-bg`, `--color-fg`, `--color-surface`, `--color-surface-hover`, `--color-border`, `--color-safe`, `--color-board-cell`, `--color-board-border`) — direct `hsl(...)` values, overridden on `.dark`.
+- **Player colors** (`--player-N`, `--player-N-light`, `--player-N-path`, `--base-color-N`, `--base-color-N-light`) — raw HSL triplets so they can be remapped at runtime by `applyColorMap` in `scripts/render-logic.js`. Don't rename these unless you also update render-logic.
+
+Spacing scale: `--space-{1..12}` (4px base). Radii: `--radius-{sm,md,lg,xl,2xl,pill}`. Fonts: `--font-display` (Instrument Serif), `--font-sans` (DM Sans), `--font-mono` (JetBrains Mono).
+
+### Layout shell
+
+Home, setup, settings, pause, changelog, privacy all share the same outer frame:
+
+- Outermost wrapper uses `.page` (flex centered, padded).
+- Inner column uses `.frame` (max-width 384px, sized to fill viewport on phones, fixed-height card on `>640px`).
+- Top row uses `.top-bar` with a `.icon-btn` (or `.icon-btn-spacer`) on each side and a centered `.top-bar-title` label.
+- Middle content sits inside `.frame-body`.
+- Primary action uses `.cta-primary` in `.frame-footer`. Secondary use `.cta-secondary`.
+
+The game board (`wc-board`) uses `.board-frame` (same outer min-height) plus `.board-spacer` divs above corner-row-top *and* below corner-row-bottom to vertically center the play area while keeping the top icon row aligned with the other screens.
+
+Overlays (`#pause-menu`, `#settings-overlay`, `wc-game-end`'s root) use `.frame-overlay` — fixed inset, hidden by default, shown by removing the `.hidden` class.
 
 ## Test Overrides (URL Params)
 
@@ -113,7 +140,7 @@ Edit `version.js`. No other steps for web. For Android, `npm run android:prepare
 
 Public release notes live at [changelog.html](changelog.html). Newest entry on top.
 
-**Every VERSION bump must add a changelog entry.** Copy the most recent `<article>` block, change the version + date, fill in the new content. Keep the layout shell (icon row, max-w-96, `bg-card` sections) consistent with `privacy.html`.
+**Every VERSION bump must add a changelog entry.** Copy the most recent `<article>` block, change the version + date, fill in the new content. Keep the layout shell (icon row, `.frame`, `.surface-card` sections) consistent with `privacy.html`.
 
 Minimum sections per entry:
 - **Highlights** — short bullet list of user-visible changes.
@@ -121,7 +148,7 @@ Minimum sections per entry:
 
 ## Android (Capacitor)
 
-Capacitor's `webDir` is `www/`, which is **built** from the root by `tools/build-www.mjs` (copies `index.html`, `changelog.html`, `privacy.html`, `manifest.json`, `output.css`, `sw.js`, `version.js`, `components/`, `scripts/`, `assets/`). `www/` is gitignored.
+Capacitor's `webDir` is `www/`, which is **built** from the root by `tools/build-www.mjs` (copies the three HTMLs + `changelog.css` + `manifest.json` + `sw.js` + `version.js` + the `styles/`, `components/`, `scripts/`, and `assets/` trees). `www/` is gitignored.
 
 Scripts in `package.json`:
 

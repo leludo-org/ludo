@@ -32,7 +32,7 @@ import {
 const ICON_BACK = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>`;
 
 const SETTINGS_HTML = /*html*/ `
-<button id="settings-icon" class="w-[38px] h-[38px] rounded-full bg-transparent border border-foreground/15 flex items-center justify-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity p-0">
+<button id="settings-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="17" height="17">
         <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
         <circle cx="12" cy="12" r="3" />
@@ -40,97 +40,97 @@ const SETTINGS_HTML = /*html*/ `
 </button>
 `;
 
-function toggleHtml(id, label, checked = false) {
-    return `<div class="flex items-center justify-between py-2.5 ${id !== 'last' ? 'border-b border-foreground/5' : ''}">
-        <label for="${id}" class="text-sm cursor-pointer">${label}</label>
-        <input type="checkbox" id="${id}" class="hidden peer" ${checked ? 'checked' : ''} />
-        <label for="${id}" class="w-10 h-[22px] bg-foreground/20 peer-checked:bg-foreground rounded-full flex items-center p-[2px] cursor-pointer transition-all peer-checked:justify-end">
-            <div class="size-[18px] rounded-full bg-background shadow-sm"></div>
+function toggleHtml(id, label, checked = false, withBorder = true) {
+    return `<div class="settings-row${withBorder ? ' settings-row--bordered' : ''}">
+        <label for="${id}" class="settings-row-label">${label}</label>
+        <input type="checkbox" id="${id}" class="toggle-input" ${checked ? 'checked' : ''} />
+        <label for="${id}" class="toggle-track">
+            <div class="toggle-knob"></div>
         </label>
     </div>`;
 }
 
 function settingsGroup(label, content) {
     return `<div>
-        <div class="text-[11px] tracking-widest uppercase opacity-40 mb-2">${label}</div>
-        <div class="bg-card rounded-2xl px-3.5 border border-foreground/10">${content}</div>
+        <div class="section-label" style="margin-bottom:8px;">${label}</div>
+        <div class="settings-group-card">${content}</div>
     </div>`;
 }
 
 function buildSettingsOverlay() {
-    return `<div id="settings-overlay" class="fixed inset-0 z-50 bg-background overflow-y-auto hidden flex items-start sm:items-center justify-center p-2">
-        <div class="max-w-96 w-full flex flex-col min-h-[70vh] sm:min-h-0 sm:h-[820px] sm:max-h-[calc(100dvh-32px)]">
-            <div class="flex items-center gap-2 pt-1 pb-6">
-                <button id="settings-back" class="w-[38px] h-[38px] rounded-full bg-transparent border border-foreground/15 flex items-center justify-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity">${ICON_BACK}</button>
-                <div class="flex-1 text-center text-[11px] font-medium tracking-[0.16em] uppercase opacity-50">Settings</div>
-                <div class="w-[38px]"></div>
+    return `<div id="settings-overlay" class="frame-overlay hidden">
+        <div class="frame">
+            <div class="top-bar">
+                <button id="settings-back" class="icon-btn">${ICON_BACK}</button>
+                <div class="top-bar-title">Settings</div>
+                <div class="icon-btn-spacer"></div>
             </div>
 
-            <div class="flex-1 flex flex-col justify-center">
-                <div class="px-3 pt-2">
-                    <div class="font-display text-[40px] leading-none tracking-tight">Preferences.</div>
+            <div class="settings-body">
+                <div class="settings-title-wrap">
+                    <h2 class="settings-title">Preferences.</h2>
                 </div>
 
-                <div class="px-2 pt-4 pb-4 flex flex-col gap-6">
+                <div class="settings-groups">
                 ${settingsGroup('Theme', `
-                    <div class="flex gap-2.5 py-2.5">
-                        <label class="flex-1 cursor-pointer">
-                            <input type="radio" name="s-theme" value="light" class="hidden peer" />
-                            <div class="aspect-[1.4] rounded-xl p-2.5 flex flex-col justify-between border-[1.5px] border-transparent peer-checked:border-foreground" style="background:#EFE9DC;color:#1F1B14;">
-                                <div class="font-display text-xl leading-none">Aa</div>
-                                <div class="text-[11px]">Paper</div>
+                    <div class="theme-row">
+                        <label class="theme-tile-wrap">
+                            <input type="radio" name="s-theme" value="light" class="theme-tile-input" />
+                            <div class="theme-tile" style="background:#EFE9DC;color:#1F1B14;">
+                                <div class="theme-tile-glyph">Aa</div>
+                                <div class="theme-tile-label">Paper</div>
                             </div>
                         </label>
-                        <label class="flex-1 cursor-pointer">
-                            <input type="radio" name="s-theme" value="dark" class="hidden peer" />
-                            <div class="aspect-[1.4] rounded-xl p-2.5 flex flex-col justify-between border-[1.5px] border-transparent peer-checked:border-foreground" style="background:#1F1B14;color:#F2EDE3;">
-                                <div class="font-display text-xl leading-none">Aa</div>
-                                <div class="text-[11px]">Dusk</div>
+                        <label class="theme-tile-wrap">
+                            <input type="radio" name="s-theme" value="dark" class="theme-tile-input" />
+                            <div class="theme-tile" style="background:#1F1B14;color:#F2EDE3;">
+                                <div class="theme-tile-glyph">Aa</div>
+                                <div class="theme-tile-label">Dusk</div>
                             </div>
                         </label>
-                        <label class="flex-1 cursor-pointer">
-                            <input type="radio" name="s-theme" value="system" class="hidden peer" />
-                            <div class="aspect-[1.4] rounded-xl p-2.5 flex flex-col justify-between border-[1.5px] border-transparent peer-checked:border-foreground" style="background:#0d0d0d;color:#fff;">
-                                <div class="font-display text-xl leading-none">Aa</div>
-                                <div class="text-[11px]">System</div>
+                        <label class="theme-tile-wrap">
+                            <input type="radio" name="s-theme" value="system" class="theme-tile-input" />
+                            <div class="theme-tile" style="background:#0d0d0d;color:#fff;">
+                                <div class="theme-tile-glyph">Aa</div>
+                                <div class="theme-tile-label">System</div>
                             </div>
                         </label>
                     </div>
                 `)}
 
-                ${settingsGroup('Sound', toggleHtml('s-sound', 'Sound effects', !isSoundMuted()))}
+                ${settingsGroup('Sound', toggleHtml('s-sound', 'Sound effects', !isSoundMuted(), false))}
 
-                ${settingsGroup('Assist', ASSIST_TOGGLES.map(t => toggleHtml(t.id, t.label, readAssistPref(t))).join(''))}
+                ${settingsGroup('Assist', ASSIST_TOGGLES.map((t, idx, arr) => toggleHtml(t.id, t.label, readAssistPref(t), idx < arr.length - 1)).join(''))}
 
                 ${settingsGroup('Bot vibe', `
-                    <div class="flex flex-col">
-                        ${Object.keys(BOT_NAME_POOLS).map((key, idx, arr) => {
+                    <div class="bot-pool-list">
+                        ${Object.keys(BOT_NAME_POOLS).map((key) => {
                             const sample = BOT_NAME_POOLS[key].slice(0, 3).join(' · ')
-                            return `<label class="flex items-center justify-between py-2.5 cursor-pointer ${idx < arr.length - 1 ? 'border-b border-foreground/5' : ''}">
-                                <div class="flex flex-col gap-0.5 min-w-0 pr-3">
-                                    <span class="text-sm">${BOT_POOL_LABELS[key]}</span>
-                                    <span class="text-[11px] opacity-50 truncate">${sample}</span>
+                            return `<label class="bot-pool-row">
+                                <div class="bot-pool-body">
+                                    <span class="bot-pool-name">${BOT_POOL_LABELS[key]}</span>
+                                    <span class="bot-pool-sample">${sample}</span>
                                 </div>
-                                <input type="radio" name="s-bot-pool" value="${key}" class="hidden peer" />
-                                <span class="size-[18px] rounded-full border-[1.5px] border-foreground/30 peer-checked:border-foreground peer-checked:bg-foreground shrink-0"></span>
+                                <input type="radio" name="s-bot-pool" value="${key}" class="bot-pool-input hidden" />
+                                <span class="bot-pool-dot"></span>
                             </label>`
                         }).join('')}
                     </div>
                 `)}
 
                 ${settingsGroup('About', `
-                    <div class="flex flex-col gap-2 py-2.5">
-                        <div class="flex justify-between text-sm">
-                            <span class="opacity-50">Version</span>
-                            <span class="font-mono">${VERSION}</span>
+                    <div class="about-list">
+                        <div class="about-row">
+                            <span class="about-key">Version</span>
+                            <span class="about-value-mono">${VERSION}</span>
                         </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="opacity-50">Source</span>
-                            <a href="https://github.com/LeludoOrg/leludo" class="font-mono opacity-70 hover:opacity-100">github.com/LeludoOrg/leludo</a>
+                        <div class="about-row">
+                            <span class="about-key">Source</span>
+                            <a href="https://github.com/LeludoOrg/leludo" class="about-value-mono about-link">github.com/LeludoOrg/leludo</a>
                         </div>
-                        <div class="flex justify-between text-sm border-t border-foreground/5 pt-2 mt-1">
-                            <span class="opacity-50">Privacy</span>
-                            <a href="privacy.html" class="opacity-70 hover:opacity-100">Read policy</a>
+                        <div class="about-row about-row--separator">
+                            <span class="about-key">Privacy</span>
+                            <a href="privacy.html" class="about-link">Read policy</a>
                         </div>
                     </div>
                 `)}

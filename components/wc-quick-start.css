@@ -1,0 +1,305 @@
+/* ============================================================
+   wc-quick-start — home + setup screens
+   ============================================================ */
+
+wc-quick-start {
+    display: block;
+}
+
+/* ----- Home ----- */
+
+wc-quick-start .home-hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+}
+
+wc-quick-start .home-dice-row {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+}
+
+wc-quick-start .home-dice {
+    line-height: 0;
+}
+
+wc-quick-start .home-title {
+    font-family: var(--font-display);
+    line-height: 0.85;
+    letter-spacing: -0.025em;
+    font-size: clamp(64px, 18vw, 88px);
+    margin: 0;
+}
+
+wc-quick-start .home-tagline {
+    margin: 0;
+    margin-top: var(--space-4);
+    font-size: 16px;
+    opacity: 0.5;
+    max-width: 280px;
+    line-height: 1.5;
+}
+
+wc-quick-start .home-resume-row {
+    padding-bottom: var(--space-3);
+}
+
+wc-quick-start .resume-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-2xl);
+    padding: 14px 16px;
+    border: 1px solid color-mix(in srgb, var(--color-fg) 10%, transparent);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+}
+
+wc-quick-start .resume-card:hover {
+    background: var(--color-surface-hover);
+}
+
+wc-quick-start .resume-card-pawns {
+    display: flex;
+    position: relative;
+    width: 60px;
+}
+
+wc-quick-start .resume-card-pawn {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid var(--color-surface);
+    width: 22px;
+    height: 22px;
+}
+
+wc-quick-start .resume-card-body {
+    flex: 1;
+}
+
+wc-quick-start .resume-card-label {
+    font-size: 12px;
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+wc-quick-start .resume-card-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+wc-quick-start .home-cta-row {
+    padding-bottom: var(--space-2);
+}
+
+wc-quick-start .home-cta {
+    box-shadow: 0 8px 22px -8px rgba(31, 27, 20, 0.4);
+}
+
+/* ----- Setup ----- */
+
+wc-quick-start .setup-helper {
+    font-size: 14px;
+    opacity: 0.5;
+    padding: var(--space-2) var(--space-1) var(--space-4);
+    max-width: 320px;
+    margin: 0;
+}
+
+wc-quick-start .seat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+wc-quick-start .seat-row {
+    background: var(--color-surface);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-3) 14px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    border: 1px solid color-mix(in srgb, var(--color-fg) 10%, transparent);
+    transition: opacity 150ms ease;
+    flex-wrap: nowrap;
+}
+
+wc-quick-start .seat-row-empty {
+    background: color-mix(in srgb, var(--color-surface) 40%, transparent);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-3) 14px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    border: 1px dashed color-mix(in srgb, var(--color-fg) 15%, transparent);
+}
+
+wc-quick-start .seat-color-cycle {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    padding: 0;
+    border: 0;
+}
+
+wc-quick-start .seat-pawn {
+    width: 78%;
+    height: 78%;
+}
+
+wc-quick-start .seat-empty-color {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    border: 2px dashed color-mix(in srgb, var(--color-fg) 20%, transparent);
+    flex-shrink: 0;
+}
+
+wc-quick-start .seat-body {
+    flex: 1;
+    min-width: 0;
+}
+
+wc-quick-start .seat-empty-title {
+    font-size: 15px;
+    font-weight: 500;
+    opacity: 0.6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+wc-quick-start .seat-empty-sub {
+    font-size: 12px;
+    opacity: 0.5;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+wc-quick-start .seat-name-wrap {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: var(--space-2);
+    cursor: text;
+    min-width: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-fg) 12%, transparent);
+    transition: border-color 150ms ease, border-width 150ms ease;
+    padding-bottom: 2px;
+}
+
+wc-quick-start .seat-name {
+    flex: 1;
+    width: 100%;
+    background: transparent;
+    border: 0;
+    outline: 0 !important;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent;
+    color: var(--color-fg);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+    appearance: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+wc-quick-start .seat-name:focus,
+wc-quick-start .seat-name:focus-visible {
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
+wc-quick-start .seat-name::selection {
+    background: color-mix(in srgb, var(--color-fg) 12%, transparent);
+    color: inherit;
+}
+
+wc-quick-start .seat-name-pencil {
+    opacity: 0.3;
+    line-height: 0;
+    flex-shrink: 0;
+    transition: opacity 150ms ease;
+}
+
+wc-quick-start .seat-name-wrap:hover .seat-name-pencil {
+    opacity: 0.7;
+}
+
+wc-quick-start .seat-name-pencil.hide-on-focus {
+    display: none;
+}
+
+wc-quick-start .seat-char-count {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    flex-shrink: 0;
+}
+
+wc-quick-start .seat-pill {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--color-fg) 5%, transparent);
+    padding: 3px;
+    font-size: 12px;
+    font-weight: 500;
+    flex-shrink: 0;
+    border: 1px solid color-mix(in srgb, var(--color-fg) 8%, transparent);
+}
+
+wc-quick-start .seat-half,
+wc-quick-start .seat-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    border: 0;
+    cursor: pointer;
+    transition: opacity 150ms ease, background-color 150ms ease, color 150ms ease;
+}
+
+wc-quick-start .seat-half--inactive,
+wc-quick-start .seat-add {
+    background: transparent;
+    opacity: 0.55;
+}
+
+wc-quick-start .seat-half--inactive:hover,
+wc-quick-start .seat-add:hover {
+    opacity: 0.9;
+}
+
+wc-quick-start .seat-remove {
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    padding: 4px;
+    opacity: 0.3;
+    transition: opacity 150ms ease;
+    flex-shrink: 0;
+}
+
+wc-quick-start .seat-remove:hover {
+    opacity: 0.6;
+}

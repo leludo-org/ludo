@@ -19,7 +19,7 @@ export default defineConfig({
         { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
     ],
     webServer: {
-        command: `npx tailwindcss -i input.css -o output.css --minify && node tools/serve-static.mjs ${PORT}`,
+        command: `node tools/serve-static.mjs ${PORT}`,
         url: BASE_URL,
         reuseExistingServer: !process.env.CI,
         timeout: 60_000,

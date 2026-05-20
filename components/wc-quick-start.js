@@ -22,16 +22,16 @@ const DICE_SVG = (value, size = 56) => {
     const cell = (size - pad * 2) / 2;
     const pips = PIP_LAYOUTS[value] || PIP_LAYOUTS[1];
     const pipSvgs = pips.map(([gr, gc]) =>
-        `<circle cx="${pad + gc * cell}" cy="${pad + gr * cell}" r="${pip/2}" fill="hsl(var(--foreground))"/>`
+        `<circle cx="${pad + gc * cell}" cy="${pad + gr * cell}" r="${pip/2}" fill="hsl(var(--color-fg-raw, 36 18% 10%))" style="fill:var(--color-fg)"/>`
     ).join('');
     return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-        <rect width="${size}" height="${size}" rx="${size * 0.22}" fill="hsl(var(--card))" stroke="hsl(var(--border))" stroke-width="1"/>
+        <rect width="${size}" height="${size}" rx="${size * 0.22}" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1"/>
         ${pipSvgs}
     </svg>`;
 };
 
 const PAWN_SVG = (playerIndex) => `
-    <svg viewBox="0 0 32 32" class="text-player-${playerIndex}" style="width:100%;height:100%;filter:drop-shadow(0 1.2px 1.5px rgba(0,0,0,0.28));">
+    <svg viewBox="0 0 32 32" class="player-fg-${playerIndex}" style="width:100%;height:100%;filter:drop-shadow(0 1.2px 1.5px rgba(0,0,0,0.28));">
         <ellipse cx="16" cy="28" rx="8" ry="1.5" fill="rgba(0,0,0,0.18)"/>
         <path d="M16 4c3.2 0 5.5 2.4 5.5 5.2 0 1.8-1 3.2-2.4 4 1.7.7 2.9 1.8 3.6 3.4l1.1 2.6c.4 1 .1 2-.7 2.4-.2.1-.4.1-.6.1H9.5c-.9 0-1.6-.7-1.6-1.6 0-.3.1-.6.2-.9l1.1-2.6c.7-1.6 1.9-2.7 3.6-3.4-1.4-.8-2.4-2.2-2.4-4C10.4 6.4 12.8 4 16 4z" fill="currentColor"/>
         <path d="M16 4c3.2 0 5.5 2.4 5.5 5.2 0 1.8-1 3.2-2.4 4-.6-.3-1.3-.5-2-.5h-2.2c-.7 0-1.4.2-2 .5-1.4-.8-2.4-2.2-2.4-4C10.4 6.4 12.8 4 16 4z" fill="rgba(255,255,255,0.24)"/>
@@ -47,8 +47,6 @@ const ICON_PLUS = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" s
 const ICON_USER = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zM4 21a8 8 0 0116 0"/></svg>`;
 const ICON_BOT = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3M8 7h8a3 3 0 013 3v7a3 3 0 01-3 3H8a3 3 0 01-3-3v-7a3 3 0 013-3zM9 13h.01M15 13h.01M9 17h6"/></svg>`;
 const ICON_PENCIL = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`;
-
-const CIRCLE_BTN = "w-[38px] h-[38px] rounded-full bg-transparent border border-foreground/15 flex items-center justify-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity";
 
 class QuickStart extends HTMLElement {
     constructor() {
@@ -117,45 +115,40 @@ class QuickStart extends HTMLElement {
 
         const savedGame = localStorage.getItem('ludo-save')
         const resumeCard = savedGame ? `
-            <div class="resume-card bg-card rounded-2xl p-3.5 px-4 border border-foreground/10 flex items-center gap-3.5 cursor-pointer hover:bg-card-hover transition-colors">
-                <div class="flex relative" style="width:60px;">
+            <div class="resume-card">
+                <div class="resume-card-pawns">
                     ${[0,1,2,3].map((c, i) => `
-                        <div class="absolute rounded-full border-2 border-card" style="left:${i*12}px;width:22px;height:22px;background:hsl(var(--player-${c}));"></div>
+                        <div class="resume-card-pawn" style="left:${i*12}px;background:hsl(var(--player-${c}));"></div>
                     `).join('')}
                 </div>
-                <div class="flex-1">
-                    <div class="text-xs opacity-50 tracking-wider uppercase">Resume</div>
-                    <div class="text-sm font-medium mt-0.5">Saved game</div>
+                <div class="resume-card-body">
+                    <div class="resume-card-label">Resume</div>
+                    <div class="resume-card-title">Saved game</div>
                 </div>
             </div>` : ''
 
         const html = /*html*/ `
-            <div class="flex flex-col h-full min-h-[calc(100dvh-16px)] sm:min-h-0 sm:h-[820px] sm:max-h-[calc(100dvh-32px)]">
-                <div class="flex items-center gap-2 pt-1 pb-6">
-                    <a href="https://github.com/LeludoOrg/leludo" target="_blank" rel="noopener" class="${CIRCLE_BTN} text-foreground no-underline">${ICON_GITHUB}</a>
-                    <div class="flex-1 text-center text-[11px] font-medium tracking-[0.16em] uppercase opacity-50">v${VERSION}</div>
+            <div class="frame">
+                <div class="top-bar">
+                    <a href="https://github.com/LeludoOrg/leludo" target="_blank" rel="noopener" class="icon-btn">${ICON_GITHUB}</a>
+                    <div class="top-bar-title">v${VERSION}</div>
                     <wc-settings></wc-settings>
                 </div>
-                <div class="flex-1 flex flex-col justify-center px-2">
-                    <div class="flex items-end gap-3 mb-6">
-                        <div class="home-dice" data-value="4" style="line-height:0;">${DICE_SVG(4, 48)}</div>
-                        <div class="home-dice" data-value="6" style="line-height:0;">${DICE_SVG(6, 48)}</div>
+                <div class="home-hero">
+                    <div class="home-dice-row">
+                        <div class="home-dice" data-value="4">${DICE_SVG(4, 48)}</div>
+                        <div class="home-dice" data-value="6">${DICE_SVG(6, 48)}</div>
                     </div>
-                    <h1 class="font-display leading-[0.85] tracking-tight" style="font-size: clamp(64px, 18vw, 88px);">
-                        le<br>ludo.
-                    </h1>
-                    <p class="mt-4 text-base opacity-50 max-w-[280px] leading-relaxed">
+                    <h1 class="home-title">le<br>ludo.</h1>
+                    <p class="home-tagline">
                         A quiet, faithful take on the classic four-player race. Pass &amp; play, or run the table against bots.
                     </p>
                 </div>
 
-                ${resumeCard ? `<div class="px-0 pb-3">${resumeCard}</div>` : ''}
+                ${resumeCard ? `<div class="home-resume-row">${resumeCard}</div>` : ''}
 
-                <div class="pb-2">
-                    <button class="new-game-btn w-full h-[60px] rounded-2xl bg-foreground text-background font-medium text-[17px] tracking-wide border-none cursor-pointer flex items-center justify-center gap-2.5 hover:opacity-90 transition-opacity"
-                        style="box-shadow: 0 8px 22px -8px rgba(31,27,20,0.4);">
-                        New game
-                    </button>
+                <div class="home-cta-row">
+                    <button class="new-game-btn cta-primary home-cta">New game</button>
                 </div>
             </div>
         `
@@ -234,34 +227,22 @@ class QuickStart extends HTMLElement {
         this.innerHTML = ""
 
         const html = /*html*/ `
-            <style>
-                .seat-name { outline: none !important; box-shadow: none !important; -webkit-tap-highlight-color: transparent; color: hsl(var(--foreground)); }
-                .seat-name:focus, .seat-name:focus-visible { outline: none !important; box-shadow: none !important; }
-                .seat-name::selection { background: hsl(var(--foreground) / 0.12); color: inherit; }
-                .seat-name-pencil.hide-on-focus { display: none; }
-                .seat-row { flex-wrap: nowrap; }
-                .seat-pill { display: inline-flex; flex-wrap: nowrap; }
-            </style>
-            <div class="flex flex-col min-h-[calc(100dvh-16px)] sm:min-h-0 sm:h-[820px] sm:max-h-[calc(100dvh-32px)]">
-                <div class="flex items-center gap-2 pt-1 pb-6">
-                    <button class="back-btn ${CIRCLE_BTN}">${ICON_BACK}</button>
-                    <div class="flex-1 text-center text-xs font-medium tracking-[0.16em] uppercase opacity-50">Setup</div>
+            <div class="frame">
+                <div class="top-bar">
+                    <button class="back-btn icon-btn">${ICON_BACK}</button>
+                    <div class="top-bar-title">Setup</div>
                     <wc-settings></wc-settings>
                 </div>
 
-                <h2 class="font-display text-[40px] leading-none tracking-tight px-1 pt-2">
-                    Who&rsquo;s<br>playing?
-                </h2>
-                <p id="setup-helper" data-default="Each seat is either a person on this phone or a bot. Tap the pill to switch." data-edit="Rename your seat. Tap return when you&rsquo;re done." class="text-sm opacity-50 px-1 pt-2 pb-4 max-w-[320px]">Each seat is either a person on this phone or a bot. Tap the pill to switch.</p>
+                <h2 class="display-title">Who&rsquo;s<br>playing?</h2>
+                <p id="setup-helper" class="setup-helper" data-default="Each seat is either a person on this phone or a bot. Tap the pill to switch." data-edit="Rename your seat. Tap return when you&rsquo;re done.">Each seat is either a person on this phone or a bot. Tap the pill to switch.</p>
 
-                <div id="seat-list" class="flex flex-col gap-2.5"></div>
+                <div id="seat-list" class="seat-list"></div>
 
-                <div class="flex-1"></div>
+                <div style="flex:1"></div>
 
-                <div class="pt-4 pb-2">
-                    <button class="start-btn w-full h-[60px] rounded-2xl bg-foreground text-background font-medium text-[17px] tracking-wide border-none cursor-pointer flex items-center justify-center gap-2.5 hover:opacity-90 transition-opacity">
-                        Start game
-                    </button>
+                <div class="frame-footer">
+                    <button class="start-btn cta-primary">Start game</button>
                 </div>
             </div>
         `
@@ -295,31 +276,29 @@ class QuickStart extends HTMLElement {
                 const isPlayer = seat.type === 'PLAYER'
                 const NAME_MAX = 9
                 if (!seat.name) seat.name = this._defaultName(seat, i)
-                const colorName = COLOR_NAMES[seat.colorIndex]
                 const colorVar = `hsl(var(--player-${seat.colorIndex}))`
                 const playerActiveStyle = isPlayer ? `style="background:${colorVar};color:#fff;"` : ''
                 const botActiveStyle = !isPlayer ? `style="background:${colorVar};color:#fff;"` : ''
-                const inactiveCls = "bg-transparent opacity-55 hover:opacity-90"
                 const dimmed = this._focusedSeatIndex !== null && this._focusedSeatIndex !== i
                 const rowDimStyle = dimmed ? 'opacity:0.35;' : ''
                 const charLen = (seat.name || '').length
                 const seatHtml = /*html*/ `
-                    <div class="seat-row bg-card rounded-2xl p-3 px-3.5 flex items-center gap-3 border border-foreground/10 transition-opacity" data-seat-idx="${i}" style="${rowDimStyle}">
-                        <button class="color-cycle w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border-none cursor-pointer p-0" style="background:${colorVar};" title="Change color">
-                            <div class="w-[78%] h-[78%]">${PAWN_SVG(seat.colorIndex)}</div>
+                    <div class="seat-row" data-seat-idx="${i}" style="${rowDimStyle}">
+                        <button class="color-cycle seat-color-cycle" style="background:${colorVar};" title="Change color">
+                            <div class="seat-pawn">${PAWN_SVG(seat.colorIndex)}</div>
                         </button>
-                        <div class="flex-1 min-w-0">
-                            <label class="seat-name-wrap group flex w-full items-center gap-2 cursor-text min-w-0" style="border-bottom:1px solid hsl(var(--foreground)/0.12);transition:border-color 0.15s, border-width 0.15s;padding-bottom:2px;">
-                                <input class="seat-name flex-1 w-full bg-transparent border-none outline-none text-[15px] font-medium truncate p-0 m-0 min-w-0 appearance-none" type="text" name="ludo-seat-${i}" autocomplete="off" autocorrect="off" autocapitalize="words" data-form-type="other" data-lpignore="true" data-1p-ignore="true" style="caret-color:${colorVar};background:transparent;" value="${(seat.name || '').replace(/"/g, '&quot;')}" maxlength="${NAME_MAX}" spellcheck="false" />
-                                <span class="seat-name-pencil opacity-30 group-hover:opacity-70 transition-opacity shrink-0" style="line-height:0;">${ICON_PENCIL}</span>
-                                <span class="seat-char-count text-[11px] font-mono hidden shrink-0" style="color:${colorVar};">${charLen}/${NAME_MAX}</span>
+                        <div class="seat-body">
+                            <label class="seat-name-wrap">
+                                <input class="seat-name" type="text" name="ludo-seat-${i}" autocomplete="off" autocorrect="off" autocapitalize="words" data-form-type="other" data-lpignore="true" data-1p-ignore="true" style="caret-color:${colorVar};" value="${(seat.name || '').replace(/"/g, '&quot;')}" maxlength="${NAME_MAX}" spellcheck="false" />
+                                <span class="seat-name-pencil">${ICON_PENCIL}</span>
+                                <span class="seat-char-count hidden" style="color:${colorVar};">${charLen}/${NAME_MAX}</span>
                             </label>
                         </div>
-                        <div class="seat-pill inline-flex rounded-full bg-foreground/5 p-[3px] text-[12px] font-medium shrink-0" style="border:1px solid hsl(var(--foreground)/0.08);">
-                            <button data-half="PLAYER" class="seat-half inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer transition-colors ${isPlayer ? '' : inactiveCls}" ${playerActiveStyle}>${ICON_USER}<span>Human</span></button>
-                            <button data-half="BOT" class="seat-half inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer transition-colors ${!isPlayer ? '' : inactiveCls}" ${botActiveStyle}>${ICON_BOT}<span>Bot</span></button>
+                        <div class="seat-pill">
+                            <button data-half="PLAYER" class="seat-half ${isPlayer ? '' : 'seat-half--inactive'}" ${playerActiveStyle}>${ICON_USER}<span>Human</span></button>
+                            <button data-half="BOT" class="seat-half ${!isPlayer ? '' : 'seat-half--inactive'}" ${botActiveStyle}>${ICON_BOT}<span>Bot</span></button>
                         </div>
-                        <button class="remove-seat cursor-pointer bg-transparent border-none p-1 opacity-30 hover:opacity-60 transition-opacity shrink-0">${ICON_CLOSE}</button>
+                        <button class="remove-seat seat-remove">${ICON_CLOSE}</button>
                     </div>`
                 const seatEl = htmlToElement(seatHtml)
 
@@ -399,15 +378,15 @@ class QuickStart extends HTMLElement {
                 container.appendChild(seatEl)
             } else {
                 const emptyHtml = /*html*/ `
-                    <div class="seat-row-empty bg-card/40 rounded-2xl p-3 px-3.5 flex items-center gap-3 border border-dashed border-foreground/15">
-                        <div class="w-11 h-11 rounded-xl border-2 border-dashed border-foreground/20 shrink-0"></div>
-                        <div class="flex-1 min-w-0">
-                            <div class="text-[15px] font-medium opacity-60 truncate">Empty seat</div>
-                            <div class="text-xs opacity-50 mt-0.5 truncate">Tap a side to fill</div>
+                    <div class="seat-row-empty">
+                        <div class="seat-empty-color"></div>
+                        <div class="seat-body">
+                            <div class="seat-empty-title">Empty seat</div>
+                            <div class="seat-empty-sub">Tap a side to fill</div>
                         </div>
-                        <div class="seat-pill inline-flex rounded-full bg-foreground/5 p-[3px] text-[12px] font-medium shrink-0" style="border:1px solid hsl(var(--foreground)/0.08);">
-                            <button data-add="PLAYER" class="seat-add inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer bg-transparent opacity-55 hover:opacity-100 transition-opacity">${ICON_USER}<span>Human</span></button>
-                            <button data-add="BOT" class="seat-add inline-flex items-center gap-1 px-2.5 py-1 rounded-full border-none cursor-pointer bg-transparent opacity-55 hover:opacity-100 transition-opacity">${ICON_BOT}<span>Bot</span></button>
+                        <div class="seat-pill">
+                            <button data-add="PLAYER" class="seat-add">${ICON_USER}<span>Human</span></button>
+                            <button data-add="BOT" class="seat-add">${ICON_BOT}<span>Bot</span></button>
                         </div>
                     </div>`
                 const emptyEl = htmlToElement(emptyHtml)
@@ -434,8 +413,6 @@ class QuickStart extends HTMLElement {
         const startBtn = this.querySelector(".start-btn")
         if (startBtn) {
             startBtn.disabled = activeCount < 2
-            startBtn.style.opacity = activeCount < 2 ? '0.4' : '1'
-            startBtn.style.cursor = activeCount < 2 ? 'not-allowed' : 'pointer'
         }
     }
 
