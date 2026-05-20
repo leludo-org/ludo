@@ -91,14 +91,28 @@ test.describe('Path cell backgrounds', () => {
         expect(tints.size).toBe(4);
     });
 
-    test('safe (starred) cells get safe-tint background', async ({ page }) => {
+    test('safe (starred) cells share the plain board-cell background', async ({ page }) => {
+        // Design call: safe squares (m8, m21, m34, m47) are visually
+        // identical to plain path cells. The "safe" signal comes from
+        // the player-colored star SVG drawn on top, not from a tinted
+        // cell background. A regression that tints the cell (with
+        // --color-safe or a player-path color) makes the cell read as
+        // "grey" / out-of-place compared to its neighbours and breaks
+        // this assertion.
         await startGame(page);
-        const sample = await page.evaluate(() => ({
-            safe: getComputedStyle(document.getElementById('m8')).backgroundColor,
-            plain: getComputedStyle(document.getElementById('m1')).backgroundColor,
-        }));
-        expect(sample.safe).not.toBe(sample.plain);
-        expect(sample.safe).toMatch(HSL_RE);
+
+        const sample = await page.evaluate(() => {
+            const ids = ['m8', 'm21', 'm34', 'm47'];
+            const out = { plain: getComputedStyle(document.getElementById('m1')).backgroundColor };
+            for (const id of ids) {
+                out[id] = getComputedStyle(document.getElementById(id)).backgroundColor;
+            }
+            return out;
+        });
+
+        for (const id of ['m8', 'm21', 'm34', 'm47']) {
+            expect(sample[id], `${id} should match plain board-cell color ${sample.plain}`).toBe(sample.plain);
+        }
     });
 });
 

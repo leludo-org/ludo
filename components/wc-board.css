@@ -192,8 +192,11 @@ wc-board .path-cell.player-bg-path-3 {
     background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent);
 }
 
+/* Safe cells (m8, m21, m34, m47) keep the plain board-cell background
+   inherited from `:where(.path-cell)` and signal "safe" purely through
+   the player-colored star SVG drawn inside. Don't add a background
+   tint here — see test/e2e/board-styles.spec.js. */
 wc-board .path-cell--safe {
-    background-color: var(--color-safe);
     display: flex;
     align-items: center;
     justify-content: center;
