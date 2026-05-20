@@ -218,7 +218,7 @@ function updateCurrentPlayer() {
     const next = getNextPlayerIndex(currentPlayerIndex, playerTypes, playerTokenPositions)
     if (next !== -1) currentPlayerIndex = next
     updateTurnCounter()
-    handlePayerUpdated()
+    handlePlayerUpdated()
 }
 
 
@@ -316,7 +316,7 @@ export function handleGamePause() {
 }
 
 
-export function handlePayerUpdated() {
+export function handlePlayerUpdated() {
     moveDice(currentPlayerIndex)
     handleDiceMoved()
 }
