@@ -10,7 +10,7 @@ test.describe('Home screen', () => {
 
         await page.goto('/');
 
-        const title = page.locator('wc-quick-start h1.font-display').first();
+        const title = page.locator('wc-quick-start h1.home-title').first();
         await expect(title).toContainText('le');
         await expect(title).toContainText('ludo');
 

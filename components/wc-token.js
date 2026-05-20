@@ -8,8 +8,7 @@ import {
 //language=HTML
 const TOKEN_HTML = (playerIndex) => /*html*/ `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
-         class="text-player-${playerIndex} relative size-full min-w-full transition-transform duration-300 ease-out"
-         style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));">
+         class="player-fg-${playerIndex}">
         <defs>
             <linearGradient id="pb${playerIndex}" x1="0.2" y1="0" x2="0.8" y2="1">
                 <stop offset="0%" stop-color="white" stop-opacity="0.35"/>
@@ -47,8 +46,6 @@ class Token extends HTMLElement {
      */
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === "id") {
-
-            ["block", "transition-transform"].forEach(c => this.classList.add(c))
 
             const id = newValue;
             const idTokens = id.split("-")

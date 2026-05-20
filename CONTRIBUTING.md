@@ -13,17 +13,17 @@ Tiny fixes (typo, broken link, one-line bug) can skip the issue.
 
 ```bash
 npm install
-npm run dev    # five-server on :8888 + tailwindcss --watch
-npm test       # opens the QUnit suite (needs dev running)
+npm run dev      # five-server on :8888 (no build step)
+npm test         # vitest watch mode
+npm run test:e2e # Playwright smoke suite
 ```
 
 See [README.md](README.md) for the short version, [CLAUDE.md](CLAUDE.md) for the full repo map and architecture notes.
 
 ## House rules
 
-- **Vanilla JS + Web Components + Tailwind, no bundler.** Don't introduce a build step or framework.
-- **After editing any JS file under `components/` or `scripts/`**, run `npm run cache-bust` — filenames carry an MD5 hash and the script rewrites every import. Idempotent; re-run is safe.
-- **User-visible change?** Bump `VERSION` in `components/utils.*.js` and add an entry to [changelog.html](changelog.html) (semver: patch = fix/polish, minor = feature, major = breaking).
+- **Vanilla JS + Web Components + hand-written CSS, no bundler.** Don't introduce a build step or framework. New components ship as `components/wc-foo.js` + `components/wc-foo.css`; link the CSS from `index.html` and add both to the `PRECACHE` array in [sw.js](sw.js).
+- **User-visible change?** Bump `VERSION` in [version.js](version.js) and add an entry to [changelog.html](changelog.html) (semver: patch = fix/polish, minor = feature, major = breaking).
 - **Pure logic stays pure.** `scripts/game-logic.*.js` must remain side-effect-free so the test suite can import it directly.
 - **Pause respect.** Any bot or autoplay `setTimeout` in the turn flow must go through `scheduleTurn` — see the Pause Model section of CLAUDE.md.
 

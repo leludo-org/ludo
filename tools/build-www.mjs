@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Populate www/ with files Capacitor should ship to the APK.
-// Skips build-only inputs (input.css, tailwind.config.js), source design assets, tests, tools, etc.
+// Skips tests, tools, source design assets, etc.
 
 import { rm, mkdir, cp } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
@@ -14,13 +14,20 @@ const SHIPPED = [
   'index.html',
   'changelog.html',
   'privacy.html',
+  'changelog.css',
   'manifest.json',
-  'output.css',
   'sw.js',
   'version.js',
+  'styles',
   'components',
   'scripts',
   'assets',
+  // GitHub Pages chrome — copied so the same www/ tree can be used
+  // both for Capacitor (which ignores these) and for Pages deploys
+  // (which need the custom domain CNAME + .nojekyll to opt out of
+  // Jekyll processing).
+  'CNAME',
+  '.nojekyll',
 ];
 
 await rm(www, { recursive: true, force: true });

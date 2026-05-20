@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="h-full">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8"/>
@@ -8,7 +8,18 @@
 
     <script type="module" src="components/index.js"></script>
     <script type="module" src="scripts/index.js"></script>
-    <link rel="stylesheet" href="output.css"/>
+
+    <link rel="stylesheet" href="styles/base.css"/>
+    <link rel="stylesheet" href="components/wc-board.css"/>
+    <link rel="stylesheet" href="components/wc-quick-start.css"/>
+    <link rel="stylesheet" href="components/wc-settings.css"/>
+    <link rel="stylesheet" href="components/wc-game-end.css"/>
+    <link rel="stylesheet" href="components/wc-dice.css"/>
+    <link rel="stylesheet" href="components/wc-token.css"/>
+    <link rel="stylesheet" href="components/wc-pause-menu.css"/>
+    <link rel="stylesheet" href="components/wc-header.css"/>
+    <link rel="stylesheet" href="components/wc-button.css"/>
+    <link rel="stylesheet" href="components/wc-icons.css"/>
 
     <link rel="manifest" href="manifest.json"/>
 
@@ -26,50 +37,41 @@
     <title>Leludo</title>
 </head>
 
-<body class="h-full flex flex-col">
+<body>
 
-<div id="root" class="flex-1 flex items-start sm:items-center justify-center p-2">
-
-    <div id="game-container" class="w-full max-w-96">
-        <wc-quick-start id="main-menu" class=""></wc-quick-start>
-
+<div id="root" class="page">
+    <div id="game-container" style="width:100%;max-width:var(--frame-max-w);">
+        <wc-quick-start id="main-menu"></wc-quick-start>
         <wc-board id="game" class="hidden"></wc-board>
     </div>
-
 </div>
 
-<div id="pause-menu" class="fixed inset-0 z-50 bg-background overflow-y-auto hidden items-start sm:items-center justify-center p-2">
-    <div class="max-w-96 w-full flex flex-col min-h-[calc(100dvh-16px)] sm:min-h-0 sm:h-[820px] sm:max-h-[calc(100dvh-32px)]">
-        <div class="flex items-center gap-2 pt-1 pb-6">
-            <div class="w-[38px]"></div>
-            <div class="flex-1 text-center text-[11px] font-medium tracking-[0.16em] uppercase opacity-50">Paused</div>
-            <div class="w-[38px]"></div>
+<div id="pause-menu" class="frame-overlay hidden">
+    <div class="frame">
+        <div class="top-bar">
+            <div class="icon-btn-spacer"></div>
+            <div class="top-bar-title">Paused</div>
+            <div class="icon-btn-spacer"></div>
         </div>
 
-        <div class="flex-1 flex flex-col justify-center">
-            <h2 class="font-display text-[40px] leading-none tracking-tight px-1 pt-2 pb-2">
-                Take a<br>breather.
-            </h2>
-            <p class="text-sm opacity-50 px-1 pt-2 pb-4 max-w-[320px]">The board's right where you left it. Resume when you're ready, or bow out to the menu.</p>
+        <div class="frame-body">
+            <h2 class="display-title">Take a<br>breather.</h2>
+            <p class="body-helper">The board's right where you left it. Resume when you're ready, or bow out to the menu.</p>
 
-            <div class="px-0 pt-4 pb-4 flex flex-col gap-6">
+            <div style="padding:16px 0; display:flex; flex-direction:column; gap:24px;">
                 <div>
-                    <div class="flex items-baseline justify-between mb-2">
-                        <div class="text-[11px] tracking-widest uppercase opacity-40">Standings</div>
-                        <div id="pm-turn-count" class="text-[11px] tracking-widest uppercase opacity-40">Turn 0</div>
+                    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px;">
+                        <div class="section-label">Standings</div>
+                        <div id="pm-turn-count" class="section-label">Turn 0</div>
                     </div>
-                    <div id="pm-scoreboard" class="bg-card rounded-2xl px-3.5 border border-foreground/10"></div>
+                    <div id="pm-scoreboard" class="pause-scoreboard"></div>
                 </div>
             </div>
         </div>
 
-        <div class="pt-4 pb-2 flex flex-col gap-2.5">
-            <button id="pm-resume" class="w-full h-[60px] rounded-2xl bg-foreground text-background font-medium text-[17px] tracking-wide border-none cursor-pointer flex items-center justify-center gap-2.5 hover:opacity-90 transition-opacity">
-                Resume
-            </button>
-            <button class="restart-game w-full h-[48px] rounded-2xl bg-transparent text-foreground font-medium text-[14px] border border-foreground/15 cursor-pointer hover:bg-foreground/5 transition-colors opacity-80">
-                Exit to menu
-            </button>
+        <div class="frame-footer">
+            <button id="pm-resume" class="cta-primary">Resume</button>
+            <button class="restart-game cta-secondary">Exit to menu</button>
         </div>
     </div>
 </div>

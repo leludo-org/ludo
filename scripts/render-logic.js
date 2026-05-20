@@ -314,7 +314,7 @@ export function updateCellStacking(cell) {
         const badgeEl = document.createElement('div');
         badgeEl.className = 'stack-badge';
         badgeEl.textContent = `×${n}`;
-        badgeEl.style.cssText = 'position:absolute;bottom:-6%;right:-6%;min-width:46%;height:46%;padding:0 4px;border-radius:50%;background:hsl(var(--foreground));color:hsl(var(--background));font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.3);z-index:3;';
+        // All visuals (position, colors, sizing) live in wc-board.css .stack-badge.
         cell.appendChild(badgeEl);
     }
 }
@@ -442,12 +442,15 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
 export function activateToken(currentPlayerIndex, tokenIndex) {
     const tokenElementId = getTokenElementId(currentPlayerIndex, tokenIndex)
     const tokenElement = document.getElementById(tokenElementId);
-    ["animate-bounce", "z-20"].forEach(c => tokenElement.children[0].classList.add(c))
+    const inner = tokenElement.children[0];
+    inner.classList.add("animate-bounce");
+    inner.style.zIndex = "20";
 }
 
 export function inactiveTokens() {
     document.querySelectorAll(".animate-bounce").forEach(element => {
-        ["animate-bounce", "z-20"].forEach(c => element.classList.remove(c))
+        element.classList.remove("animate-bounce");
+        element.style.removeProperty("z-index");
     })
 }
 
@@ -505,7 +508,7 @@ export function slideBackToMenu() {
 }
 
 const PAWN_SVG_MINI = (playerIndex) => `
-    <svg viewBox="0 0 32 32" class="text-player-${playerIndex}" style="width:100%;height:100%;filter:drop-shadow(0 1px 1px rgba(0,0,0,0.22));">
+    <svg viewBox="0 0 32 32" class="player-fg-${playerIndex}" style="width:100%;height:100%;filter:drop-shadow(0 1px 1px rgba(0,0,0,0.22));">
         <ellipse cx="16" cy="28" rx="8" ry="1.5" fill="rgba(0,0,0,0.18)"/>
         <path d="M16 4c3.2 0 5.5 2.4 5.5 5.2 0 1.8-1 3.2-2.4 4 1.7.7 2.9 1.8 3.6 3.4l1.1 2.6c.4 1 .1 2-.7 2.4-.2.1-.4.1-.6.1H9.5c-.9 0-1.6-.7-1.6-1.6 0-.3.1-.6.2-.9l1.1-2.6c.7-1.6 1.9-2.7 3.6-3.4-1.4-.8-2.4-2.2-2.4-4C10.4 6.4 12.8 4 16 4z" fill="currentColor"/>
         <rect x="7.5" y="22" width="17" height="3.5" rx="1.4" fill="currentColor"/>
@@ -533,28 +536,26 @@ function renderPauseScoreboard() {
         const finished = _getFinishedCount ? _getFinishedCount(idx) : 0
         const name = (_playerNames[idx] && String(_playerNames[idx]).trim()) || `P${idx + 1}`
         const isActive = idx === currentIdx
-        const dotCls = isActive ? `bg-player-${idx}` : 'bg-foreground/15'
-        const tag = isActive
-            ? `<span class="text-[10px] tracking-[0.14em] uppercase font-medium opacity-60 ml-1.5">Up next</span>`
-            : ''
+        const dotCls = isActive ? `player-bg-${idx}` : 'pm-finish-dot--idle'
+        const tag = isActive ? `<span class="pm-upnext">Up next</span>` : ''
         const typeBadge = `
-            <span class="inline-flex items-center gap-1 text-foreground/60 text-[11px] tracking-widest uppercase font-medium" style="align-self:flex-start;">
+            <span class="pm-type">
                 ${playerTypeGlyph(type, 12)}
                 ${playerTypeLabel(type)}
             </span>`
         rows.push(`
-            <div class="flex items-center gap-3 py-3 ${rows.length > 0 ? 'border-t border-foreground/5' : ''}">
-                <div class="size-7 shrink-0">${PAWN_SVG_MINI(idx)}</div>
-                <div class="flex-1 min-w-0 flex flex-col gap-1">
-                    <div class="flex items-center min-w-0">
-                        <span class="text-sm font-medium truncate">${escapeHtml(name)}</span>
+            <div class="pm-row">
+                <div class="pm-pawn">${PAWN_SVG_MINI(idx)}</div>
+                <div class="pm-body">
+                    <div class="pm-name-row">
+                        <span class="pm-name">${escapeHtml(name)}</span>
                         ${tag}
                     </div>
                     ${typeBadge}
                 </div>
-                <div class="flex items-center gap-1.5 shrink-0">
-                    <span class="text-sm font-mono tabular-nums">${finished}<span class="opacity-40">/4</span></span>
-                    <span class="size-1.5 rounded-full ${dotCls}"></span>
+                <div class="pm-finish">
+                    <span class="pm-finish-count">${finished}<span class="pm-finish-count-total">/4</span></span>
+                    <span class="pm-finish-dot ${dotCls}"></span>
                 </div>
             </div>`)
     })
@@ -567,14 +568,12 @@ export function showPauseMenu() {
     if (turnEl) turnEl.textContent = `Turn ${turnCount}`
     renderPauseScoreboard()
     overlay.classList.remove("hidden")
-    overlay.classList.add("flex")
     releaseWakeLock()
 }
 
 export function resumeGame() {
     const overlay = document.getElementById("pause-menu")
     overlay.classList.add("hidden")
-    overlay.classList.remove("flex")
     requestWakeLock()
 }
 
@@ -620,16 +619,14 @@ const CORNER_CFG = [
 
 function pillMarkup(idx, finished, active) {
     const type = _playerTypes ? _playerTypes[idx] : null;
-    const glyph = `<span class="inline-flex items-center justify-center" style="width:14px;height:14px;opacity:0.85;">${playerTypeGlyph(type, 14)}</span>`;
-    const cls = active
-        ? `bg-player-${idx} text-white border-player-${idx}`
-        : `bg-card text-foreground border-foreground/10`;
+    const glyph = `<span class="corner-pill-glyph">${playerTypeGlyph(type, 14)}</span>`;
+    const cls = active ? `corner-pill corner-pill--active player-bg-${idx}` : `corner-pill`;
     const name = (_playerNames[idx] && String(_playerNames[idx]).trim()) || `P${idx + 1}`;
     const safe = name.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     return `
-        <div class="flex items-center gap-1.5 rounded-full border ${cls} shadow-sm" style="padding:7px 11px;height:32px;box-sizing:border-box;">
+        <div class="${cls}">
             ${glyph}
-            <div class="text-[12px] font-medium leading-none max-w-[120px] truncate">${safe}</div>
+            <div class="corner-pill-name">${safe}</div>
         </div>`;
 }
 
@@ -651,7 +648,7 @@ export function updateCornerWidgets() {
         const finished = _getFinishedCount(idx);
 
         const wrap = document.createElement('div');
-        wrap.className = 'flex items-center gap-2';
+        wrap.className = 'corner-widget';
 
         const pill = document.createElement('div');
         pill.innerHTML = pillMarkup(idx, finished, isActive);
@@ -659,16 +656,15 @@ export function updateCornerWidgets() {
 
         const diceBtn = document.createElement('div');
         if (isActive) {
-            diceBtn.className = `rounded-2xl flex items-center justify-center bg-player-${idx} active-dice-pulse`;
-            diceBtn.style.cssText = 'width:56px;height:56px;padding:6px;box-sizing:border-box;--pulse-color:hsl(var(--player-' + idx + ') / 0.55);';
+            diceBtn.className = `corner-dice corner-dice--active player-bg-${idx} active-dice-pulse`;
+            diceBtn.style.setProperty('--pulse-color', `hsl(var(--player-${idx}) / 0.55)`);
             if (dice) {
                 dice.style.cssText = 'width:100%;height:100%;';
                 dice.className = '';
                 diceBtn.appendChild(dice);
             }
         } else {
-            diceBtn.className = `rounded-2xl bg-player-${idx}`;
-            diceBtn.style.cssText = 'width:56px;height:56px;box-sizing:border-box;opacity:0.4;';
+            diceBtn.className = `corner-dice corner-dice--idle player-bg-${idx}`;
         }
 
         if (layout === 'TD') {

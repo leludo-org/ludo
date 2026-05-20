@@ -18,13 +18,13 @@ Loaded at runtime from [Google Fonts](https://fonts.google.com/) (licensed under
 
 ## Test framework
 
-- **[QUnit](https://qunitjs.com/)** (MIT) — loaded from `code.jquery.com` for the in-browser test suite at `/test/`.
+- **[Vitest](https://vitest.dev/)** (MIT) — unit + integration tests under `test/`.
+- **[Playwright](https://playwright.dev/)** (Apache-2.0) — E2E smoke tests under `test/e2e/`.
 
 ## Build tooling
 
 See [package.json](package.json) for the full dev dependency list. Notable runtime-impacting tools:
 
-- **[Tailwind CSS](https://tailwindcss.com/)** (MIT)
 - **[five-server](https://github.com/yandeu/five-server)** (MIT) — dev server
 - **[Capacitor](https://capacitorjs.com/)** (MIT) — Android shell
 

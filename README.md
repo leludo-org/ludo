@@ -2,7 +2,7 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
-Browser Ludo game. Vanilla JS + Web Components + Tailwind. No bundler. Ships to web ([leludo.org](https://leludo.org)) and Android via Capacitor.
+Browser Ludo game. Vanilla JS + Web Components + hand-written CSS. No bundler, no Tailwind. Ships to web ([leludo.org](https://leludo.org)) and Android via Capacitor.
 
 Play offline. Four AI personalities (`balanced`, `aggressive`, `defensive`, `rusher`). No ads, no tracking, no accounts.
 
@@ -15,26 +15,17 @@ npm install
 ## Develop
 
 ```bash
-npm run dev      # five-server on :8888 + tailwindcss --watch
-npm test         # opens the QUnit test page (needs dev running)
+npm run dev      # five-server on :8888 (no build step)
+npm test         # vitest watch mode
+npm run test:e2e # Playwright smoke suite
 ```
 
-Open <http://localhost:8888> for the game, <http://localhost:8888/test/> for tests.
-
-## After editing JS
-
-Filenames carry a content hash. Run cache-bust to refresh hashes + import refs:
-
-```bash
-npm run cache-bust
-```
-
-Idempotent — safe to re-run.
+Open <http://localhost:8888> for the game.
 
 ## Android (Capacitor)
 
 ```bash
-npm run android:prepare   # cache-bust + version sync + build www/ + cap sync
+npm run android:prepare   # version sync + build www/ + cap sync
 npm run android:open      # open in Android Studio
 npm run android:run       # run on connected device or emulator
 ```

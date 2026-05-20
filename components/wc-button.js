@@ -4,8 +4,7 @@ import {
 
 //language=HTML
 const BUTTON_HTML = /*html*/ `
-<div class="rounded-lg px-4 py-3 bg-card shadow-md hover:shadow-lg hover:bg-card-hover cursor-pointer text-center transition-all duration-200 border border-border/20 active:scale-[0.98] active:shadow-sm font-medium tracking-wide">
-</div>
+<div class="wc-button"></div>
 `
 
 class Button extends HTMLElement {

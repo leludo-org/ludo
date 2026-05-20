@@ -36,21 +36,27 @@ jobs:
   e2e:
     name: Playwright E2E
     runs-on: ubuntu-latest
+
+    # Run inside the official Playwright image so Chromium and every
+    # required OS shared lib are baked into the container. Skips the
+    # 1-2 min `npx playwright install --with-deps` step that
+    # ubuntu-latest needs on every run.
+    #
+    # Tag MUST match the @playwright/test version pinned in
+    # package-lock.json (currently 1.60.0). When you bump
+    # @playwright/test in package.json, also bump this tag — the test
+    # runner refuses to launch against a mismatched browser bundle.
+    # The bundled image ships Node 20; we don't run actions/setup-node
+    # here since e2e doesn't care about the host Node version.
+    container:
+      image: mcr.microsoft.com/playwright:v1.60.0-noble
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
       - name: Install dependencies
         run: npm ci
-
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
 
       - name: Run Playwright tests
         run: npm run test:e2e
@@ -82,18 +88,21 @@ jobs:
       - name: Read VERSION
         run: node -e "import('./version.js').then(m => console.log('VERSION =', m.VERSION))"
 
-      - name: Build Tailwind CSS
-        run: npx tailwindcss -i input.css -o output.css --minify
-
       - name: Build www/
         run: npm run build:www
 
       - name: Confirm www/ contents
         run: |
           test -f www/index.html
-          test -f www/output.css
+          test -f www/changelog.html
+          test -f www/privacy.html
           test -f www/sw.js
           test -f www/version.js
-          test -d www/components
+          test -f www/manifest.json
+          test -f www/CNAME
+          test -f www/.nojekyll
+          test -f www/styles/base.css
+          test -f www/components/wc-board.css
+          test -f www/components/wc-board.js
           test -d www/scripts
           test -d www/assets
