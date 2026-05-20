@@ -49,8 +49,35 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright browsers
+      # Cache the downloaded Playwright browsers (Chromium etc.) keyed
+      # on the exact @playwright/test version pinned in
+      # package-lock.json. The full browser tarball is ~150-200MB and
+      # downloading it adds 1-2 minutes to every CI run; restoring
+      # from cache is <5s. The key busts automatically when the
+      # Playwright dep version changes.
+      - name: Read Playwright version
+        id: playwright-version
+        run: |
+          echo "version=$(node -p "require('./package-lock.json').packages['node_modules/@playwright/test'].version")" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-browsers-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+
+      # On cache miss: download browsers + their system deps in one
+      # call. On cache hit: the browsers are restored from cache, but
+      # the OS-level shared libs they need are NOT in the cache path
+      # — install just those.
+      - name: Install Playwright browsers (cache miss)
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium
+
+      - name: Install Playwright system deps (cache hit)
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
 
       - name: Run Playwright tests
         run: npm run test:e2e
@@ -82,18 +109,21 @@ jobs:
       - name: Read VERSION
         run: node -e "import('./version.js').then(m => console.log('VERSION =', m.VERSION))"
 
-      - name: Build Tailwind CSS
-        run: npx tailwindcss -i input.css -o output.css --minify
-
       - name: Build www/
         run: npm run build:www
 
       - name: Confirm www/ contents
         run: |
           test -f www/index.html
-          test -f www/output.css
+          test -f www/changelog.html
+          test -f www/privacy.html
           test -f www/sw.js
           test -f www/version.js
-          test -d www/components
+          test -f www/manifest.json
+          test -f www/CNAME
+          test -f www/.nojekyll
+          test -f www/styles/base.css
+          test -f www/components/wc-board.css
+          test -f www/components/wc-board.js
           test -d www/scripts
           test -d www/assets
