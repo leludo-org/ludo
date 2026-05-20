@@ -59,11 +59,10 @@ GitHub Actions workflows live in [.github/workflows/](.github/workflows/):
 
 - `ci.yml` — runs on PRs to `main` and pushes to other branches.
   Three jobs: vitest, Playwright E2E, and a `www/` build smoke test.
-- `deploy-pages.yml` — manual trigger only (`workflow_dispatch`).
-  Builds `www/` and force-pushes it to the `gh-pages` branch
-  (see Web Deployment below).
-- `release.yml` — Android / Play Store release pipeline. Manual
-  trigger only (`workflow_dispatch`).
+- `release.yml` — full release pipeline (web + Android + Play Store +
+  gh-pages publish). Manual trigger only (`workflow_dispatch`). The
+  `publish-pages` job inside it owns the `gh-pages` push (see Web
+  Deployment below).
 
 ### Playwright runner
 
@@ -155,14 +154,19 @@ Example: `http://localhost:8888/?positions=50,,,,,,,,,,,,,,,&player=0` puts P0's
 ## Web Deployment (GitHub Pages)
 
 `leludo.org` is served from the `gh-pages` branch, NOT from the repo
-root. The branch is rebuilt and force-pushed by
-[.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml),
-which runs **manually only** (`workflow_dispatch` from the Actions tab):
+root. The branch is rebuilt and force-pushed by the `publish-pages`
+job in [.github/workflows/release.yml](.github/workflows/release.yml),
+which runs as part of the manual release pipeline (`workflow_dispatch`):
 
 1. `npm ci`
 2. `node tools/build-www.mjs` → assembles `www/` (HTML + CSS + JS +
    service worker + assets + `CNAME` + `.nojekyll`).
 3. `peaceiris/actions-gh-pages@v4` publishes `./www` to `gh-pages`.
+
+Web shipping is now coupled to the release ritual: bumping `VERSION`
+and triggering Release publishes the new bundle to `leludo.org` as
+part of the same run. There is no longer a standalone gh-pages
+workflow — a web-only fix still requires a version bump + Release run.
 
 The public domain therefore only ever sees runtime artifacts —
 internal docs (`CLAUDE.md`, `CONTRIBUTING.md`), tooling (`tools/`,
