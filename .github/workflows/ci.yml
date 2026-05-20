@@ -36,48 +36,27 @@ jobs:
   e2e:
     name: Playwright E2E
     runs-on: ubuntu-latest
+
+    # Run inside the official Playwright image so Chromium and every
+    # required OS shared lib are baked into the container. Skips the
+    # 1-2 min `npx playwright install --with-deps` step that
+    # ubuntu-latest needs on every run.
+    #
+    # Tag MUST match the @playwright/test version pinned in
+    # package-lock.json (currently 1.60.0). When you bump
+    # @playwright/test in package.json, also bump this tag — the test
+    # runner refuses to launch against a mismatched browser bundle.
+    # The bundled image ships Node 20; we don't run actions/setup-node
+    # here since e2e doesn't care about the host Node version.
+    container:
+      image: mcr.microsoft.com/playwright:v1.60.0-noble
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
       - name: Install dependencies
         run: npm ci
-
-      # Cache the downloaded Playwright browsers (Chromium etc.) keyed
-      # on the exact @playwright/test version pinned in
-      # package-lock.json. The full browser tarball is ~150-200MB and
-      # downloading it adds 1-2 minutes to every CI run; restoring
-      # from cache is <5s. The key busts automatically when the
-      # Playwright dep version changes.
-      - name: Read Playwright version
-        id: playwright-version
-        run: |
-          echo "version=$(node -p "require('./package-lock.json').packages['node_modules/@playwright/test'].version")" >> "$GITHUB_OUTPUT"
-
-      - name: Cache Playwright browsers
-        id: playwright-cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-browsers-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
-
-      # On cache miss: download browsers + their system deps in one
-      # call. On cache hit: the browsers are restored from cache, but
-      # the OS-level shared libs they need are NOT in the cache path
-      # — install just those.
-      - name: Install Playwright browsers (cache miss)
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium
-
-      - name: Install Playwright system deps (cache hit)
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
-        run: npx playwright install-deps chromium
 
       - name: Run Playwright tests
         run: npm run test:e2e
