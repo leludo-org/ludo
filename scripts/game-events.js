@@ -19,10 +19,8 @@ import {
     resumeGame,
     showGame,
     showPauseMenu,
-    slideBackToMenu,
     updateDiceFace,
     updateTokenContainer,
-    updateActionZone,
     updateTurnCounter,
     resetTurnCount,
     initRailDeps,
@@ -303,7 +301,7 @@ export function handleGamePause() {
     const onExit = async () => {
         playClickSound()
         cleanup()
-        await slideBackToMenu()
+        releaseWakeLock()
         window.location.href = window.location.origin
     }
 
@@ -324,7 +322,6 @@ export function handleDiceRoll() {
     if (_paused) return;
     if (isInputLocked()) return;
     acquireInputLock();
-    updateActionZone('rolling');
     animateDiceRoll(currentDiceRoll)
         .then(() => {
             const lastDiceRoll = currentDiceRoll
@@ -359,7 +356,6 @@ function handleAfterDiceRoll() {
 
         if (movableTokenIndexes.length > 0) {
             inactiveDice();
-            updateActionZone('select', currentDiceRoll);
 
             if (isCurrentPlayerBot()) {
                 scheduleTurn(() => {
