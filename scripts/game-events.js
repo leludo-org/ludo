@@ -29,6 +29,17 @@ import {
     setPlayerNames,
 } from "./index.js";
 import { pickBestMove, PERSONALITIES, randomPersonality } from "./bot-ai.js";
+import {
+    isPlayerFinished as isPlayerFinishedPure,
+    allTokensInHome as allTokensInHomePure,
+    getFinishedCount as getFinishedCountPure,
+    selectStartingPlayer,
+    getNextPlayerIndex,
+    shouldEndGame,
+    computeLeftoverRankOrder,
+    serializeGameState,
+    deserializeGameState,
+} from "./turn-rules.js";
 
 /**
  * @typedef {'PLAYER'|'BOT'} PlayerType
@@ -157,8 +168,7 @@ export function getIsLocalMultiplayer() {
     return defined >= 2 && humans === defined;
 }
 export function getFinishedCount(playerIndex) {
-    if (!playerTokenPositions[playerIndex]) return 0;
-    return playerTokenPositions[playerIndex].filter(p => p === 56).length;
+    return getFinishedCountPure(playerTokenPositions[playerIndex]);
 }
 
 /**
@@ -178,7 +188,7 @@ function isAutoplay() {
 }
 
 function allTokensInHome(playerIndex) {
-    return playerTokenPositions[playerIndex].every(p => p === -1)
+    return allTokensInHomePure(playerTokenPositions[playerIndex])
 }
 
 /**
@@ -200,16 +210,13 @@ function initPlayers(quickStartId) {
  * @returns {boolean}
  */
 function isPlayerFinished(playerIndex) {
-    return playerTokenPositions[playerIndex].find(tp => tp !== 56) === undefined
+    return isPlayerFinishedPure(playerTokenPositions[playerIndex])
 }
 
 function updateCurrentPlayer() {
     consecutiveSixesCount = 0
-
-    do {
-        currentPlayerIndex = (currentPlayerIndex + 1) % 4
-    } while (playerTypes[currentPlayerIndex] === undefined || isPlayerFinished(currentPlayerIndex))
-
+    const next = getNextPlayerIndex(currentPlayerIndex, playerTypes, playerTokenPositions)
+    if (next !== -1) currentPlayerIndex = next
     updateTurnCounter()
     handlePayerUpdated()
 }
@@ -234,9 +241,7 @@ export function handleGameStart(quickStartId, namesByPlayerIndex) {
     }
     setPlayerNames(playerNames)
 
-    currentPlayerIndex = playerTypes.includes("PLAYER")
-        ? 2
-        : playerTypes.findIndex(t => t !== undefined)
+    currentPlayerIndex = selectStartingPlayer(playerTypes)
 
     showGame();
 
@@ -450,36 +455,13 @@ function handleAfterTokenMove(tripComplete, captureCount) {
         playerRanks[currentPlayerIndex] = ++lastRank
         playerTimes[currentPlayerIndex] = new Date().getTime() - gameStartedAt
 
-        let numberOfRemainingPlayers = 0;
-        let remainingHumans = 0;
-        let hasAnyHuman = false;
-        playerTypes.forEach((playerType, playerIndex) => {
-            if (!playerType) return;
-            if (playerType === 'PLAYER') hasAnyHuman = true;
-            if (!isPlayerFinished(playerIndex)) {
-                numberOfRemainingPlayers++;
-                if (playerType === 'PLAYER') remainingHumans++;
-            }
-        })
-
-        const allHumansDoneVsBots = hasAnyHuman && remainingHumans === 0 && numberOfRemainingPlayers > 0;
-
-        if (numberOfRemainingPlayers === 1 || allHumansDoneVsBots) {
-            const leftover = [];
-            playerTypes.forEach((playerType, playerIndex) => {
-                if (playerType && playerRanks[playerIndex] === 0) leftover.push(playerIndex);
-            })
-            leftover.sort((a, b) => {
-                const fa = getFinishedCount(a), fb = getFinishedCount(b);
-                if (fb !== fa) return fb - fa;
-                const sa = playerTokenPositions[a].reduce((s, p) => s + (p < 0 ? 0 : p), 0);
-                const sb = playerTokenPositions[b].reduce((s, p) => s + (p < 0 ? 0 : p), 0);
-                return sb - sa;
-            });
-            leftover.forEach(playerIndex => {
-                playerRanks[playerIndex] = ++lastRank
-                playerTimes[playerIndex] = new Date().getTime() - gameStartedAt
-            })
+        if (shouldEndGame(playerTypes, playerTokenPositions)) {
+            const now = new Date().getTime()
+            computeLeftoverRankOrder(playerTypes, playerTokenPositions, playerRanks)
+                .forEach(playerIndex => {
+                    playerRanks[playerIndex] = ++lastRank
+                    playerTimes[playerIndex] = now - gameStartedAt
+                })
 
             document.getElementById("game-container").appendChild(document.createElement("wc-game-end"))
             document.getElementById("game").classList.add("hidden")
@@ -525,21 +507,21 @@ let _quickStartId = null;
 
 function saveGameState() {
     if (!_quickStartId) return;
-    const state = {
+    const state = serializeGameState({
         quickStartId: _quickStartId,
-        playerNamesArr: Array.from(playerNames),
-        playerTypesArr: Array.from(playerTypes),
-        botPersonalitiesArr: Array.from(botPersonalities),
-        positions: playerTokenPositions.map(p => p ? Array.from(p) : null),
+        playerNames,
+        playerTypes,
+        botPersonalities,
+        playerTokenPositions,
         currentPlayerIndex,
         currentDiceRoll,
         consecutiveSixesCount,
-        capturesArr: Array.from(playerCaptures),
-        ranksArr: Array.from(playerRanks),
-        timesArr: Array.from(playerTimes),
+        playerCaptures,
+        playerRanks,
+        playerTimes,
         lastRank,
         gameStartedAt,
-    };
+    });
     localStorage.setItem('ludo-save', JSON.stringify(state));
 }
 
@@ -580,10 +562,7 @@ export function restartGame() {
 }
 
 export function getSavedGame() {
-    try {
-        const raw = localStorage.getItem('ludo-save');
-        return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
+    return deserializeGameState(localStorage.getItem('ludo-save'));
 }
 
 export function handleGameResume() {
