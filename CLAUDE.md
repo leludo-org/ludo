@@ -34,6 +34,47 @@ Browser Ludo game. Vanilla JS + Web Components + hand-written CSS. No bundler, n
 - `npm run test:e2e` — Playwright smoke tests in [test/e2e/](test/e2e/). Spawns a static server via [tools/serve-static.mjs](tools/serve-static.mjs) on port 8889. Use `npm run test:e2e:ui` for the inspector.
 - `npm run cache-bust` — see Cache Busting below.
 
+## Bug-fix discipline
+
+**Every bug fix lands with a regression test.** If a CSS / layout /
+behavioural bug got through review once, the only way to keep it from
+returning is a failing assertion in CI. Add or extend a Playwright
+case in [test/e2e/](test/e2e/) (or a vitest case under
+[test/](test/) if the bug lives in pure logic) that:
+
+1. Reproduces the broken state — confirm the test FAILS before your fix.
+2. Asserts the corrected behaviour — confirm the test PASSES after.
+3. Carries a short comment explaining the original symptom so a
+   future reader knows what the assertion is guarding.
+
+`test/e2e/board-styles.spec.js` is the canonical example: each block
+of assertions maps 1:1 to a concrete board-rendering bug fixed during
+the Tailwind → hand-written CSS refactor. Follow that pattern for new
+fixes — don't ship "just the fix" expecting the next reviewer to
+catch the regression by eye.
+
+## CI
+
+GitHub Actions workflows live in [.github/workflows/](.github/workflows/):
+
+- `ci.yml` — runs on PRs to `main` and pushes to other branches.
+  Three jobs: vitest, Playwright E2E, and a `www/` build smoke test.
+- `deploy-pages.yml` — runs on push to `main`. Builds `www/` and
+  force-pushes it to the `gh-pages` branch (see Web Deployment below).
+- `release.yml` — Android / Play Store release pipeline.
+
+### Playwright runner
+
+The E2E job runs inside the official
+`mcr.microsoft.com/playwright:v<version>-noble` container so the
+Chromium browser and its OS shared libs are pre-baked — no
+`playwright install` step on every run.
+
+**The container image tag MUST match the `@playwright/test` version
+pinned in `package-lock.json`.** When bumping `@playwright/test`,
+also bump the `image:` tag in `ci.yml`. Mismatch makes the test
+runner refuse to launch with a loud, obvious error.
+
 ## Architecture
 
 Two top-level module trees at the repo root, each with an `index.*.js` barrel that re-exports its tree:
