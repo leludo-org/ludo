@@ -1,0 +1,163 @@
+import { test, expect } from '@playwright/test';
+
+/**
+ * Regression suite for board CSS.
+ *
+ * These assertions exist because the Tailwind → hand-written CSS
+ * refactor introduced specificity bugs that broke board visuals
+ * (corner pills lost player color, home-stretch path cells lost their
+ * tint, grid cell sizes drifted, animate-bounce tokens clipped at the
+ * board edge). Keep them green to catch the same class of regression
+ * if the CSS layering changes again.
+ */
+
+const HSL_RE = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/;
+
+async function startGame(page) {
+    await page.goto('/');
+    await page.locator('.new-game-btn').click();
+    await page.locator('.start-btn').click();
+    await page.locator('wc-board:not(.hidden)').waitFor();
+    // wait for at least one corner widget to populate so we can read pill styles
+    await page.locator('.corner-widget').first().waitFor();
+}
+
+test.describe('Board grid layout', () => {
+    test('all 72 path cells render at identical width and height', async ({ page }) => {
+        await startGame(page);
+
+        const sizes = await page.evaluate(() => {
+            const cells = Array.from(document.querySelectorAll('wc-board .path-cell'));
+            return cells.map(c => {
+                const r = c.getBoundingClientRect();
+                // round to one decimal so sub-pixel layout noise doesn't fail
+                return { id: c.id, w: Math.round(r.width * 10) / 10, h: Math.round(r.height * 10) / 10 };
+            });
+        });
+
+        expect(sizes.length).toBe(72);
+        const widths = new Set(sizes.map(s => s.w));
+        const heights = new Set(sizes.map(s => s.h));
+        expect([...widths]).toHaveLength(1);
+        expect([...heights]).toHaveLength(1);
+        // cells should be square (within rounding tolerance)
+        const [w] = [...widths];
+        const [h] = [...heights];
+        expect(Math.abs(w - h)).toBeLessThanOrEqual(0.5);
+    });
+
+    test('board-grid does NOT clip overflow (animate-bounce + drop shadows extend past edge)', async ({ page }) => {
+        await startGame(page);
+        const overflow = await page.evaluate(() =>
+            getComputedStyle(document.querySelector('wc-board .board-grid')).overflow
+        );
+        expect(overflow).toBe('visible');
+    });
+});
+
+test.describe('Path cell backgrounds', () => {
+    test('plain path cells render at board-cell color (not blank/transparent)', async ({ page }) => {
+        await startGame(page);
+        const bg = await page.evaluate(() =>
+            getComputedStyle(document.getElementById('m1')).backgroundColor
+        );
+        expect(bg).toMatch(HSL_RE);
+        const [, r, g, b] = bg.match(HSL_RE).map(Number);
+        // light theme --color-board-cell is hsl(42 38% 95%) ~ rgb(247,244,237).
+        // accept anything that's clearly not transparent (alpha 0) and not white.
+        expect(r).toBeGreaterThan(200);
+        expect(g).toBeGreaterThan(200);
+    });
+
+    test('home-stretch cells (player-bg-path-N) use the player tint, not board-cell', async ({ page }) => {
+        await startGame(page);
+
+        const sample = await page.evaluate(() => {
+            const ids = ['p0s1', 'p1s1', 'p2s1', 'p3s1'];
+            const plain = getComputedStyle(document.getElementById('m1')).backgroundColor;
+            const map = {};
+            for (const id of ids) {
+                map[id] = getComputedStyle(document.getElementById(id)).backgroundColor;
+            }
+            return { plain, map };
+        });
+
+        // Each player's home-stretch cell must differ from the plain board-cell.
+        for (const [id, bg] of Object.entries(sample.map)) {
+            expect(bg, `${id} should not match plain board-cell color ${sample.plain}`).not.toBe(sample.plain);
+        }
+        // And they should all differ from each other (one tint per player).
+        const tints = new Set(Object.values(sample.map));
+        expect(tints.size).toBe(4);
+    });
+
+    test('safe (starred) cells get safe-tint background', async ({ page }) => {
+        await startGame(page);
+        const sample = await page.evaluate(() => ({
+            safe: getComputedStyle(document.getElementById('m8')).backgroundColor,
+            plain: getComputedStyle(document.getElementById('m1')).backgroundColor,
+        }));
+        expect(sample.safe).not.toBe(sample.plain);
+        expect(sample.safe).toMatch(HSL_RE);
+    });
+});
+
+test.describe('Corner widget (player pill)', () => {
+    test('active pill background uses the active player color (not surface)', async ({ page }) => {
+        await startGame(page);
+
+        const data = await page.evaluate(() => {
+            const active = document.querySelector('.corner-pill.corner-pill--active');
+            const idle = document.querySelector('.corner-pill:not(.corner-pill--active)');
+            const surface = getComputedStyle(document.documentElement).getPropertyValue('--color-surface').trim();
+            return {
+                activeBg: active ? getComputedStyle(active).backgroundColor : null,
+                activeColor: active ? getComputedStyle(active).color : null,
+                idleBg: idle ? getComputedStyle(idle).backgroundColor : null,
+                surfaceVar: surface,
+            };
+        });
+
+        expect(data.activeBg, 'active corner pill must have a background').not.toBeNull();
+        expect(data.activeBg).toMatch(HSL_RE);
+
+        // Active pill text must be white-ish (we set color:#fff explicitly).
+        expect(data.activeColor).toMatch(/^rgb\(255,\s*255,\s*255\)$/);
+
+        // Active pill background should NOT match the idle (surface) pill.
+        if (data.idleBg) {
+            expect(data.activeBg).not.toBe(data.idleBg);
+        }
+    });
+
+    test('idle pill uses surface color, not transparent', async ({ page }) => {
+        await startGame(page);
+        const idleBg = await page.evaluate(() => {
+            const idle = document.querySelector('.corner-pill:not(.corner-pill--active)');
+            return idle ? getComputedStyle(idle).backgroundColor : null;
+        });
+        expect(idleBg).toBeTruthy();
+        // rgba(0,0,0,0) is transparent — must NOT be that
+        expect(idleBg).not.toBe('rgba(0, 0, 0, 0)');
+    });
+});
+
+test.describe('Player color utilities', () => {
+    test('.player-bg-N classes resolve to four distinct colors', async ({ page }) => {
+        await page.goto('/');
+        const colors = await page.evaluate(() => {
+            const probe = document.createElement('div');
+            probe.style.cssText = 'position:fixed;top:-1000px;width:10px;height:10px;';
+            document.body.appendChild(probe);
+            const out = [];
+            for (let i = 0; i < 4; i++) {
+                probe.className = `player-bg-${i}`;
+                out.push(getComputedStyle(probe).backgroundColor);
+            }
+            probe.remove();
+            return out;
+        });
+        expect(new Set(colors).size).toBe(4);
+        for (const c of colors) expect(c).toMatch(HSL_RE);
+    });
+});

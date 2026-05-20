@@ -314,7 +314,7 @@ export function updateCellStacking(cell) {
         const badgeEl = document.createElement('div');
         badgeEl.className = 'stack-badge';
         badgeEl.textContent = `×${n}`;
-        badgeEl.style.cssText = 'position:absolute;bottom:-6%;right:-6%;min-width:46%;height:46%;padding:0 4px;border-radius:50%;background:hsl(var(--foreground));color:hsl(var(--background));font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.3);z-index:3;';
+        // All visuals (position, colors, sizing) live in wc-board.css .stack-badge.
         cell.appendChild(badgeEl);
     }
 }

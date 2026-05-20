@@ -81,7 +81,10 @@ wc-board .board-grid {
         0 14px 40px -10px rgba(31, 27, 20, 0.22),
         0 2px 6px rgba(31, 27, 20, 0.06),
         inset 0 0 0 1px rgba(31, 27, 20, 0.06);
-    overflow: hidden;
+    /* Intentionally NOT overflow:hidden — tokens use animate-bounce
+       (translateY -20%) and drop-shadow on the edge cells (e.g. m11)
+       that need to render beyond the board's bounding box. The home
+       quads supply their own corner radii. */
 }
 
 /* ----- Home quadrants ----- */
@@ -92,6 +95,8 @@ wc-board .home-quad {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 0;
+    min-height: 0;
 }
 
 wc-board .home-quad--tl { border-top-left-radius: var(--radius-lg); }
@@ -140,6 +145,8 @@ wc-board .path-arm-v {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(6, 1fr);
+    min-width: 0;
+    min-height: 0;
 }
 
 wc-board .path-arm-h {
@@ -147,6 +154,8 @@ wc-board .path-arm-h {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    min-width: 0;
+    min-height: 0;
 }
 
 wc-board .path-arm-h > .path-cell,
@@ -155,12 +164,27 @@ wc-board .path-arm-v > .path-cell {
     outline-offset: -1px;
 }
 
+/* Layout-only rule keeps full specificity (every cell is positioned).
+   `min-width: 0; min-height: 0` overrides the default `min-content`
+   floor for grid items so token children (intrinsic 1:1 via SVG
+   viewBox) don't stretch their row/column track. Without this, rows
+   that contain a token grow taller than rows that don't, breaking
+   board uniformity. */
 wc-board .path-cell {
     position: relative;
-    background: var(--color-board-cell);
+    min-width: 0;
+    min-height: 0;
 }
 
-/* Player-tinted path cells (home-stretch + entry-row coloring) */
+/* Default background uses :where() so the wc-board prefix doesn't
+   raise specificity above the global .player-bg-path-N helpers
+   (base.css). Without this, tinted home-stretch cells render as
+   board-cell color. */
+wc-board :where(.path-cell) {
+    background-color: var(--color-board-cell);
+}
+
+/* Player-tinted path cells gain a subtle directional gloss. */
 wc-board .path-cell.player-bg-path-0,
 wc-board .path-cell.player-bg-path-1,
 wc-board .path-cell.player-bg-path-2,
@@ -169,7 +193,7 @@ wc-board .path-cell.player-bg-path-3 {
 }
 
 wc-board .path-cell--safe {
-    background: var(--color-safe);
+    background-color: var(--color-safe);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -211,6 +235,8 @@ wc-board .finish-zone {
     position: relative;
     overflow: clip;
     background: var(--color-board-cell);
+    min-width: 0;
+    min-height: 0;
 }
 
 wc-board .finish-tri {
