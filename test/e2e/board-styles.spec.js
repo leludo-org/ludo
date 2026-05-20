@@ -156,6 +156,30 @@ test.describe('Corner widget (player pill)', () => {
     });
 });
 
+test.describe('Token animation speed', () => {
+    test('wc-token uses ~150ms transform transition (matches pre-refactor)', async ({ page }) => {
+        // scripts/render-logic.js animates each per-cell hop by setting
+        // wc-token.style.transform; the CSS transition-duration on the
+        // wc-token element drives the resulting move speed. A regression
+        // that ratchets this up (e.g. to 300ms) makes the game feel
+        // sluggish. Pin it to the pre-refactor Tailwind value (150ms).
+        await page.goto('/');
+        const dur = await page.evaluate(() => {
+            // wc-token only renders inside a board, so make a temporary
+            // probe element to read the CSS rule's resolved duration.
+            const el = document.createElement('wc-token');
+            el.style.cssText = 'position:absolute;top:-9999px;left:0;width:1px;height:1px;';
+            document.body.appendChild(el);
+            const cs = getComputedStyle(el);
+            const out = { duration: cs.transitionDuration, property: cs.transitionProperty };
+            el.remove();
+            return out;
+        });
+        expect(dur.property).toContain('transform');
+        expect(dur.duration).toBe('0.15s');
+    });
+});
+
 test.describe('Player color utilities', () => {
     test('.player-bg-N classes resolve to four distinct colors', async ({ page }) => {
         await page.goto('/');

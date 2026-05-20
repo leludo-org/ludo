@@ -2,11 +2,21 @@
    wc-token — single token (svg pawn) on the board
    ============================================================ */
 
+/* The wc-token element is what scripts/render-logic.js
+   updateTokenContainer animates with `style.transform = translate(...)`
+   between cell positions, so this duration drives per-step movement
+   speed. Match the pre-refactor Tailwind `transition-transform`
+   utility (150ms, cubic-bezier(0.4, 0, 0.2, 1)) — anything longer
+   makes the dice-to-cell hopping feel sluggish. */
 wc-token {
     display: block;
-    transition: transform 300ms ease-out;
+    transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* The inner SVG keeps the old 300ms ease-out transition the markup
+   used to declare directly — it isn't animated by render-logic today,
+   but the slower curve is what the prior visual treatment expected
+   for any future direct SVG transforms. */
 wc-token svg {
     position: relative;
     width: 100%;
