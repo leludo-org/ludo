@@ -59,9 +59,11 @@ GitHub Actions workflows live in [.github/workflows/](.github/workflows/):
 
 - `ci.yml` — runs on PRs to `main` and pushes to other branches.
   Three jobs: vitest, Playwright E2E, and a `www/` build smoke test.
-- `deploy-pages.yml` — runs on push to `main`. Builds `www/` and
-  force-pushes it to the `gh-pages` branch (see Web Deployment below).
-- `release.yml` — Android / Play Store release pipeline.
+- `deploy-pages.yml` — manual trigger only (`workflow_dispatch`).
+  Builds `www/` and force-pushes it to the `gh-pages` branch
+  (see Web Deployment below).
+- `release.yml` — Android / Play Store release pipeline. Manual
+  trigger only (`workflow_dispatch`).
 
 ### Playwright runner
 
@@ -154,8 +156,8 @@ Example: `http://localhost:8888/?positions=50,,,,,,,,,,,,,,,&player=0` puts P0's
 
 `leludo.org` is served from the `gh-pages` branch, NOT from the repo
 root. The branch is rebuilt and force-pushed by
-[.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml)
-on every push to `main`:
+[.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml),
+which runs **manually only** (`workflow_dispatch` from the Actions tab):
 
 1. `npm ci`
 2. `node tools/build-www.mjs` → assembles `www/` (HTML + CSS + JS +

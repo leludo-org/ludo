@@ -8,8 +8,6 @@ name: Deploy GitHub Pages
 # package.json, internal docs, etc.).
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
