@@ -203,11 +203,18 @@ wc-quick-start .resume-play {
     color: var(--home-cta-fg);
 }
 
-/* Scoped settings-icon override: higher-contrast ring on home only. */
+/* Settings icon on home: soft surface chip — quiet utility weight,
+   pairs with the resume card's surface. Scoped to the home top-bar
+   so other screens keep their token-based ring. */
 wc-quick-start .home-top-bar wc-settings #settings-icon {
-    border-color: var(--home-ring);
-    opacity: 1;
+    background: var(--color-surface);
     color: var(--color-fg);
+    border: 1px solid color-mix(in srgb, var(--color-fg) 12%, transparent);
+    opacity: 1;
+}
+
+wc-quick-start .home-top-bar wc-settings #settings-icon:hover {
+    background: var(--color-surface-hover);
 }
 
 wc-quick-start .home-new-secondary {

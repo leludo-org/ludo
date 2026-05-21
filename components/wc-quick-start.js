@@ -28,13 +28,7 @@ const DICE_SVG = (value, size = 56) => {
     </svg>`;
 };
 
-const QUAD_CHIP_SVG = (size = 26) => `
-    <svg width="${size}" height="${size}" viewBox="0 0 2 2" style="border-radius:6px;overflow:hidden;display:block;box-shadow:0 1px 4px rgba(0,0,0,0.18);">
-        <rect x="0" y="0" width="1" height="1" fill="hsl(var(--player-0))"/>
-        <rect x="1" y="0" width="1" height="1" fill="hsl(var(--player-2))"/>
-        <rect x="0" y="1" width="1" height="1" fill="hsl(var(--player-3))"/>
-        <rect x="1" y="1" width="1" height="1" fill="hsl(var(--player-1))"/>
-    </svg>`;
+const QUAD_CHIP_SVG = (size = 26) => MINI_BOARD_SVG(size);
 
 const PLAY_ICON_SVG = (size = 14) =>
     `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
