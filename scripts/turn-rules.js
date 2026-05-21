@@ -123,6 +123,7 @@ export function serializeGameState({
     playerTimes,
     lastRank,
     gameStartedAt,
+    turnCount,
 }) {
     return {
         quickStartId,
@@ -138,6 +139,7 @@ export function serializeGameState({
         timesArr: playerTimes.slice(),
         lastRank,
         gameStartedAt,
+        turnCount: Number.isFinite(turnCount) ? turnCount : 0,
     };
 }
 

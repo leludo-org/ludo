@@ -575,6 +575,14 @@ export function resetTurnCount() {
     turnCount = 0;
 }
 
+export function getTurnCount() {
+    return turnCount;
+}
+
+export function setTurnCount(n) {
+    turnCount = Number.isFinite(n) && n >= 0 ? Math.floor(n) : 0;
+}
+
 export function moveDice() {
     updateCornerWidgets();
 }

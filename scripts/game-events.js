@@ -25,6 +25,8 @@ import {
     updateTokenContainer,
     updateTurnCounter,
     resetTurnCount,
+    getTurnCount,
+    setTurnCount,
     initRailDeps,
     setPlayerNames,
 } from "./index.js";
@@ -521,6 +523,7 @@ function saveGameState() {
         playerTimes,
         lastRank,
         gameStartedAt,
+        turnCount: getTurnCount(),
     });
     localStorage.setItem('ludo-save', JSON.stringify(state));
 }
@@ -577,7 +580,7 @@ export function handleGameResume() {
     lastRank = saved.lastRank;
     consecutiveSixesCount = saved.consecutiveSixesCount;
     currentDiceRoll = saved.currentDiceRoll;
-    resetTurnCount();
+    setTurnCount(saved.turnCount || 0);
     initRailDeps(playerTypes, getCurrentPlayerIndex, getFinishedCount, getIsLocalMultiplayer);
 
     initPlayers(saved.quickStartId);

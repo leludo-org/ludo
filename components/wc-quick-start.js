@@ -15,16 +15,41 @@ const DICE_SVG = (value, size = 56) => {
         5: [[0,0],[0,2],[1,1],[2,0],[2,2]],
         6: [[0,0],[0,2],[1,0],[1,2],[2,0],[2,2]],
     };
-    const pad = size * 0.18;
-    const pip = size * 0.12;
+    const pad = size * 0.2;
+    const pip = size * 0.15;
     const cell = (size - pad * 2) / 2;
     const pips = PIP_LAYOUTS[value] || PIP_LAYOUTS[1];
     const pipSvgs = pips.map(([gr, gc]) =>
-        `<circle cx="${pad + gc * cell}" cy="${pad + gr * cell}" r="${pip/2}" fill="hsl(var(--color-fg-raw, 36 18% 10%))" style="fill:var(--color-fg)"/>`
+        `<circle cx="${pad + gc * cell}" cy="${pad + gr * cell}" r="${pip/2}" fill="var(--color-fg)"/>`
     ).join('');
     return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-        <rect width="${size}" height="${size}" rx="${size * 0.22}" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1"/>
+        <rect x="0.5" y="0.5" width="${size - 1}" height="${size - 1}" rx="${size * 0.22}" fill="var(--color-surface)" stroke="var(--color-border)" stroke-width="1"/>
         ${pipSvgs}
+    </svg>`;
+};
+
+const QUAD_CHIP_SVG = (size = 26) => MINI_BOARD_SVG(size);
+
+const PLAY_ICON_SVG = (size = 14) =>
+    `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+
+const MINI_BOARD_SVG = (size = 52) => {
+    // Faithful to design/home.jsx MiniBoard: 2x2 colored quadrants
+    // (each 50%), dark cross overlay sized at 1/3 of the box, tiny
+    // off-white diamond at the center.
+    // viewBox = 60 so the 1/3-thick cross sits at 20..40.
+    return `<svg width="${size}" height="${size}" viewBox="0 0 60 60" style="border-radius:7px;overflow:hidden;display:block;">
+        <rect x="0"  y="0"  width="30" height="30" fill="hsl(var(--player-1))"/>
+        <rect x="30" y="0"  width="30" height="30" fill="hsl(var(--player-2))"/>
+        <rect x="0"  y="30" width="30" height="30" fill="hsl(var(--player-3))"/>
+        <rect x="30" y="30" width="30" height="30" fill="hsl(var(--player-0))"/>
+        <!-- 1/3-thick dark cross (matches mockup's tinted lanes) -->
+        <rect x="0"  y="20" width="60" height="20" fill="rgba(20,15,10,0.22)"/>
+        <rect x="20" y="0"  width="20" height="60" fill="rgba(20,15,10,0.22)"/>
+        <!-- center diamond -->
+        <rect x="-3.4" y="-3.4" width="6.8" height="6.8"
+              transform="translate(30 30) rotate(45)"
+              fill="rgba(255,250,240,0.78)"/>
     </svg>`;
 };
 
@@ -37,13 +62,14 @@ const PAWN_SVG = (playerIndex) => `
         <rect x="7.5" y="22" width="17" height="1.2" rx="0.6" fill="rgba(255,255,255,0.38)"/>
     </svg>`;
 
-const ICON_GITHUB = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 00-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.5 9.5 0 015 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.8v2.6c0 .3.2.6.7.5A10 10 0 0012 2z"/></svg>`;
 const ICON_BACK = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>`;
 const ICON_CLOSE = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
 const ICON_PLUS = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>`;
 const ICON_USER = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zM4 21a8 8 0 0116 0"/></svg>`;
 const ICON_BOT = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3M8 7h8a3 3 0 013 3v7a3 3 0 01-3 3H8a3 3 0 01-3-3v-7a3 3 0 013-3zM9 13h.01M15 13h.01M9 17h6"/></svg>`;
 const ICON_PENCIL = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`;
+
+const escapeHtml = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 class QuickStart extends HTMLElement {
     constructor() {
@@ -110,42 +136,29 @@ class QuickStart extends HTMLElement {
     showHomeScreen() {
         this.innerHTML = ""
 
-        const savedGame = localStorage.getItem('ludo-save')
-        const resumeCard = savedGame ? `
-            <div class="resume-card">
-                <div class="resume-card-pawns">
-                    ${[0,1,2,3].map((c, i) => `
-                        <div class="resume-card-pawn" style="left:${i*12}px;background:hsl(var(--player-${c}));"></div>
-                    `).join('')}
-                </div>
-                <div class="resume-card-body">
-                    <div class="resume-card-label">Resume</div>
-                    <div class="resume-card-title">Saved game</div>
-                </div>
-            </div>` : ''
+        const saved = this._readSavedGame()
 
         const html = /*html*/ `
-            <div class="frame">
-                <div class="top-bar">
-                    <a href="https://github.com/LeludoOrg/leludo" target="_blank" rel="noopener" class="icon-btn">${ICON_GITHUB}</a>
-                    <div class="top-bar-title">v${VERSION}</div>
+            <div class="frame home-frame${saved ? ' home-frame--in-progress' : ''}">
+                <div class="top-bar home-top-bar">
+                    <div class="home-brand-chip" aria-label="le ludo">${QUAD_CHIP_SVG(26)}</div>
+                    <div class="top-bar-title home-top-spacer"></div>
                     <wc-settings></wc-settings>
                 </div>
+
                 <div class="home-hero">
-                    <div class="home-dice-row">
-                        <div class="home-dice" data-value="4">${DICE_SVG(4, 48)}</div>
-                        <div class="home-dice" data-value="6">${DICE_SVG(6, 48)}</div>
-                    </div>
-                    <h1 class="home-title">le<br>ludo.</h1>
-                    <p class="home-tagline">
-                        A quiet, faithful take on the classic four-player race. Pass &amp; play, or run the table against bots.
-                    </p>
+                    <div class="home-die">${DICE_SVG(6, 48)}</div>
+                    <h1 class="home-title">le&nbsp;ludo.</h1>
+                    <p class="home-tagline">A quiet, faithful take on the classic four-player race.</p>
                 </div>
 
-                ${resumeCard ? `<div class="home-resume-row">${resumeCard}</div>` : ''}
+                ${saved ? this._resumeCardHtml(saved) : ''}
 
-                <div class="home-cta-row">
-                    <button class="new-game-btn cta-primary home-cta">New game</button>
+                <div class="home-footer">
+                    ${saved
+                        ? `<button class="new-game-btn cta-secondary">Start a new game</button>`
+                        : `<button class="new-game-btn cta-primary">New game</button>`}
+                    <div class="home-version">v${VERSION}</div>
                 </div>
             </div>
         `
@@ -166,61 +179,55 @@ class QuickStart extends HTMLElement {
         }
 
         this.appendChild(el)
-        this._startHomeDiceAnim()
     }
 
-    _startHomeDiceAnim() {
-        this._stopHomeDiceAnim()
-        const dice = Array.from(this.querySelectorAll('.home-dice'))
-        if (!dice.length) return
-
-        this._homeDiceTimers = []
-
-        const roll = (el) => {
-            el.classList.add('dice-rolling')
-            const finalValue = 1 + Math.floor(Math.random() * 6)
-            const seq = []
-            for (let i = 0; i < 7; i++) seq.push(1 + Math.floor(Math.random() * 6))
-            seq.push(finalValue)
-            const delays = [40, 40, 40, 50, 60, 80, 100, 140]
-            let step = 0
-            const tick = () => {
-                if (step >= seq.length) {
-                    el.classList.remove('dice-rolling')
-                    el.dataset.value = finalValue
-                    return
-                }
-                el.innerHTML = DICE_SVG(seq[step], 48)
-                const d = delays[step]
-                step++
-                this._homeDiceTimers.push(setTimeout(tick, d))
-            }
-            tick()
+    _readSavedGame() {
+        try {
+            const raw = localStorage.getItem('ludo-save')
+            if (!raw) return null
+            const parsed = JSON.parse(raw)
+            if (!parsed || !Array.isArray(parsed.positions)) return null
+            return parsed
+        } catch {
+            return null
         }
-
-        const rollAll = () => {
-            dice.forEach((el, idx) => {
-                this._homeDiceTimers.push(setTimeout(() => roll(el), idx * 180))
-            })
-        }
-
-        this._homeDiceTimers.push(setTimeout(rollAll, 900))
-        this._homeDiceInterval = setInterval(rollAll, 1900)
     }
 
-    _stopHomeDiceAnim() {
-        if (this._homeDiceInterval) clearInterval(this._homeDiceInterval)
-        if (this._homeDiceTimers) this._homeDiceTimers.forEach(t => clearTimeout(t))
-        this._homeDiceTimers = []
-        this._homeDiceInterval = null
-    }
+    _resumeCardHtml(saved) {
+        const types = saved.playerTypesArr || []
+        const names = saved.playerNamesArr || []
+        const cpi = saved.currentPlayerIndex ?? 0
+        const turn = Number.isFinite(saved.turnCount) && saved.turnCount > 0 ? saved.turnCount : 1
+        const activeIdx = [0,1,2,3].filter(i => types[i])
+        const currentIsHuman = types[cpi] === 'PLAYER'
+        const currentName = (names[cpi] || '').trim() || `Player ${cpi + 1}`
+        const turnLine = currentIsHuman
+            ? `Turn ${turn} · your move`
+            : `Turn ${turn} · ${currentName}'s move`
+        const opponents = activeIdx
+            .filter(i => i !== cpi)
+            .map(i => (names[i] || '').trim() || `P${i + 1}`)
+            .join(', ')
+        const dots = activeIdx.map(i =>
+            `<span class="resume-dot" style="background:hsl(var(--player-${i}));"></span>`
+        ).join('')
 
-    disconnectedCallback() {
-        this._stopHomeDiceAnim()
+        return /*html*/ `
+            <div class="home-resume-row">
+                <div class="resume-eyebrow">IN&nbsp;PROGRESS</div>
+                <button class="resume-card" type="button">
+                    <span class="resume-mini-board">${MINI_BOARD_SVG(52)}</span>
+                    <span class="resume-body">
+                        <span class="resume-title">${escapeHtml(turnLine)}</span>
+                        <span class="resume-sub">vs ${escapeHtml(opponents)}</span>
+                        <span class="resume-dots">${dots}</span>
+                    </span>
+                    <span class="resume-play">${PLAY_ICON_SVG(14)}</span>
+                </button>
+            </div>`
     }
 
     showSetupScreen() {
-        this._stopHomeDiceAnim()
         this.innerHTML = ""
 
         const html = /*html*/ `
