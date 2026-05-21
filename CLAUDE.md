@@ -59,10 +59,20 @@ GitHub Actions workflows live in [.github/workflows/](.github/workflows/):
 
 - `ci.yml` — runs on PRs to `main` and pushes to other branches.
   Three jobs: vitest, Playwright E2E, and a `www/` build smoke test.
-- `release.yml` — full release pipeline (web + Android + Play Store +
-  gh-pages publish). Manual trigger only (`workflow_dispatch`). The
-  `publish-pages` job inside it owns the `gh-pages` push (see Web
-  Deployment below).
+- `release-web.yml` — web release pipeline (test + build + gh-pages
+  publish + tag + GH release with web zip). Manual trigger only
+  (`workflow_dispatch`). Owns the `gh-pages` push (see Web Deployment
+  below).
+- `release-android.yml` — Android release pipeline (test + build APK
+  + AAB + Play Store publish + tag + GH release with apk/aab).
+  Manual trigger only (`workflow_dispatch`).
+
+Both release workflows create the `vX.Y.Z` tag idempotently (skip if
+it exists) and use `softprops/action-gh-release@v2`, which creates the
+release on first run and appends artifacts on subsequent runs — so
+running web then android lands a single GH release per version with
+web zip + apk + aab attached. Typical flow: bump `VERSION`, run web,
+validate `leludo.org`, then run android.
 
 ### Playwright runner
 
@@ -155,18 +165,19 @@ Example: `http://localhost:8888/?positions=50,,,,,,,,,,,,,,,&player=0` puts P0's
 
 `leludo.org` is served from the `gh-pages` branch, NOT from the repo
 root. The branch is rebuilt and force-pushed by the `publish-pages`
-job in [.github/workflows/release.yml](.github/workflows/release.yml),
-which runs as part of the manual release pipeline (`workflow_dispatch`):
+job in [.github/workflows/release-web.yml](.github/workflows/release-web.yml),
+which runs as part of the web release pipeline (`workflow_dispatch`):
 
 1. `npm ci`
 2. `node tools/build-www.mjs` → assembles `www/` (HTML + CSS + JS +
    service worker + assets + `CNAME` + `.nojekyll`).
 3. `peaceiris/actions-gh-pages@v4` publishes `./www` to `gh-pages`.
 
-Web shipping is now coupled to the release ritual: bumping `VERSION`
-and triggering Release publishes the new bundle to `leludo.org` as
-part of the same run. There is no longer a standalone gh-pages
-workflow — a web-only fix still requires a version bump + Release run.
+Web release is decoupled from Android — running `release-web.yml`
+publishes `leludo.org` and creates/updates the GH release with the
+web zip, without touching the Play Store. Android ships separately
+via `release-android.yml`. A web-only fix still requires a version
+bump + a Release (Web) run.
 
 The public domain therefore only ever sees runtime artifacts —
 internal docs (`CLAUDE.md`, `CONTRIBUTING.md`), tooling (`tools/`,
