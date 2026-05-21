@@ -15,6 +15,11 @@
     --color-board-border: hsl(37 15% 78%);
     --color-safe: hsl(40 28% 87%);
 
+    /* CTA pair pulled from the mockup palette for higher contrast
+       than the muddier --color-fg / --color-bg tokens. */
+    --cta-bg: #1a1410;
+    --cta-fg: #ede4d3;
+
     /* Player palettes — base swatches (kept as raw HSL triplets so they
        can be remapped at runtime via --player-N = var(--base-color-X)). */
     --base-color-0: 10 63% 48%;
@@ -84,6 +89,9 @@
     --color-board-cell: hsl(30 12% 20%);
     --color-board-border: hsl(30 12% 28%);
     --color-safe: hsl(30 15% 20%);
+
+    --cta-bg: #ecdfd0;
+    --cta-fg: #1a1410;
 
     --base-color-0: 10 63% 55%;
     --base-color-1: 152 38% 45%;
@@ -261,22 +269,20 @@ table td {
     width: var(--icon-btn-size);
     height: var(--icon-btn-size);
     border-radius: var(--radius-pill);
-    background: transparent;
-    border: 1px solid hsl(var(--color-fg-h, 36 18% 10%) / 0.15);
-    border-color: color-mix(in srgb, var(--color-fg) 15%, transparent);
+    background: var(--color-surface);
+    border: 1px solid color-mix(in srgb, var(--color-fg) 12%, transparent);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 150ms ease;
+    transition: background-color 150ms ease;
     color: inherit;
     padding: 0;
     text-decoration: none;
 }
 
 .icon-btn:hover {
-    opacity: 1;
+    background: var(--color-surface-hover);
 }
 
 .icon-btn-spacer {
@@ -302,23 +308,24 @@ table td {
 
 .cta-primary {
     width: 100%;
-    height: var(--cta-h);
-    border-radius: var(--radius-2xl);
-    background: var(--color-fg);
-    color: var(--color-bg);
-    font-weight: 500;
+    height: 56px;
+    border-radius: 28px;
+    background: var(--cta-bg);
+    color: var(--cta-fg);
+    font-weight: 600;
     font-size: 17px;
-    letter-spacing: 0.025em;
+    letter-spacing: 0.01em;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
+    box-shadow: 0 8px 22px -8px rgba(31, 27, 20, 0.4);
     transition: opacity 150ms ease;
 }
 
 .cta-primary:hover {
-    opacity: 0.9;
+    opacity: 0.92;
 }
 
 .cta-primary:disabled {
@@ -328,15 +335,14 @@ table td {
 
 .cta-secondary {
     width: 100%;
-    height: var(--cta-h-sm);
-    border-radius: var(--radius-2xl);
+    height: 54px;
+    border-radius: 27px;
     background: transparent;
     color: var(--color-fg);
     font-weight: 500;
-    font-size: 14px;
-    border: 1px solid color-mix(in srgb, var(--color-fg) 15%, transparent);
+    font-size: 15px;
+    border: 1px solid color-mix(in srgb, var(--color-fg) 20%, transparent);
     cursor: pointer;
-    opacity: 0.8;
     transition: background-color 150ms ease;
 }
 

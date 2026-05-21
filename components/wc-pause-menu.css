@@ -4,10 +4,7 @@
    ============================================================ */
 
 #pause-menu .pause-scoreboard {
-    background: var(--color-surface);
-    border-radius: var(--radius-2xl);
     padding: 0 14px;
-    border: 1px solid color-mix(in srgb, var(--color-fg) 10%, transparent);
 }
 
 #pause-menu .pm-row {

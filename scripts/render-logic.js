@@ -1,130 +1,5 @@
 import {getMarkIndex} from "./index.js";
-
-const SOUND_MUTED_KEY = "sound-muted";
-let _soundMuted = localStorage.getItem(SOUND_MUTED_KEY) === "true";
-
-export function isSoundMuted() {
-    return _soundMuted;
-}
-
-export function setSoundMuted(muted) {
-    _soundMuted = !!muted;
-    localStorage.setItem(SOUND_MUTED_KEY, _soundMuted);
-}
-
-export function playClickSound() {
-    if (_soundMuted) return;
-    const ctx = getAudioCtx();
-    const t = ctx.currentTime;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.frequency.setValueAtTime(1200, t);
-    osc.frequency.exponentialRampToValueAtTime(800, t + 0.04);
-    gain.gain.setValueAtTime(0.06, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
-    osc.start(t);
-    osc.stop(t + 0.05);
-}
-
-let audioCtx = null;
-function getAudioCtx() {
-    if (!audioCtx) audioCtx = new AudioContext();
-    return audioCtx;
-}
-
-export function playStepSound() {
-    if (_soundMuted) return;
-    const ctx = getAudioCtx();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.frequency.value = 600;
-    gain.gain.setValueAtTime(0.08, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.06);
-}
-
-let captureBuffer = null;
-let captureBufferLoading = null;
-const CAPTURE_URL = new URL("../assets/sounds/capture.m4a", import.meta.url).href;
-
-function loadCaptureBuffer() {
-    if (captureBuffer) return Promise.resolve(captureBuffer);
-    if (captureBufferLoading) return captureBufferLoading;
-    const ctx = getAudioCtx();
-    captureBufferLoading = fetch(CAPTURE_URL)
-        .then(r => r.arrayBuffer())
-        .then(buf => ctx.decodeAudioData(buf))
-        .then(decoded => { captureBuffer = decoded; return decoded; });
-    return captureBufferLoading;
-}
-
-export function playCaptureSound() {
-    if (_soundMuted) return;
-    const ctx = getAudioCtx();
-    loadCaptureBuffer().then(buffer => {
-        if (_soundMuted) return;
-        const src = ctx.createBufferSource();
-        src.buffer = buffer;
-        const gain = ctx.createGain();
-        gain.gain.value = 0.3;
-        src.connect(gain);
-        gain.connect(ctx.destination);
-        src.start();
-    });
-}
-
-export function playDiceSound() {
-    if (_soundMuted) return;
-    const ctx = getAudioCtx();
-    const t = ctx.currentTime;
-
-    const bufferLen = Math.ceil(ctx.sampleRate * 0.06);
-    const noiseBuffer = ctx.createBuffer(1, bufferLen, ctx.sampleRate);
-    const data = noiseBuffer.getChannelData(0);
-    for (let i = 0; i < bufferLen; i++) data[i] = Math.random() * 2 - 1;
-
-    const burstCount = 7 + Math.floor(Math.random() * 5);
-    let offset = 0;
-    let amp = 0.12;
-
-    for (let i = 0; i < burstCount; i++) {
-        const duration = 0.003 + Math.random() * 0.005;
-        const startTime = t + offset;
-
-        const noise = ctx.createBufferSource();
-        noise.buffer = noiseBuffer;
-
-        const lp = ctx.createBiquadFilter();
-        lp.type = "lowpass";
-        lp.frequency.setValueAtTime(3000 + Math.random() * 2000, startTime);
-        lp.Q.setValueAtTime(0.1, startTime);
-
-        const hp = ctx.createBiquadFilter();
-        hp.type = "highpass";
-        hp.frequency.setValueAtTime(300 + Math.random() * 200, startTime);
-        hp.Q.setValueAtTime(0.1, startTime);
-
-        const gain = ctx.createGain();
-        gain.gain.setValueAtTime(amp, startTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-
-        noise.connect(hp);
-        hp.connect(lp);
-        lp.connect(gain);
-        gain.connect(ctx.destination);
-
-        noise.start(startTime);
-        noise.stop(startTime + duration);
-
-        offset += 0.01 + Math.random() * 0.025;
-        amp *= 0.7 + Math.random() * 0.15;
-    }
-}
+import {playStepSound, playDiceSound} from "./audio.js";
 
 /**
  *
@@ -155,6 +30,22 @@ export function getTokenContainerId(playerIndex, tokenIndex, tokenPosition) {
  */
 export function getTokenElementId(playerIndex, tokenIndex) {
     return `p-${playerIndex}-${tokenIndex}`;
+}
+
+const _tokenElementCache = new Map();
+
+export function getTokenElement(playerIndex, tokenIndex) {
+    const key = playerIndex * 4 + tokenIndex;
+    const cached = _tokenElementCache.get(key);
+    if (cached && cached.isConnected) return cached;
+    const el = document.getElementById(getTokenElementId(playerIndex, tokenIndex));
+    if (el) _tokenElementCache.set(key, el);
+    return el;
+}
+
+export function clearTokenElementCache() {
+    _tokenElementCache.clear();
+    _bouncingTokens.clear();
 }
 
 /**
@@ -327,10 +218,22 @@ export function updateCellStacking(cell) {
  * @param {number} newTokenPosition
  * @returns {Promise<void>}
  */
+function waitForTransitionEnd(el, onSettle, fallbackMs = 400) {
+    let settled = false;
+    const settle = () => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(fallbackTimer);
+        onSettle();
+    };
+    el.addEventListener('transitionend', settle, { once: true });
+    const fallbackTimer = setTimeout(settle, fallbackMs);
+}
+
 export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPosition, newTokenPosition) {
 
     const path = getContainerPath(playerIndex, tokenIndex, currentTokenPosition, newTokenPosition);
-    const element = document.getElementById(getTokenElementId(playerIndex, tokenIndex));
+    const element = getTokenElement(playerIndex, tokenIndex);
 
     return new Promise((resolve) => {
         if (path.length === 0) { resolve(); return; }
@@ -390,19 +293,13 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
                 void element.offsetWidth;
                 element.style.transition = '';
 
-                let settled = false;
-                const settle = () => {
-                    if (settled) return;
-                    settled = true;
-                    clearTimeout(fallbackTimer);
+                waitForTransitionEnd(element, () => {
                     element.style.willChange = '';
                     element.style.zIndex = '';
                     element.style.transformOrigin = '';
                     element.style.removeProperty('transform');
                     resolve();
-                };
-                element.addEventListener('transitionend', settle, { once: true });
-                const fallbackTimer = setTimeout(settle, 400);
+                });
                 requestAnimationFrame(() => {
                     element.style.transform = '';
                 });
@@ -416,17 +313,10 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
 
             element.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
 
-            let settled = false;
-            const settle = () => {
-                if (settled) return;
-                settled = true;
-                clearTimeout(fallbackTimer);
+            waitForTransitionEnd(element, () => {
                 stepIndex++;
                 requestAnimationFrame(step);
-            };
-
-            element.addEventListener('transitionend', settle, { once: true });
-            const fallbackTimer = setTimeout(settle, 400);
+            });
         }
 
         requestAnimationFrame(step);
@@ -438,19 +328,22 @@ export function updateTokenContainer(playerIndex, tokenIndex, currentTokenPositi
  * @param {number} currentPlayerIndex
  * @param {number} tokenIndex
  */
+const _bouncingTokens = new Set();
+
 export function activateToken(currentPlayerIndex, tokenIndex) {
-    const tokenElementId = getTokenElementId(currentPlayerIndex, tokenIndex)
-    const tokenElement = document.getElementById(tokenElementId);
+    const tokenElement = getTokenElement(currentPlayerIndex, tokenIndex);
     const inner = tokenElement.children[0];
     inner.classList.add("animate-bounce");
     inner.style.zIndex = "20";
+    _bouncingTokens.add(inner);
 }
 
 export function inactiveTokens() {
-    document.querySelectorAll(".animate-bounce").forEach(element => {
+    _bouncingTokens.forEach(element => {
         element.classList.remove("animate-bounce");
         element.style.removeProperty("z-index");
-    })
+    });
+    _bouncingTokens.clear();
 }
 
 export function activateDice() {
@@ -680,6 +573,14 @@ export function updateTurnCounter() {
 
 export function resetTurnCount() {
     turnCount = 0;
+}
+
+export function getTurnCount() {
+    return turnCount;
+}
+
+export function setTurnCount(n) {
+    turnCount = Number.isFinite(n) && n >= 0 ? Math.floor(n) : 0;
 }
 
 export function moveDice() {
